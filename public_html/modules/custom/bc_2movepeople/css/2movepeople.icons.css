@@ -1,0 +1,15 @@
+/**
+ * @file
+ * Styling for the 2movepeople module icons.
+ */
+
+/**
+ * Toolbar tab icon.
+ */
+.toolbar-bar .toolbar-icon-examples:before {
+  background-image: url(../images/2movepeopel.svg);
+}
+.toolbar-bar .toolbar-icon-examples:active:before,
+.toolbar-bar .toolbar-icon-examples.active:before {
+  background-image: url(../images/2movepeople.svg);
+}

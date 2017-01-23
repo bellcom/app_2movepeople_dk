@@ -1,0 +1,7 @@
+bc_2movepeople_dashboard.info:
+  path: '/2movepeople/dashboard'
+  defaults:
+    _title: 'Dashboard'
+    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getJsAccordionImplementation'
+  requirements:
+    _permission: 'access content'

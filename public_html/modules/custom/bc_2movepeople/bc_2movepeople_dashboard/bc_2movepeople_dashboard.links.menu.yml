@@ -1,0 +1,5 @@
+# Define default links for this module.
+bc_2movepeople_dashboard.info:
+  title: 2Movepeople Dashboard 
+  description: 2Movepeople Dashboard
+  route_name: bc_2movepeople_dashboard.info

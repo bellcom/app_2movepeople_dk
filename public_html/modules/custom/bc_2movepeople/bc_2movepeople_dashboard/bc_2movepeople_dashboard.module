@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * Examples showing how to use some of the new JavaScript features in Drupal 8.
+ */
+
+use Drupal\Core\Url;
+
+/**
+ * @defgroup bc_2movepeople_dashboard.module: JavaScript
+ * @ingroup 2movepeople
+ * @{
+ *
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function bc_2movepeople_dashboard_theme() {
+  return array(
+    'bc_2movepeople_dashboard_accordion' => array(
+      'template' => 'accordion',
+      'variables' => array('title' => NULL),
+    ),
+  );
+}
+
+/**
+ * @} End of "defgroup bc_2movepeople_dashboard.accordion".
+ */
