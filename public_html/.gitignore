@@ -43,3 +43,4 @@ simpletest
 # Ignore core phpcs.xml and phpunit.xml.
 #core/phpcs.xml
 $core/phpunit.xml
+sites/2move.dd
