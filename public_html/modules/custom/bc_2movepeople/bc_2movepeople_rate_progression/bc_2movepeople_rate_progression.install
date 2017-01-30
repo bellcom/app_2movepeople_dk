@@ -1,0 +1,45 @@
+<?php
+
+function bc_2movepeople_rate_progression_schema() {
+  $schema['bc_2movepeople_rate_progression'] = array(
+    'description' => 'This table stores goal rates',
+    'fields' => array(
+      'id' => array(
+        'description' => 'The rate id',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'progression_target_id' => array(
+        'description' => 'Node id of the progressio target',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'goal_id' => array(
+        'description' => 'Node id of the goal',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'rate' => array(
+        'description' => 'Progerssion rate',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'uid' => array(
+        'description' => 'The user id of the note author',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'created' => array(
+        'description' => 'Timestamp of when rate was created',
+        'type' => 'int',
+        'unsigned' => TRUE,
+      ),
+    ),
+    'primary key' => array('id'),
+    'indexes' => array(
+      'ind_goal_id' => array('goal_id'),
+      'uid' => array('uid'),
+    ),
+  );
+  return $schema;
+}

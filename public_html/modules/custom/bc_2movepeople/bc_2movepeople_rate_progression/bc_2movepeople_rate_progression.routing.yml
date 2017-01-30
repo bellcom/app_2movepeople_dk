@@ -1,0 +1,13 @@
+bc_2movepeople_rate_progerssion.rates_add:
+  path: '/rates/{progression_target_id}/add'
+  options:
+    parameters:
+      progression_target_id:
+        type: entity:node
+  defaults:
+    _title: 'Goal rate add'
+    _form: '\Drupal\bc_2movepeople_rate_progression\Form\RateAddForm'
+    node: null
+  requirements:
+    _permission: 'access content'
+    progression_target_id: \d+

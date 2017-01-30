@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Contains bc_2movepeople_rate_progression.module..
+ */
+
+function bc_2movepeople_rate_progression_get_rates($progression_target_id, $goal_id) {
+  $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
+  $query->fields('rates', array('rate'))
+    ->condition('uid', \Drupal::currentUser()->id(), '=')
+    ->condition('goal_id', $goal_id, '=')
+    ->condition('progression_target_id', $progression_target_id, '=')
+    ->orderBy('created', 'DESC')
+    ->range(0, 5);
+    $result = $query->execute()->fetchAll();
+    $rate_arr =  array();
+    foreach ($result as $row) {
+      $rate_arr[] = '[ ' . $row->rate .  ' ]';
+    }
+    $output = '<span id="progress_rates_' . $progression_target_id . '_' . $goal_id . '">' . implode(' ', array_reverse($rate_arr)) . '</span>';
+    return $output;
+}
