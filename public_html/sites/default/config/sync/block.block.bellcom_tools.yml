@@ -1,0 +1,26 @@
+uuid: a88f8d68-5347-4b73-8ee8-0084eb057872
+langcode: da
+status: true
+dependencies:
+  config:
+    - system.menu.tools
+  module:
+    - system
+  theme:
+    - bellcom
+_core:
+  default_config_hash: NeHSoqm4XFqA7_0bDmR429ZZQt3LRbZMNRJTMsFyOfI
+id: bellcom_tools
+theme: bellcom
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'system_menu_block:tools'
+settings:
+  id: 'system_menu_block:tools'
+  label: Værktøjer
+  provider: system
+  label_display: visible
+  level: 1
+  depth: 0
+visibility: {  }

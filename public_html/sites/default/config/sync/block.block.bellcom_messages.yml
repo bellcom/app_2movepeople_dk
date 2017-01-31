@@ -1,0 +1,22 @@
+uuid: 188a63a1-dda2-4988-97f6-29e7c35125f0
+langcode: da
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - bellcom
+_core:
+  default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
+id: bellcom_messages
+theme: bellcom
+region: highlighted
+weight: 0
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: Statusmeddelelser
+  provider: system
+  label_display: '0'
+visibility: {  }

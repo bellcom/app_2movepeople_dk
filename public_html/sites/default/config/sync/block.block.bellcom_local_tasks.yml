@@ -1,0 +1,22 @@
+uuid: 9953afc9-f39e-44c5-8da4-761a4c848df2
+langcode: da
+status: true
+dependencies:
+  theme:
+    - bellcom
+_core:
+  default_config_hash: X9I1OB0W3WlWtrK-CNcg6hNWwa8wficanpH8pYnDZDE
+id: bellcom_local_tasks
+theme: bellcom
+region: content
+weight: -40
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Faner
+  provider: core
+  label_display: '0'
+  primary: true
+  secondary: true
+visibility: {  }

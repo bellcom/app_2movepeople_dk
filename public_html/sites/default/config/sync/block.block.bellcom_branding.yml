@@ -1,0 +1,25 @@
+uuid: fd2a0bd5-d90f-47e2-9380-2d259757b203
+langcode: da
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - bellcom
+_core:
+  default_config_hash: NDwadleLD3YVSbDUaakxyYZyINYtkFtOVGShfq4kWy8
+id: bellcom_branding
+theme: bellcom
+region: header
+weight: 0
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Site branding'
+  provider: system
+  label_display: '0'
+  use_site_logo: true
+  use_site_name: true
+  use_site_slogan: true
+visibility: {  }

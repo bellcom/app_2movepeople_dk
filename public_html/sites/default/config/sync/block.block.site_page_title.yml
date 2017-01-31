@@ -1,0 +1,20 @@
+uuid: a8baf247-1539-441f-a46b-2aaf16f54f7a
+langcode: da
+status: true
+dependencies:
+  theme:
+    - site
+_core:
+  default_config_hash: 7rR9chwXvdM2H8OYMAYx9Zj3GGlPMrZp_M3ZA4thYTk
+id: site_page_title
+theme: site
+region: content
+weight: -3
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: Sidetitel
+  provider: core
+  label_display: '0'
+visibility: {  }

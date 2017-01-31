@@ -1,0 +1,22 @@
+uuid: ab01c246-1821-4b20-a412-0c35bedafb47
+langcode: da
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - bellcom
+_core:
+  default_config_hash: 9EoWV2Lot6FVSr50t4hoKgiz1LIXYWNG-IIPYsWxBqo
+id: bellcom_content
+theme: bellcom
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Primært sideindhold'
+  provider: system
+  label_display: '0'
+visibility: {  }

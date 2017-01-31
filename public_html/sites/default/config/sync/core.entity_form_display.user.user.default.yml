@@ -1,0 +1,73 @@
+uuid: 25d7e90d-9f90-4b54-a66b-148173769803
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.field.user.user.field_organisation
+    - field.field.user.user.field_user_firstname
+    - field.field.user.user.field_user_surname
+    - field.field.user.user.user_picture
+    - image.style.thumbnail
+  module:
+    - image
+    - path
+    - shs_chosen
+    - user
+_core:
+  default_config_hash: LLAieeozVsoZDb-2PbFxRJpQqnKmpR7-4OoRJnduz-U
+id: user.user.default
+targetEntityType: user
+bundle: user
+mode: default
+content:
+  account:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+  field_organisation:
+    weight: 7
+    settings:
+      chosen_override: false
+      chosen_settings:
+        disable_search: false
+        search_contains: false
+        placeholder_text_multiple: 'Choose some options'
+        placeholder_text_single: 'Choose an option'
+        no_results_text: 'No results match'
+      display_node_count: false
+      create_new_items: false
+      create_new_levels: false
+      force_deepest: false
+    third_party_settings: {  }
+    type: options_shs_chosen
+  field_user_firstname:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_user_surname:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  path:
+    type: path
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+  timezone:
+    weight: 6
+  user_picture:
+    type: image_image
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    weight: 3
+hidden:
+  contact: true
+  language: true

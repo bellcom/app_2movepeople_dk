@@ -1,0 +1,13 @@
+uuid: d2796669-aad7-4ba1-aea9-82318ccf5404
+langcode: da
+status: true
+dependencies:
+  module:
+    - pathauto
+_core:
+  default_config_hash: fWszFHPeJ_dhZ8kJEEWo4w-FQH_etR4AxTQkQCW9OLk
+id: pathauto_update_alias_user
+label: 'Update URL alias'
+type: user
+plugin: pathauto_update_alias
+configuration: {  }

@@ -1,0 +1,22 @@
+uuid: 2f52e8c8-1d50-4402-bcbf-9f98b9a6d9d3
+langcode: da
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - site
+_core:
+  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
+id: site_help
+theme: site
+region: content
+weight: -5
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Hjælp
+  provider: help
+  label_display: '0'
+visibility: {  }

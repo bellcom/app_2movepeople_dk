@@ -1,0 +1,28 @@
+uuid: 9339598c-b7bf-4cbd-830b-33d593561b03
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_progression_target
+    - node.type.goal
+    - node.type.progression_target
+id: node.progression_target.field_progression_target
+field_name: field_progression_target
+entity_type: node
+bundle: progression_target
+label: Progression_target
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      goal: goal
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
