@@ -21,6 +21,8 @@ content:
     weight: 100
     settings: {  }
     third_party_settings: {  }
+  flag_bookmark:
+    weight: 10
   links:
     weight: 101
 hidden:

@@ -49,6 +49,8 @@ content:
     settings:
       link: true
     third_party_settings: {  }
+  flag_bookmark:
+    weight: 10
   links:
     weight: 100
 hidden:

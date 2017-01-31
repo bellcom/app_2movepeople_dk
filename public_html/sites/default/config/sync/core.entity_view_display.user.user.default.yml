@@ -39,6 +39,8 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+  flag_following:
+    weight: 10
   member_for:
     weight: 5
   user_picture:
