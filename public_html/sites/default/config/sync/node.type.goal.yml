@@ -1,0 +1,17 @@
+uuid: 1c29ad72-3f68-4515-acea-d1f8e6683729
+langcode: da
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Mål
+type: goal
+description: ''
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: false

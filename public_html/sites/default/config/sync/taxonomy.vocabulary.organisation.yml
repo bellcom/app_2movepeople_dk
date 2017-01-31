@@ -1,0 +1,9 @@
+uuid: 22f50df9-302d-4502-a97f-d6ac0a0711bf
+langcode: da
+status: true
+dependencies: {  }
+name: Organisation
+vid: organisation
+description: ''
+hierarchy: 1
+weight: 0

@@ -1,0 +1,66 @@
+uuid: 83ebd7c1-a045-4583-93ea-ae05d8260989
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.field.node.goal.body
+    - field.field.node.goal.field_due_date
+    - field.field.node.goal.field_person
+    - node.type.goal
+  module:
+    - datetime
+    - text
+    - user
+id: node.goal.default
+targetEntityType: node
+bundle: goal
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+  field_deadline:
+    weight: 103
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+  field_due_date:
+    weight: 106
+    label: inline
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+  field_person:
+    weight: 105
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  field_status:
+    weight: 104
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+  flag_status:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  langcode: true

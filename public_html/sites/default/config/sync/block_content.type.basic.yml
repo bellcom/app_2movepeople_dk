@@ -1,0 +1,10 @@
+uuid: d4daf0af-90af-45db-91f6-1db056ef74ad
+langcode: da
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: zglzjmYxi0G0ag9MZ02y0LSJOdpWRwJxyP_OvFojFyo
+id: basic
+label: 'Simpel blok'
+revision: 0
+description: 'En simpel blok indeholder en titel og en brødtekst.'

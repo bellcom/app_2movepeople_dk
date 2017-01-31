@@ -1,0 +1,23 @@
+uuid: 4af3abdf-402f-4721-9db9-248e4f3c33eb
+langcode: da
+status: true
+dependencies:
+  enforced:
+    module:
+      - entity_browser_example
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+_core:
+  default_config_hash: c5js_X1AanZ0f8g-zZiOCn1tPGHr5wxWqp_ec_X1wxE
+name: 'Entity browser test'
+type: entity_browser_test
+description: 'Testing entity browser.'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

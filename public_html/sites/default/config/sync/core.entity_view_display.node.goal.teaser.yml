@@ -1,0 +1,42 @@
+uuid: cedea2bd-89da-49d6-9bed-ec0c610a3799
+langcode: da
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.goal.body
+    - field.field.node.goal.field_due_date
+    - field.field.node.goal.field_person
+    - node.type.goal
+  module:
+    - datetime
+    - text
+    - user
+id: node.goal.teaser
+targetEntityType: node
+bundle: goal
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_trimmed
+    weight: 1
+    settings:
+      trim_length: 150
+    third_party_settings: {  }
+  field_due_date:
+    type: datetime_default
+    weight: 2
+    label: inline
+    settings:
+      timezone_override: ''
+      format_type: short
+    third_party_settings: {  }
+  flag_status:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_person: true
+  langcode: true
+  links: true
