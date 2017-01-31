@@ -14,3 +14,4 @@ tmp
 *.vi
 *.zip
 *.sql
+/nbproject/private/

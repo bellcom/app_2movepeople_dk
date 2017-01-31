@@ -1,5 +1,10 @@
 # A simple script using jquery ui accordion.
 bc_2movepeople_dashboard.accordion:
+  # Add css file.
+  css:
+    component:
+      css/bc_2movepeople_dashboard.css: {}
+  # Add js files.
   js:
     js/bc_2movepeople_dashboard_accordion.js: {}
   # Build up our dependencies for this page as a library. Our accordion script

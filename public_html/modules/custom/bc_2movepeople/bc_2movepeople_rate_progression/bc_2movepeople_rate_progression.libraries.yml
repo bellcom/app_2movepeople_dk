@@ -1,0 +1,4 @@
+rate-add:
+  version: 1.x 
+  dependencies:
+    - core/jquery

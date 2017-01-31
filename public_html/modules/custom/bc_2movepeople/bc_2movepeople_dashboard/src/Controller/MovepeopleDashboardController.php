@@ -169,14 +169,14 @@ class MovepeopleDashboardController extends ControllerBase {
     	<div id="accordion">';
 	foreach ($nodes as $progrdata) {
 		$mtid = $progrdata->get('field_progression_target')->getValue();
-		$progression .= '<h3><a href="#">' . $progrdata->get('title')->value . '</a></h3>
+		$progression .= '<h3><a href="#">' . $progrdata->get('title')->value . '</a> <a class="btn btn-default btn-sm btn-progress use-ajax"  data-dialog-type = "modal" href="/rates/' . $progrdata->id() . '/add">Rate progression</a></h3>
 		      <div>
 		';
 		foreach ($mtid as $tid) {
 			$gettid = $tid['target_id'];
 			$nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($gettid);
 			$nodetitle = $nodedata->get('title')->value;
-        		$progression .= '<p>' . $nodetitle . '</p>';
+        		$progression .= '<p>' . $nodetitle . ' ' . bc_2movepeople_rate_progression_get_rates($progrdata->id() ,$gettid) . '</p>';
         	}
 		$progression .= '</div>';
     	}
@@ -184,7 +184,7 @@ class MovepeopleDashboardController extends ControllerBase {
     	$pgrogression .= '</div>
     		</div><!-- End demo -->';
     	$build['content'] = array(
-      	'#markup' => $progression, 
+      	'#markup' => $progression,
     	);
 
     return $build;
