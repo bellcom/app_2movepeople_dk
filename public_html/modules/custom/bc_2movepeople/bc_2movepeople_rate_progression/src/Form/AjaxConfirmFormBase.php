@@ -7,6 +7,7 @@ use Drupal\node\NodeInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
+use Drupal\Core\Ajax\InvokeCommand;
 use Prophecy\Exception\Doubler\MethodNotFoundException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 
@@ -66,7 +67,7 @@ abstract class AjaxConfirmFormBase extends ConfirmFormBase {
    * @return AjaxResponse
    */
   public function ajaxCloseForm(array &$form, FormStateInterface $form_state) {
-    $response = new AjaxResponse();
+    $response = new AjaxResponse();    
     $response->addCommand(new CloseModalDialogCommand());
 
     return $response;

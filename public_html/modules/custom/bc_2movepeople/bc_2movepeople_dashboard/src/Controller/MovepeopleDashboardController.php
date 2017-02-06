@@ -2,7 +2,6 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Controller;
 
-
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 use Drupal\file\Entity\File;
@@ -20,19 +19,17 @@ use Drupal\bc_2movepeople_dashboard\bc_2movepeople_dashboardStorage;
  */
 class MovepeopleDashboardController extends ControllerBase {
 
+  protected $database;
 
-        protected $database;
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('database')
+    );
+  }
 
-        public static function create(ContainerInterface $container) {
-                return new static(
-                        $container->get('database')
-                );
-        }
-
-
-        public function __construct(Connection $database) {
-                $this->database = $database;
-        }
+  public function __construct(Connection $database) {
+    $this->database = $database;
+  }
 
   /**
    * Example info page.
@@ -94,7 +91,6 @@ class MovepeopleDashboardController extends ControllerBase {
     return $content;
   }
 
-
   public function getJsWeightImplementation() {
     // Create an array of items with random-ish weight values.
     $weights = array(
@@ -141,7 +137,7 @@ class MovepeopleDashboardController extends ControllerBase {
     $tab1 = $this->entryList();
     #error_log('Tab ' . print_r($tab1,true));
     $tab1 = t('hest');
-      # '#theme' => 'bc_2movepeople_dashboard_accordion',
+    # '#theme' => 'bc_2movepeople_dashboard_accordion',
     $build['myelement'] = array(
       '#title' => $title,
       '#tab1' => $tab1,
@@ -152,42 +148,99 @@ class MovepeopleDashboardController extends ControllerBase {
     // $build['myelement']['#attached']['library'][] = 'js_example/js_example.accordion';
 
     $build['myelement']['#attached']['library'][] = 'bc_2movepeople_dashboard/bc_2movepeople_dashboard.accordion';
+    $build['myelement']['#attached']['library'][] = 'bc_2movepeople_rate_progression/bc_2movepeople_rate_progression.charts';
     // Return the renderable array.
 
-        $rows = array();
+    $rows = array();
 
-        $query = $this->database->select('node', 'n')
-                 ->extend('\Drupal\Core\Database\Query\PagerSelectExtender')
-                 ->extend('\Drupal\Core\Database\Query\TableSortExtender');
+    $query = $this->database->select('node', 'n')
+      ->extend('\Drupal\Core\Database\Query\PagerSelectExtender')
+      ->extend('\Drupal\Core\Database\Query\TableSortExtender');
 
-        $query = \Drupal::entityQuery('node');
-        $query->condition('status', 1);
-        $query->condition('type', 'progression_target');
-        $entity_ids = $query->execute();
-        $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
-    	$progression = '<div class="demo"><h2>' . $title . '</h2>
+    $query = \Drupal::entityQuery('node');
+    $query->condition('status', 1);
+    $query->condition('type', 'progression_target');
+    $entity_ids = $query->execute();
+    $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
+    $progression = '<div class="demo"><h2>' . $title . '</h2>
     	<div id="accordion">';
-	foreach ($nodes as $progrdata) {
-		$mtid = $progrdata->get('field_progression_target')->getValue();
-		$progression .= '<h3><a href="#">' . $progrdata->get('title')->value . '</a> <a class="btn btn-default btn-sm btn-progress use-ajax"  data-dialog-type = "modal" href="/rates/' . $progrdata->id() . '/add">Rate progression</a></h3>
-		      <div>
+    foreach ($nodes as $progrdata) {
+      $mtid = $progrdata->get('field_progression_target')->getValue();
+      $progression .= '<h3 data-progression-id="' . $progrdata->id() . '"><a href="#">' . $progrdata->get('title')->value . '</a> <a class="btn btn-default btn-sm btn-progress use-ajax"  data-dialog-type = "modal" href="/rates/' . $progrdata->id() . '/add">Rate progression</a></h3>
+		      <div><div class="div-goals">
 		';
-		foreach ($mtid as $tid) {
-			$gettid = $tid['target_id'];
-			$nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($gettid);
-			$nodetitle = $nodedata->get('title')->value;
-        		$progression .= '<p>' . $nodetitle . ' ' . bc_2movepeople_rate_progression_get_rates($progrdata->id() ,$gettid) . '</p>';
-        	}
-		$progression .= '</div>';
-    	}
 
-    	$pgrogression .= '</div>
+      foreach ($mtid as $tid) {
+        $gettid = $tid['target_id'];
+        $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($gettid);
+        $nodetitle = $nodedata->get('title')->value;
+        $progression .= '<p>' . $nodetitle . ' ' . bc_2movepeople_rate_progression_get_rates($progrdata->id(), $gettid) . '</p>';
+      }
+      $progression .= '</div><div class = "div-chart" id="div_chart_' . $progrdata->id() . '"></div></div>';
+    }
+
+    $pgrogression .= '</div>
     		</div><!-- End demo -->';
-    	$build['content'] = array(
-      	'#markup' => $progression,
-    	);
+    $build['content'] = array(
+      '#markup' => $progression,
+    );
 
     return $build;
+  }
+
+  public function createGraph() {
+    $data = $this::getData();
+    $data['usa']['label'] = $this->t('USA');
+    $data['russia']['label'] = $this->t('Russia');
+    $data['uk']['label'] = $this->t('UK');
+    $data['germany']['label'] = $this->t('Germany');
+    $data['denmark']['label'] = $this->t('Demmark');
+    $data['sweden']['label'] = $this->t('Sweden');
+    $data['norway']['label'] = $this->t('Norway');
+    $options = [
+      'yaxis' => ['min' => 0],
+      'xaxis' => ['tickDecimals' => 0],
+    ];
+    $text = [];
+    $array = [':one' => 'http://www.sipri.org/'];
+    $text[] = $this->t('This example shows military budgets for various countries in constant (2005) million US dollars (source: <a href=":one">SIPRI</a>).', $array);
+    $text[] = $this->t("Since all data is available client-side, it's pretty easy to make the plot interactive. Try turning countries on and off with the checkboxes next to the plot.");
+    $output['flot'] = [
+      '#type' => 'flot',
+      '#theme' => 'flot_my_template',
+      '#options' => $options,
+      '#data' => $data,
+      '#text' => $text,
+    ];
+
+    return render($output);
+  }
+
+  /**
+   * Fetch the data from the raw text file.
+   */
+  private function getData() {
+    $file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'flot_examples') . '/src/Controller/MilitaryData.txt';
+    $file = fopen($file_path, "r") or die("Unable to open file: $file_path");
+    $countries = [
+      'usa', 'russia', 'uk', 'germany',
+      'denmark', 'sweden', 'norway',
+    ];
+    $data = [];
+    while (!feof($file)) {
+      $line = fgets($file);
+      $values = explode(', ', $line);
+      if (count($values) > 1) {
+        $year = $values[0];
+        foreach ($countries as $key => $country) {
+          if ($values[$key + 1] != "") {
+            $data[$country]['data'][] = [$year, $values[$key + 1]];
+          }
+        }
+      }
+    }
+    fclose($file);
+    return $data;
   }
 
 }

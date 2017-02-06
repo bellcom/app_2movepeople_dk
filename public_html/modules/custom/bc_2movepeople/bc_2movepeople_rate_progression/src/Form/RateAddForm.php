@@ -125,6 +125,8 @@ class RateAddForm extends FormBase {
       $rates = bc_2movepeople_rate_progression_get_rates($this->node->id(), $tid['target_id']);
       $response->addCommand(new \Drupal\Core\Ajax\ReplaceCommand('#progress_rates_' . $this->node->id() . '_' . $tid['target_id'], $rates));
     }
+    //$('#accordion').activate('activate', elementSelector);
+    $response->addCommand(new \Drupal\Core\Ajax\InvokeCommand(NULL, 'graphReload', array('#div_chart_' . $this->node->id())));
     $response->addCommand(new CloseModalDialogCommand());
     return $response;
   }

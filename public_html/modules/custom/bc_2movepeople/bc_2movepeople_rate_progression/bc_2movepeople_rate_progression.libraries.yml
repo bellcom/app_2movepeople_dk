@@ -1,4 +1,6 @@
-rate-add:
-  version: 1.x 
-  dependencies:
-    - core/jquery
+# Google charts library.
+bc_2movepeople_rate_progression.charts:
+  js:
+    https://www.gstatic.com/charts/loader.js: {type: external}
+    https://www.google.com/jsapi: {type: external}
+    js/bc_2movepeople_rate_progression_charts.js: {}

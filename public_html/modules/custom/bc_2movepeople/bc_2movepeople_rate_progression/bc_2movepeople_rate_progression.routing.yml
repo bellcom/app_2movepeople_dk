@@ -1,4 +1,4 @@
-bc_2movepeople_rate_progerssion.rates_add:
+bc_2movepeople_rate_progression.rates_add:
   path: '/rates/{progression_target_id}/add'
   options:
     parameters:
@@ -11,3 +11,12 @@ bc_2movepeople_rate_progerssion.rates_add:
   requirements:
     _permission: 'access content'
     progression_target_id: \d+
+    
+bc_2movepeople_rate_progression.rates.get:
+  path: '/rates/{progression_target_id}/get'
+  defaults:
+    _controller: '\Drupal\bc_2movepeople_rate_progression\Controller\RateController::rateGet'
+    _title: ''
+  requirements:
+    _permission: 'access content'
+    _method: 'GET'
