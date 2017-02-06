@@ -55,7 +55,9 @@
            title:  data.chart_title ,
           //},
           bars: 'vertical',
-          vAxis: {format: '#'},          
+          vAxis: { minValue: 0,
+            ticks: [0, 1, 2, 3, 4, 5]
+          },          
           height: 350,
           legend: {position: "bottom"}
         };
