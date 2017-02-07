@@ -34,7 +34,7 @@ class RateController extends ControllerBase {
     foreach ($mtid as $key => $tid) {
       $goal_id = $tid['target_id'];
       $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($goal_id);
-      $data['series'][$key] = $nodedata->get('title')->value;
+      //$data['series'][$key] = $nodedata->get('title')->value;
       $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
       $query->fields('rates', array('rate'))
         ->condition('uid', \Drupal::currentUser()->id(), '=')
@@ -43,6 +43,8 @@ class RateController extends ControllerBase {
         ->orderBy('created', 'DESC')
         ->range(0, 5);
       $result = $query->execute()->fetchAll();
+      if ($result) 
+        $data['series'][$key] = $nodedata->get('title')->value;
       foreach ($result as $row) {
         $rates[$key][] = (int) $row->rate;
       }

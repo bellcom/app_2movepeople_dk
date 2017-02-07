@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -7,21 +7,21 @@
     Drupal.behaviors.dashboardCharts = {
         attach: function(context, settings) {
             google.charts.load('current', {packages:['corechart','bar']});
-         
-          
-         $("#accordion").accordion({ 
-           activate: function(event, ui) {        
-             loadGraph(ui.newHeader, ui.newPanel);          
+
+
+         $("#accordion").accordion({
+           activate: function(event, ui) {
+             loadGraph(ui.newHeader, ui.newPanel);
             },
-            create: function(event, ui) {        
+            create: function(event, ui) {
              loadGraph(ui.header, ui.panel);
             }
-          });        
-          
-          
+          });
+
+
       }
     };
-   
+
      function loadGraph(header, panel, reload=false) {
         if (panel.find('.div-chart div').length > 0 && reload==false) return;
           var progression_id = header.attr('data-progression-id');
@@ -40,14 +40,14 @@
           function drawChart(element, data) {
             var arr = [
           [''].concat(data.series),
-          
+
         ];
-        
+
        data.values.forEach(function(item){
           arr.push(item);
          // console.log(item);
         });
-        
+
             var cdata = google.visualization.arrayToDataTable(arr);
 
         var options = {
@@ -57,12 +57,14 @@
           bars: 'vertical',
           vAxis: { minValue: 0,
             ticks: [0, 1, 2, 3, 4, 5]
-          },          
+          },
           height: 350,
-          legend: {position: "bottom"}
+          legend: {position: "bottom"},
+          pointSize: 10,
+
         };
 
-        var chart = new google.visualization.ColumnChart(document.getElementById(element));
+        var chart = new google.visualization.LineChart(document.getElementById(element));
         chart.draw(cdata, options);
         $('#' + element).parent('.ui-accordion-content').height($('#' + element).parent('.ui-accordion-content').children('.div-goals').height() + $('#' + element).height());
         }
@@ -73,9 +75,8 @@
            console.log(header);
            console.log(element);
            loadGraph(header, panel, true);
-           
+
     }
 })(jQuery);
 
 
-          
