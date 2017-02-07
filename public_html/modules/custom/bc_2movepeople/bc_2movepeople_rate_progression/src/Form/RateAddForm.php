@@ -122,7 +122,9 @@ class RateAddForm extends FormBase {
     $response = new AjaxResponse();
     $mtid = $this->node->get('field_progression_target')->getValue();
     foreach ($mtid as $tid) {
-      $rates = bc_2movepeople_rate_progression_get_rates($this->node->id(), $tid['target_id']);
+      $rates = implode(' ' , bc_2movepeople_rate_progression_get_rates($this->node->id(), $tid['target_id']));
+
+      $rates = '<span id="progress_rates_' . $progression_target_id . '_' . $goal_id . '">' . $rates . '</span>';
       $response->addCommand(new \Drupal\Core\Ajax\ReplaceCommand('#progress_rates_' . $this->node->id() . '_' . $tid['target_id'], $rates));
     }
     //$('#accordion').activate('activate', elementSelector);

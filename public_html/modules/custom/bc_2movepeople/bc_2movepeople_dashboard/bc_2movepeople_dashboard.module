@@ -23,6 +23,12 @@ function bc_2movepeople_dashboard_theme() {
       'template' => 'accordion',
       'variables' => array('title' => NULL),
     ),
+    'bc_2movepeople_dashboard' => array(
+      'template' => 'bc-2movepeople-dashboard',
+      'variables' => array('title' => NULL,
+        'subtitle' => NULL,
+        'progression_targets' => array()),
+    ),
   );
 }
 

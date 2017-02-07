@@ -1,0 +1,34 @@
+{#
+
+/**
+ * @file
+ * Template file for js_example module.
+ */
+#}
+{{ attach_library('bc_2movepeople_dashboard/bc_2movepeople_dashboard.accordion') }}
+{{ attach_library('bc_2movepeople_rate_progression/bc_2movepeople_rate_progression.charts') }}
+<div class="demo">
+  <h2>{{ subtitle  }}</h2>
+  <div id="accordion">
+    {% for progression_target in progression_targets %}
+      <h3 data-progression-id="{{ progression_target.id }}">
+        <a href="#">{{ progression_target.title }}</a>
+        <a class="btn btn-default btn-sm btn-progress use-ajax"  data-dialog-type = "modal" href="/rates/{{ progression_target.id }}/add">Rate progression</a>
+      </h3>
+      <div>
+        <div class="div-goals">
+        {% for goal in progression_target.goals %}
+          <p> {{ goal.title }}
+            <span id="progress_rates_{{ progression_target.id }}_{{ goal.id }}">
+            {% for rate in goal.rates %}
+               {{ rate }}
+            {% endfor %}
+            </span>
+          </p>
+        {% endfor %}
+        </div>
+        <div class = "div-chart" id="div_chart_{{ progression_target.id }}"></div>
+      </div>
+    {% endfor %}
+   </div>
+  </div><!-- End demo -->
