@@ -17,6 +17,15 @@
           loadGraph(ui.header, ui.panel);
         }
       });
+      $("#dialog-message").dialog({
+                modal: true,
+                autoOpen: false,
+                buttons: {
+                  Ok: function () {
+                    $(this).dialog("close");
+                  }
+                }
+              });
 
       $(".btn-update").click(function () {
         var progression_id = $(this).attr('data-progression-id');
@@ -33,14 +42,7 @@
                 drawChart("div_chart_" + progression_id, data)
               });
             } else {
-              $("#dialog-message").dialog({
-                modal: true,
-                buttons: {
-                  Ok: function () {
-                    $(this).dialog("close");
-                  }
-                }
-              });
+              $("#dialog-message").dialog( "open" );
             }
           }
         });
@@ -58,9 +60,13 @@
       dataType: 'json',
       success: function (data) {
         if (data.values.length) {
-          google.charts.setOnLoadCallback(function () {
+          panel.find('.div-form').show();
+          google.charts.setOnLoadCallback(function () {            
             drawChart(panel.find('.div-chart').attr('id'), data)
           });
+        }
+        else {
+          panel.find('.div-form').hide();
         }
       }
     });
