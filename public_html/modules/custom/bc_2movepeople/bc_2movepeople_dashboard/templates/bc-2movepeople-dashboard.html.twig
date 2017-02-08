@@ -7,6 +7,7 @@
 #}
 {{ attach_library('bc_2movepeople_dashboard/bc_2movepeople_dashboard.accordion') }}
 {{ attach_library('bc_2movepeople_rate_progression/bc_2movepeople_rate_progression.charts') }}
+{{ attach_library('drupal.date') }}
 <div class="demo">
   <h2>{{ subtitle  }}</h2>
   <div id="accordion">
@@ -27,7 +28,19 @@
           </p>
         {% endfor %}
         </div>
-        <div class = "div-chart" id="div_chart_{{ progression_target.id }}"></div>
+        <div class = "div-chart" id="div_chart_{{ progression_target.id }}">         
+        </div>
+        <div class="div-form row form-inline" id="div_form_{{ progression_target.id }}"> 
+           <div class='col-sm-4'>             
+            <input type='input' class="datepicker" id ="date_from_{{ progression_target.id }}" placeholder="From date"/>
+          </div>
+           <div class='col-sm-4'>
+            <input type='input' class="datepicker date-from" id ="date_to_{{ progression_target.id }}" placeholder="From date" />
+          </div>
+           <div class='col-sm-4'>
+            <button type="button" class="btn btn-default btn-update" data-progression-id="{{ progression_target.id }}" id="update_graph_{{ progression_target.id }}">Update graph</button>
+          </div>
+        </div>       
       </div>
     {% endfor %}
    </div>

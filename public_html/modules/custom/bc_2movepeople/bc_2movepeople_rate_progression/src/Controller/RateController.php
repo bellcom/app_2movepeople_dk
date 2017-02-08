@@ -26,24 +26,32 @@ class RateController extends ControllerBase {
       'series' => array(),
       'values' => array(),
     );
+
     $progression_target_data = \Drupal::entityTypeManager()->getStorage('node')->load($progression_target_id);
     $mtid = $progression_target_data->get('field_progression_target')->getValue();
     $data['chart_title'] = $progression_target_data->get('title')->value;
     $rates = array();
-
+    isset($_GET['to']) ? $date_to = strtotime($_GET['to']) : null;
+    isset($_GET['from']) ? $date_from = strtotime($_GET['from']) : null;
     foreach ($mtid as $key => $tid) {
       $goal_id = $tid['target_id'];
       $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($goal_id);
-      //$data['series'][$key] = $nodedata->get('title')->value;
       $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
       $query->fields('rates', array('rate'))
         ->condition('uid', \Drupal::currentUser()->id(), '=')
         ->condition('goal_id', $goal_id, '=')
-        ->condition('progression_target_id', $progression_target_id, '=')
-        ->orderBy('created', 'DESC')
-        ->range(0, 5);
+        ->condition('progression_target_id', $progression_target_id, '=');
+     if (isset($date_to))
+       $query->condition('created', $date_to, '<=');
+     if (isset($date_from))
+       $query->condition('created', $date_from, '>=');
+
+      $query->orderBy('created', 'DESC');
+      if (!isset($date_to) && !isset($date_from))
+        $query->range(0, 5);
+
       $result = $query->execute()->fetchAll();
-      if ($result) 
+      if ($result)
         $data['series'][$key] = $nodedata->get('title')->value;
       foreach ($result as $row) {
         $rates[$key][] = (int) $row->rate;
@@ -56,7 +64,6 @@ class RateController extends ControllerBase {
         $val = array($val);
       $data['values'][$key] = array_merge(array(" "), $val);
     }
-
     return new JsonResponse($data);
   }
 
