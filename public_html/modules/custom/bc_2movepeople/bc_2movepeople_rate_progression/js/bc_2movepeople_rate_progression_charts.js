@@ -32,6 +32,15 @@
               google.charts.setOnLoadCallback(function () {
                 drawChart("div_chart_" + progression_id, data)
               });
+            } else {
+              $("#dialog-message").dialog({
+                modal: true,
+                buttons: {
+                  Ok: function () {
+                    $(this).dialog("close");
+                  }
+                }
+              });
             }
           }
         });

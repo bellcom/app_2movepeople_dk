@@ -12,6 +12,7 @@ bc_2movepeople_dashboard.accordion:
   dependencies:
     - core/jquery.ui.accordion
     - core/jquery.ui.datepicker
+    - core/jquery.ui.dialog
 
 # Show how weights work.
 bc_2movepeople_dashboard.weights:

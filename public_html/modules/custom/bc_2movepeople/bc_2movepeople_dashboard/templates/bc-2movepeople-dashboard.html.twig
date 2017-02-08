@@ -18,30 +18,35 @@
       </h3>
       <div>
         <div class="div-goals">
-        {% for goal in progression_target.goals %}
-          <p> {{ goal.title }}
-            <span id="progress_rates_{{ progression_target.id }}_{{ goal.id }}">
-            {% for rate in goal.rates %}
-               {{ rate }}
-            {% endfor %}
-            </span>
-          </p>
-        {% endfor %}
+          {% for goal in progression_target.goals %}
+            <p> {{ goal.title }}
+              <span id="progress_rates_{{ progression_target.id }}_{{ goal.id }}">
+                {% for rate in goal.rates %}
+                  {{ rate }}
+                {% endfor %}
+              </span>
+            </p>
+          {% endfor %}
         </div>
-        <div class = "div-chart" id="div_chart_{{ progression_target.id }}">         
+        <div class = "div-chart" id="div_chart_{{ progression_target.id }}">
         </div>
-        <div class="div-form row form-inline" id="div_form_{{ progression_target.id }}"> 
-           <div class='col-sm-4'>             
+        <div class="div-form row form-inline" id="div_form_{{ progression_target.id }}">
+          <div class='col-sm-4'>
             <input type='input' class="datepicker" id ="date_from_{{ progression_target.id }}" placeholder="From date"/>
           </div>
-           <div class='col-sm-4'>
+          <div class='col-sm-4'>
             <input type='input' class="datepicker date-from" id ="date_to_{{ progression_target.id }}" placeholder="From date" />
           </div>
-           <div class='col-sm-4'>
+          <div class='col-sm-4'>
             <button type="button" class="btn btn-default btn-update" data-progression-id="{{ progression_target.id }}" id="update_graph_{{ progression_target.id }}">Update graph</button>
           </div>
-        </div>       
+        </div>
       </div>
     {% endfor %}
-   </div>
-  </div><!-- End demo -->
+  </div>
+  <div id="dialog-message" title="Notification">
+    <p>
+      Not found rates in selected period
+    </p>
+  </div>
+</div><!-- End demo -->
