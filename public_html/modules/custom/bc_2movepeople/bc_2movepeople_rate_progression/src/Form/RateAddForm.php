@@ -16,6 +16,7 @@ use Drupal\node\NodeInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\bc_2movepeople_rate_progression\Progression\Target;
 
 /**
  * Implements the ModalForm form controller.
@@ -31,7 +32,6 @@ use Drupal\Core\Ajax\ReplaceCommand;
 class RateAddForm extends FormBase {
 
   protected $node;
-
   /**
    * {@inheritdoc}
    */
@@ -41,12 +41,15 @@ class RateAddForm extends FormBase {
 
     $form['#prefix'] = '<div id="bc_2movepeople-rate-progression-add-form">';
     $form['#suffix'] = '</div>';
-    foreach ($mtid as $tid) {
-      $gettid = $tid['target_id'];
-      $goaldata = \Drupal::entityTypeManager()->getStorage('node')->load($gettid);
+    
+    $progression_target = new Target($this->node->id());
+    $goals =  $progression_target->getAllGoals();
+    
+    foreach ($goals as $id){
+      $goaldata = \Drupal::entityTypeManager()->getStorage('node')->load($id);
       if (empty($goaldata->get('field_due_date')->value)) {
         $goaltitle = $goaldata->get('title')->value;
-        $form['rate'][$gettid] = [
+        $form['rate'][$id] = [
           '#type' => 'select',
           '#title' => $goaltitle,
           '#required' => FALSE,
@@ -58,9 +61,11 @@ class RateAddForm extends FormBase {
             4 => '4',
             5 => '5'
           ]
-        ];
-      }
-    }
+        ];     
+       
+        }
+      }     
+    
     // Group submit handlers in an actions element with a key of "actions" so
     // that it gets styled correctly, and so that other modules may add actions
     // to the form.
@@ -120,17 +125,28 @@ class RateAddForm extends FormBase {
    */
   public function ajaxSubmitForm(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
-    $mtid = $this->node->get('field_progression_target')->getValue();
-    foreach ($mtid as $tid) {
-      $rates = implode(' ' , bc_2movepeople_rate_progression_get_rates($this->node->id(), $tid['target_id']));
-
-      $rates = '<span id="progress_rates_' . $progression_target_id . '_' . $goal_id . '">' . $rates . '</span>';
-      $response->addCommand(new \Drupal\Core\Ajax\ReplaceCommand('#progress_rates_' . $this->node->id() . '_' . $tid['target_id'], $rates));
+    $progression_target = new Target($this->node->id());
+    $goals =  $progression_target->getAllGoals();
+    foreach ($goals as $id) {
+      $rates = implode(' ' , bc_2movepeople_rate_progression_get_rates($this->node->id(), $id));
+      $rates = '<span id="progress_rates_' . $this->node->id(). '_' . $id . '">' . $rates . '</span>';   
+      $response->addCommand(new \Drupal\Core\Ajax\ReplaceCommand('#progress_rates_' . $this->node->id() . '_' . $id, $rates));
     }
     //$('#accordion').activate('activate', elementSelector);
     $response->addCommand(new \Drupal\Core\Ajax\InvokeCommand(NULL, 'graphReload', array('#div_chart_' . $this->node->id())));
     $response->addCommand(new CloseModalDialogCommand());
     return $response;
   }
-
+  
+ private function getGoals($nodeid){   
+    $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($nodeid);      
+      $subnodes = $nodedata->get('field_subgoal')->getValue();
+      $this->goals[] = $nodeid;
+      //$subgoals= array();
+      foreach ($subnodes as $tid) {
+        $this->goals[] =  $tid['target_id'];
+         $this->getGoals($tid['target_id']);
+       }  
+       
+  }       
 }

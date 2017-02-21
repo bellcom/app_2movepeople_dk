@@ -11,6 +11,7 @@ namespace Drupal\bc_2movepeople_rate_progression\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Drupal\bc_2movepeople_rate_progression\Progression\Target;
 
 class RateController extends ControllerBase {
 
@@ -20,21 +21,26 @@ class RateController extends ControllerBase {
    *
    * @return none.
    */
+ 
+  
   public function rateGet($progression_target_id) {
     $data = array(
       'chart_title' => '',
       'series' => array(),
       'values' => array(),
     );
+    
+    $progression_target = new Target($progression_target_id);    
+    $progression_target_data = $progression_target->getProgressionTarget();
+    $goals =  $progression_target->getAllGoals();
 
-    $progression_target_data = \Drupal::entityTypeManager()->getStorage('node')->load($progression_target_id);
-    $mtid = $progression_target_data->get('field_progression_target')->getValue();
     $data['chart_title'] = $progression_target_data->get('title')->value;
     $rates = array();
     isset($_GET['to']) ? $date_to = strtotime($_GET['to']) : null;
     isset($_GET['from']) ? $date_from = strtotime($_GET['from']) : null;
-    foreach ($mtid as $key => $tid) {
-      $goal_id = $tid['target_id'];
+    
+    foreach ($goals as $key => $id) {
+      $goal_id = $id;
       $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($goal_id);
       $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
       $query->fields('rates', array('rate'))
@@ -66,5 +72,4 @@ class RateController extends ControllerBase {
     }
     return new JsonResponse($data);
   }
-
 }

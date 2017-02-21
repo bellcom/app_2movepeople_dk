@@ -1,0 +1,27 @@
+uuid: d08fa643-c56b-4819-b832-030dcd2fe3c9
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_subgoal
+    - node.type.goal
+id: node.goal.field_subgoal
+field_name: field_subgoal
+entity_type: node
+bundle: goal
+label: Subgoals
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      goal: goal
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

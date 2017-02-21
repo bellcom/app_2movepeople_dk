@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.goal.body
     - field.field.node.goal.field_due_date
     - field.field.node.goal.field_person
+    - field.field.node.goal.field_subgoal
     - node.type.goal
   module:
     - datetime
@@ -50,6 +51,14 @@ content:
       display_label: false
     third_party_settings: {  }
     type: boolean_checkbox
+  field_subgoal:
+    weight: 37
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
   flag:
     weight: 10
     settings: {  }

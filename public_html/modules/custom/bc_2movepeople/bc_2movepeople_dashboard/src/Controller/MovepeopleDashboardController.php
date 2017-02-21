@@ -152,16 +152,14 @@ class MovepeopleDashboardController extends ControllerBase {
       $progression_targets[$progrdata->id()]['id'] = $progrdata->id();
       $progression_targets[$progrdata->id()]['goals'] = array();
       foreach ($mtid as $tid) {
-        $gettid = $tid['target_id'];
-        $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($gettid);
-        $nodetitle = $nodedata->get('title')->value;
-        $progression_targets[$progrdata->id()]['goals'][$gettid]['id'] = $gettid;
-        $progression_targets[$progrdata->id()]['goals'][$gettid]['title'] = $nodetitle ;
-        $progression_targets[$progrdata->id()]['goals'][$gettid]['rates'] = bc_2movepeople_rate_progression_get_rates($progrdata->id(), $gettid);
+        $gettid = $tid['target_id'];     
+        $progression_targets[$progrdata->id()]['goals'][$gettid] = $this->getGoal($gettid, $progrdata);
+        //dpm($progrdata->id()]['goals'][$gettid]);
+        //$progression_targets[$progrdata->id()]['goals'][$gettid]['title'] = $nodetitle ;
+       // $progression_targets[$progrdata->id()]['goals'][$gettid]['rates'] = bc_2movepeople_rate_progression_get_rates($progrdata->id(), $gettid);
         //$progression .= '<p data-toggle="collapse" href="#collapse' . $tid['target_id'] .'">' . $nodetitle . ' ' . bc_2movepeople_rate_progression_get_rates($progrdata->id(), $gettid) . '<p id="collapse' . $tid['target_id'] .'">&nbsp;&nbsp;&nbsp;subtask </p></p>';
       }
     }
-
     $build = array (
       '#theme' => 'bc_2movepeople_dashboard',
        "#title" => 'Dashboard',
@@ -170,4 +168,19 @@ class MovepeopleDashboardController extends ControllerBase {
     );
     return $build;
   }
+  private function getGoal($nodeid, $progression_target){
+    $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($nodeid);
+      $nodetitle = $nodedata->get('title')->value;
+      $subnodes = $nodedata->get('field_subgoal')->getValue();
+      $subgoals= array();
+      foreach ($subnodes as $tid) {
+        $goal_id = $tid['target_id'];
+        $subgoals[$goal_id]=$this->getGoal($goal_id, $progression_target);
+       }  
+        return array ('id' =>$nodeid, 
+          'title' => $nodetitle,
+          'rates' => bc_2movepeople_rate_progression_get_rates($progression_target->id(), $nodeid),
+          'subgoals' => $subgoals,
+          );
+  }       
 }

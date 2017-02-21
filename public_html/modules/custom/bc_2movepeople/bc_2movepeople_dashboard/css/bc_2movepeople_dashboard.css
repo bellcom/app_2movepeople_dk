@@ -4,4 +4,23 @@ a.btn-progress {
   right: 5px;
   z-index: 999;
 }
-
+a.has-child,
+a.has-child:hover{
+  text-decoration: none;
+}
+a.has-child::before{
+  content: '\25ba';
+  margin-left: -1.5em;
+  font-size: 10px;
+  vertical-align:middle;
+}
+a.has-child[aria-expanded="false"]::before {
+    content: '\25ba';
+}
+a.has-child[aria-expanded="true"]::before {
+    content: '\25bc';
+}
+  .subgoals {
+    padding-left: 10px;
+    margin: 10px 0;
+  }
