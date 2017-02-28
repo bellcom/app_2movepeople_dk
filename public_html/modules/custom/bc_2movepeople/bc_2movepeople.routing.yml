@@ -12,8 +12,7 @@ bc_2movepeople_dashboard:
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getJsAccordionImplementation'
     _title: 'Dashboard'
   requirements:
-    _permission: 'access content'
-    _role: 'authenticated'
+    _user_is_logged_in: 'TRUE'
 
 bc_2movepeople.admin_settings_form:
   path: '/admin/config/bc_2movepeople/account'

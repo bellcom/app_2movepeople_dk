@@ -3,6 +3,7 @@ langcode: da
 status: true
 dependencies:
   config:
+    - field.field.user.user.field_connected_users
     - field.field.user.user.field_organisation
     - field.field.user.user.field_user_firstname
     - field.field.user.user.field_user_surname
@@ -24,6 +25,14 @@ content:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+  field_connected_users:
+    weight: 8
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
   field_organisation:
     weight: 7
     settings:

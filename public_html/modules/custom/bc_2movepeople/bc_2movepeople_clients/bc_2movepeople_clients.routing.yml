@@ -1,0 +1,7 @@
+bc_2movepeople_clients.info:
+  path: '/2movepeople/clients'
+  defaults:
+    _title: 'Clients'
+    _controller: '\Drupal\bc_2movepeople_clients\Controller\MovepeopleClientsController::getClientsImplementation'
+  requirements:
+    _user_is_logged_in: 'TRUE'

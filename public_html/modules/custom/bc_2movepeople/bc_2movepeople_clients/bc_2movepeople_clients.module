@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Examples showing how to use some of the new JavaScript features in Drupal 8.
+ */
+
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_theme().
+ */
+function bc_2movepeople_clients_theme() {
+  return array(
+    'bc_2movepeople_clients_list' => array(
+      'template' => 'bc-2movepeople-clients-list',
+      'variables' => array('title' => NULL,
+      'users' => array()),
+    ),    
+  );
+}
+

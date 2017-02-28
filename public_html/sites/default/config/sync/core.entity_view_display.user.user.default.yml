@@ -3,6 +3,7 @@ langcode: da
 status: true
 dependencies:
   config:
+    - field.field.user.user.field_connected_users
     - field.field.user.user.field_organisation
     - field.field.user.user.field_user_firstname
     - field.field.user.user.field_user_surname
@@ -18,6 +19,13 @@ targetEntityType: user
 bundle: user
 mode: default
 content:
+  field_connected_users:
+    weight: 11
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
   field_organisation:
     weight: 10
     label: above
