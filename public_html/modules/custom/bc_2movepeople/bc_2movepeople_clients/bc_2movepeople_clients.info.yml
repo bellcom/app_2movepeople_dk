@@ -1,8 +1,0 @@
-name: '2Movepeople Clients'
-description: '2Movepeople Clients'
-type: module
-package: '2Movepeople'
-core: 8.x
-dependencies:
-  - bc_2movepeople
-

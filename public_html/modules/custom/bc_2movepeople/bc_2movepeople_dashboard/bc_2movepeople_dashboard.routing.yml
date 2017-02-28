@@ -6,3 +6,10 @@ bc_2movepeople_dashboard.info:
   requirements:
     _permission: 'access content'
     _user_is_logged_in: 'TRUE'
+bc_2movepeople_dashboard_clients.info:
+  path: '/2movepeople/clients'
+  defaults:
+    _title: 'Clients'
+    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getClientsImplementation'
+  requirements:
+    _user_is_logged_in: 'TRUE'

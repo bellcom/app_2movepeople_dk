@@ -164,6 +164,26 @@ class MovepeopleDashboardController extends ControllerBase {
     );
     return $build;
   }
+  
+  public function getClientsImplementation() {
+   $current_user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+   $connected_users_ids = $current_user->get('field_connected_users')->getValue();
+   $connected_users = array();
+   foreach ($connected_users_ids as $key => $user_id) {     
+     $uid = $user_id['target_id'];
+     $user = \Drupal\user\Entity\User::load($uid);
+     $connected_users[$uid] = $user->field_user_firstname->value . ' ' . $user->field_user_surname->value;
+   }
+   
+    $build = array (
+      "#theme" => "bc_2movepeople_dashboard_clients",
+      "#title" => 'Clients',
+      "#users" => $connected_users
+    );
+  ;
+    return $build;
+  }
+  
   private function getGoal($nodeid, $progression_target){
     $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($nodeid);
       $nodetitle = $nodedata->get('title')->value;
