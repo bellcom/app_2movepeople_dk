@@ -5,3 +5,4 @@ bc_2movepeople_dashboard.info:
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getJsAccordionImplementation'
   requirements:
     _permission: 'access content'
+    _role: 'authenticated'

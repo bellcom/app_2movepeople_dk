@@ -24,3 +24,14 @@ a.has-child[aria-expanded="true"]::before {
     padding-left: 10px;
     margin: 10px 0;
   }
+span.task {
+  display: inline-block;
+  width: 16px;    
+  height: 16px;
+}
+ span.task.uncompleted{
+  background-image: url(../images/uncompleted-task-icon.png);
+}
+ span.task.completed{
+  background-image: url(../images/completed-task-icon.png);
+}

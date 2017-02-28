@@ -56,7 +56,7 @@
     var progression_id = header.attr('data-progression-id');
     $.ajax({
       type: 'GET',
-      url: 'rates/' + progression_id + '/get',
+      url: '/rates/' + progression_id + '/get',
       dataType: 'json',
       success: function (data) {
         if (data.values.length) {

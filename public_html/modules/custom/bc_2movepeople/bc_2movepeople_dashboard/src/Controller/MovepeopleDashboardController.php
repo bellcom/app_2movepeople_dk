@@ -154,10 +154,6 @@ class MovepeopleDashboardController extends ControllerBase {
       foreach ($mtid as $tid) {
         $gettid = $tid['target_id'];     
         $progression_targets[$progrdata->id()]['goals'][$gettid] = $this->getGoal($gettid, $progrdata);
-        //dpm($progrdata->id()]['goals'][$gettid]);
-        //$progression_targets[$progrdata->id()]['goals'][$gettid]['title'] = $nodetitle ;
-       // $progression_targets[$progrdata->id()]['goals'][$gettid]['rates'] = bc_2movepeople_rate_progression_get_rates($progrdata->id(), $gettid);
-        //$progression .= '<p data-toggle="collapse" href="#collapse' . $tid['target_id'] .'">' . $nodetitle . ' ' . bc_2movepeople_rate_progression_get_rates($progrdata->id(), $gettid) . '<p id="collapse' . $tid['target_id'] .'">&nbsp;&nbsp;&nbsp;subtask </p></p>';
       }
     }
     $build = array (
@@ -172,6 +168,9 @@ class MovepeopleDashboardController extends ControllerBase {
     $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($nodeid);
       $nodetitle = $nodedata->get('title')->value;
       $subnodes = $nodedata->get('field_subgoal')->getValue();
+      $date = $nodedata->get('field_due_date')->value;
+      $is_completed = $nodedata->get('field_task_complete')->value;
+      $type = (isset($date))? 'task' : 'goal' ;
       $subgoals= array();
       foreach ($subnodes as $tid) {
         $goal_id = $tid['target_id'];
@@ -179,6 +178,9 @@ class MovepeopleDashboardController extends ControllerBase {
        }  
         return array ('id' =>$nodeid, 
           'title' => $nodetitle,
+          'type' => $type,
+          'completed' => $is_completed,
+          'date' => $date,
           'rates' => bc_2movepeople_rate_progression_get_rates($progression_target->id(), $nodeid),
           'subgoals' => $subgoals,
           );

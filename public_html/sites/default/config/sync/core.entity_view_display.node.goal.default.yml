@@ -7,6 +7,7 @@ dependencies:
     - field.field.node.goal.field_due_date
     - field.field.node.goal.field_person
     - field.field.node.goal.field_subgoal
+    - field.field.node.goal.field_task_complete
     - node.type.goal
   module:
     - datetime
@@ -62,6 +63,15 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+  field_task_complete:
+    weight: 108
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
   flag_status:
     weight: 10
     settings: {  }
