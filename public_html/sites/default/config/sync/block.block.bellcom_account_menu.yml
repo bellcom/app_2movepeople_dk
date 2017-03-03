@@ -1,4 +1,4 @@
-uuid: 64fa1059-22b7-4df5-b737-f34031dec1b8
+uuid: a044cb1c-1cad-4ef2-82d5-048fcc8b5547
 langcode: da
 status: true
 dependencies:
@@ -7,20 +7,20 @@ dependencies:
   module:
     - system
   theme:
-    - bootstrap
+    - bellcom
 _core:
-  default_config_hash: R2K_qX0ZUMbUL6ie_-S9tZVjvqmlWKlscikgeRv9vhw
-id: bootstrap_account_menu
-theme: bootstrap
-region: navigation_collapsible
-weight: -7
+  default_config_hash: DweBpscQZdG0-fHkSpUzdYucrNH45G_KF7Z82V-oyQM
+id: bellcom_account_menu
+theme: bellcom
+region: secondary_menu
+weight: 0
 provider: null
 plugin: 'system_menu_block:account'
 settings:
   id: 'system_menu_block:account'
-  label: 'User account menu'
+  label: Brugerkontomenu
   provider: system
   label_display: '0'
   level: 1
-  depth: 2
+  depth: 1
 visibility: {  }

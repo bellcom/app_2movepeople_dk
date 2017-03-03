@@ -1,4 +1,4 @@
-uuid: 9a06761b-8932-4298-962c-29571abc4e93
+uuid: 7d38d2c6-d05b-47c3-95fc-84565be88988
 langcode: da
 status: true
 dependencies:
@@ -7,20 +7,20 @@ dependencies:
   module:
     - system
   theme:
-    - bootstrap
+    - site
 _core:
-  default_config_hash: GT_zYl7I9VAILH8OxMRe-VDvFadCDHxRcnmBc5xEmf0
-id: bootstrap_main_menu
-theme: bootstrap
+  default_config_hash: rx9IrdDv7Ldc4kpalZAxdhIPZfYIeOMh1N-qKoQZwHo
+id: site_main_menu
+theme: site
 region: navigation_collapsible
-weight: -7
+weight: -6
 provider: null
 plugin: 'system_menu_block:main'
 settings:
   id: 'system_menu_block:main'
-  label: 'Main navigation'
+  label: 'Primær navigation'
   provider: system
   label_display: '0'
   level: 1
-  depth: 2
+  depth: 1
 visibility: {  }

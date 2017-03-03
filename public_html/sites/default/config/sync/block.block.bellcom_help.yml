@@ -1,0 +1,22 @@
+uuid: 1717f56b-04ea-4836-8c51-ec592574b5bf
+langcode: da
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - bellcom
+_core:
+  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
+id: bellcom_help
+theme: bellcom
+region: content
+weight: -30
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Hjælp
+  provider: help
+  label_display: '0'
+visibility: {  }

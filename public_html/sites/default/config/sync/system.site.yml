@@ -3,7 +3,7 @@ name: 2movepeople.dk
 mail: mail@2movepeople.dk
 slogan: ''
 page:
-  403: ''
+  403: /user
   404: ''
   front: /2movepeople/clients
 admin_compact_mode: false

@@ -1,0 +1,33 @@
+schemas:
+  bootstrap: 8000
+  bellcom: 8000
+  site: 8000
+favicon:
+  mimetype: image/vnd.microsoft.icon
+  path: ''
+  url: 'http://app.2movepeople.dev/themes/contrib/bootstrap/favicon.ico'
+  use_default: 1
+features:
+  comment_user_picture: 1
+  comment_user_verification: 1
+  favicon: 1
+  node_user_picture: 1
+logo:
+  path: ''
+  url: ''
+  use_default: 1
+cdn_provider: ''
+region_wells:
+  sidebar_first: ''
+  sidebar_second: ''
+  content: ''
+  header: ''
+  primary_menu: ''
+  secondary_menu: ''
+  footer: ''
+  highlighted: ''
+  help: ''
+  breadcrumb: ''
+table_responsive: '-1'
+table: ''
+breadcrumb_home: 1

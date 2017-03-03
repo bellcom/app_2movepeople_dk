@@ -1,26 +1,26 @@
-uuid: 64fa1059-22b7-4df5-b737-f34031dec1b8
+uuid: 94ff68ab-db72-4427-b4b3-1920efeee83e
 langcode: da
-status: true
+status: false
 dependencies:
   config:
     - system.menu.account
   module:
     - system
   theme:
-    - bootstrap
+    - site
 _core:
-  default_config_hash: R2K_qX0ZUMbUL6ie_-S9tZVjvqmlWKlscikgeRv9vhw
-id: bootstrap_account_menu
-theme: bootstrap
-region: navigation_collapsible
-weight: -7
+  default_config_hash: DweBpscQZdG0-fHkSpUzdYucrNH45G_KF7Z82V-oyQM
+id: site_account_menu
+theme: site
+region: '-1'
+weight: -1
 provider: null
 plugin: 'system_menu_block:account'
 settings:
   id: 'system_menu_block:account'
-  label: 'User account menu'
+  label: Brugerkontomenu
   provider: system
   label_display: '0'
   level: 1
-  depth: 2
+  depth: 1
 visibility: {  }

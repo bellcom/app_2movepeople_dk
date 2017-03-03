@@ -1,4 +1,4 @@
-uuid: 244fa668-178a-45a7-bcf3-fce65ab02375
+uuid: 4e24251c-3d57-46b6-bf2e-5d3b62358211
 langcode: da
 status: false
 dependencies:
@@ -7,18 +7,18 @@ dependencies:
   module:
     - system
   theme:
-    - bootstrap
+    - site
 _core:
-  default_config_hash: f3Dd5TnUiFDjFZp9yEGJInwt6cUzs7O6SvLTFTATSlU
-id: bootstrap_tools
-theme: bootstrap
+  default_config_hash: NeHSoqm4XFqA7_0bDmR429ZZQt3LRbZMNRJTMsFyOfI
+id: site_tools
+theme: site
 region: '-1'
-weight: 0
+weight: -3
 provider: null
 plugin: 'system_menu_block:tools'
 settings:
   id: 'system_menu_block:tools'
-  label: Tools
+  label: Værktøjer
   provider: system
   label_display: visible
   level: 1
