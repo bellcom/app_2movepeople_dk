@@ -10,6 +10,7 @@ use Drupal\Core\Database\Connection;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\bc_2movepeople_dashboard\bc_2movepeople_dashboardStorage;
 
 /**
@@ -130,21 +131,13 @@ class MovepeopleDashboardController extends ControllerBase {
    * @return array
    *   A renderable array.
    */
-  public function getJsAccordionImplementation() {
+  public function getJsAccordionImplementation(AccountInterface $user) {
     $title = t('Klik on each section to expand or collapse the progressions:');
     // Build using our theme. This gives us content, which is not a good
     // practice,.
 
     $progression_targets = array();
-
-    $query = $this->database->select('node', 'n')
-      ->extend('\Drupal\Core\Database\Query\PagerSelectExtender')
-      ->extend('\Drupal\Core\Database\Query\TableSortExtender');
-    // select all progression targets
-    $query = \Drupal::entityQuery('node');
-    $query->condition('status', 1);
-    $query->condition('type', 'progression_target');
-    $entity_ids = $query->execute();
+    $entity_ids = self::getProgressionTargets($user->id());
     $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
     foreach ($nodes as $progrdata) {
       $mtid = $progrdata->get('field_progression_target')->getValue();
@@ -152,57 +145,140 @@ class MovepeopleDashboardController extends ControllerBase {
       $progression_targets[$progrdata->id()]['id'] = $progrdata->id();
       $progression_targets[$progrdata->id()]['goals'] = array();
       foreach ($mtid as $tid) {
-        $gettid = $tid['target_id'];     
+        $gettid = $tid['target_id'];
         $progression_targets[$progrdata->id()]['goals'][$gettid] = $this->getGoal($gettid, $progrdata);
       }
     }
-    $build = array (
+    $build = array(
       '#theme' => 'bc_2movepeople_dashboard',
-       "#title" => 'Dashboard',
-       "#subtitle" => $title,
-       '#progression_targets' => $progression_targets
+      "#title" => 'Dashboard',
+      "#subtitle" => $title,
+      '#progression_targets' => $progression_targets
     );
     return $build;
   }
-  
+
   public function getClientsImplementation() {
-   $current_user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
-   $connected_users_ids = $current_user->get('field_connected_users')->getValue();
-   $connected_users = array();
-   foreach ($connected_users_ids as $key => $user_id) {     
-     $uid = $user_id['target_id'];
-     $user = \Drupal\user\Entity\User::load($uid);
-     $connected_users[$uid] = $user->field_user_firstname->value . ' ' . $user->field_user_surname->value;
-   }
-   
-    $build = array (
+    $current_user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+    $connected_users_ids = $current_user->get('field_connected_users')->getValue();
+    $connected_users = array();
+    foreach ($connected_users_ids as $key => $user_id) {
+      $uid = $user_id['target_id'];
+      $user = \Drupal\user\Entity\User::load($uid);
+      $connected_users[$key]['name'] = $user->field_user_firstname->value . ' ' . $user->field_user_surname->value;
+      $connected_users[$key]['uid'] = $uid;
+    }
+
+    $build = array(
       "#theme" => "bc_2movepeople_dashboard_clients",
       "#title" => 'Clients',
       "#users" => $connected_users
     );
-  ;
+    ;
     return $build;
   }
-  
-  private function getGoal($nodeid, $progression_target){
+
+  public function getUserOverviewImplementation(AccountInterface $user) {
+    $entity_ids = array_keys($this->getProgressionTargets($user->id()));
+    $dates = array();
+    $table = array();
+    $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
+    $query->condition('progression_target_id', $entity_ids, 'IN');
+    $query->addExpression("FROM_UNIXTIME(created,  '%d.%m')", 'dates');
+    $query->GroupBy('dates');
+    $query->orderBy('created', 'ASC');
+
+    $result = $query->execute()->fetchAll();
+    foreach ($result as $row) {
+      $dates[] = $row->dates;
+    }
+    $header = array_merge(array(t('Categories')), $dates);
+
+    foreach ($entity_ids as $key => $target_id) {
+      $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($target_id);
+      $title = $nodedata->get('title')->value;
+      $table[$key] = array_fill(1, count($dates), 0);
+      $avg_rates = self::getTargetAgeragePonts($target_id);
+      foreach ($avg_rates as $row) {
+        $table[$key][array_search($row->dates, $header)] = round((float) $row->avg_rates, 2);
+      }
+      $table[$key] = array_merge(array($title), $table[$key]);
+    }
+
+    $build = array(
+      "#theme" => "bc_2movepeople_dashboard_user_overview",
+      "#title" => $user->field_user_firstname->value . ' ' . $user->field_user_surname->value,
+      "#user" => $user->id(),
+      "#table_header" => $header,
+      "#table_data" => $table
+    );
+    return $build;
+  }
+
+  private function getGoal($nodeid, $progression_target) {
     $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($nodeid);
-      $nodetitle = $nodedata->get('title')->value;
-      $subnodes = $nodedata->get('field_subgoal')->getValue();
-      $date = $nodedata->get('field_due_date')->value;
-      $is_completed = $nodedata->get('field_task_complete')->value;
-      $type = (isset($date))? 'task' : 'goal' ;
-      $subgoals= array();
-      foreach ($subnodes as $tid) {
-        $goal_id = $tid['target_id'];
-        $subgoals[$goal_id]=$this->getGoal($goal_id, $progression_target);
-       }  
-        return array ('id' =>$nodeid, 
-          'title' => $nodetitle,
-          'type' => $type,
-          'completed' => $is_completed,
-          'date' => $date,
-          'rates' => bc_2movepeople_rate_progression_get_rates($progression_target->id(), $nodeid),
-          'subgoals' => $subgoals,
-          );
-  }       
+    $nodetitle = $nodedata->get('title')->value;
+    $subnodes = $nodedata->get('field_subgoal')->getValue();
+    $date = $nodedata->get('field_due_date')->value;
+    $is_completed = $nodedata->get('field_task_complete')->value;
+    $type = (isset($date)) ? 'task' : 'goal';
+    $subgoals = array();
+    foreach ($subnodes as $tid) {
+      $goal_id = $tid['target_id'];
+      $subgoals[$goal_id] = $this->getGoal($goal_id, $progression_target);
+    }
+    return array('id' => $nodeid,
+      'title' => $nodetitle,
+      'type' => $type,
+      'completed' => $is_completed,
+      'date' => $date,
+      'rates' => bc_2movepeople_rate_progression_get_rates($progression_target->id(), $nodeid),
+      'subgoals' => $subgoals,
+    );
+  }
+
+  /*
+   * return progression targets for user
+   *
+   * @params
+   * $user_id - user uuid
+   *
+   * @return array
+   *
+   */
+
+  public static function getProgressionTargets($user_id) {
+    $query = \Drupal::database()->select('node', 'n')
+      ->extend('\Drupal\Core\Database\Query\PagerSelectExtender')
+      ->extend('\Drupal\Core\Database\Query\TableSortExtender');
+    // select all progression targets
+    $query = \Drupal::entityQuery('node');
+    $query->condition('status', 1);
+    $query->condition('type', 'progression_target');
+    $query->condition('field_progression_user', $user_id);
+    $entity_ids = $query->execute();
+    return $entity_ids;
+  }
+
+  /*
+   * return progression targets for user
+   *
+   * @params
+   * $target_id - progression target nid
+   *
+   * @return array
+   *
+   */
+
+  public static function getTargetAgeragePonts($target_id) {
+    $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
+    $query->condition('progression_target_id', $target_id, '=');
+    $query->addExpression("FROM_UNIXTIME(created,  '%d.%m')", 'dates');
+    $query->addExpression("AVG(rate)", 'avg_rates');
+    $query->GroupBy('dates');
+    $query->orderBy('created', 'ASC');
+    $result = $query->execute()->fetchAll();
+    return $result;
+  }
+
 }

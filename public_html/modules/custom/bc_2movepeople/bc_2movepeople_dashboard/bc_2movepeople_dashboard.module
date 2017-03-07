@@ -33,7 +33,14 @@ function bc_2movepeople_dashboard_theme() {
       'template' => 'bc-2movepeople-dashboard-clients',
       'variables' => array('title' => NULL,
       'users' => array()),
-    ),    
+    ),
+    'bc_2movepeople_dashboard_user_overview' => array(
+      'template' => 'bc-2movepeople-dashboard-user-overview',
+      'variables' => array('title' => NULL,
+      'user' => NULL,
+      'table_header' => array(),
+      'table_data' => array()),
+    ),
   );
 }
 

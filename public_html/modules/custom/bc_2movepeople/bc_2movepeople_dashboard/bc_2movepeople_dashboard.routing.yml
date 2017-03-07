@@ -1,5 +1,5 @@
 bc_2movepeople_dashboard.info:
-  path: '/2movepeople/dashboard'
+  path: '/2movepeople/dashboard/{user}'
   defaults:
     _title: 'Dashboard'
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getJsAccordionImplementation'
@@ -12,4 +12,12 @@ bc_2movepeople_dashboard_clients.info:
     _title: 'Clients'
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getClientsImplementation'
   requirements:
+    _user_is_logged_in: 'TRUE'
+bc_2movepeople_dashboard_user_overview.info:
+  path: '/2movepeople/dashboard/{user}/overview'
+  defaults:
+    _title: 'Dashboard'
+    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getUserOverviewImplementation'
+  requirements:
+    _permission: 'access content'
     _user_is_logged_in: 'TRUE'

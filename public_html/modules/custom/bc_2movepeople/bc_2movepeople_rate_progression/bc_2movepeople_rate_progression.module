@@ -21,3 +21,4 @@ function bc_2movepeople_rate_progression_get_rates($progression_target_id, $goal
     //$output = '<span id="progress_rates_' . $progression_target_id . '_' . $goal_id . '">' . implode(' ', array_reverse($rate_arr)) . '</span>';
     return array_reverse($rate_arr);
 }
+
