@@ -10,7 +10,7 @@ id: node.progression_target.field_progression_target
 field_name: field_progression_target
 entity_type: node
 bundle: progression_target
-label: Progression_target
+label: Goals
 description: ''
 required: false
 translatable: false

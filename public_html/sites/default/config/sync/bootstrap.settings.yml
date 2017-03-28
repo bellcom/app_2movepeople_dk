@@ -1,8 +1,10 @@
 favicon:
   mimetype: image/vnd.microsoft.icon
   path: ''
-  url: ''
+  url: 'http://prod2move.dd:8083/themes/bootstrap/favicon.ico'
   use_default: true
+schemas:
+  bootstrap: 8000
 features:
   comment_user_picture: true
   comment_user_verification: true
@@ -12,6 +14,6 @@ logo:
   path: ''
   url: ''
   use_default: true
-schemas:
-  bootstrap: 8000
-langcode: da
+table_responsive: '-1'
+modal_enabled: 0
+table: ''

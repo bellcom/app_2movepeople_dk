@@ -9,7 +9,7 @@ third_party_settings:
     available_menus:
       - main
     parent: 'main:'
-name: Progression_target
+name: 'Progression target'
 type: progression_target
 description: ''
 help: ''

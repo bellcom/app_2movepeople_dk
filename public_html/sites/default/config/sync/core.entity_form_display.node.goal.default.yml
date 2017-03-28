@@ -5,7 +5,6 @@ dependencies:
   config:
     - field.field.node.goal.body
     - field.field.node.goal.field_due_date
-    - field.field.node.goal.field_person
     - field.field.node.goal.field_subgoal
     - field.field.node.goal.field_task_complete
     - node.type.goal
@@ -41,11 +40,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
-  field_person:
-    weight: 35
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
   field_status:
     weight: 34
     settings:

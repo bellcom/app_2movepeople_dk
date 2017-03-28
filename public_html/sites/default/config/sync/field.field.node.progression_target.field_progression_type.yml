@@ -10,7 +10,7 @@ id: node.progression_target.field_progression_type
 field_name: field_progression_type
 entity_type: node
 bundle: progression_target
-label: Progression_type
+label: 'Progression type'
 description: ''
 required: false
 translatable: false

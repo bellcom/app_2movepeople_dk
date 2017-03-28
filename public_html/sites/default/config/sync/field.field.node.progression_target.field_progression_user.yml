@@ -9,7 +9,7 @@ id: node.progression_target.field_progression_user
 field_name: field_progression_user
 entity_type: node
 bundle: progression_target
-label: Progression_user
+label: User
 description: ''
 required: false
 translatable: false
