@@ -1,25 +1,9 @@
 {{ attach_library('bc_2movepeople_rate_progression/bc_2movepeople_rate_progression.charts') }}
 
 <div class= "pull-right">
-<a class="btn btn-default" href="/2movepeople/dashboard/{{ user }}">Show progression</a>
+  <a class="btn btn-default" href="/2movepeople/dashboard/{{ user }}">Show progression</a>
+  <a class="btn btn-default btn-progress use-ajax"  data-dialog-type = "modal" href="/rates/user/{{ user }}/add">Rate progression</a>
 </div>
-<div id="progression_total_table">
-<table  class="table table-striped table-bordered">
-  <thead>
-    <tr>
-      {% for column in table_header %}
-        <th data-target="col_{{ loop.index }}"> {{ column }} </th>
-        {% endfor %}
-    </tr>
-  </thead>
-  {% for row in table_data %}
-    <tr>
-      {% for column in row %}
-        <td data-target="col_{{ loop.index }}"> {{ column }} </td>
-      {% endfor %}
-    </tr>
-  {% endfor %}
-</table>
-</div>
+{{ table }}
 <div id="progression_total_chart">
 </div>

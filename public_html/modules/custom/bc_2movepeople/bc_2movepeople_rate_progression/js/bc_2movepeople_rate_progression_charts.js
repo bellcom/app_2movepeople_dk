@@ -53,23 +53,7 @@
   Drupal.behaviors.totalChart = {
     attach: function (context, settings) {
       google.charts.load('current', {packages: ['corechart', 'bar']});
-      if ($("#progression_total_table").length > 0) {
-        columns = GetColumnCount($("#progression_total_table table"));
-        var arr = [];
-        for (var i = 1; i <= columns; i++) {
-          arr[i - 1] = [$("#progression_total_table table th[data-target=col_" + i + "]").text()];
-          $("#progression_total_table table td[data-target=col_" + i + "]").each(function () {
-            if (!isNaN(parseFloat($(this).text())))
-              arr[i - 1].push(parseFloat($(this).text()));
-            else
-              arr[i - 1].push($(this).text());
-          })
-
-        }
-        google.charts.setOnLoadCallback(function () {
-          drawChart("progression_total_chart", arr);
-        });
-      }
+       $(this).graphTotalLoad();
     }
   };
 
@@ -120,7 +104,7 @@
       pointSize: 10,
 
     };
-    var chart = new google.visualization.LineChart(document.getElementById(element));
+    var chart = new google.visualization.ColumnChart(document.getElementById(element));
     chart.draw(cdata, options);
   }
   $.fn.graphReload = function (element) {
@@ -128,6 +112,25 @@
     var header = $("#" + panel.attr('aria-labelledby'));
     loadGraph(header, panel, true);
 
+  }
+  $.fn.graphTotalLoad = function (){
+    if ($('#progression_total_table').length > 0) {
+        columns = GetColumnCount($("#progression_total_table table"));
+        var arr = [];
+        for (var i = 1; i <= columns; i++) {
+          arr[i - 1] = [$("#progression_total_table table th[data-target=col_" + i + "]").text()];
+          $("#progression_total_table table td[data-target=col_" + i + "]").each(function () {
+            if (!isNaN(parseFloat($(this).text())))
+              arr[i - 1].push(parseFloat($(this).text()));
+            else
+              arr[i - 1].push($(this).text());
+          })
+
+        }
+        google.charts.setOnLoadCallback(function () {
+          drawChart("progression_total_chart", arr);
+        });
+      }
   }
   function GetColumnCount(table)
   {

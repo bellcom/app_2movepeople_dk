@@ -18,7 +18,6 @@ function bc_2movepeople_rate_progression_get_rates($progression_target_id, $goal
     foreach ($result as $row) {
       $rate_arr[] = '[ ' . $row->rate . ' ]';
     }
-    //$output = '<span id="progress_rates_' . $progression_target_id . '_' . $goal_id . '">' . implode(' ', array_reverse($rate_arr)) . '</span>';
     return array_reverse($rate_arr);
 }
 

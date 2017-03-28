@@ -180,37 +180,17 @@ class MovepeopleDashboardController extends ControllerBase {
 
   public function getUserOverviewImplementation(AccountInterface $user) {
     $entity_ids = array_keys($this->getProgressionTargets($user->id()));
-    $dates = array();
-    $table = array();
-    $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
-    $query->condition('progression_target_id', $entity_ids, 'IN');
-    $query->addExpression("FROM_UNIXTIME(created,  '%d.%m')", 'dates');
-    $query->GroupBy('dates');
-    $query->orderBy('created', 'ASC');
 
-    $result = $query->execute()->fetchAll();
-    foreach ($result as $row) {
-      $dates[] = $row->dates;
-    }
-    $header = array_merge(array(t('Categories')), $dates);
-
-    foreach ($entity_ids as $key => $target_id) {
-      $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($target_id);
-      $title = $nodedata->get('title')->value;
-      $table[$key] = array_fill(1, count($dates), 0);
-      $avg_rates = self::getTargetAgeragePonts($target_id);
-      foreach ($avg_rates as $row) {
-        $table[$key][array_search($row->dates, $header)] = round((float) $row->avg_rates, 2);
-      }
-      $table[$key] = array_merge(array($title), $table[$key]);
-    }
-
+    $result =  $this->getProgressionsTable($entity_ids);
     $build = array(
       "#theme" => "bc_2movepeople_dashboard_user_overview",
       "#title" => $user->field_user_firstname->value . ' ' . $user->field_user_surname->value,
       "#user" => $user->id(),
-      "#table_header" => $header,
-      "#table_data" => $table
+      '#table' => array (
+        "#theme" => "bc_2movepeople_dashboard_progression_total_table",
+        "#table_header" => $result['header'],
+        "#table_data" => $result['data'])
+
     );
     return $build;
   }
@@ -281,4 +261,34 @@ class MovepeopleDashboardController extends ControllerBase {
     return $result;
   }
 
+  public static function getProgressionsTable($entity_ids) {
+    $results = array();
+    $dates = array();
+    $table = array();
+
+    $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
+    $query->condition('progression_target_id', $entity_ids, 'IN');
+    $query->addExpression("FROM_UNIXTIME(created,  '%d.%m')", 'dates');
+    $query->GroupBy('dates');
+    $query->orderBy('created', 'ASC');
+
+    $result = $query->execute()->fetchAll();
+    foreach ($result as $row) {
+      $dates[] = $row->dates;
+    }
+    $header = array_merge(array(t('Categories')), $dates);
+
+    foreach ($entity_ids as $key => $target_id) {
+      $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($target_id);
+      $title = $nodedata->get('title')->value;
+      $table[$key] = array_fill(1, count($dates), 0);
+      $avg_rates = self::getTargetAgeragePonts($target_id);
+      foreach ($avg_rates as $row) {
+        $table[$key][array_search($row->dates, $header)] = round((float) $row->avg_rates, 2);
+      }
+      $table[$key] = array_merge(array($title), $table[$key]);
+    }
+    return array('header' => $header,
+    'data' => $table);
+  }
 }

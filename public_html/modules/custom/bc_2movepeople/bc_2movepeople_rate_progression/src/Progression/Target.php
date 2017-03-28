@@ -44,5 +44,8 @@ class Target {
   public function getProgressionTarget() {
     return $this->node;
   }
+  public function getProgressionTargetTitle() {
+    return $this->node->get('title')->value;
+  }
 
 }

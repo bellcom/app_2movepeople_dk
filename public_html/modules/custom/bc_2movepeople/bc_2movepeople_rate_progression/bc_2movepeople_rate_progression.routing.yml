@@ -11,6 +11,19 @@ bc_2movepeople_rate_progression.rates_add:
   requirements:
     _permission: 'access content'
     progression_target_id: \d+
+
+bc_2movepeople_rate_progression.user_rates_add:
+  path: '/rates/user/{user}/add'
+  options:
+    parameters:
+      user:
+        type: entity:user
+  defaults:
+    _title: User's rates add
+    _form: '\Drupal\bc_2movepeople_rate_progression\Form\UserRatesAddForm'
+  requirements:
+    _permission: 'access content'
+    user: \d+
     
 bc_2movepeople_rate_progression.rates.get:
   path: '/rates/{progression_target_id}/get'
