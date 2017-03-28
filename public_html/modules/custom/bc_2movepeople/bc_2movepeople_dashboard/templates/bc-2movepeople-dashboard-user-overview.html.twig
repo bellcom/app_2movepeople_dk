@@ -4,6 +4,8 @@
   <a class="btn btn-default" href="/2movepeople/dashboard/{{ user }}">Show progression</a>
   <a class="btn btn-default btn-progress use-ajax"  data-dialog-type = "modal" href="/rates/user/{{ user }}/add">Rate progression</a>
 </div>
-{{ table }}
+{% if table is defined %}
+  {{ table }}
+{% endif %}
 <div id="progression_total_chart">
 </div>

@@ -24,7 +24,7 @@ class MovepeopleDashboardController extends ControllerBase {
 
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('database')
+        $container->get('database')
     );
   }
 
@@ -181,17 +181,26 @@ class MovepeopleDashboardController extends ControllerBase {
   public function getUserOverviewImplementation(AccountInterface $user) {
     $entity_ids = array_keys($this->getProgressionTargets($user->id()));
 
-    $result =  $this->getProgressionsTable($entity_ids);
-    $build = array(
-      "#theme" => "bc_2movepeople_dashboard_user_overview",
-      "#title" => $user->field_user_firstname->value . ' ' . $user->field_user_surname->value,
-      "#user" => $user->id(),
-      '#table' => array (
-        "#theme" => "bc_2movepeople_dashboard_progression_total_table",
-        "#table_header" => $result['header'],
-        "#table_data" => $result['data'])
+    if (!empty($entity_ids)) {
+      $result = $this->getProgressionsTable($entity_ids);
+      $build = array(
+        "#theme" => "bc_2movepeople_dashboard_user_overview",
+        "#title" => $user->field_user_firstname->value . ' ' . $user->field_user_surname->value,
+        "#user" => $user->id(),
+        '#table' => array(
+          "#theme" => "bc_2movepeople_dashboard_progression_total_table",
+          "#table_header" => $result['header'],
+          "#table_data" => $result['data'])
+      );
+    }
+    else {
+      $build = array(
+        "#theme" => "bc_2movepeople_dashboard_user_overview",
+        "#title" => $user->field_user_firstname->value . ' ' . $user->field_user_surname->value,
+        "#user" => $user->id()
+      );
+    }
 
-    );
     return $build;
   }
 
@@ -288,7 +297,8 @@ class MovepeopleDashboardController extends ControllerBase {
       }
       $table[$key] = array_merge(array($title), $table[$key]);
     }
-    return array('header' => $header,
-    'data' => $table);
+    return array('header' => $header, 
+      'data' => $table);
   }
+
 }
