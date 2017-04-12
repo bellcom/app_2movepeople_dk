@@ -1,13 +1,13 @@
-uuid: 9339598c-b7bf-4cbd-830b-33d593561b03
+uuid: 3478b73b-96eb-4cfb-a85f-12380d24d09a
 langcode: da
 status: true
 dependencies:
   config:
-    - field.storage.node.field_progression_target
+    - field.storage.node.field_goal_ids
     - node.type.goal
     - node.type.progression_target
-id: node.progression_target.field_progression_target
-field_name: field_progression_target
+id: node.progression_target.field_goal_ids
+field_name: field_goal_ids
 entity_type: node
 bundle: progression_target
 label: Goals
@@ -22,7 +22,8 @@ settings:
     target_bundles:
       goal: goal
     sort:
-      field: _none
+      field: title
+      direction: ASC
     auto_create: false
     auto_create_bundle: ''
 field_type: entity_reference

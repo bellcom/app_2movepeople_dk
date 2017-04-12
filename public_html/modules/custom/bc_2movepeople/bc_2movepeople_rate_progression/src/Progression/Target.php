@@ -22,7 +22,7 @@ class Target {
   public function __construct($progression_target_id) {
 
     $this->node = \Drupal::entityTypeManager()->getStorage('node')->load($progression_target_id);
-    $mtid = $this->node->get('field_progression_target')->getValue();
+    $mtid = $this->node->get('field_goal_ids')->getValue();
     foreach ($mtid as $tid) {
       $this->getGoals($tid['target_id']);
     }

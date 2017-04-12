@@ -1,4 +1,4 @@
-uuid: 8655420d-4740-4dca-ab15-cc6f4f916210
+uuid: 51f06eca-92f7-4735-a1b8-82ad702c6f46
 langcode: da
 status: true
 dependencies:
@@ -8,8 +8,8 @@ dependencies:
 third_party_settings:
   field_permissions:
     permission_type: public
-id: node.field_progression_target
-field_name: field_progression_target
+id: node.field_goal_ids
+field_name: field_goal_ids
 entity_type: node
 type: entity_reference
 settings:

@@ -4,7 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.progression_target.body
-    - field.field.node.progression_target.field_progression_target
+    - field.field.node.progression_target.field_goal_ids
     - field.field.node.progression_target.field_progression_type
     - field.field.node.progression_target.field_progression_user
     - node.type.progression_target
@@ -15,8 +15,8 @@ targetEntityType: node
 bundle: progression_target
 mode: default
 content:
-  field_progression_target:
-    weight: 104
+  field_goal_ids:
+    weight: 105
     label: above
     settings:
       link: true

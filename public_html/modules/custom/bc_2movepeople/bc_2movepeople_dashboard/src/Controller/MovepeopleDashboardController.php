@@ -140,7 +140,7 @@ class MovepeopleDashboardController extends ControllerBase {
     $entity_ids = self::getProgressionTargets($user->id());
     $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
     foreach ($nodes as $progrdata) {
-      $mtid = $progrdata->get('field_progression_target')->getValue();
+      $mtid = $progrdata->get('field_goal_ids')->getValue();
       $progression_targets[$progrdata->id()]['title'] = $progrdata->get('title')->value;
       $progression_targets[$progrdata->id()]['id'] = $progrdata->id();
       $progression_targets[$progrdata->id()]['goals'] = array();

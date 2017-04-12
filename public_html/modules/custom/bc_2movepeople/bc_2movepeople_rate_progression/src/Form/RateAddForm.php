@@ -37,7 +37,7 @@ class RateAddForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $progression_target_id = null) {
     $this->node = $progression_target_id;
-    $mtid = $this->node->get('field_progression_target')->getValue();
+    $mtid = $this->node->get('field_goal_ids')->getValue();
 
     $form['#prefix'] = '<div id="bc_2movepeople-rate-progression-add-form">';
     $form['#suffix'] = '</div>';
