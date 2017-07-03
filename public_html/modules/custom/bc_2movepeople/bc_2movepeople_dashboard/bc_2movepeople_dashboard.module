@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Url;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @defgroup bc_2movepeople_dashboard.module: JavaScript
@@ -52,3 +53,11 @@ function bc_2movepeople_dashboard_theme() {
 /**
  * @} End of "defgroup bc_2movepeople_dashboard.accordion".
  */
+
+/**
+ * Implements hook_user_login().
+ */
+function bc_2movepeople_dashboard_user_login($account) {
+    $response = new RedirectResponse('/');
+    $response->send();   
+}
