@@ -4,6 +4,7 @@ status: true
 dependencies:
   module:
     - search
+    - user
   theme:
     - bootstrap
 _core:
@@ -19,4 +20,12 @@ settings:
   label: Search
   provider: search
   label_display: visible
-visibility: {  }
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      authenticated: authenticated
+      administrator: administrator
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
