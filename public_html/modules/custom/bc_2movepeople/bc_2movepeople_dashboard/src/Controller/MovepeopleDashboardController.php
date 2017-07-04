@@ -221,7 +221,7 @@ class MovepeopleDashboardController extends ControllerBase {
       'type' => $type,
       'completed' => $is_completed,
       'date' => $date,
-      'rates' => bc_2movepeople_rate_progression_get_rates($progression_target->id(), $nodeid),
+      //'rates' => bc_2movepeople_rate_progression_get_rates($progression_target->id(), $nodeid),
       'subgoals' => $subgoals,
     );
   }
