@@ -129,8 +129,8 @@ class RateAddForm extends FormBase {
     $goals =  $progression_target->getAllGoals();
     foreach ($goals as $id) {
       $rates = implode(' ' , bc_2movepeople_rate_progression_get_rates($this->node->id(), $id));
-      $rates = '<span id="progress_rates_' . $this->node->id(). '_' . $id . '">' . $rates . '</span>';   
-      $response->addCommand(new \Drupal\Core\Ajax\ReplaceCommand('#progress_rates_' . $this->node->id() . '_' . $id, $rates));
+//      $rates = '<span id="progress_rates_' . $this->node->id(). '_' . $id . '">' . $rates . '</span>';   
+//      $response->addCommand(new \Drupal\Core\Ajax\ReplaceCommand('#progress_rates_' . $this->node->id() . '_' . $id, $rates));
     }
     //$('#accordion').activate('activate', elementSelector);
     $response->addCommand(new \Drupal\Core\Ajax\InvokeCommand(NULL, 'graphReload', array('#div_chart_' . $this->node->id())));

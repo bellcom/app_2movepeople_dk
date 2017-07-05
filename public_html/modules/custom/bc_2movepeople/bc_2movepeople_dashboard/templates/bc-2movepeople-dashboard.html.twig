@@ -22,9 +22,9 @@
             <p> {% if goal.type == 'task' %} <span class="task {% if goal.completed %} completed {% else %} uncompleted {% endif %} ">&nbsp;</span> {% endif %} {% if goal.subgoals %} <a data-toggle="collapse" href="#subgoals_{{ goal.id }}" class="has-child" > {% endif %} 
              {{ goal.title }} {% if goal.type == 'task' %} ({{ goal.date|date("d.m.Y H:i")}}){% endif %}
               <span id="progress_rates_{{ progression_target.id }}_{{ goal.id }}">
-                {% for rate in goal.rates %}
+{#                {% for rate in goal.rates %}
                   {{ rate }}
-                {% endfor %}
+                {% endfor %}#}
               </span>
               {% if goal.subgoals %} </a > {% endif %}
             </p>
@@ -34,9 +34,9 @@
               
               <p> {{ subgoal.title }}
               <span id="progress_rates_{{ progression_target.id }}_{{ subgoal.id }}">
-                {% for rate in subgoal.rates %}
+{#                {% for rate in subgoal.rates %}
                   {{ rate }}
-                {% endfor %}
+                {% endfor %}#}
               </span>
             </p>
             {% endfor %}  
