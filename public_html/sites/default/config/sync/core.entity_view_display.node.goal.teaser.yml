@@ -5,12 +5,12 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.goal.body
-    - field.field.node.goal.field_due_date
+    - field.field.node.goal.field_activity_title
+    - field.field.node.goal.field_evaluation
     - field.field.node.goal.field_subgoal
     - field.field.node.goal.field_task_complete
     - node.type.goal
   module:
-    - datetime
     - text
     - user
 id: node.goal.teaser
@@ -25,19 +25,13 @@ content:
     settings:
       trim_length: 150
     third_party_settings: {  }
-  field_due_date:
-    type: datetime_default
-    weight: 2
-    label: inline
-    settings:
-      timezone_override: ''
-      format_type: short
-    third_party_settings: {  }
   flag_status:
     weight: 0
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_activity_title: true
+  field_evaluation: true
   field_subgoal: true
   field_task_complete: true
   langcode: true

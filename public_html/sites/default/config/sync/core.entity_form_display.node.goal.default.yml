@@ -4,7 +4,9 @@ status: true
 dependencies:
   config:
     - field.field.node.goal.body
+    - field.field.node.goal.field_activity_title
     - field.field.node.goal.field_due_date
+    - field.field.node.goal.field_evaluation
     - field.field.node.goal.field_subgoal
     - field.field.node.goal.field_task_complete
     - node.type.goal
@@ -30,16 +32,30 @@ content:
     weight: 10
     settings: {  }
     third_party_settings: {  }
+  field_activity_title:
+    weight: 39
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
   field_deadline:
     weight: 33
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
   field_due_date:
-    weight: 36
+    weight: 41
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
+  field_evaluation:
+    weight: 40
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
   field_status:
     weight: 34
     settings:

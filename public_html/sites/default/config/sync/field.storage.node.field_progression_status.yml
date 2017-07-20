@@ -1,4 +1,4 @@
-uuid: b10235c5-194f-42bc-b84a-2e98125a85c7
+uuid: f13e7a45-e02e-41a9-81bc-b6d166db677f
 langcode: en
 status: true
 dependencies:
@@ -9,18 +9,18 @@ dependencies:
 third_party_settings:
   field_permissions:
     permission_type: public
-id: node.field_progression_type
-field_name: field_progression_type
+id: node.field_progression_status
+field_name: field_progression_status
 entity_type: node
 type: list_string
 settings:
   allowed_values:
     -
-      value: progression
-      label: Progression
+      value: active
+      label: Active
     -
-      value: target_milestone
-      label: 'Target milestone'
+      value: not_active
+      label: 'Not active'
   allowed_values_function: ''
 module: options
 locked: false

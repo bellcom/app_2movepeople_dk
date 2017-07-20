@@ -1,17 +1,17 @@
-uuid: 28c21d77-d72d-41bc-a90b-49b40307fb4f
+uuid: 9115cb9f-9f44-48bf-ba77-a8efdb3622ed
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_progression_type
+    - field.storage.node.field_progression_status
     - node.type.progression_target
   module:
     - options
-id: node.progression_target.field_progression_type
-field_name: field_progression_type
+id: node.progression_target.field_progression_status
+field_name: field_progression_status
 entity_type: node
 bundle: progression_target
-label: 'Progression type'
+label: Status
 description: ''
 required: false
 translatable: false

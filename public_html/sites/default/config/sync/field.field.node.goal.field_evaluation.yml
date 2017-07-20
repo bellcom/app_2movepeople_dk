@@ -1,21 +1,19 @@
-uuid: 730ef5ce-de1c-4a53-b314-cb01f585e7f4
+uuid: 954c2a0d-4aab-4f38-b596-65d828321dbc
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_due_date
+    - field.storage.node.field_evaluation
     - node.type.goal
-  module:
-    - datetime
-id: node.goal.field_due_date
-field_name: field_due_date
+id: node.goal.field_evaluation
+field_name: field_evaluation
 entity_type: node
 bundle: goal
-label: 'Due date'
+label: Evaluation
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: datetime
+field_type: string_long
