@@ -1,0 +1,17 @@
+label: 'Tour an example admin page'
+tips:
+  introduction:
+    label: Introduction
+    body: 'This is an example tour. Click "next" to continue through the tour.'
+  first-item:
+    label: 'First Item'
+    body: 'Tours are helpful for walking users through an unfamiliar admin interface.'
+  second-item:
+    label: 'Second Item'
+    body: 'Individual tips can be positioned anywhere on the page.'
+  third-item:
+    label: 'Third Item'
+    body: 'You can click the X in the top right corner of this box to close the tour at any time.'
+  fourth-item:
+    label: 'Fourth Item'
+    body: 'When the tour is over, click "End Tour".'
