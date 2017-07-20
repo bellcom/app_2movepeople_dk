@@ -4,8 +4,15 @@
   <a class="btn btn-default" href="/2movepeople/dashboard/{{ user }}">Show progression</a>
   <a class="btn btn-default btn-progress use-ajax"  data-dialog-type = "modal" href="/rates/user/{{ user }}/add">Rate progression</a>
 </div>
-{% if table is defined %}
-  {{ table }}
+{% if table_progression is defined %}
+  {{ table_progression }}
 {% endif %}
 <div id="progression_total_chart">
 </div>
+{% if table_milestone is defined %}
+<div style="margin-top:50px">&nbsp;</div>
+<div class= "pull-right">
+  <a class="btn btn-default" href="/2movepeople/dashboard/milestone/{{ user }}">Show Target Milestoens</a>
+</div>  
+  {{ table_milestone }}
+{% endif %}  

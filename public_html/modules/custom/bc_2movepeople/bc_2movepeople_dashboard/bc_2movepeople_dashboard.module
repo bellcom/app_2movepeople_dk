@@ -30,6 +30,12 @@ function bc_2movepeople_dashboard_theme() {
         'subtitle' => NULL,
         'progression_targets' => array()),
     ),
+    'bc_2movepeople_milestone_dashboard' => array(
+      'template' => 'bc-2movepeople-milestone-dashboard',
+      'variables' => array('title' => NULL,
+        'subtitle' => NULL,
+        'milestone_targets' => array()),
+    ),
     'bc_2movepeople_dashboard_clients' => array(
       'template' => 'bc-2movepeople-dashboard-clients',
       'variables' => array('title' => NULL,
@@ -39,11 +45,12 @@ function bc_2movepeople_dashboard_theme() {
       'template' => 'bc-2movepeople-dashboard-user-overview',
       'variables' => array('title' => NULL,
       'user' => NULL,
-      'table' => NULL),
+      'table_progression' => NULL, 'table_milestone' => NULL),
     ),
     'bc_2movepeople_dashboard_progression_total_table' => array(
       'template' => 'bc-2movepeople-dashboard-progression-total-table',
       'variables' => array(
+      'type' => 'progression',
       'table_header' => array(),
       'table_data' => array()),
     ),

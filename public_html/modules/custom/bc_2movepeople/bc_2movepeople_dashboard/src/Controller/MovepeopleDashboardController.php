@@ -157,6 +157,26 @@ class MovepeopleDashboardController extends ControllerBase {
     );
     return $build;
   }
+  
+  public function getMilestoneJsAccordionImplementation(AccountInterface $user) {
+    $title = t('Klik on each section to expand or collapse the progressions:');
+
+    $progression_targets = array();
+    $entity_ids = self::getProgressionTargets($user->id(), 'target_milestone');
+    $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
+    foreach ($nodes as $progrdata) {
+      $progression_targets[$progrdata->id()]['id'] = $progrdata->id();
+      $progression_targets[$progrdata->id()]['title'] = $progrdata->get('title')->value;  
+      $progression_targets[$progrdata->id()]['form'] = \Drupal::formBuilder()->getForm(\Drupal\bc_2movepeople_dashboard\Form\MilestoneEditForm::class, $progrdata);
+    }
+    $build = array(
+      '#theme' => 'bc_2movepeople_milestone_dashboard',
+      "#title" => 'Dashboard Milestone',
+      "#subtitle" => $title,
+      '#milestone_targets' => $progression_targets
+    );
+    return $build;
+  }
 
   public function getClientsImplementation() {
     $current_user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
@@ -174,24 +194,42 @@ class MovepeopleDashboardController extends ControllerBase {
       "#title" => 'Clients',
       "#users" => $connected_users
     );
-    ;
+
     return $build;
   }
 
   public function getUserOverviewImplementation(AccountInterface $user) {
-    $entity_ids = array_keys($this->getProgressionTargets($user->id()));
+    $entity_progression_ids = array_keys($this->getProgressionTargets($user->id(), 'progression'));
+    $entity_milestone_ids = array_keys($this->getProgressionTargets($user->id(), 'target_milestone'));
 
-    if (!empty($entity_ids)) {
-      $result = $this->getProgressionsTable($entity_ids);
+    if (!empty($entity_progression_ids) || !empty($entity_milestone_ids)) {
+      
       $build = array(
         "#theme" => "bc_2movepeople_dashboard_user_overview",
         "#title" => $user->field_user_firstname->value . ' ' . $user->field_user_surname->value,
-        "#user" => $user->id(),
-        '#table' => array(
-          "#theme" => "bc_2movepeople_dashboard_progression_total_table",
-          "#table_header" => $result['header'],
-          "#table_data" => $result['data'])
+        "#user" => $user->id()
       );
+      
+      if (!empty($entity_progression_ids)) {
+        $result_progression = $this->getProgressionsTable($entity_progression_ids);
+        $build['#table_progression'] = array(
+          "#theme" => "bc_2movepeople_dashboard_progression_total_table",
+          "#type" => 'progression',
+          "#table_header" => $result_progression['header'],
+          "#table_data" => $result_progression['data']);
+      }
+      
+      if (!empty($entity_milestone_ids)) {
+        $result_milestone = $this->getMilestoneTable($entity_milestone_ids);
+      //  dpm($result_milestone);
+        $build['#table_milestone'] = array(
+          "#theme" => "bc_2movepeople_dashboard_progression_total_table",
+          "#type" => 'milestone',
+          "#table_header" => $result_milestone['header'],
+          "#table_data" => $result_milestone['data']);
+        
+       
+      }
     }
     else {
       $build = array(
@@ -204,12 +242,14 @@ class MovepeopleDashboardController extends ControllerBase {
     return $build;
   }
 
-  private function getGoal($nodeid, $progression_target) {
+  public function getGoal($nodeid, $progression_target) {
     $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($nodeid);
     $nodetitle = $nodedata->get('title')->value;
     $subnodes = $nodedata->get('field_subgoal')->getValue();
     $date = $nodedata->get('field_due_date')->value;
     $is_completed = $nodedata->get('field_task_complete')->value;
+    $activity_title = $nodedata->get('field_activity_title')->value;
+    $evaluation = $nodedata->get('field_evaluation')->value;
     $type = (isset($date)) ? 'task' : 'goal';
     $subgoals = array();
     foreach ($subnodes as $tid) {
@@ -222,6 +262,8 @@ class MovepeopleDashboardController extends ControllerBase {
       'completed' => $is_completed,
       'date' => $date,
       'rates' => bc_2movepeople_rate_progression_get_rates($progression_target->id(), $nodeid),
+      'activity_title' => $activity_title,
+      'evaluation' => $evaluation,
       'subgoals' => $subgoals,
     );
   }
@@ -236,15 +278,16 @@ class MovepeopleDashboardController extends ControllerBase {
    *
    */
 
-  public static function getProgressionTargets($user_id) {
-    $query = \Drupal::database()->select('node', 'n')
-      ->extend('\Drupal\Core\Database\Query\PagerSelectExtender')
-      ->extend('\Drupal\Core\Database\Query\TableSortExtender');
+  public static function getProgressionTargets($user_id, $progression_type = 'progression') {
+//    $query = \Drupal::database()->select('node', 'n')
+//      ->extend('\Drupal\Core\Database\Query\PagerSelectExtender')
+//      ->extend('\Drupal\Core\Database\Query\TableSortExtender');
     // select all progression targets
     $query = \Drupal::entityQuery('node');
     $query->condition('status', 1);
     $query->condition('type', 'progression_target');
     $query->condition('field_progression_user', $user_id);
+    $query->condition('field_progression_type', $progression_type);
     $entity_ids = $query->execute();
     return $entity_ids;
   }
@@ -259,7 +302,7 @@ class MovepeopleDashboardController extends ControllerBase {
    *
    */
 
-  public static function getTargetAgeragePonts($target_id) {
+  public static function getTargetAveragePoints($target_id) {
     $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
     $query->condition('progression_target_id', $target_id, '=');
     $query->addExpression("FROM_UNIXTIME(created,  '%d.%m')", 'dates');
@@ -271,7 +314,6 @@ class MovepeopleDashboardController extends ControllerBase {
   }
 
   public static function getProgressionsTable($entity_ids) {
-    $results = array();
     $dates = array();
     $table = array();
 
@@ -291,7 +333,7 @@ class MovepeopleDashboardController extends ControllerBase {
       $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($target_id);
       $title = $nodedata->get('title')->value;
       $table[$key] = array_fill(1, count($dates), 0);
-      $avg_rates = self::getTargetAgeragePonts($target_id);
+      $avg_rates = self::getTargetAveragePoints($target_id);
       foreach ($avg_rates as $row) {
         $table[$key][array_search($row->dates, $header)] = round((float) $row->avg_rates, 2);
       }
@@ -300,5 +342,20 @@ class MovepeopleDashboardController extends ControllerBase {
     return array('header' => $header, 
       'data' => $table);
   }
+  
+    public static function getMilestoneTable($entity_ids) {
+    $table = array();
+    $header = array_merge(array(t('Target Milestones'), t('Priority'), t('Status')));
 
+    foreach ($entity_ids as $key => $target_id) {
+      $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($target_id);
+      $title = $nodedata->get('title')->value;
+      $priority = $nodedata->get('field_priority')->value;
+      $status = $nodedata->get('field_progression_status')->value;
+      
+      $table[$key] = array($title, $priority, $status);
+    }
+    return array('header' => $header, 
+      'data' => $table);
+  }
 }

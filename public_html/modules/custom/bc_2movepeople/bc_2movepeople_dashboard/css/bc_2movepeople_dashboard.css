@@ -20,10 +20,10 @@ a.has-child[aria-expanded="false"]::before {
 a.has-child[aria-expanded="true"]::before {
     content: '\25bc';
 }
-  .subgoals {
-    padding-left: 10px;
-    margin: 10px 0;
-  }
+.subgoals {
+  padding-left: 10px;
+  margin: 10px 0;
+}
 span.task {
   display: inline-block;
   width: 16px;    
@@ -34,4 +34,10 @@ span.task {
 }
  span.task.completed{
   background-image: url(../images/completed-task-icon.png);
+}
+.custom-form-fields {
+  margin-top: 10px;
+}
+.custom-form-label {
+  font-weight: bold;
 }

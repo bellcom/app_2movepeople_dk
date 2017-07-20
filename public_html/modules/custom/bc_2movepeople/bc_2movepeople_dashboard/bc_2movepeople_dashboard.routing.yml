@@ -21,3 +21,11 @@ bc_2movepeople_dashboard_user_overview.info:
   requirements:
     _permission: 'access content'
     _user_is_logged_in: 'TRUE'
+bc_2movepeople_dashboard_milestone.info:
+  path: '/2movepeople/dashboard/milestone/{user}'
+  defaults:
+    _title: 'Dashboard'
+    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getMilestoneJsAccordionImplementation'
+  requirements:
+    _permission: 'access content'
+    _user_is_logged_in: 'TRUE'

@@ -1,0 +1,16 @@
+{{ attach_library('bc_2movepeople_dashboard/bc_2movepeople_dashboard.accordion') }}
+{{ attach_library('drupal.date') }}
+<div id="form-system-messages"></div>
+<div class="demo">
+  <h2>{{ subtitle  }}</h2>
+  <div id="accordion">
+    {% for milestone_target in milestone_targets %}
+      <h3 data-progression-id="{{ milestone_target.id }}">
+        <a href="#">{{ milestone_target.title }}</a>
+      </h3>
+      <div>
+        {{ milestone_target.form }}     
+      </div>
+    {% endfor %}
+  </div>
+</div>
