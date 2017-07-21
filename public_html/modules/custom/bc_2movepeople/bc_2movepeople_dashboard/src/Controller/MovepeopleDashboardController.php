@@ -221,7 +221,6 @@ class MovepeopleDashboardController extends ControllerBase {
       
       if (!empty($entity_milestone_ids)) {
         $result_milestone = $this->getMilestoneTable($entity_milestone_ids);
-      //  dpm($result_milestone);
         $build['#table_milestone'] = array(
           "#theme" => "bc_2movepeople_dashboard_progression_total_table",
           "#type" => 'milestone',
@@ -351,8 +350,10 @@ class MovepeopleDashboardController extends ControllerBase {
       $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($target_id);
       $title = $nodedata->get('title')->value;
       $priority = $nodedata->get('field_priority')->value;
-      $status = $nodedata->get('field_progression_status')->value;
       
+      $status_obj = $nodedata->get('field_progression_status');
+      $status = $status_obj->getSettings()['allowed_values'][$status_obj->value];
+     
       $table[$key] = array($title, $priority, $status);
     }
     return array('header' => $header, 
