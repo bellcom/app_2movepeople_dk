@@ -12,8 +12,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\node\NodeInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
-use Drupal\Core\Render\Element\Button; 
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 
 
@@ -21,6 +21,7 @@ class MilestoneEditForm extends FormBase {
 
   protected $node;
   private $updated_msg = 'Records successfully updated.';
+  private $wrong_msg = 'Something wrong.';
   /**
    * {@inheritdoc}
    */
@@ -61,7 +62,8 @@ class MilestoneEditForm extends FormBase {
       $form['goals'][$goal_id]['title'] = [
         '#type' => 'textfield',
         '#default_value' => $goal['title'],
-        '#prefix' => '<div class="row custom-form-fields"><div class="col-md-3 col-sm-2 col-xs-2">',
+        '#prefix' => '<div class="row custom-form-fields" id="goal_row_'.$goal_id.'">'
+          . '<div class="col-md-3 col-sm-2 col-xs-2">',
         '#suffix' => '</div>'
 
       ];
@@ -93,7 +95,6 @@ class MilestoneEditForm extends FormBase {
       $form['goals'][$goal_id]['complete_btn'] = [
         '#type' => 'button',
         '#name' => 'complete_btn'.$goal_id,
-        '#value' => '',
         '#attributes' => [
           'data_goal_id' => $goal_id,
           'class' => ['btn', 'btn-primary', 'custom-checkbox-ok'],
@@ -117,12 +118,18 @@ class MilestoneEditForm extends FormBase {
       
       $form['goals'][$goal_id]['delete_btn'] = [
         '#type' => 'button',
-      //  '#value' => '',
+        '#name' => 'delete_btn'.$goal_id,
         '#attributes' => [
+          'data_goal_id' => $goal_id,
           'class' => ['btn', 'btn-primary', 'custom-checkbox-trash'],
           'data-toggle' => ['button'],
           'aria-pressed' => ['false'],
           'autocomplete' => ['off']
+        ],
+        '#ajax' => [
+          'event' => 'click',
+          'callback' => '::ajaxGoalDelete',
+          'progress' => ['type' => 'none']
         ],
         '#suffix' => '</div></div>'
       ];
@@ -169,7 +176,7 @@ class MilestoneEditForm extends FormBase {
    */
   public function ajaxSubmitForm(array &$form, FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
-    $nid = $this->node->id();  
+    $nid = $this->node->id();
    
     if (!$form_state->getErrors()) {
 
@@ -255,6 +262,46 @@ class MilestoneEditForm extends FormBase {
     return $ajax_response;
   }
   
+    /**
+   * {@inheritdoc}
+   */
+  public function ajaxGoalDelete(array &$form, FormStateInterface $form_state) {
+    $ajax_response = new AjaxResponse();
+    
+    $goal_id = $form_state->getTriggeringElement()['#attributes']['data_goal_id'];
+    $old_goal_ids = $this->node->get('field_goal_ids')->getValue();
+
+    $is_deleted = 0;
+    $new_goal_ids = [];
+    foreach($old_goal_ids as $tid) {
+      if($tid['target_id'] != $goal_id) {
+        $new_goal_ids[] = $tid['target_id'];
+      } else {
+        $is_deleted = 1;
+      }
+    }
+
+    if ($is_deleted) {
+      $this->node->set('field_goal_ids', $new_goal_ids);
+      $this->node->save();
+    } else {
+      drupal_set_message($this->t($this->wrong_msg));
+      $message = [
+        '#theme' => 'status_messages',
+        '#message_list' => drupal_get_messages(),
+        '#status_headings' => [
+          'status' => $this->t('Status message'),
+          'error'  => $this->t('Error message'),
+          'warning'=> $this->t('Warning message'),
+        ],
+      ];
+      $messages = \Drupal::service('renderer')->render($message);
+      $ajax_response->addCommand(new HtmlCommand('#form-system-messages', $messages));
+    }
+    $ajax_response->addCommand(new RemoveCommand('#goal_row_'.$goal_id));
+    
+    return $ajax_response;
+  }
 
   /**
    * {@inheritdoc}
