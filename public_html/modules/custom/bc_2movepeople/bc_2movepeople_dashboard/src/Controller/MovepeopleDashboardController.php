@@ -146,7 +146,7 @@ class MovepeopleDashboardController extends ControllerBase {
       $progression_targets[$progrdata->id()]['goals'] = array();
       foreach ($mtid as $tid) {
         $gettid = $tid['target_id'];
-        $progression_targets[$progrdata->id()]['goals'][$gettid] = $this->getGoal($gettid, $progrdata);
+        $progression_targets[$progrdata->id()]['goals'][$gettid] = self::getGoal($gettid, $progrdata);
       }
     }
     $build = array(
@@ -241,7 +241,7 @@ class MovepeopleDashboardController extends ControllerBase {
     return $build;
   }
 
-  public function getGoal($nodeid, $progression_target) {
+  static function getGoal($nodeid, $progression_target) {
     $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($nodeid);
     $nodetitle = $nodedata->get('title')->value;
     $subnodes = $nodedata->get('field_subgoal')->getValue();
@@ -253,7 +253,7 @@ class MovepeopleDashboardController extends ControllerBase {
     $subgoals = array();
     foreach ($subnodes as $tid) {
       $goal_id = $tid['target_id'];
-      $subgoals[$goal_id] = $this->getGoal($goal_id, $progression_target);
+      $subgoals[$goal_id] = self::getGoal($goal_id, $progression_target);
     }
     return array('id' => $nodeid,
       'title' => $nodetitle,

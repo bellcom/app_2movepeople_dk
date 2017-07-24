@@ -12,12 +12,15 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\node\NodeInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\Render\Element\Button; 
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 
 
 class MilestoneEditForm extends FormBase {
 
   protected $node;
+  private $updated_msg = 'Records successfully updated.';
   /**
    * {@inheritdoc}
    */
@@ -39,10 +42,11 @@ class MilestoneEditForm extends FormBase {
       '#prefix' => '<div class="row"><div class="col-sm-12">',
       '#suffix' => '</div></div>'
           . '<div class="row custom-form-fields custom-form-label">'
-          . '<div class="col-sm-3">'.$this->t('Milestone').'</div>'
-          . '<div class="col-sm-3">'.$this->t('Activity').'</div>'
-          . '<div class="col-sm-3">'.$this->t('Deadline').'</div>'
-          . '<div class="col-sm-3">'.$this->t('Evaluation').'</div>'
+          . '<div class="col-md-3 col-sm-2 col-xs-2">'.$this->t('Milestone').'</div>'
+          . '<div class="col-md-2 col-sm-2 col-xs-2">'.$this->t('Activity').'</div>'
+          . '<div class="col-md-3 col-sm-4 col-xs-4">'.$this->t('Deadline').'</div>'
+          . '<div class="col-md-2 col-sm-2 col-xs-2">'.$this->t('Evaluation').'</div>'
+          . '<div class="col-md-2 col-sm-2 col-xs-2">'.$this->t('Actions').'</div>'
           . '</div>'
     ];
 
@@ -56,38 +60,73 @@ class MilestoneEditForm extends FormBase {
 
       $form['goals'][$goal_id]['title'] = [
         '#type' => 'textfield',
-       // '#title' => $this->t('Milestone'),
         '#default_value' => $goal['title'],
-        '#prefix' => '<div class="row custom-form-fields"><div class="col-sm-3">',
+        '#prefix' => '<div class="row custom-form-fields"><div class="col-md-3 col-sm-2 col-xs-2">',
         '#suffix' => '</div>'
 
       ];
 
       $form['goals'][$goal_id]['activity_title'] = [
         '#type' => 'textfield',
-       // '#title' => $this->t('Activity'),
         '#default_value' => $goal['activity_title'],
-        '#prefix' => '<div class="col-sm-3">',
+        '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2">',
         '#suffix' => '</div>'
       ];
 
+
       $form['goals'][$goal_id]['due_date'] = [
         '#type' => 'date',
-       // '#title' => $this->t('Deadline'),
         '#default_value' => $goal['date'],
-        '#prefix' => '<div class="col-sm-3">',
+        '#prefix' => '<div class="col-md-3 col-sm-4 col-xs-4">',
         '#suffix' => '</div>'
 
       ];
 
       $form['goals'][$goal_id]['evaluation'] = [
         '#type' => 'textfield',
-      //  '#title' => $this->t('Evaluation'),
         '#default_value' => $goal['evaluation'],
-        '#prefix' => '<div class="col-sm-3">',
-        '#suffix' => '</div></div>'
+        '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2">',
+        '#suffix' => '</div>'
 
       ];
+
+      $form['goals'][$goal_id]['complete_btn'] = [
+        '#type' => 'button',
+        '#name' => 'complete_btn'.$goal_id,
+        '#value' => '',
+        '#attributes' => [
+          'data_goal_id' => $goal_id,
+          'class' => ['btn', 'btn-primary', 'custom-checkbox-ok'],
+          'data-toggle'  => ['button'],
+          'aria-pressed' => ['false'],
+          'autocomplete' => ['off']
+        ],
+        '#ajax' => [
+          'event' => 'click',
+          'callback' => '::ajaxGoalComplete',
+          'progress' => ['type' => 'none']
+        ],  
+        '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2"><span id="complete_btn_box'.$goal_id.'">',
+        '#suffix' => '</span>'
+      ];
+
+      if ($goal['completed']) {
+        $form['goals'][$goal_id]['complete_btn']['#attributes']['class'][] = 'active';
+        $form['goals'][$goal_id]['complete_btn']['#attributes']['aria-pressed'] = ['true'];
+      }
+      
+      $form['goals'][$goal_id]['delete_btn'] = [
+        '#type' => 'button',
+      //  '#value' => '',
+        '#attributes' => [
+          'class' => ['btn', 'btn-primary', 'custom-checkbox-trash'],
+          'data-toggle' => ['button'],
+          'aria-pressed' => ['false'],
+          'autocomplete' => ['off']
+        ],
+        '#suffix' => '</div></div>'
+      ];
+      
     }
     
 //    $form['system_messages'] = [
@@ -102,7 +141,7 @@ class MilestoneEditForm extends FormBase {
         '#name' => 'submit',  
         '#value' => $this->t('Update'),
         '#button_type' => 'primary',
-        '#prefix' => '<div class="pull-right custom-form-fields">',
+        '#prefix' => '<div class="pull-left custom-form-fields">',
         '#suffix' => '</div>',
         '#ajax' => [
           'callback' => '::ajaxSubmitForm',
@@ -112,7 +151,7 @@ class MilestoneEditForm extends FormBase {
           ],
         ]
       )
-    ];    
+    ];
 
     return $form;
   }
@@ -150,10 +189,56 @@ class MilestoneEditForm extends FormBase {
         $goal_node->set("field_evaluation", $goal['evaluation']);        
         $goal_node->save();
       }      
-      drupal_set_message($this->t('Records successfully updated.'));
+      drupal_set_message($this->t($this->updated_msg));
     }
     
     $message = [
+      '#theme' => 'status_messages',
+      '#message_list' => drupal_get_messages(),
+      '#status_headings' => [
+        'status' => $this->t('Status message'),
+        'error'  => $this->t('Error message'),
+        'warning'=> $this->t('Warning message'),
+      ],
+    ];
+    $messages = \Drupal::service('renderer')->render($message);
+    $ajax_response->addCommand(new HtmlCommand('#form-system-messages', $messages));
+
+    return $ajax_response;
+  }
+  
+  
+  /**
+   * {@inheritdoc}
+   */
+  public function ajaxGoalComplete(array &$form, FormStateInterface $form_state) {
+    $ajax_response = new AjaxResponse();
+    
+    $goal_id = $form_state->getTriggeringElement()['#attributes']['data_goal_id']; 
+    $goal = MovepeopleDashboardController::getGoal($goal_id, $this->node);
+    $goal_node = \Drupal\node\Entity\Node::load($goal_id);
+
+    if(is_object($goal_node)) {
+      
+      unset($form['goals'][$goal_id]['complete_btn']['#prefix']);
+      unset($form['goals'][$goal_id]['complete_btn']['#suffix']);
+
+      $form['goals'][$goal_id]['complete_btn']['#prefix'] = '<span id="complete_btn_box'.$goal_id.'">';
+      $form['goals'][$goal_id]['complete_btn']['#suffix'] = '</span>';
+      
+      if ($goal['completed']) {
+        $goal_node->set("field_task_complete", 0);
+        $form['goals'][$goal_id]['complete_btn']['#attributes']['aria-pressed'] = ['false'];
+        $form['goals'][$goal_id]['complete_btn']['#attributes']['class'] = ['btn', 'btn-primary', 'custom-checkbox-ok'];
+      } else {
+        $goal_node->set("field_task_complete", 1);
+        $form['goals'][$goal_id]['complete_btn']['#attributes']['aria-pressed'] = ['true'];
+        $form['goals'][$goal_id]['complete_btn']['#attributes']['class'] = ['btn', 'btn-primary', 'custom-checkbox-ok', 'active'];
+      }      
+      $goal_node->save();
+      
+      drupal_set_message($this->t($this->updated_msg));
+      $message = [
         '#theme' => 'status_messages',
         '#message_list' => drupal_get_messages(),
         '#status_headings' => [
@@ -161,12 +246,15 @@ class MilestoneEditForm extends FormBase {
           'error'  => $this->t('Error message'),
           'warning'=> $this->t('Warning message'),
         ],
-      ];
-    $messages = \Drupal::service('renderer')->render($message);
-    $ajax_response->addCommand(new HtmlCommand('#form-system-messages', $messages));
-
+      ];  
+      $messages = \Drupal::service('renderer')->render($message);
+      $ajax_response->addCommand(new HtmlCommand('#form-system-messages', $messages));
+      $ajax_response->addCommand(new ReplaceCommand('#complete_btn_box'.$goal_id, $form['goals'][$goal_id]['complete_btn']));
+    }
+    
     return $ajax_response;
   }
+  
 
   /**
    * {@inheritdoc}
