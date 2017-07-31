@@ -9,7 +9,7 @@ namespace Drupal\bc_2movepeople_dashboard\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\node\NodeInterface;
+//use Drupal\node\NodeInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\RemoveCommand;
@@ -22,17 +22,21 @@ class MilestoneEditForm extends FormBase {
   protected $node;
   private $updated_msg = 'Records successfully updated.';
   private $wrong_msg = 'Something wrong.';
+  
+  public function __construct($nodedata) {
+    $this->node = $nodedata;
+  }  
+  
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $milestone_node = null) {
-    $this->node = $milestone_node;
-    
+  public function buildForm(array $form, FormStateInterface $form_state) {
+//    $this->node = $milestone_node;   
 //    $form['#attached']['library'][] = 'core/drupal.ajax';
 //    $form['#attached']['library'][] = 'core/drupal.dialog';
 //    $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
     
-    $purpose = $milestone_node->get('field_purpose')->value;
+    $purpose = $this->node->get('field_purpose')->value;
     
     $form['purpose'] = [
       '#type' => 'textarea',
@@ -51,13 +55,13 @@ class MilestoneEditForm extends FormBase {
           . '</div>'
     ];
 
-    $raw_goal_ids = $milestone_node->get('field_goal_ids')->getValue();
+    $raw_goal_ids = $this->node->get('field_goal_ids')->getValue();
      
     foreach ($raw_goal_ids as $tid) {
       $form['goals']['#tree'] = TRUE;
       
       $goal_id = $tid['target_id'];
-      $goal = MovepeopleDashboardController::getGoal($goal_id, $milestone_node);
+      $goal = MovepeopleDashboardController::getGoal($goal_id, $this->node);
 
       $form['goals'][$goal_id]['title'] = [
         '#type' => 'textfield',
@@ -74,7 +78,6 @@ class MilestoneEditForm extends FormBase {
         '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2">',
         '#suffix' => '</div>'
       ];
-
 
       $form['goals'][$goal_id]['due_date'] = [
         '#type' => 'date',
@@ -167,7 +170,7 @@ class MilestoneEditForm extends FormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'bc_2movepeople-dashboard-milestone-edit-form';
+    return 'bc_2movepeople-dashboard-milestone-edit-form-'.$this->node->id();
   }
   
   
@@ -262,7 +265,7 @@ class MilestoneEditForm extends FormBase {
     return $ajax_response;
   }
   
-    /**
+  /**
    * {@inheritdoc}
    */
   public function ajaxGoalDelete(array &$form, FormStateInterface $form_state) {
@@ -302,7 +305,7 @@ class MilestoneEditForm extends FormBase {
     
     return $ajax_response;
   }
-
+ 
   /**
    * {@inheritdoc}
    */

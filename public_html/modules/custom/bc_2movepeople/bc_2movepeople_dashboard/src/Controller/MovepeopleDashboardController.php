@@ -12,6 +12,9 @@ use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\bc_2movepeople_dashboard\bc_2movepeople_dashboardStorage;
+use Drupal\bc_2movepeople_dashboard\Form\MilestonePriorityEditForm;
+use Drupal\bc_2movepeople_dashboard\Form\MilestoneEditForm;
+use Drupal\bc_2movepeople_dashboard\Form\MilestoneStatusEditForm;
 
 /**
  * Controller for js_example pages.
@@ -166,8 +169,12 @@ class MovepeopleDashboardController extends ControllerBase {
     $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
     foreach ($nodes as $progrdata) {
       $progression_targets[$progrdata->id()]['id'] = $progrdata->id();
-      $progression_targets[$progrdata->id()]['title'] = $progrdata->get('title')->value;  
-      $progression_targets[$progrdata->id()]['form'] = \Drupal::formBuilder()->getForm(\Drupal\bc_2movepeople_dashboard\Form\MilestoneEditForm::class, $progrdata);
+      $progression_targets[$progrdata->id()]['title'] = $progrdata->get('title')->value; 
+      
+      $milestone_edit_form = new MilestoneEditForm($progrdata);
+      $progression_targets[$progrdata->id()]['form'] = \Drupal::formBuilder()->getForm($milestone_edit_form);
+
+      //$progression_targets[$progrdata->id()]['form'] = \Drupal::formBuilder()->getForm(\Drupal\bc_2movepeople_dashboard\Form\MilestoneEditForm::class, $progrdata);
     }
     $build = array(
       '#theme' => 'bc_2movepeople_milestone_dashboard',
@@ -349,10 +356,17 @@ class MovepeopleDashboardController extends ControllerBase {
     foreach ($entity_ids as $key => $target_id) {
       $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($target_id);
       $title = $nodedata->get('title')->value;
-      $priority = $nodedata->get('field_priority')->value;
       
-      $status_obj = $nodedata->get('field_progression_status');
-      $status = $status_obj->getSettings()['allowed_values'][$status_obj->value];
+     // $priority = $nodedata->get('field_priority')->value;
+      
+      $priority_edit_form = new MilestonePriorityEditForm($nodedata);
+      $priority = \Drupal::formBuilder()->getForm($priority_edit_form);
+      
+      $status_edit_form = new MilestoneStatusEditForm($nodedata);
+      $status = \Drupal::formBuilder()->getForm($status_edit_form);
+      
+//      $status_obj = $nodedata->get('field_progression_status');
+//      $status = $status_obj->getSettings()['allowed_values'][$status_obj->value];
      
       $table[$key] = array($title, $priority, $status);
     }
