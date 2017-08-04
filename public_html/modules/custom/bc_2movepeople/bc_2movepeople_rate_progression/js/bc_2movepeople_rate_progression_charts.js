@@ -35,12 +35,18 @@
         $.ajax({
           type: 'GET',
           data: {from: date_from, to: date_to},
-          url: 'rates/' + progression_id + '/get',
+          url: '/rates/' + progression_id + '/get',
           dataType: 'json',
           success: function (data) {
             if (data.values.length) {
               google.charts.setOnLoadCallback(function () {
-                drawChart("div_chart_" + progression_id, data)
+                var arr = [
+                  [''].concat(Object.values(data.series)),
+                ];
+                data.values.forEach(function (item) {
+                  arr.push(item);
+                });
+                drawChart("div_chart_" + progression_id, arr, data.chart_title)
               });
             } else {
               $("#dialog-message").dialog("open");
@@ -77,6 +83,7 @@
             data.values.forEach(function (item) {
               arr.push(item);
             });
+
             drawChart(panel.find('.div-chart').attr('id'), arr, data.chart_title)
             $('#' + element).parent('.ui-accordion-content').height($('#' + element).parent('.ui-accordion-content').children('.div-goals').height()
                     + $('#' + element).parent('.ui-accordion-content').children('.div-form').height()

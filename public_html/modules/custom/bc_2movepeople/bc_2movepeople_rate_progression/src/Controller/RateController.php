@@ -70,6 +70,7 @@ class RateController extends ControllerBase {
         $val = array($val);
       $data['values'][$key] = array_merge(array(" "), $val);
     }
+
     return new JsonResponse($data);
   }
 }
