@@ -112,7 +112,7 @@ class MilestoneTaskEditForm extends FormBase {
         $renderer = \Drupal::service('renderer');
         //$response->addCommand(new HtmlCommand("#goals-box", $render_goals))
         //$response->addCommand(new HtmlCommand("#goals-box", $renderer->render($goals)));
-        $response->addCommand(new ReplaceCommand("#goals-box", $renderer->render($goals)));
+        $response->addCommand(new ReplaceCommand("#goals-box-".$this->parent_node->id(), $renderer->render($goals)));
         $response->addCommand(new CloseModalDialogCommand());
       }
     }
