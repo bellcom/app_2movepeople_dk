@@ -33,6 +33,7 @@ function bc_2movepeople_dashboard_theme() {
     'bc_2movepeople_milestone_dashboard' => array(
       'template' => 'bc-2movepeople-milestone-dashboard',
       'variables' => array('title' => NULL,
+        'user' => NULL,
         'subtitle' => NULL,
         'milestone_targets' => array()),
     ),

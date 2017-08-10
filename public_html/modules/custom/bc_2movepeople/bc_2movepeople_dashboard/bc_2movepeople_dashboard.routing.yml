@@ -40,3 +40,14 @@ bc_2movepeople_dashboard_milestone.task_add:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskEditForm'
   requirements:
     _permission: 'access content'
+bc_2movepeople_dashboard_milestone.add:
+  path: '/2movepeople/progression_target/milestone/{user}/add'
+  options:
+    parameters:
+      user:
+        type: entity:user
+  defaults:
+    _title: 'Add new milestone'
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneAddForm'
+  requirements:
+    _permission: 'access content'

@@ -29,8 +29,6 @@ class MilestoneTaskEditForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL) {
     $this->parent_node = $node;
     
-    $form['#attached']['library'][] = 'bc_2movepeople_dashboard/milestone-task-edit';
-
     $form['#prefix'] = '<div id="bc_2movepeople-dashboard-milestone-task-edit-form">';
     $form['#suffix'] = '</div>';
 

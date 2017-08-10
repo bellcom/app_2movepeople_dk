@@ -3,6 +3,8 @@
 <div id="form-system-messages"></div>
 <div class="demo">
   <h2>{{ subtitle  }}</h2>
+  <a href="/2movepeople/progression_target/milestone/{{ user }}/add" class="btn btn-info" role="button">Add new milestone</a>
+  <br/><br/>
   <div id="accordion">
     {% for milestone_target in milestone_targets %}
       <h3 data-progression-id="{{ milestone_target.id }}">

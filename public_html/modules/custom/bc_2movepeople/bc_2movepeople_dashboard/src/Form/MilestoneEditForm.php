@@ -55,9 +55,7 @@ class MilestoneEditForm extends FormBase {
           . '<div class="col-md-2 col-sm-2 col-xs-2">'.$this->t('Evaluation').'</div>'
           . '<div class="col-md-2 col-sm-2 col-xs-2">'.$this->t('Actions').'</div>'
           . '</div>'
-          . ''
     ];
-
     
     $form = CommonFormUtils::goalsContainer($form, $this->node);
     
