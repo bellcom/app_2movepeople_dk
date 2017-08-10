@@ -5,27 +5,10 @@
  */
 
 namespace Drupal\bc_2movepeople_dashboard\Form;
-use Drupal\Core\Url;
-use Drupal\node\Entity\Node;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 
 
 class CommonFormUtils {
-
-//  public static function buildBulletPointsContainer($form) {
-//    //printing BP container
-//    $form['bullet_points_container'] = [
-//      '#type' => 'container',
-//      '#attributes' => ['id' => 'js-bps-container'],
-//    ];
-//    $form['bullet_points_container']['bp_nids'] = [
-//      '#type' => 'hidden',
-//      '#default_value' => implode(',', $bp_nids),
-//      '#attributes' => ['id' => 'js-bp-nids'],
-//    ];
-//
-//    return $form;
-//  }
 
   public static function goalsContainer($form, $node) {
     
@@ -44,7 +27,7 @@ class CommonFormUtils {
 
       $form['goals'][$goal_id]['title'] = [
         '#type' => 'textfield',
-        '#default_value' => $goal['title'],
+        '#value' => $goal['title'],
         '#prefix' => '<div class="row custom-form-fields" id="goal_row_'.$goal_id.'">'
           . '<div class="col-md-3 col-sm-2 col-xs-2">',
         '#suffix' => '</div>'
@@ -53,14 +36,14 @@ class CommonFormUtils {
 
       $form['goals'][$goal_id]['activity_title'] = [
         '#type' => 'textfield',
-        '#default_value' => $goal['activity_title'],
+        '#value' => $goal['activity_title'],
         '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2">',
         '#suffix' => '</div>'
       ];
 
       $form['goals'][$goal_id]['due_date'] = [
         '#type' => 'date',
-        '#default_value' => $goal['date'],
+        '#value' => $goal['date'],
         '#prefix' => '<div class="col-md-3 col-sm-4 col-xs-4">',
         '#suffix' => '</div>'
 
@@ -68,7 +51,7 @@ class CommonFormUtils {
 
       $form['goals'][$goal_id]['evaluation'] = [
         '#type' => 'textfield',
-        '#default_value' => $goal['evaluation'],
+        '#value' => $goal['evaluation'],
         '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2">',
         '#suffix' => '</div>'
 

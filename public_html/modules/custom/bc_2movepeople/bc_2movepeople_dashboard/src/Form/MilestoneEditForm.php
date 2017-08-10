@@ -16,6 +16,7 @@ use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
+use Drupal\node\Entity\Node;
 
 
 class MilestoneEditForm extends FormBase {
@@ -59,92 +60,6 @@ class MilestoneEditForm extends FormBase {
 
     
     $form = CommonFormUtils::goalsContainer($form, $this->node);
-    
-    //$raw_goal_ids = $this->node->get('field_goal_ids')->getValue();
-    
-    //$form['goals'] = CommonFormUtils::test();
-     
-//    foreach ($raw_goal_ids as $tid) {
-//      $form['goals']['#tree'] = TRUE;
-//      
-//      $goal_id = $tid['target_id'];
-//      $goal = MovepeopleDashboardController::getGoal($goal_id, $this->node);
-//
-//      $form['goals'][$goal_id]['title'] = [
-//        '#type' => 'textfield',
-//        '#default_value' => $goal['title'],
-//        '#prefix' => '<div class="row custom-form-fields" id="goal_row_'.$goal_id.'">'
-//          . '<div class="col-md-3 col-sm-2 col-xs-2">',
-//        '#suffix' => '</div>'
-//
-//      ];
-//
-//      $form['goals'][$goal_id]['activity_title'] = [
-//        '#type' => 'textfield',
-//        '#default_value' => $goal['activity_title'],
-//        '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2">',
-//        '#suffix' => '</div>'
-//      ];
-//
-//      $form['goals'][$goal_id]['due_date'] = [
-//        '#type' => 'date',
-//        '#default_value' => $goal['date'],
-//        '#prefix' => '<div class="col-md-3 col-sm-4 col-xs-4">',
-//        '#suffix' => '</div>'
-//
-//      ];
-//
-//      $form['goals'][$goal_id]['evaluation'] = [
-//        '#type' => 'textfield',
-//        '#default_value' => $goal['evaluation'],
-//        '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2">',
-//        '#suffix' => '</div>'
-//
-//      ];
-//
-//      $form['goals'][$goal_id]['complete_btn'] = [
-//        '#type' => 'button',
-//        '#name' => 'complete_btn'.$goal_id,
-//        '#attributes' => [
-//          'data_goal_id' => $goal_id,
-//          'class' => ['btn', 'btn-primary', 'custom-checkbox-ok'],
-//          'data-toggle'  => ['button'],
-//          'aria-pressed' => ['false'],
-//          'autocomplete' => ['off']
-//        ],
-//        '#ajax' => [
-//          'event' => 'click',
-//          'callback' => '::ajaxGoalComplete',
-//          'progress' => ['type' => 'none']
-//        ],  
-//        '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2"><span id="complete_btn_box'.$goal_id.'">',
-//        '#suffix' => '</span>'
-//      ];
-//
-//      if ($goal['completed']) {
-//        $form['goals'][$goal_id]['complete_btn']['#attributes']['class'][] = 'active';
-//        $form['goals'][$goal_id]['complete_btn']['#attributes']['aria-pressed'] = ['true'];
-//      }
-//      
-//      $form['goals'][$goal_id]['delete_btn'] = [
-//        '#type' => 'button',
-//        '#name' => 'delete_btn'.$goal_id,
-//        '#attributes' => [
-//          'data_goal_id' => $goal_id,
-//          'class' => ['btn', 'btn-primary', 'custom-checkbox-trash'],
-//          'data-toggle' => ['button'],
-//          'aria-pressed' => ['false'],
-//          'autocomplete' => ['off']
-//        ],
-//        '#ajax' => [
-//          'event' => 'click',
-//          'callback' => '::ajaxGoalDelete',
-//          'progress' => ['type' => 'none']
-//        ],
-//        '#suffix' => '</div></div>'
-//      ];
-//      
-//    }
     
 //    $form['system_messages'] = [
 //      '#markup' => '<div id="form-system-messages"></div>',
@@ -295,6 +210,7 @@ class MilestoneEditForm extends FormBase {
     $ajax_response = new AjaxResponse();
     
     $goal_id = $form_state->getTriggeringElement()['#attributes']['data_goal_id'];
+    $this->node = Node::load($this->node->id());
     $old_goal_ids = $this->node->get('field_goal_ids')->getValue();
 
     $is_deleted = 0;
@@ -306,7 +222,6 @@ class MilestoneEditForm extends FormBase {
         $is_deleted = 1;
       }
     }
-
     if ($is_deleted) {
       $this->node->set('field_goal_ids', $new_goal_ids);
       $this->node->save();

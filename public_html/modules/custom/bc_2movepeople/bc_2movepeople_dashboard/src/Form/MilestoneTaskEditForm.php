@@ -108,17 +108,13 @@ class MilestoneTaskEditForm extends FormBase {
       $response->addCommand(new HtmlCommand('#bc_2movepeople-dashboard-milestone-task-edit-form', $form));
     } 
     else {
-
-      //$nid = $this->parent_node->id();
-      //$render_bullet_point = CommonFormUtils::buildSingleBulletPointContainer(array(), $nid, FALSE);
-      
       
       if ($this->isSaved == SAVED_UPDATED) {
         $goals = CommonFormUtils::goalsContainer(array(), $this->parent_node);
         $renderer = \Drupal::service('renderer');
+        //$response->addCommand(new HtmlCommand("#goals-box", $render_goals))
         //$response->addCommand(new HtmlCommand("#goals-box", $renderer->render($goals)));
         $response->addCommand(new ReplaceCommand("#goals-box", $renderer->render($goals)));
-        //$response->addCommand(new HtmlCommand("#goals-box", $render_goals));
         $response->addCommand(new CloseModalDialogCommand());
       }
     }
