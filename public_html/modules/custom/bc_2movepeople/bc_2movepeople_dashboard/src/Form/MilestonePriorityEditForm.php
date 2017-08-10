@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\bc_2movepeople_dashboard\Form\MilestoneEditForm.
+ * Contains \Drupal\bc_2movepeople_dashboard\Form\MilestonePriorityEditForm.
  */
 
 namespace Drupal\bc_2movepeople_dashboard\Form;

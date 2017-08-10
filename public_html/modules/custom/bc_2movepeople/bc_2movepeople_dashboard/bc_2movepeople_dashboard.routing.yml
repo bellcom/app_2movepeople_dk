@@ -29,3 +29,14 @@ bc_2movepeople_dashboard_milestone.info:
   requirements:
     _permission: 'access content'
     _user_is_logged_in: 'TRUE'
+bc_2movepeople_dashboard_milestone.task_add:
+  path: '/progression_target/{node}/goals/add'
+  options:
+    parameters:
+      node:
+        type: entity:node
+  defaults:
+    _title: 'Add new milestone task'
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskEditForm'
+  requirements:
+    _permission: 'access content'

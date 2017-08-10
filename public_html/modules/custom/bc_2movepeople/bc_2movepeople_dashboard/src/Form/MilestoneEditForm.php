@@ -7,6 +7,7 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Form;
 
+use Drupal\Core\Url;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 //use Drupal\node\NodeInterface;
@@ -53,96 +54,118 @@ class MilestoneEditForm extends FormBase {
           . '<div class="col-md-2 col-sm-2 col-xs-2">'.$this->t('Evaluation').'</div>'
           . '<div class="col-md-2 col-sm-2 col-xs-2">'.$this->t('Actions').'</div>'
           . '</div>'
+          . ''
     ];
 
-    $raw_goal_ids = $this->node->get('field_goal_ids')->getValue();
+    
+    $form = CommonFormUtils::goalsContainer($form, $this->node);
+    
+    //$raw_goal_ids = $this->node->get('field_goal_ids')->getValue();
+    
+    //$form['goals'] = CommonFormUtils::test();
      
-    foreach ($raw_goal_ids as $tid) {
-      $form['goals']['#tree'] = TRUE;
-      
-      $goal_id = $tid['target_id'];
-      $goal = MovepeopleDashboardController::getGoal($goal_id, $this->node);
-
-      $form['goals'][$goal_id]['title'] = [
-        '#type' => 'textfield',
-        '#default_value' => $goal['title'],
-        '#prefix' => '<div class="row custom-form-fields" id="goal_row_'.$goal_id.'">'
-          . '<div class="col-md-3 col-sm-2 col-xs-2">',
-        '#suffix' => '</div>'
-
-      ];
-
-      $form['goals'][$goal_id]['activity_title'] = [
-        '#type' => 'textfield',
-        '#default_value' => $goal['activity_title'],
-        '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2">',
-        '#suffix' => '</div>'
-      ];
-
-      $form['goals'][$goal_id]['due_date'] = [
-        '#type' => 'date',
-        '#default_value' => $goal['date'],
-        '#prefix' => '<div class="col-md-3 col-sm-4 col-xs-4">',
-        '#suffix' => '</div>'
-
-      ];
-
-      $form['goals'][$goal_id]['evaluation'] = [
-        '#type' => 'textfield',
-        '#default_value' => $goal['evaluation'],
-        '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2">',
-        '#suffix' => '</div>'
-
-      ];
-
-      $form['goals'][$goal_id]['complete_btn'] = [
-        '#type' => 'button',
-        '#name' => 'complete_btn'.$goal_id,
-        '#attributes' => [
-          'data_goal_id' => $goal_id,
-          'class' => ['btn', 'btn-primary', 'custom-checkbox-ok'],
-          'data-toggle'  => ['button'],
-          'aria-pressed' => ['false'],
-          'autocomplete' => ['off']
-        ],
-        '#ajax' => [
-          'event' => 'click',
-          'callback' => '::ajaxGoalComplete',
-          'progress' => ['type' => 'none']
-        ],  
-        '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2"><span id="complete_btn_box'.$goal_id.'">',
-        '#suffix' => '</span>'
-      ];
-
-      if ($goal['completed']) {
-        $form['goals'][$goal_id]['complete_btn']['#attributes']['class'][] = 'active';
-        $form['goals'][$goal_id]['complete_btn']['#attributes']['aria-pressed'] = ['true'];
-      }
-      
-      $form['goals'][$goal_id]['delete_btn'] = [
-        '#type' => 'button',
-        '#name' => 'delete_btn'.$goal_id,
-        '#attributes' => [
-          'data_goal_id' => $goal_id,
-          'class' => ['btn', 'btn-primary', 'custom-checkbox-trash'],
-          'data-toggle' => ['button'],
-          'aria-pressed' => ['false'],
-          'autocomplete' => ['off']
-        ],
-        '#ajax' => [
-          'event' => 'click',
-          'callback' => '::ajaxGoalDelete',
-          'progress' => ['type' => 'none']
-        ],
-        '#suffix' => '</div></div>'
-      ];
-      
-    }
+//    foreach ($raw_goal_ids as $tid) {
+//      $form['goals']['#tree'] = TRUE;
+//      
+//      $goal_id = $tid['target_id'];
+//      $goal = MovepeopleDashboardController::getGoal($goal_id, $this->node);
+//
+//      $form['goals'][$goal_id]['title'] = [
+//        '#type' => 'textfield',
+//        '#default_value' => $goal['title'],
+//        '#prefix' => '<div class="row custom-form-fields" id="goal_row_'.$goal_id.'">'
+//          . '<div class="col-md-3 col-sm-2 col-xs-2">',
+//        '#suffix' => '</div>'
+//
+//      ];
+//
+//      $form['goals'][$goal_id]['activity_title'] = [
+//        '#type' => 'textfield',
+//        '#default_value' => $goal['activity_title'],
+//        '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2">',
+//        '#suffix' => '</div>'
+//      ];
+//
+//      $form['goals'][$goal_id]['due_date'] = [
+//        '#type' => 'date',
+//        '#default_value' => $goal['date'],
+//        '#prefix' => '<div class="col-md-3 col-sm-4 col-xs-4">',
+//        '#suffix' => '</div>'
+//
+//      ];
+//
+//      $form['goals'][$goal_id]['evaluation'] = [
+//        '#type' => 'textfield',
+//        '#default_value' => $goal['evaluation'],
+//        '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2">',
+//        '#suffix' => '</div>'
+//
+//      ];
+//
+//      $form['goals'][$goal_id]['complete_btn'] = [
+//        '#type' => 'button',
+//        '#name' => 'complete_btn'.$goal_id,
+//        '#attributes' => [
+//          'data_goal_id' => $goal_id,
+//          'class' => ['btn', 'btn-primary', 'custom-checkbox-ok'],
+//          'data-toggle'  => ['button'],
+//          'aria-pressed' => ['false'],
+//          'autocomplete' => ['off']
+//        ],
+//        '#ajax' => [
+//          'event' => 'click',
+//          'callback' => '::ajaxGoalComplete',
+//          'progress' => ['type' => 'none']
+//        ],  
+//        '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2"><span id="complete_btn_box'.$goal_id.'">',
+//        '#suffix' => '</span>'
+//      ];
+//
+//      if ($goal['completed']) {
+//        $form['goals'][$goal_id]['complete_btn']['#attributes']['class'][] = 'active';
+//        $form['goals'][$goal_id]['complete_btn']['#attributes']['aria-pressed'] = ['true'];
+//      }
+//      
+//      $form['goals'][$goal_id]['delete_btn'] = [
+//        '#type' => 'button',
+//        '#name' => 'delete_btn'.$goal_id,
+//        '#attributes' => [
+//          'data_goal_id' => $goal_id,
+//          'class' => ['btn', 'btn-primary', 'custom-checkbox-trash'],
+//          'data-toggle' => ['button'],
+//          'aria-pressed' => ['false'],
+//          'autocomplete' => ['off']
+//        ],
+//        '#ajax' => [
+//          'event' => 'click',
+//          'callback' => '::ajaxGoalDelete',
+//          'progress' => ['type' => 'none']
+//        ],
+//        '#suffix' => '</div></div>'
+//      ];
+//      
+//    }
     
 //    $form['system_messages'] = [
 //      '#markup' => '<div id="form-system-messages"></div>',
 //      '#weight' => -100,
 //    ];
+//    
+    $form['add_mt'] = [ 
+      '#type' => 'link',
+      '#title' => 'Add new task',
+      '#name' => 'add_task_btn',
+      '#url' => Url::fromRoute('bc_2movepeople_dashboard_milestone.task_add', array('node' => $this->node->id())),
+      '#prefix' => '<div class="row custom-form-fields"><div class="col-md-10 col-sm-10 col-xs-10">',
+      '#suffix' => '</div>',
+      '#attributes' => [
+        'class' => ['use-ajax', 'btn', 'btn-info', 'link-btn'],
+        'data-dialog-type' => 'modal',
+      ]
+    ];
+    
+    // Disable caching on this form.
+    $form_state->setCached(FALSE);
     
     $form['actions'] = [
       '#type'  => 'actions',
@@ -151,8 +174,8 @@ class MilestoneEditForm extends FormBase {
         '#name' => 'submit',  
         '#value' => $this->t('Update'),
         '#button_type' => 'primary',
-        '#prefix' => '<div class="pull-left custom-form-fields">',
-        '#suffix' => '</div>',
+        '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2">',
+        '#suffix' => '</div></div>',
         '#ajax' => [
           'callback' => '::ajaxSubmitForm',
           'event' => 'click',
