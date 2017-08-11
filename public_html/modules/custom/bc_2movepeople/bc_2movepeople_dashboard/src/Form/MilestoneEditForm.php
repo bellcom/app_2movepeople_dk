@@ -33,7 +33,8 @@ class MilestoneEditForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-//    $this->node = $milestone_node;   
+    
+    $form['#attached']['library'][] = 'bc_2movepeople_dashboard/bc_2movepeople_dashboard.milestone-edit';   
 //    $form['#attached']['library'][] = 'core/drupal.ajax';
 //    $form['#attached']['library'][] = 'core/drupal.dialog';
 //    $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
@@ -48,13 +49,13 @@ class MilestoneEditForm extends FormBase {
       '#default_value' => $purpose,
       '#prefix' => '<div class="row"><div class="col-sm-12">',
       '#suffix' => '</div></div>'
-          . '<div class="row custom-form-fields custom-form-label">'
-          . '<div class="col-md-3 col-sm-2 col-xs-2">'.$this->t('Milestone').'</div>'
-          . '<div class="col-md-2 col-sm-2 col-xs-2">'.$this->t('Activity').'</div>'
-          . '<div class="col-md-3 col-sm-4 col-xs-4">'.$this->t('Deadline').'</div>'
-          . '<div class="col-md-2 col-sm-2 col-xs-2">'.$this->t('Evaluation').'</div>'
-          . '<div class="col-md-2 col-sm-2 col-xs-2">'.$this->t('Actions').'</div>'
-          . '</div>'
+//          . '<div class="row custom-form-fields custom-form-label">'
+//          . '<div class="col-md-3 col-sm-2 col-xs-2">'.$this->t('Milestone').'</div>'
+//          . '<div class="col-md-2 col-sm-2 col-xs-2">'.$this->t('Activity').'</div>'
+//          . '<div class="col-md-3 col-sm-4 col-xs-4">'.$this->t('Deadline').'</div>'
+//          . '<div class="col-md-2 col-sm-2 col-xs-2">'.$this->t('Evaluation').'</div>'
+//          . '<div class="col-md-2 col-sm-2 col-xs-2">'.$this->t('Actions').'</div>'
+//          . '</div>'
     ];
     
     $form = CommonFormUtils::goalsContainer($form, $this->node);

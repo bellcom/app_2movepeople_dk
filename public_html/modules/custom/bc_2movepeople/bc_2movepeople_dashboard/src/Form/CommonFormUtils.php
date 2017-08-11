@@ -35,18 +35,16 @@ class CommonFormUtils {
      
       $form['goals']['#tree'] = TRUE;
       
-//      $form['goals']['header'] = [
-//        '#markup' => ''
-//            . '<div class="row custom-form-fields custom-form-label">'
-//            . '<div class="col-md-3 col-sm-2 col-xs-2">Milestone</div>'
-//            . '<div class="col-md-2 col-sm-2 col-xs-2">Activity</div>'
-//            . '<div class="col-md-3 col-sm-4 col-xs-4">Deadline</div>'
-//            . '<div class="col-md-2 col-sm-2 col-xs-2">Evaluation</div>'
-//            . '<div class="col-md-2 col-sm-2 col-xs-2">Actions</div>'
-//            . '</div>'
-//      ];
-      
-      
+      $form['goals']['header'] = [
+        '#markup' => ''
+            . '<div class="row custom-form-fields custom-form-label">'
+            . '<div class="col-md-3 col-sm-2 col-xs-2">Milestone</div>'
+            . '<div class="col-md-2 col-sm-2 col-xs-2">Activity</div>'
+            . '<div class="col-md-3 col-sm-4 col-xs-4">Deadline</div>'
+            . '<div class="col-md-2 col-sm-2 col-xs-2">Evaluation</div>'
+            . '<div class="col-md-2 col-sm-2 col-xs-2">Actions</div>'
+            . '</div>'
+      ];
       
       $goal_id = $tid['target_id'];
       $goal = MovepeopleDashboardController::getGoal($goal_id, $node);

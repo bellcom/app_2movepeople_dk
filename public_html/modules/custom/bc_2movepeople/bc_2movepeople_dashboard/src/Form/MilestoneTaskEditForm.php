@@ -13,7 +13,8 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\node\NodeInterface;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
 use Drupal\Core\Ajax\HtmlCommand;
-use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\Url;
+//use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\node\Entity\Node;
 
 class MilestoneTaskEditForm extends FormBase {
@@ -62,17 +63,23 @@ class MilestoneTaskEditForm extends FormBase {
       '#type' => 'actions',
     ];
     // Add a submit button that handles the submission of the form.
+//    $form['actions']['submit'] = [
+//      '#type' => 'submit',
+//      '#value' => $this->t('Save'),
+//      '#attributes' => [
+//        'class' => ['btn', 'btn-info'],
+//      ],
+//      '#ajax' => [
+//        'callback' => '::ajaxSubmitForm',
+//        'event' => 'click',
+//      ],
+//    ];
+    
     $form['actions']['submit'] = [
       '#type' => 'submit',
+      '#name' => 'submit',  
       '#value' => $this->t('Save'),
-      '#attributes' => [
-        'class' => ['btn', 'btn-info'],
-      ],
-      '#ajax' => [
-        'callback' => '::ajaxSubmitForm',
-        'event' => 'click',
-      ],
-    ];
+    ];    
 
     return $form;
   }
@@ -90,30 +97,24 @@ class MilestoneTaskEditForm extends FormBase {
    * {@inheritdoc}
    */
   public function ajaxSubmitForm(array &$form, FormStateInterface $form_state) {
-    //dpm(time() . 'ajaxSubmitForm');
-    // We begin building a new ajax reponse.
     $response = new AjaxResponse();
     
     if ($form_state->getErrors()) {
-
       unset($form['#prefix']);
       unset($form['#suffix']);
       $form['status_messages'] = [
         '#type' => 'status_messages',
-        '#message_list' => 'test',//$this->wrong_msg,
         '#weight' => -10,
       ];
       $response->addCommand(new HtmlCommand('#bc_2movepeople-dashboard-milestone-task-edit-form', $form));
     } 
     else {
-      
       if ($this->isSaved == SAVED_UPDATED) {
-        $goals = CommonFormUtils::goalsContainer(array(), $this->parent_node);
-        $renderer = \Drupal::service('renderer');
-        //$response->addCommand(new HtmlCommand("#goals-box", $render_goals))
-        //$response->addCommand(new HtmlCommand("#goals-box", $renderer->render($goals)));
-        $response->addCommand(new ReplaceCommand("#goals-box-".$this->parent_node->id(), $renderer->render($goals)));
+//        $goals = CommonFormUtils::goalsContainer(array(), $this->parent_node);
+//        $renderer = \Drupal::service('renderer');
+//        $response->addCommand(new ReplaceCommand("#goals-box-".$this->parent_node->id(), $renderer->render($goals)));
         $response->addCommand(new CloseModalDialogCommand());
+        $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard_milestone.info', ['user' => 12]));
       }
     }
     return $response;
@@ -149,6 +150,10 @@ class MilestoneTaskEditForm extends FormBase {
       $new_goal_ids[] = $node->id();
       $this->parent_node->set('field_goal_ids', $new_goal_ids);
       $this->isSaved = $this->parent_node->save();
+      
+      $user = $this->parent_node->get('field_progression_user')->getValue();   
+      $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard_milestone.info', 
+        ['user' => $user[0]['target_id']], ['fragment' => $this->parent_node->id()]));
     }
   }
        

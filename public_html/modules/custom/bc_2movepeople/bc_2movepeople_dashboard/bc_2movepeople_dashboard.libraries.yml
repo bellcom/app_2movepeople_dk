@@ -32,3 +32,6 @@ bc_2movepeople_dashboard.weights:
   dependencies:
     - core/jquery
     - core/drupalSettings
+bc_2movepeople_dashboard.milestone-edit:
+  js:
+    js/milestone-edit.js: {}
