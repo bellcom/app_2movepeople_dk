@@ -156,6 +156,7 @@ class MovepeopleDashboardController extends ControllerBase {
       '#theme' => 'bc_2movepeople_dashboard',
       "#title" => 'Dashboard',
       "#subtitle" => $title,
+      "#user" => $user->id(),
       '#progression_targets' => $progression_targets
     );
     return $build;

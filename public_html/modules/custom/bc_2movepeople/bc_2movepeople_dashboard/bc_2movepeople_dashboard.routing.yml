@@ -51,3 +51,14 @@ bc_2movepeople_dashboard_milestone.add:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneAddForm'
   requirements:
     _permission: 'access content'
+bc_2movepeople_dashboard_progression.add:
+  path: '/2movepeople/progression_target/progression/{user}/add'
+  options:
+    parameters:
+      user:
+        type: entity:user
+  defaults:
+    _title: 'Add new progression'
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionAddForm'
+  requirements:
+    _permission: 'access content'
