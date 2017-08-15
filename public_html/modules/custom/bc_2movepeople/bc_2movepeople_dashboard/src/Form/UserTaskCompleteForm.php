@@ -29,6 +29,8 @@ class UserTaskCompleteForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL) {
     $this->node = $node;
     
+    list($year, $month, $day) = explode('-', $node->get('field_due_date')->value);
+    
     $form['info'] = [
       '#markup' => ''
           . '<br/>'
@@ -43,7 +45,7 @@ class UserTaskCompleteForm extends FormBase {
           . '<div class="row task-complete-ajax-form-row">'
           . '<div class="col-sm-12 task-complete-ajax-form-title">'.$this->t('Deadline').'</div></div>'
           . '<div class="row task-complete-ajax-form-row">'
-          . '<div class="col-sm-12 task-complete-ajax-form-box">'.$node->get('field_due_date')->value.'</div></div>'
+          . '<div class="col-sm-12 task-complete-ajax-form-box">'.$day.'-'.$month.'-'.$year.'</div></div>'
           . '<div class="row task-complete-ajax-form-row">'
           . '<div class="col-sm-12 task-complete-ajax-form-title">'.$this->t('Evaluation').'</div></div>'
           . '<div class="row task-complete-ajax-form-row">'
