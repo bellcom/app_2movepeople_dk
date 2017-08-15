@@ -1,0 +1,9 @@
+uuid: 202fdd9b-0bbc-49d0-9b48-22b76505b2a4
+langcode: en
+status: true
+dependencies: {  }
+id: 2mp_user
+label: '2MP User'
+weight: 5
+is_admin: null
+permissions: {  }

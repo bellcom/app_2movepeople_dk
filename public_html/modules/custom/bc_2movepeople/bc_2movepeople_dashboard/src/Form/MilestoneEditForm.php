@@ -75,6 +75,9 @@ class MilestoneEditForm extends FormBase {
       '#attributes' => [
         'class' => ['use-ajax', 'btn', 'btn-info', 'link-btn'],
         'data-dialog-type' => 'modal',
+//        'data-dialog-options' => Json::encode([
+//          'width' => 700,
+//        ]),
       ]
     ];
     

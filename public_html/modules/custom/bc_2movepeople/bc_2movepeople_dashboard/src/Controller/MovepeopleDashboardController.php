@@ -264,16 +264,21 @@ class MovepeopleDashboardController extends ControllerBase {
       $goal_id = $tid['target_id'];
       $subgoals[$goal_id] = self::getGoal($goal_id, $progression_target);
     }
-    return array('id' => $nodeid,
+    $result = array('id' => $nodeid,
       'title' => $nodetitle,
       'type' => $type,
       'completed' => $is_completed,
       'date' => $date,
-      'rates' => bc_2movepeople_rate_progression_get_rates($progression_target->id(), $nodeid),
+      'rates' => nulls,
       'activity_title' => $activity_title,
       'evaluation' => $evaluation,
       'subgoals' => $subgoals,
     );
+    if (is_object($progression_target)) {
+      $result['rates'] = bc_2movepeople_rate_progression_get_rates($progression_target->id(), $nodeid);
+    }
+    
+    return $result;
   }
 
   /*
@@ -351,7 +356,7 @@ class MovepeopleDashboardController extends ControllerBase {
       'data' => $table);
   }
   
-    public static function getMilestoneTable($entity_ids) {
+  public static function getMilestoneTable($entity_ids) {
     $table = array();
     $header = array_merge(array(t('Target Milestones'), t('Priority'), t('Status')));
 
@@ -375,4 +380,51 @@ class MovepeopleDashboardController extends ControllerBase {
     return array('header' => $header, 
       'data' => $table);
   }
+  
+  public function getUserTasks(AccountInterface $user) {
+    $title = t("User's tasks");
+
+    $query = \Drupal::entityQuery('node');
+    $query->condition('status', 1);
+    $query->condition('type', 'progression_target');
+    $query->condition('field_progression_type', 'target_milestone');
+    $query->condition('field_progression_user', 12);//$user->id());
+   // $query->sort('date', 'DESC'); 
+    $entity_ids = $query->execute();
+    $progression_targets = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
+    
+ 
+    $hour   = 0;
+    $minute = 0;
+    $second = 0;
+    
+    $tasks = [];
+    foreach ($progression_targets as $progrdata) {
+      $goal_ids = $progrdata->get('field_goal_ids')->getValue();
+      
+      foreach ($goal_ids as $tid) {
+        $goal_id = $tid['target_id'];
+        $goal = self::getGoal($goal_id);
+        if ($goal['completed']) {
+          continue;
+        }
+        
+        list($year, $month, $day) = explode('-', $goal['date']);
+        $timestamp = mktime($hour, $minute, $second, $month, $day, $year); 
+        
+        $tasks[$timestamp] = $goal;
+        $second++;
+      }
+    }
+    ksort($tasks, SORT_NUMERIC);
+
+    $build = array(
+      '#theme' => 'bc_2movepeople_dashboard_user_tasks_overview',
+      "#title" => $title,
+      '#tasks' => $tasks
+    );
+  
+    return $build;
+  }
+
 }

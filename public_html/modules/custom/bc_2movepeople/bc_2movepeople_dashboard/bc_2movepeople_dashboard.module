@@ -56,6 +56,13 @@ function bc_2movepeople_dashboard_theme() {
       'table_header' => array(),
       'table_data' => array()),
     ),
+    'bc_2movepeople_dashboard_user_tasks_overview' => array(
+      'template' => 'bc-2movepeople-user-tasks',
+      'variables' => array(
+          'title' => NULL,
+          'tasks' => NULL
+      ),
+    ),
   );
 }
 
@@ -67,6 +74,12 @@ function bc_2movepeople_dashboard_theme() {
  * Implements hook_user_login().
  */
 function bc_2movepeople_dashboard_user_login($account) {
-    $response = new RedirectResponse('/');
-    $response->send();   
+    $path = '/';
+    $user_roles = $account->getRoles();
+    if (in_array("2mp_user", $user_roles)) {
+      $path = '/en/2movepeople/16/tasks';
+      $path = Url::fromRoute('bc_2movepeople_dashboard_user_tasks_overview', ['user' => $account->id()])->toString();
+    }  
+    $response = new RedirectResponse($path);
+    $response->send(); 
 }

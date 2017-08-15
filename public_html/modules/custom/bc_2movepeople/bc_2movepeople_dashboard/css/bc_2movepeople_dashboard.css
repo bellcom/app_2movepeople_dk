@@ -55,3 +55,20 @@ button.custom-checkbox-trash:before {
 .link-btn {
   color: #FFF !important;
 }
+.user-task-box {
+  border-bottom: 1px solid lightgray;
+  padding: 5px;
+}
+.task-complete-ajax-form-row {
+  padding: 0 10px;
+}
+.task-complete-ajax-form-title {
+  font-weight: bold;
+}
+.task-complete-ajax-form-box {
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 5px;
+}
+.col-right {
+  text-align: right;
+}

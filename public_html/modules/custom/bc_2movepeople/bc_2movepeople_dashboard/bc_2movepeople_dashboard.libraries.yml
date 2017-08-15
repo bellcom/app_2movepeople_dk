@@ -35,3 +35,8 @@ bc_2movepeople_dashboard.weights:
 bc_2movepeople_dashboard.milestone-edit:
   js:
     js/milestone-edit.js: {}
+bc_2movepeople_dashboard.user-tasks:
+  # Add css file.
+  css:
+    component:
+      css/bc_2movepeople_dashboard.css: {}
