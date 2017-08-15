@@ -12,7 +12,6 @@ dependencies:
   module:
     - image
     - path
-    - shs_chosen
     - user
 _core:
   default_config_hash: LLAieeozVsoZDb-2PbFxRJpQqnKmpR7-4OoRJnduz-U
@@ -34,21 +33,13 @@ content:
     third_party_settings: {  }
     type: entity_reference_autocomplete
   field_organisation:
-    weight: 7
+    weight: 9
     settings:
-      chosen_override: false
-      chosen_settings:
-        disable_search: false
-        search_contains: false
-        placeholder_text_multiple: 'Choose some options'
-        placeholder_text_single: 'Choose an option'
-        no_results_text: 'No results match'
-      display_node_count: false
-      create_new_items: false
-      create_new_levels: false
-      force_deepest: false
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
-    type: options_shs_chosen
+    type: entity_reference_autocomplete
   field_user_firstname:
     weight: 1
     settings:
