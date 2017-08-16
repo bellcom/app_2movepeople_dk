@@ -176,7 +176,7 @@ class MovepeopleDashboardController extends ControllerBase {
       $progression_targets[$progrdata->id()]['form'] = \Drupal::formBuilder()->getForm($milestone_edit_form);
 
       //$progression_targets[$progrdata->id()]['form'] = \Drupal::formBuilder()->getForm(\Drupal\bc_2movepeople_dashboard\Form\MilestoneEditForm::class, $progrdata);
-    }
+    }    
     $build = array(
       '#theme' => 'bc_2movepeople_milestone_dashboard',
       "#title" => 'Dashboard Milestone',
@@ -388,7 +388,7 @@ class MovepeopleDashboardController extends ControllerBase {
     $query->condition('status', 1);
     $query->condition('type', 'progression_target');
     $query->condition('field_progression_type', 'target_milestone');
-    $query->condition('field_progression_user', 12);//$user->id());
+    $query->condition('field_progression_user', $user->id());
    // $query->sort('date', 'DESC'); 
     $entity_ids = $query->execute();
     $progression_targets = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
