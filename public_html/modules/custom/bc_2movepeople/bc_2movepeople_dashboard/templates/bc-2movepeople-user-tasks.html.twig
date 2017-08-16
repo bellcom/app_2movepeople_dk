@@ -19,7 +19,7 @@
       <div class="col-sm-2"></div>
     </div>
     {% if task.subgoals is not null %}
-      {{ _self.recursiveTasks(task.subgoals) }}
+      {{ _self.recursiveTasks(task.subgoals, user) }}
     {% endif %}
   {% endfor %}
   
