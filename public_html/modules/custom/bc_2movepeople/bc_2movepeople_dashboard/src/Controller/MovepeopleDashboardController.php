@@ -382,7 +382,7 @@ class MovepeopleDashboardController extends ControllerBase {
   }
   
   public function getUserTasks(AccountInterface $user) {
-    $title = t("User's tasks");
+    $title = t("User's tasks");   
 
     $query = \Drupal::entityQuery('node');
     $query->condition('status', 1);

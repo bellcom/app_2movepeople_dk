@@ -6,6 +6,7 @@ bc_2movepeople_dashboard.info:
   requirements:
     _permission: 'access content'
     _user_is_logged_in: 'TRUE'
+
 bc_2movepeople_dashboard_clients.info:
   path: '/2movepeople/clients'
   defaults:
@@ -13,6 +14,7 @@ bc_2movepeople_dashboard_clients.info:
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getClientsImplementation'
   requirements:
     _user_is_logged_in: 'TRUE'
+
 bc_2movepeople_dashboard_user_overview.info:
   path: '/2movepeople/dashboard/{user}/overview'
   defaults:
@@ -21,6 +23,7 @@ bc_2movepeople_dashboard_user_overview.info:
   requirements:
     _permission: 'access content'
     _user_is_logged_in: 'TRUE'
+
 bc_2movepeople_dashboard_milestone.info:
   path: '/2movepeople/dashboard/milestone/{user}'
   defaults:
@@ -29,6 +32,7 @@ bc_2movepeople_dashboard_milestone.info:
   requirements:
     _permission: 'access content'
     _user_is_logged_in: 'TRUE'
+
 bc_2movepeople_dashboard_milestone.task_add:
   path: '/progression_target/{node}/goals/add'
   options:
@@ -40,6 +44,7 @@ bc_2movepeople_dashboard_milestone.task_add:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskEditForm'
   requirements:
     _permission: 'access content'
+
 bc_2movepeople_dashboard_milestone.add:
   path: '/2movepeople/progression_target/milestone/{user}/add'
   options:
@@ -51,6 +56,7 @@ bc_2movepeople_dashboard_milestone.add:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneAddForm'
   requirements:
     _permission: 'access content'
+
 bc_2movepeople_dashboard_progression.add:
   path: '/2movepeople/progression_target/progression/{user}/add'
   options:
@@ -62,6 +68,7 @@ bc_2movepeople_dashboard_progression.add:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionAddForm'
   requirements:
     _permission: 'access content'
+
 bc_2movepeople_dashboard_user_tasks_overview:
   path: '/2movepeople/user/{user}/tasks'
   options:
@@ -74,6 +81,7 @@ bc_2movepeople_dashboard_user_tasks_overview:
   requirements:
     _permission: 'access content'
     _user_is_logged_in: 'TRUE'
+
 bc_2movepeople_dashboard_user_task.complete:
   path: '/2movepeople/user/{user}/task/{node}/complete'
   options:
@@ -88,3 +96,13 @@ bc_2movepeople_dashboard_user_task.complete:
   requirements:
     _permission: 'access content'
     _user_is_logged_in: 'TRUE'
+
+bc_2movepeople_dashboard.admin_settings_form:
+  path: '/admin/config/bc_2movepeople_dashboard/adminsettings'
+  defaults:
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\AdminSettingsForm'
+    _title: '2 Move People settings form'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE

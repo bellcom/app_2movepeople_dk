@@ -137,6 +137,10 @@ class UserTaskCompleteForm extends FormBase {
       $query->condition('status', 1);
       $query->condition('field_connected_users', $this->user->id());
       $mp_admin_ids = $query->execute();
+      
+      $config = $this->config('bc_2movepeople_dashboard.AdminSettings');
+      $body = $config->get('task_complete_email_body');
+      $subject = $config->get('task_complete_email_subject');
 
 
       foreach ($mp_admin_ids as $mp_id) {
@@ -147,9 +151,9 @@ class UserTaskCompleteForm extends FormBase {
         CommonFormUtils::sendMail([
             'to' => $to,
             'from' => $from = \Drupal::config('system.site')->get('mail'),
-            'subject' => 'Test subject',
-            'body' => 'Test message...',
-            'sender' => 'System notify'
+            'subject' => $subject,
+            'body' => $body,
+            'sender' => $this->t('System notify')
         ]);
       }
     } // SAVED_UPDATED
