@@ -140,6 +140,9 @@ class UserTaskCompleteForm extends FormBase {
       $config = $this->config('bc_2movepeople_dashboard.AdminSettings');
       $body = $config->get('task_complete_email_body');
       $subject = $config->get('task_complete_email_subject');
+      
+      $body = str_replace("@user", $this->user->get('name')->value, $body);
+      $body = str_replace("@task_title", $this->node->get('title')->value, $body);
 
       foreach ($mp_admin_ids as $mp_id) {
         $mp_admin = \Drupal\user\Entity\User::load($mp_id);

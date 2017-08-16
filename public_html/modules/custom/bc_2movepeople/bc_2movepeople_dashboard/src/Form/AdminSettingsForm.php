@@ -46,6 +46,9 @@ class AdminSettingsForm extends ConfigFormBase {
       '#type' => 'textarea',
       '#title' => $this->t('Task complete\'s email body'),
       '#default_value' => $config->get('task_complete_email_body'),
+      '#description' => '
+        @user = '.$this->t('The name of the user that finished the task').'<br />
+        @task_title  = '.$this->t('The title of the task that is being complete')
     ];
     
     return parent::buildForm($form, $form_state);
