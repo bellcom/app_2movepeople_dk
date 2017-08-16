@@ -128,8 +128,7 @@ class UserTaskCompleteForm extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->node->set("field_task_complete",TRUE);
-    //$this->isSaved = $this->node->save();
-    $this->isSaved = 2;
+    $this->isSaved = $this->node->save();
     
     if ($this->isSaved == SAVED_UPDATED) {
       //\Drupal::currentUser()->id()
@@ -142,11 +141,9 @@ class UserTaskCompleteForm extends FormBase {
       $body = $config->get('task_complete_email_body');
       $subject = $config->get('task_complete_email_subject');
 
-
       foreach ($mp_admin_ids as $mp_id) {
         $mp_admin = \Drupal\user\Entity\User::load($mp_id);
         $to = $mp_admin->get('mail')->value;
-        $to = 'evgeny@bellcom.ee'; // TEST HACK
 
         CommonFormUtils::sendMail([
             'to' => $to,
