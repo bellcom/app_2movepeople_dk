@@ -128,16 +128,25 @@ class CommonFormUtils {
     return $form;
   }
   
+  /**
+   * Simply send mail function
+   *
+   * @param array $message with keys
+   * - to
+   * - from
+   * - body
+   * - sender
+   * - subject
+   * @return BOOLEAN
+   */  
   public static function sendMail($message) {
     $send_mail = new \Drupal\Core\Mail\Plugin\Mail\PhpMail(); 
     $message['headers'] = array(
       'content-type' => 'text/html',
       'MIME-Version' => '1.0',
       'reply-to' => $message['from'],
-      'from' => 'sender name <'.$message['from'].'>'
+      'from' => $message['sender'].' <'.$message['from'].'>'
     );
-    $send_mail->mail($message);
-    
-    return 1;
+    return $send_mail->mail($message);
   }
 }

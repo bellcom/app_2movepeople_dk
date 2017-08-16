@@ -389,10 +389,8 @@ class MovepeopleDashboardController extends ControllerBase {
     $query->condition('type', 'progression_target');
     $query->condition('field_progression_type', 'target_milestone');
     $query->condition('field_progression_user', $user->id());
-   // $query->sort('date', 'DESC'); 
     $entity_ids = $query->execute();
     $progression_targets = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
-    
  
     $hour   = 0;
     $minute = 0;

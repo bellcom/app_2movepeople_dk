@@ -142,13 +142,14 @@ class UserTaskCompleteForm extends FormBase {
       foreach ($mp_admin_ids as $mp_id) {
         $mp_admin = \Drupal\user\Entity\User::load($mp_id);
         $to = $mp_admin->get('mail')->value;
-        $to = 'evgeny@bellcom.ee';
+        $to = 'evgeny@bellcom.ee'; // TEST HACK
 
         CommonFormUtils::sendMail([
             'to' => $to,
-            'from' => 'admin@move.dk',
+            'from' => $from = \Drupal::config('system.site')->get('mail'),
             'subject' => 'Test subject',
-            'body' => 'Test message...'
+            'body' => 'Test message...',
+            'sender' => 'System notify'
         ]);
       }
     } // SAVED_UPDATED
