@@ -1,6 +1,6 @@
 {{ attach_library('bc_2movepeople_dashboard/bc_2movepeople_dashboard.user-tasks') }}
 
-{% macro recursiveTasks(tasks) %}
+{% macro recursiveTasks(tasks, user) %}
   
   {% for task in tasks %}
     <div class="row" id="task-row-{{task.id}}">
@@ -12,7 +12,7 @@
             {{ 'Date'|trans }}: {{ task.date|date("d-m-Y") }}
           </div>
           <div class="col-sm-2">
-            <a href="{{ path('bc_2movepeople_dashboard_user_task.complete', {'node': task.id}) }}" class="btn btn-info use-ajax link-btn" data-dialog-type="modal" data-dialog-options='{"width":640}' role="button">{{ 'Complete'|trans }}</a>
+            <a href="{{ path('bc_2movepeople_dashboard_user_task.complete', {'user': user, 'node': task.id}) }}" class="btn btn-info use-ajax link-btn" data-dialog-type="modal" data-dialog-options='{"width":640}' role="button">{{ 'Complete'|trans }}</a>
           </div>
         </div>
       </div>
@@ -25,4 +25,4 @@
   
 {% endmacro %}
 
-{{ _self.recursiveTasks(tasks) }}
+{{ _self.recursiveTasks(tasks, user) }}

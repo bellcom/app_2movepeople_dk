@@ -13,21 +13,24 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
-//use Drupal\user\UserInterface;
+use Drupal\user\UserInterface;
 //use Drupal\node\Entity\Node;
 //use Drupal\Core\Url;
 
 class UserTaskCompleteForm extends FormBase {
 
   private $node;
+  private $user;
+  protected $isSaved;
   private $updated_msg = 'Records successfully updated.';
   private $wrong_msg = 'Something wrong.';
 
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, UserInterface $user = NULL, NodeInterface $node = NULL) {
     $this->node = $node;
+    $this->user = $user;
     
     list($year, $month, $day) = explode('-', $node->get('field_due_date')->value);
     
@@ -107,25 +110,48 @@ class UserTaskCompleteForm extends FormBase {
     return 'bc_2movepeople-user-task-complete-form';
   }
   
-  
   /**
    * {@inheritdoc}
    */
   public function ajaxCompleteForm(array &$form, FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse(); 
-    $this->node->set("field_task_complete",TRUE);
-    $this->node->save();
-    $ajax_response->addCommand(new RemoveCommand('#task-row-'.$this->node->id()));
-    $ajax_response->addCommand(new CloseModalDialogCommand());
+    if ($this->isSaved == SAVED_UPDATED) {
+      $ajax_response->addCommand(new RemoveCommand('#task-row-'.$this->node->id()));
+      $ajax_response->addCommand(new CloseModalDialogCommand());
+    }
     
     return $ajax_response;
   }
-  
   
   /**
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    $this->node->set("field_task_complete",TRUE);
+    //$this->isSaved = $this->node->save();
+    $this->isSaved = 2;
+    
+    if ($this->isSaved == SAVED_UPDATED) {
+      //\Drupal::currentUser()->id()
+      $query = \Drupal::entityQuery('user');
+      $query->condition('status', 1);
+      $query->condition('field_connected_users', $this->user->id());
+      $mp_admin_ids = $query->execute();
+
+
+      foreach ($mp_admin_ids as $mp_id) {
+        $mp_admin = \Drupal\user\Entity\User::load($mp_id);
+        $to = $mp_admin->get('mail')->value;
+        $to = 'evgeny@bellcom.ee';
+
+        CommonFormUtils::sendMail([
+            'to' => $to,
+            'from' => 'admin@move.dk',
+            'subject' => 'Test subject',
+            'body' => 'Test message...'
+        ]);
+      }
+    } // SAVED_UPDATED
   }
        
 }

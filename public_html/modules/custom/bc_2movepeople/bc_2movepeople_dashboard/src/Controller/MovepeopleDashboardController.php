@@ -176,7 +176,7 @@ class MovepeopleDashboardController extends ControllerBase {
       $progression_targets[$progrdata->id()]['form'] = \Drupal::formBuilder()->getForm($milestone_edit_form);
 
       //$progression_targets[$progrdata->id()]['form'] = \Drupal::formBuilder()->getForm(\Drupal\bc_2movepeople_dashboard\Form\MilestoneEditForm::class, $progrdata);
-    }    
+    }
     $build = array(
       '#theme' => 'bc_2movepeople_milestone_dashboard',
       "#title" => 'Dashboard Milestone',
@@ -250,7 +250,7 @@ class MovepeopleDashboardController extends ControllerBase {
     return $build;
   }
 
-  static function getGoal($nodeid, $progression_target) {
+  static function getGoal($nodeid, $progression_target = NULL) {
     $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($nodeid);
     $nodetitle = $nodedata->get('title')->value;
     $subnodes = $nodedata->get('field_subgoal')->getValue();
@@ -269,7 +269,7 @@ class MovepeopleDashboardController extends ControllerBase {
       'type' => $type,
       'completed' => $is_completed,
       'date' => $date,
-      'rates' => nulls,
+      'rates' => null,
       'activity_title' => $activity_title,
       'evaluation' => $evaluation,
       'subgoals' => $subgoals,
@@ -417,11 +417,11 @@ class MovepeopleDashboardController extends ControllerBase {
       }
     }
     ksort($tasks, SORT_NUMERIC);
-
     $build = array(
-      '#theme' => 'bc_2movepeople_dashboard_user_tasks_overview',
+      "#theme" => 'bc_2movepeople_dashboard_user_tasks_overview',
       "#title" => $title,
-      '#tasks' => $tasks
+      "#tasks" => $tasks,
+      "#user" => $user->id(),
     );
   
     return $build;

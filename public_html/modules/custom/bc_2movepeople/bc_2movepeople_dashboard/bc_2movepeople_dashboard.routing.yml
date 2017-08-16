@@ -75,10 +75,12 @@ bc_2movepeople_dashboard_user_tasks_overview:
     _permission: 'access content'
     _user_is_logged_in: 'TRUE'
 bc_2movepeople_dashboard_user_task.complete:
-  path: '/2movepeople/task/{node}/complete'
+  path: '/2movepeople/user/{user}/task/{node}/complete'
   options:
     parameters:
       user:
+        type: entity:user
+      node:
         type: entity:node
   defaults:
     _title: "Task complete"

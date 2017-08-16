@@ -1,0 +1,14 @@
+uuid: e8fc3026-2d07-4c09-9d90-031f766136c3
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.2mp_admin
+  module:
+    - user
+id: user_remove_role_action.2mp_admin
+label: 'Remove the 2MP Admin role from the selected users'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: 2mp_admin
