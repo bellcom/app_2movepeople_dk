@@ -63,7 +63,7 @@ class ProgressionAddForm extends FormBase {
     ));
     
     if ($node->save() == SAVED_NEW) {
-      $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.info', ['user' => $this->user->id()]));
+      $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $this->user->id()]));
     }
   }
        

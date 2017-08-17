@@ -69,7 +69,7 @@ class MilestoneEditForm extends FormBase {
       '#type' => 'link',
       '#title' => 'Add new task',
       '#name' => 'add_task_btn',
-      '#url' => Url::fromRoute('bc_2movepeople_dashboard_milestone.task_add', array('node' => $this->node->id())),
+      '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.tasks.add', array('node' => $this->node->id())),
       '#prefix' => '<div class="row custom-form-fields"><div class="col-md-10 col-sm-10 col-xs-10">',
       '#suffix' => '</div>',
       '#attributes' => [

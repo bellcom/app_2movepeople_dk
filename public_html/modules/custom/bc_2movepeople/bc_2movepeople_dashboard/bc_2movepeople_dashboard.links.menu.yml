@@ -1,5 +1,5 @@
 # Define default links for this module.
-bc_2movepeople_dashboard.info:
+bc_2movepeople_dashboard.user.progressions:
   title: 2Movepeople Dashboard 
   description: 2Movepeople Dashboard
-  route_name: bc_2movepeople_dashboard.info
+  route_name: bc_2movepeople_dashboard.user.progressions

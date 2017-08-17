@@ -78,7 +78,7 @@ function bc_2movepeople_dashboard_user_login($account) {
     $path = '/';
     $user_roles = $account->getRoles();
     if (in_array("2mp_user", $user_roles)) {
-      $path = Url::fromRoute('bc_2movepeople_dashboard_user_tasks_overview', ['user' => $account->id()])->toString();
+      $path = Url::fromRoute('bc_2movepeople_dashboard.user.tasks', ['user' => $account->id()])->toString();
     }  
     $response = new RedirectResponse($path);
     $response->send(); 

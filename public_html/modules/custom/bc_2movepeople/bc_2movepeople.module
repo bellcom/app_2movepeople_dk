@@ -16,7 +16,7 @@ function bc_2movepeople_toolbar(&$items) {
 // List all possible modules. 
 
   $bc_modules = array(
-    'bc_2movepeople_dashboard' => 'bc_2movepeople_dashboard.info',
+    'bc_2movepeople_dashboard' => 'bc_2movepeople_dashboard.user.progressions',
   );
 
   

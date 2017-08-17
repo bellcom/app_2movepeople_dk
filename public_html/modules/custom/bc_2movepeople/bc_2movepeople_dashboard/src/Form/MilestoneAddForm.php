@@ -94,7 +94,7 @@ class MilestoneAddForm extends FormBase {
     ));
     
     if ($node->save() == SAVED_NEW) {
-      $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard_milestone.info', ['user' => $this->user->id()]));
+      $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.user.milestones', ['user' => $this->user->id()]));
     }
   }
        

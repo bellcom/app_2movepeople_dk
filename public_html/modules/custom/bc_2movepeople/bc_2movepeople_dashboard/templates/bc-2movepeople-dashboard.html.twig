@@ -10,7 +10,7 @@
 {{ attach_library('drupal.date') }}
 <div class="demo">
   <h2>{{ subtitle  }}</h2>
-  <a href="{{ path('bc_2movepeople_dashboard_progression.add', {'user': user}) }}" class="btn btn-info use-ajax" data-dialog-type="modal" data-dialog-options='{"width":640}' role="button">{{ 'Add new progression'|trans }}</a>
+  <a href="{{ path('bc_2movepeople_dashboard.user.progressions.add', {'user': user}) }}" class="btn btn-info use-ajax" data-dialog-type="modal" data-dialog-options='{"width":640}' role="button">{{ 'Add new progression'|trans }}</a>
   <br/><br/>
   <div id="accordion">
     {% for progression_target in progression_targets %}

@@ -3,7 +3,7 @@
 <div id="form-system-messages"></div>
 <div class="demo">
   <h2>{{ subtitle  }}</h2>
-  <a href="{{ path('bc_2movepeople_dashboard_milestone.add', {'user': user}) }}" class="btn btn-info use-ajax" data-dialog-type="modal" data-dialog-options='{"width":640}' role="button">{{ 'Add new milestone'|trans }}</a>
+  <a href="{{ path('bc_2movepeople_dashboard.user.milestones.add', {'user': user}) }}" class="btn btn-info use-ajax" data-dialog-type="modal" data-dialog-options='{"width":640}' role="button">{{ 'Add new milestone'|trans }}</a>
   <br/><br/>
   <div id="accordion">
     {% for milestone_target in milestone_targets %}

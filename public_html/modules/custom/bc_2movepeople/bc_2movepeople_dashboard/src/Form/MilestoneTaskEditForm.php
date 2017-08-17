@@ -118,7 +118,6 @@ class MilestoneTaskEditForm extends FormBase {
 //        $renderer = \Drupal::service('renderer');
 //        $response->addCommand(new ReplaceCommand("#goals-box-".$this->parent_node->id(), $renderer->render($goals)));
         $response->addCommand(new CloseModalDialogCommand());
-        $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard_milestone.info', ['user' => 12]));
       }
     }
     return $response;
@@ -156,7 +155,7 @@ class MilestoneTaskEditForm extends FormBase {
       $this->isSaved = $this->parent_node->save();
       
       $user = $this->parent_node->get('field_progression_user')->getValue();   
-      $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard_milestone.info', 
+      $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.user.milestones', 
         ['user' => $user[0]['target_id']], ['fragment' => $this->parent_node->id()]));
     }
   }

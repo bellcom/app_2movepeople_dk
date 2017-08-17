@@ -1,7 +1,7 @@
 <div class="text-center" >
   <div class="btn-group-vertical">
   {% for user in users %} 
-    <a href = "/2movepeople/dashboard/{{ user.uid }}/overview" id="" name="singlebutton" class="btn btn-default btn-lg ">{{ user.name }}</a>
+    <a href = "{{ path('bc_2movepeople_dashboard.user.overview', {'user': user.uid}) }}" id="" name="singlebutton" class="btn btn-default btn-lg ">{{ user.name }}</a>
   {% endfor %}
   </div>
 </div>
