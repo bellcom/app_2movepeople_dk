@@ -32,9 +32,6 @@ content:
     label: above
     settings: {  }
     third_party_settings: {  }
-  flag_bookmark:
-    weight: 10
-    region: content
   links:
     weight: 1
     settings: {  }
@@ -44,6 +41,5 @@ content:
     weight: -20
     region: content
 hidden:
-  langcode: true
   panelizer: true
   scheduled_update: true

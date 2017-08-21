@@ -37,5 +37,4 @@ hidden:
   field_evaluation: true
   field_subgoal: true
   field_task_complete: true
-  langcode: true
   links: true

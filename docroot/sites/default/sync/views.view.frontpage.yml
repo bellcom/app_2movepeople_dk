@@ -1,5 +1,5 @@
-uuid: null
-langcode: en
+uuid: 77518d26-a3a3-416b-a09d-97301c8e9ec9
+langcode: da
 status: true
 dependencies:
   config:
@@ -8,10 +8,12 @@ dependencies:
   module:
     - node
     - user
+_core:
+  default_config_hash: rwRoOr3DiobxwoWSmtUcna1LQz5_HxHvS7H5dl7_-Uo
 id: frontpage
-label: Frontpage
+label: Forside
 module: node
-description: 'All content promoted to frontpage'
+description: 'Alt indhold som vises på forsiden.'
 tag: default
 base_table: node_field_data
 base_field: nid
@@ -28,16 +30,16 @@ display:
         options: {  }
       empty:
         area_text_custom:
-          id: area_text_custom
-          table: views
-          field: area_text_custom
-          relationship: none
-          group_type: group
           admin_label: ''
+          content: 'Der er ikke blevet oprettet forsideindhold endnu.'
           empty: true
-          tokenize: true
-          content: '<p>Welcome to [site:name]. No front page content has been created yet.</p><p>Would you like to <a href="profiles/contrib/lightning/README.md">view the README</a>?</p>'
+          field: area_text_custom
+          group_type: group
+          id: area_text_custom
           label: ''
+          relationship: none
+          table: views
+          tokenize: false
           plugin_id: text_custom
         node_listing_empty:
           admin_label: ''
@@ -59,7 +61,7 @@ display:
           admin_label: ''
           label: ''
           empty: true
-          title: 'Welcome to [site:name]'
+          title: 'Velkommen til [site:name]'
           plugin_id: title
       exposed_form:
         type: basic
@@ -117,7 +119,7 @@ display:
           group: 1
           id: status
           table: node_field_data
-          value: 'true'
+          value: '1'
           plugin_id: boolean
           entity_type: node
           entity_field: status

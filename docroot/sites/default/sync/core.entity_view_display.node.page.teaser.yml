@@ -24,9 +24,6 @@ content:
       trim_length: 600
     third_party_settings: {  }
     region: content
-  flag_bookmark:
-    weight: 10
-    region: content
   links:
     weight: 101
     region: content
@@ -35,6 +32,5 @@ content:
     region: content
 hidden:
   field_meta_tags: true
-  langcode: true
   panelizer: true
   scheduled_update: true

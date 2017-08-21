@@ -41,12 +41,6 @@ content:
     weight: 26
     settings: {  }
     third_party_settings: {  }
-  langcode:
-    type: language_select
-    weight: 2
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   panelizer:
     type: panelizer
     weight: 5

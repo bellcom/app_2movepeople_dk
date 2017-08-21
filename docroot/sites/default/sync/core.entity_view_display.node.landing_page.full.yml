@@ -87,5 +87,4 @@ content:
     region: content
 hidden:
   body: true
-  langcode: true
   panelizer: true
