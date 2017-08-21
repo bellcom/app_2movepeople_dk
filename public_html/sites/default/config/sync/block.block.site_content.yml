@@ -11,12 +11,12 @@ _core:
 id: site_content
 theme: site
 region: content
-weight: -1
+weight: -6
 provider: null
 plugin: system_main_block
 settings:
   id: system_main_block
-  label: 'Primært sideindhold'
+  label: 'Main page content'
   provider: system
   label_display: '0'
 visibility: {  }

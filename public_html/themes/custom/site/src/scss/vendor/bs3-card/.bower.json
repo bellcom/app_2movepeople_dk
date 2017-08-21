@@ -1,0 +1,33 @@
+{
+  "name": "bs3-card",
+  "version": "1.0.1",
+  "authors": [
+    "Morten Nissen <mail@hjemmesidekongen.dk>"
+  ],
+  "description": "Integrates Bootstrap 4's Card component into Bootstrap 3.",
+  "dependencies": {
+    "bootstrap-sass": "~3.*",
+    "bs3-extra-brand-colors": "~1.*",
+    "bs3-easy-breakpoints": "~1.*"
+  },
+  "main": "",
+  "license": "MIT",
+  "homepage": "https://github.com/by-nissen/bs3-card",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./src/vendor",
+    "test",
+    "tests"
+  ],
+  "_release": "1.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.0.1",
+    "commit": "ab06fe3776d7fab314312046737e5dc01ee2dcc2"
+  },
+  "_source": "https://github.com/by-nissen/bs3-card.git",
+  "_target": "~1.0.0",
+  "_originalSource": "bs3-card"
+}

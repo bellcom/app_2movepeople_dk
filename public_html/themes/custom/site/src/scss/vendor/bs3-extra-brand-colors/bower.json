@@ -1,0 +1,22 @@
+{
+  "name": "bs3-extra-brand-colors",
+  "version": "1.0.0",
+  "authors": [
+    "Morten Nissen <mail@hjemmesidekongen.dk>"
+  ],
+  "description": "Provides 2 additional brand colors for Bootstrap 3 SCSS version.",
+  "dependencies": {
+    "bootstrap-sass": "~3.*"
+  },
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./src/vendor",
+    "test",
+    "tests"
+  ]
+}

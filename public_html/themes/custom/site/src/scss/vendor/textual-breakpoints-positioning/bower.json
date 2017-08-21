@@ -1,0 +1,22 @@
+{
+  "name": "textual-breakpoints-positioning",
+  "version": "1.0.0",
+  "authors": [
+    "Morten Nissen <mail@hjemmesidekongen.dk>"
+  ],
+  "description": "Provides breakpoint positioning classes for use with Bootstrap 3 SCSS version.",
+  "dependencies": {
+    "bootstrap-sass": "~3.*"
+  },
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./src/vendor",
+    "test",
+    "tests"
+  ]
+}

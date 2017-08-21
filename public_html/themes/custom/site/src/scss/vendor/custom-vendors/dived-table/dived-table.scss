@@ -1,0 +1,125 @@
+// |--------------------------------------------------------------------------
+// | Div'ed table
+// |--------------------------------------------------------------------------
+// |
+// | This file contains styles for the following:
+// | - .dived-table
+// |
+
+// --------------------------------------------------
+// Variables
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Styling
+// --------------------------------------------------
+
+// Div'ed table
+.dived-table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+
+  .dived-table-row {
+    display: table-row;
+  }
+
+  .dived-table-head {
+    font-weight: bold;
+  }
+
+  .dived-table-head,
+  .dived-table-cell {
+    display: table-cell !important;
+    vertical-align: top;
+  }
+
+  .div-vertical-align-middle {
+    vertical-align: middle;
+  }
+}
+
+// --------------------------------------------------
+// Variants
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Responsive
+// --------------------------------------------------
+
+// Mobile - and up
+@include media-breakpoint-up(xs) {
+
+  // Div'ed table
+  .dived-table {}
+}
+
+// Mobile - only
+@include media-breakpoint-only(xs) {
+
+  // Div'ed table
+  .dived-table {}
+}
+
+// Tablet - and up
+@include media-breakpoint-up(sm) {
+
+  // Div'ed table
+  .dived-table {}
+}
+
+// Tablet - only
+@include media-breakpoint-only(sm) {
+
+  // Div'ed table
+  .dived-table {}
+}
+
+// Desktop - and up
+@include media-breakpoint-up(md) {
+
+  // Div'ed table
+  .dived-table {}
+}
+
+// Desktop - only
+@include media-breakpoint-only(md) {
+
+  // Div'ed table
+  .dived-table {}
+}
+
+// Large desktop - and up
+@include media-breakpoint-up(lg) {
+
+  // Div'ed table
+  .dived-table {}
+}
+
+// Print
+@media print {
+
+  // Div'ed table
+  .dived-table {}
+}
+
+// Touch
+.touchevents {
+
+  // Div'ed table
+  .dived-table {}
+}
+
+// No touch
+.no-touchevents {
+
+  // Div'ed table
+  .dived-table {}
+}
+
+// --------------------------------------------------
+// Mixins
+// --------------------------------------------------
+
+// Div'ed table mixin
+@mixin dived-table-mixin() {}

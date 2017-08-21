@@ -1,0 +1,184 @@
+// |--------------------------------------------------------------------------
+// | Structure
+// |--------------------------------------------------------------------------
+// |
+// | This file contains styles for the following:
+// |
+// | - Base
+// | -- Sticky header
+// | -- Element positioning
+// |
+// | - Logo
+// |
+// | - Navigation
+// | -- Link
+// | -- Dropdown
+// | --- Link
+// | --- Dropdown menu
+// | ---- Positioning
+// | ---- Visibility
+// | --- Arrow
+// |
+// | - Button
+// | -- Responsive toggle
+// |
+// | - Visibility
+// | -- Hidden state
+// | --- Phone
+// | --- Tablet
+// | --- main
+// | --- Large main
+// |
+
+.main-navigation-wrapper {
+  display: none;
+  margin-bottom: @bs3-main-navigation-margin-bottom;
+
+  .main-navigation-bar {
+    height: @bs3-main-navigation-height;
+    min-height: @bs3-main-navigation-height;
+    line-height: @bs3-main-navigation-height;
+    background-color: @bs3-main-navigation-background-color;
+    background-color: @bs3-main-navigation-background-color-rgba;
+    border-radius: @bs3-main-navigation-border-radius;
+    border-style: @bs3-main-navigation-border-style;
+    border-width: @bs3-main-navigation-border-width;
+    border-color: @bs3-main-navigation-border-color;
+  }
+
+  // Let's all elements inherit the height and line height of parent element
+  .container,
+  .container-fluid,
+  .row,
+  .main-navigation-list {
+    height: inherit;
+    min-height: inherit;
+    line-height: inherit;
+  }
+}
+
+// Navigation
+.main-navigation-wrapper {
+
+  .main-navigation-list {
+    min-height: inherit;
+    line-height: inherit;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    > li {
+      line-height: inherit;
+      float: left;
+    }
+
+    a {
+      white-space: nowrap;
+    }
+  }
+}
+
+// Dropdown menu link
+.main-navigation-wrapper {
+
+  .main-navigation-list {
+
+    .main-navigation-list-dropdown-menu {
+
+      > li {
+
+        &.main-navigation-list-dropdown {
+
+          > a {
+            padding-right: floor((@bs3-main-navigation-nav-dropdown-menu-link-left-right-padding * 2));
+          }
+        }
+      }
+    }
+  }
+}
+
+// Arrow
+.main-navigation-wrapper {
+
+  .main-navigation-list {
+
+    > .main-navigation-list-dropdown {
+
+      > a {
+
+        &:before,
+        &:after {
+          left: 50%;
+          bottom: @bs3-main-navigation-nav-dropdown-arrow-bottom-start-position;
+          width: @bs3-main-navigation-nav-dropdown-arrow-size;
+          background-color: @bs3-main-navigation-nav-dropdown-arrow-color;
+        }
+      }
+    }
+
+    .main-navigation-list-dropdown-menu {
+
+      .main-navigation-list-dropdown {
+
+        > a {
+
+          &:before,
+          &:after {
+            top: 50%;
+            right: @bs3-main-navigation-nav-dropdown-menu-dropdown-arrow-right-start-position;
+            width: @bs3-main-navigation-nav-dropdown-menu-dropdown-arrow-size;
+            background-color: @bs3-main-navigation-nav-dropdown-menu-dropdown-arrow-color;
+          }
+
+          &:before {
+            margin-top: -2px;
+          }
+
+          &:after {
+            margin-top: 1px;
+          }
+        }
+
+        &:hover {
+
+          > a {
+
+            &:before,
+            &:after {
+              right: @bs3-main-navigation-nav-dropdown-menu-dropdown-arrow-right-end-position;
+              background-color: @bs3-main-navigation-nav-dropdown-hover-arrow-color;
+            }
+          }
+        }
+
+        &.active {
+
+          > a {
+
+            &:before,
+            &:after {
+              background-color: @bs3-main-navigation-nav-dropdown-active-arrow-color;
+            }
+          }
+
+          &:hover {
+
+            > a {
+
+              &:before,
+              &:after {
+                background-color: @bs3-main-navigation-nav-dropdown-active-hover-arrow-color;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.bs3-main-navigation-mixin-vertical-align(@element-height) {
+  margin-top: ((@bs3-main-navigation-height - @element-height) / 2);
+  margin-bottom: ((@bs3-main-navigation-height - @element-height) / 2);
+}

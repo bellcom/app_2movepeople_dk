@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans+Condensed:400,500,600');
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900|Roboto+Slab:300,400,700&subset=latin-ext');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:600,400');
+
+@font-face {
+  font-family: 'Athelas';
+  src: url("../fonts/Athelas.ttc");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: 'Myriad-pro';
+  src: url("../fonts/myriad-pro.otf");
+  font-weight: normal;
+  font-style: normal; }
+
+$font-fira-sans-condensed: 'Fira Sans Condensed', serif;
+$font-myriad-pro: 'Myriad-pro', serif;
+$font-roboto-slab: 'Roboto Slab', serif;
+$font-open-sans: 'Open Sans', serif;
+$font-athelas: 'Athelas', serif;

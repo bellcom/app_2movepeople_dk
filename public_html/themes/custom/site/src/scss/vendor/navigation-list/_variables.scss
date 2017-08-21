@@ -1,0 +1,61 @@
+// |--------------------------------------------------------------------------
+// | Variables
+// |--------------------------------------------------------------------------
+// |
+
+// --------------------------------------------------
+// List item
+// --------------------------------------------------
+
+$navigation-list-item-height: 86px !default;
+
+$navigation-list-item-font-family: $font-family-sans-serif !default;
+$navigation-list-item-font-weight: inherit !default;
+$navigation-list-item-font-size: $font-size-base !default;
+$navigation-list-item-left-right-padding: 20px !default;
+
+$navigation-list-item-font-color: $text-color !default;
+$navigation-list-item-background-color: transparent !default;
+$navigation-list-item-text-decoration: none !default;
+
+$navigation-list-item-hover-font-color: $brand-primary !default;
+$navigation-list-item-hover-background-color: transparent !default;
+$navigation-list-item-hover-text-decoration: none !default;
+
+$navigation-list-item-active-font-color: $brand-primary !default;
+$navigation-list-item-active-background-color: transparent !default;
+$navigation-list-item-active-text-decoration: none !default;
+
+// --------------------------------------------------
+// Dropdown menu
+// --------------------------------------------------
+
+$navigation-list-dropdown-menu-inner-spacing: 3px !default;
+$navigation-list-dropdown-menu-zindex: $zindex-navbar-fixed !default;
+$navigation-list-dropdown-menu-background-color: #fff !default;
+$navigation-list-dropdown-menu-border-color: transparent !default;
+$navigation-list-dropdown-menu-border-style: solid !default;
+$navigation-list-dropdown-menu-border-width: 0 !default;
+$navigation-list-dropdown-menu-border-radius: $border-radius-base !default;
+$navigation-list-dropdown-menu-box-shadow: 0 10px 30px 0 rgba(92, 75, 81, .1) !default;
+
+$navigation-list-dropdown-menu-item-font-family: $font-family-sans-serif !default;
+$navigation-list-dropdown-menu-item-font-weight: normal !default;
+$navigation-list-dropdown-menu-item-font-size: $font-size-base !default;
+$navigation-list-dropdown-menu-item-border-width: 0 !default;
+$navigation-list-dropdown-menu-item-border-style: solid !default;
+$navigation-list-dropdown-menu-item-border-color: transparent !default;
+$navigation-list-dropdown-menu-item-top-bottom-padding: 5px !default;
+$navigation-list-dropdown-menu-item-left-right-padding: 10px !default;
+
+$navigation-list-dropdown-menu-item-font-color: $text-color !default;
+$navigation-list-dropdown-menu-item-background-color: transparent !default;
+$navigation-list-dropdown-menu-item-text-decoration: none !default;
+
+$navigation-list-dropdown-menu-item-hover-font-color: $brand-primary !default;
+$navigation-list-dropdown-menu-item-hover-background-color: transparent !default;
+$navigation-list-dropdown-menu-item-hover-text-decoration: none !default;
+
+$navigation-list-dropdown-menu-item-active-font-color: $brand-primary !default;
+$navigation-list-dropdown-menu-item-active-background-color: transparent !default;
+$navigation-list-dropdown-menu-item-active-text-decoration: none !default;

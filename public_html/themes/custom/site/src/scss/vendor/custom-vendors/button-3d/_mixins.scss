@@ -1,0 +1,21 @@
+@mixin button-3d() {
+  @extend .btn;
+
+  border-width: 0;
+  border-bottom-width: 2px;
+  @include box-shadow(0 4px 4px -5px rgba(0, 0, 0, .3));
+  @include transition(box-shadow $transition-time-short ease-in-out);
+
+  &:active,
+  &.active,
+  &:focus,
+  &.focus {
+    outline: 0 !important;
+  }
+
+  &:active,
+  &.active {
+    margin-top: 1px;
+    border-bottom-width: 1px;
+  }
+}

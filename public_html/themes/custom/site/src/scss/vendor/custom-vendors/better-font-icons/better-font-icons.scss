@@ -1,0 +1,105 @@
+// |--------------------------------------------------------------------------
+// | Icon
+// |--------------------------------------------------------------------------
+// |
+// | This file contains styles for the following:
+// | - .icon
+// |
+
+// --------------------------------------------------
+// Variables
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Styling
+// --------------------------------------------------
+
+// Icon
+.icon {
+  @extend .fa;
+}
+
+// --------------------------------------------------
+// Variants
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Responsive
+// --------------------------------------------------
+
+// Mobile - and up
+@include media-breakpoint-up(xs) {
+
+  // Icon
+  .icon {}
+}
+
+// Mobile - only
+@include media-breakpoint-only(xs) {
+
+  // Icon
+  .icon {}
+}
+
+// Tablet - and up
+@include media-breakpoint-up(sm) {
+
+  // Icon
+  .icon {}
+}
+
+// Tablet - only
+@include media-breakpoint-only(sm) {
+
+  // Icon
+  .icon {}
+}
+
+// Desktop - and up
+@include media-breakpoint-up(md) {
+
+  // Icon
+  .icon {}
+}
+
+// Desktop - only
+@include media-breakpoint-only(md) {
+
+  // Icon
+  .icon {}
+}
+
+// Large desktop - and up
+@include media-breakpoint-up(lg) {
+
+  // Icon
+  .icon {}
+}
+
+// Print
+@media print {
+
+  // Icon
+  .icon {}
+}
+
+// Touch
+.touchevents {
+
+  // Icon
+  .icon {}
+}
+
+// No touch
+.no-touchevents {
+
+  // Icon
+  .icon {}
+}
+
+// --------------------------------------------------
+// Mixins
+// --------------------------------------------------
+
+// Icon mixin
+@mixin mixin-icon() {}

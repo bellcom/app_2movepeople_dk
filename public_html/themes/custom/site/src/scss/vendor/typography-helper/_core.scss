@@ -1,0 +1,105 @@
+// |--------------------------------------------------------------------------
+// | Typography helper
+// |--------------------------------------------------------------------------
+// |
+
+// --------------------------------------------------
+// Additional identifiers
+// --------------------------------------------------
+
+// Headings
+.heading-h1 {
+  @extend h1;
+}
+.heading-h2 {
+  @extend h2;
+}
+.heading-h3 {
+  @extend h3;
+}
+.heading-h4 {
+  @extend h4;
+}
+.heading-h5 {
+  @extend h5;
+}
+.heading-h6 {
+  @extend h6;
+}
+
+// --------------------------------------------------
+// Font weight
+// --------------------------------------------------
+
+// Text
+body {
+  font-weight: $font-weight;
+}
+.light {
+  font-weight: $font-weight-light;
+}
+.bold, strong {
+  font-weight: $font-weight-bold;
+}
+
+// Headings
+h1, .heading-h1,
+h2, .heading-h2,
+h3, .heading-h3,
+h4, .heading-h4,
+h5, .heading-h5,
+h6, .heading-h6,
+.lead {
+  font-weight: $headings-font-weight;
+
+  &.light {
+    font-weight: $headings-font-weight-light;
+  }
+
+  strong, &.bold {
+    font-weight: $headings-font-weight-bold;
+  }
+}
+
+// --------------------------------------------------
+// Letter spacing
+// --------------------------------------------------
+
+// Text
+body
+a,
+p,
+span,
+input {
+  letter-spacing: $letter-spacing;
+}
+
+// Headings
+h1, .heading-h1,
+h2, .heading-h2,
+h3, .heading-h3,
+h4, .heading-h4,
+h5, .heading-h5,
+h6, .heading-h6,
+.lead {
+  letter-spacing: $headings-letter-spacing;
+}
+
+// --------------------------------------------------
+// Font smoothing
+// --------------------------------------------------
+
+body
+a,
+p,
+span,
+input,
+h1, .heading-h1,
+h2, .heading-h2,
+h3, .heading-h3,
+h4, .heading-h4,
+h5, .heading-h5,
+h6, .heading-h6,
+.lead {
+  @include font-smoothing();
+}

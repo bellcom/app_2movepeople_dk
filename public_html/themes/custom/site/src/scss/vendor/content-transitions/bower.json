@@ -1,0 +1,22 @@
+{
+  "name": "content-transitions",
+  "version": "1.0.0",
+  "authors": [
+    "Morten Nissen <mail@hjemmesidekongen.dk>"
+  ],
+  "description": "Provides beautiful CSS3 transitions for common HTML elements.",
+  "dependencies": {
+    "bootstrap-sass": "~3.*"
+  },
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./src/vendor",
+    "test",
+    "tests"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "bs3-easy-breakpoints",
+  "version": "1.0.0",
+  "authors": [
+    "Morten Nissen <mail@hjemmesidekongen.dk>"
+  ],
+  "description": "Provides easy use of breakpoints for Bootstrap 3 - based on Bootstrap 4 code.",
+  "dependencies": {
+    "bootstrap-sass": "~3.*"
+  },
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./src/vendor",
+    "test",
+    "tests"
+  ]
+}

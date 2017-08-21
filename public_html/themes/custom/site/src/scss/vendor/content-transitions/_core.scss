@@ -1,0 +1,12 @@
+// |--------------------------------------------------------------------------
+// | Content transitions
+// |--------------------------------------------------------------------------
+// |
+
+// --------------------------------------------------
+// Links
+// --------------------------------------------------
+
+a {
+  @include transition(color $link-transition-time-font-color ease-in-out, border-color $link-transition-time-border-color ease-in-out, background-color $link-transition-time-background-color ease-in-out);
+}

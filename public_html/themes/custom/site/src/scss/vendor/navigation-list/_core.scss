@@ -1,0 +1,252 @@
+// |--------------------------------------------------------------------------
+// | Navigation list
+// |--------------------------------------------------------------------------
+// |
+
+// --------------------------------------------------
+// Styling
+// --------------------------------------------------
+
+// Navigation list
+.navigation-list {
+  display: block;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  list-style: none;
+  min-height: $navigation-list-item-height;
+  @include clearfix;
+
+  > .navigation-list-item {
+    display: inline-block;
+    line-height: $navigation-list-item-height;
+
+    &.navigation-list-item-dropdown {
+      position: relative;
+
+      > .navigation-list-item-dropdown-menu {
+        min-width: 100%;
+      }
+    }
+
+    > a {
+      display: block;
+      background-color: $navigation-list-item-background-color;
+      font-family: $navigation-list-item-font-family;
+      font-weight: $navigation-list-item-font-weight;
+      font-size: $navigation-list-item-font-size;
+      color: $navigation-list-item-font-color;
+      padding: 0 $navigation-list-item-left-right-padding;
+      text-decoration: $navigation-list-item-text-decoration;
+      white-space: nowrap;
+    }
+
+    &:hover,
+    &:active {
+
+      > a {
+        color: $navigation-list-item-hover-font-color;
+        background-color: $navigation-list-item-hover-background-color;
+        text-decoration: $navigation-list-item-hover-text-decoration;
+      }
+    }
+
+    &.active,
+    &.active-trail {
+
+      &,
+      &:hover,
+      &:active {
+
+        > a {
+          color: $navigation-list-item-active-font-color;
+          background-color: $navigation-list-item-active-background-color;
+          text-decoration: $navigation-list-item-active-text-decoration;
+        }
+      }
+    }
+  }
+}
+
+.navigation-list-item-dropdown {
+
+  &:hover {
+
+    > .navigation-list-item-dropdown-menu {
+      display: block;
+    }
+  }
+}
+
+// Dropdown menu
+.navigation-list-item-dropdown-menu {
+  display: none;
+  z-index: $navigation-list-dropdown-menu-zindex;
+  position: absolute;
+  top: 100%;
+  height: auto;
+  min-width: 100%;
+  list-style: none;
+  padding: $navigation-list-dropdown-menu-inner-spacing 0;
+  background-color: $navigation-list-dropdown-menu-background-color;
+  text-align: left;
+  border-width: $navigation-list-dropdown-menu-border-width;
+  border-style: $navigation-list-dropdown-menu-border-style;
+  border-color: $navigation-list-dropdown-menu-border-color;
+  @include border-bottom-radius($navigation-list-dropdown-menu-border-radius);
+  @include box-shadow($navigation-list-dropdown-menu-box-shadow);
+
+  > .navigation-list-item {
+    display: block;
+    margin: 0;
+    padding: 0;
+    height: auto;
+    min-height: 0;
+    line-height: floor(($navigation-list-dropdown-menu-item-font-size * $line-height-base));
+
+    &.navigation-list-item-dropdown {
+      position: relative;
+    }
+
+    > a {
+      display: block;
+      border-bottom-width: $navigation-list-dropdown-menu-item-border-width;
+      border-bottom-style: $navigation-list-dropdown-menu-item-border-style;
+      border-bottom-color: $navigation-list-dropdown-menu-item-border-color;
+      background-color: $navigation-list-dropdown-menu-item-background-color;
+      font-family: $navigation-list-dropdown-menu-item-font-family;
+      font-weight: $navigation-list-dropdown-menu-item-font-weight;
+      font-size: $navigation-list-dropdown-menu-item-font-size;
+      color: $navigation-list-dropdown-menu-item-font-color;
+      padding: $navigation-list-dropdown-menu-item-top-bottom-padding $navigation-list-dropdown-menu-item-left-right-padding;
+      text-decoration: $navigation-list-dropdown-menu-item-text-decoration;
+      white-space: nowrap;
+    }
+
+    &:hover,
+    &:active {
+
+      > a {
+        color: $navigation-list-dropdown-menu-item-hover-font-color;
+        background-color: $navigation-list-dropdown-menu-item-hover-background-color;
+        text-decoration: $navigation-list-dropdown-menu-item-hover-text-decoration;
+      }
+    }
+
+    &.active,
+    &.active-trail {
+
+      &,
+      &:hover,
+      &:active {
+
+        > a {
+          color: $navigation-list-dropdown-menu-item-active-font-color;
+          background-color: $navigation-list-dropdown-menu-item-active-background-color;
+          text-decoration: $navigation-list-dropdown-menu-item-active-text-decoration;
+        }
+      }
+    }
+
+    &:last-child {
+
+      > a {
+        border-bottom: 0;
+      }
+    }
+  }
+
+  // Child dropdown menus
+  .navigation-list-item-dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: floor( ( 0 - ($navigation-list-dropdown-menu-inner-spacing + $navigation-list-dropdown-menu-border-width)) );
+    @include border-right-radius($navigation-list-dropdown-menu-border-radius);
+    @include border-bottom-radius($navigation-list-dropdown-menu-border-radius);
+  }
+}
+
+// --------------------------------------------------
+// Variants
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Responsive
+// --------------------------------------------------
+
+// Mobile - and up
+@include media-breakpoint-up(xs) {
+
+  // Navigation list
+  .navigation-list {}
+}
+
+// Mobile - only
+@include media-breakpoint-only(xs) {
+
+  // Navigation list
+  .navigation-list {}
+}
+
+// Tablet - and up
+@include media-breakpoint-up(sm) {
+
+  // Navigation list
+  .navigation-list {}
+}
+
+// Tablet - only
+@include media-breakpoint-only(sm) {
+
+  // Navigation list
+  .navigation-list {}
+}
+
+// Desktop - and up
+@include media-breakpoint-up(md) {
+
+  // Navigation list
+  .navigation-list {}
+}
+
+// Desktop - only
+@include media-breakpoint-only(md) {
+
+  // Navigation list
+  .navigation-list {}
+}
+
+// Large desktop - and up
+@include media-breakpoint-up(lg) {
+
+  // Navigation list
+  .navigation-list {}
+}
+
+// Print
+@media print {
+
+  // Navigation list
+  .navigation-list {}
+}
+
+// Touch
+.touchevents {
+
+  // Navigation list
+  .navigation-list {}
+}
+
+// No touch
+.no-touchevents {
+
+  // Navigation list
+  .navigation-list {}
+}
+
+// --------------------------------------------------
+// Mixins
+// --------------------------------------------------
+
+// Navigation list mixin
+@mixin navigation-mixin-list() {}

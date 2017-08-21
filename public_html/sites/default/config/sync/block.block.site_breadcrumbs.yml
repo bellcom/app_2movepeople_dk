@@ -10,13 +10,13 @@ _core:
   default_config_hash: oXUb3JZR2WW5VOdw4HrhRicCsq51mCgLfRyvheG68ck
 id: site_breadcrumbs
 theme: site
-region: content
-weight: -2
+region: header
+weight: -7
 provider: null
 plugin: system_breadcrumb_block
 settings:
   id: system_breadcrumb_block
-  label: Brødkrummer
+  label: Breadcrumbs
   provider: system
   label_display: '0'
 visibility: {  }

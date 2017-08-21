@@ -1,0 +1,47 @@
+// |--------------------------------------------------------------------------
+// | Page layout
+// |--------------------------------------------------------------------------
+// |
+
+// --------------------------------------------------
+// Styling
+// --------------------------------------------------
+
+html,
+body,
+.outer-wrapper {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.outer-wrapper,
+.inner-wrapper,
+.content,
+.footer {
+  position: relative;
+}
+
+.inner-wrapper {
+  min-height: 100%;
+  overflow: hidden;
+  background-color: $body-bg;
+}
+
+.footer-attached {
+
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+  }
+}

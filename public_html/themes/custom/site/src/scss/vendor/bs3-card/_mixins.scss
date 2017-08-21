@@ -1,0 +1,40 @@
+// --------------------------------------------------
+// Mixins
+// --------------------------------------------------
+
+// Card mixin
+@mixin card-border-radius($radius: $border-radius) {
+  border-radius: $radius;
+}
+
+// Variant
+@mixin card-variant($background, $border) {
+  background-color: $background;
+  border-color: $border;
+
+  .card-header,
+  .card-footer {
+    background-color: transparent;
+  }
+}
+
+@mixin card-outline-variant($color) {
+  background-color: transparent;
+  border-color: $color;
+}
+
+@mixin card-hover {
+  // TODO: re-enable along with mq4-hover-shim
+  //  @if $enable-hover-media-query {
+  //    // See Media Queries Level 4: http://drafts.csswg.org/mediaqueries/#hover
+  //    // Currently shimmed by https://github.com/twbs/mq4-hover-shim
+  //    @media (hover: hover) {
+  //      &:hover { @content }
+  //    }
+  //  }
+  //  @else {
+  &:hover {
+    @content
+  }
+  //  }
+}

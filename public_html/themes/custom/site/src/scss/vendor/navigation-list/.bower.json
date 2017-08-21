@@ -1,0 +1,32 @@
+{
+  "name": "navigation-list",
+  "version": "1.0.2",
+  "authors": [
+    "Morten Nissen <mail@hjemmesidekongen.dk>"
+  ],
+  "description": "Provides a beautiful navigation list.",
+  "dependencies": {
+    "bootstrap-sass": "~3.*",
+    "bs3-easy-breakpoints": "~1.*"
+  },
+  "main": "",
+  "license": "MIT",
+  "homepage": "https://github.com/by-nissen/navigation-list",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./src/vendor",
+    "test",
+    "tests"
+  ],
+  "_release": "1.0.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.0.2",
+    "commit": "c4bb95ab98410a5dc09511b07ff32b42ee55e6de"
+  },
+  "_source": "https://github.com/by-nissen/navigation-list.git",
+  "_target": "~1.0.2",
+  "_originalSource": "navigation-list"
+}

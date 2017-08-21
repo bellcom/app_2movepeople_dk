@@ -1,0 +1,7 @@
+.label-secondary {
+  @include label-variant($label-secondary-bg);
+}
+
+.label-tertiary {
+  @include label-variant($label-tertiary-bg);
+}

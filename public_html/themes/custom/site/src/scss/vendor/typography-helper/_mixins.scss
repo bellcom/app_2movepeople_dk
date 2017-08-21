@@ -1,0 +1,15 @@
+@mixin font-smoothing($type: antialiased) {
+  -webkit-font-smoothing: $type;
+  -moz-font-smoothing: $type;
+  -ms-font-smoothing: $type;
+  -o-font-smoothing: $type;
+  font-smoothing: $type;
+}
+
+@mixin line-height($font-size) {
+  line-height: floor(($font-size * $line-height-base));
+}
+
+@mixin line-height-heading($font-size) {
+  line-height: floor(($font-size * $headings-line-height));
+}

@@ -1,0 +1,104 @@
+// |--------------------------------------------------------------------------
+// | Spaced data
+// |--------------------------------------------------------------------------
+// |
+// | This file contains styles for the following:
+// | - .table-spaced-data
+// |
+
+// --------------------------------------------------
+// Styling
+// --------------------------------------------------
+
+// Spaced data
+.table-spaced-data {
+
+  &table,
+  table {
+  }
+}
+
+// --------------------------------------------------
+// Variants
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Responsive
+// --------------------------------------------------
+
+// Mobile - and up
+@include media-breakpoint-up(xs) {
+
+  // Spaced data
+  .table-spaced-data {}
+}
+
+// Mobile - only
+@include media-breakpoint-only(xs) {
+
+  // Spaced data
+  .table-spaced-data {}
+}
+
+// Tablet - and up
+@include media-breakpoint-up(sm) {
+
+  // Spaced data
+  .table-spaced-data {}
+}
+
+// Tablet - only
+@include media-breakpoint-only(sm) {
+
+  // Spaced data
+  .table-spaced-data {}
+}
+
+// Desktop - and up
+@include media-breakpoint-up(md) {
+
+  // Spaced data
+  .table-spaced-data {}
+}
+
+// Desktop - only
+@include media-breakpoint-only(md) {
+
+  // Spaced data
+  .table-spaced-data {}
+}
+
+// Large desktop - and up
+@include media-breakpoint-up(lg) {
+
+  // Spaced data
+  .table-spaced-data {}
+}
+
+// Print
+@media print {
+
+  // Spaced data
+  .table-spaced-data {}
+}
+
+// Touch
+.touchevents {
+
+  // Spaced data
+  .table-spaced-data {}
+}
+
+// No touch
+.no-touchevents {
+
+  // Spaced data
+  .table-spaced-data {}
+}
+
+// --------------------------------------------------
+// Mixins
+// --------------------------------------------------
+
+// Spaced data mixin
+@mixin table-mixin-spaced-data() {}

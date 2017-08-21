@@ -1,0 +1,37 @@
+// --------------------------------------------------
+// Secondary
+// --------------------------------------------------
+
+$brand-secondary: #2ecc71 !default;
+
+// Button
+$btn-secondary-color: #fff !default;
+$btn-secondary-bg: $brand-secondary !default;
+$btn-secondary-border: darken($btn-secondary-bg, 5%) !default;
+
+// Label
+$label-secondary-bg: $brand-secondary !default;
+
+// Panel
+$panel-secondary-text: #fff !default;
+$panel-secondary-border: $brand-secondary !default;
+$panel-secondary-heading-bg: $brand-secondary !default;
+
+// --------------------------------------------------
+// Tertiary
+// --------------------------------------------------
+
+$brand-tertiary: #f0ad4e !default;
+
+// Button
+$btn-tertiary-color: #fff !default;
+$btn-tertiary-bg: $brand-tertiary !default;
+$btn-tertiary-border: darken($btn-tertiary-bg, 5%) !default;
+
+// Label
+$label-tertiary-bg: $brand-tertiary !default;
+
+// Panel
+$panel-tertiary-text: #fff !default;
+$panel-tertiary-border: $brand-tertiary !default;
+$panel-tertiary-heading-bg: $brand-tertiary !default;

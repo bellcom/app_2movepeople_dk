@@ -1,0 +1,23 @@
+{
+  "name": "navigation-list",
+  "version": "1.0.2",
+  "authors": [
+    "Morten Nissen <mail@hjemmesidekongen.dk>"
+  ],
+  "description": "Provides a beautiful navigation list.",
+  "dependencies": {
+    "bootstrap-sass": "~3.*",
+    "bs3-easy-breakpoints": "~1.*"
+  },
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./src/vendor",
+    "test",
+    "tests"
+  ]
+}

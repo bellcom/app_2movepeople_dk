@@ -1,0 +1,202 @@
+// |--------------------------------------------------------------------------
+// | Social icons
+// |--------------------------------------------------------------------------
+// |
+
+// --------------------------------------------------
+// Styling
+// --------------------------------------------------
+
+// Social icons
+.social-icons-list {
+  @extend .list-inline;
+  padding: 0;
+  margin-bottom: 5px;
+  margin-top: 10px;
+  text-align: center;
+
+  li {
+    text-align: center;
+  }
+
+  .social-icon {
+    display: block;
+    font-family: FontAwesome;
+    border-radius: 100%;
+    border: 0;
+    height: $social-icons-height;
+    width: $social-icons-width;
+    line-height: $social-icons-height;
+    vertical-align: middle;
+    font-size: $social-icons-font-size;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    // Facebook
+    &.social-icon-facebook {
+      background-color: $social-color-facebook;
+
+      &:before {
+        content: $fa-var-facebook;
+      }
+    }
+
+    // Instagram
+    &.social-icon-instagram {
+      background-color: $social-color-instagram;
+
+      &:before {
+        content: $fa-var-instagram;
+      }
+    }
+
+    // Twitter
+    &.social-icon-twitter {
+      background-color: $social-color-twitter;
+
+      &:before {
+        content: $fa-var-twitter;
+      }
+    }
+
+    // Pinterest
+    &.social-icon-pinterest {
+      background-color: $social-color-pinterest;
+
+      &:before {
+        content: $fa-var-pinterest-p;
+      }
+    }
+
+    // Google Plus
+    &.social-icon-google-plus {
+      background-color: $social-color-google-plus;
+
+      &:before {
+        content: $fa-var-google-plus;
+      }
+    }
+
+    // LinkedIn
+    &.social-icon-linkedin {
+      background-color: $social-color-linkedin;
+
+      &:before {
+        content: $fa-var-linkedin;
+      }
+    }
+
+    // Vimeo
+    &.social-icon-vimeo {
+      background-color: $social-color-vimeo;
+
+      &:before {
+        content: $fa-var-vimeo;
+      }
+    }
+
+    // Youtube
+    &.social-icon-youtube {
+      background-color: $social-color-youtube;
+
+      &:before {
+        content: $fa-var-youtube;
+      }
+    }
+  }
+}
+
+// --------------------------------------------------
+// Variants
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Responsive
+// --------------------------------------------------
+
+// Mobile - and up
+@include media-breakpoint-up(xs) {
+
+  // Social icons
+  .social-icons {}
+}
+
+// Mobile - only
+@include media-breakpoint-only(xs) {
+
+  // Social icons
+  .social-icons {}
+}
+
+// Tablet - and up
+@include media-breakpoint-up(sm) {
+
+  // Social icons
+  .social-icons {}
+}
+
+// Tablet - only
+@include media-breakpoint-only(sm) {
+
+  // Social icons
+  .social-icons {}
+}
+
+// Desktop - and up
+@include media-breakpoint-up(md) {
+
+  // Social icons
+  .social-icons {}
+}
+
+// Desktop - only
+@include media-breakpoint-only(md) {
+
+  // Social icons
+  .social-icons {}
+}
+
+// Large desktop - and up
+@include media-breakpoint-up(lg) {
+
+  // Social icons
+  .social-icons {}
+}
+
+// Print
+@media print {
+
+  // Social icons
+  .social-icons {}
+}
+
+// Touch
+.touchevents {
+
+  // Social icons
+  .social-icons {}
+}
+
+// No touch
+.no-touchevents {
+
+  // Social icons
+  .social-icons {}
+}
+
+// --------------------------------------------------
+// Mixins
+// --------------------------------------------------
+
+// Social icons mixin
+@mixin social-mixin-icons() {}

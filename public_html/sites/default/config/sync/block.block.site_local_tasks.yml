@@ -8,13 +8,13 @@ _core:
   default_config_hash: X9I1OB0W3WlWtrK-CNcg6hNWwa8wficanpH8pYnDZDE
 id: site_local_tasks
 theme: site
-region: content
-weight: -6
+region: header
+weight: -4
 provider: null
 plugin: local_tasks_block
 settings:
   id: local_tasks_block
-  label: Faner
+  label: Tabs
   provider: core
   label_display: '0'
   primary: true

@@ -1,0 +1,7 @@
+.panel-secondary {
+  @include panel-variant($panel-secondary-border, $panel-secondary-text, $panel-secondary-heading-bg, $panel-secondary-border);
+}
+
+.panel-tertiary {
+  @include panel-variant($panel-tertiary-border, $panel-tertiary-text, $panel-tertiary-heading-bg, $panel-tertiary-border);
+}

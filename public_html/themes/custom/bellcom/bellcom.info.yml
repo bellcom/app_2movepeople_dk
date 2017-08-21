@@ -1,0 +1,10 @@
+name: Bellcom extendable theme
+type: theme
+description: Should never be used as a stand-alone theme.
+package: Bellcom
+core: 8.x
+libraries:
+  - bellcom/global-styling
+
+base theme: bootstrap
+
