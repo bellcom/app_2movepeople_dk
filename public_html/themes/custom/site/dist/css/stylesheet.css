@@ -1072,7 +1072,7 @@ body {
   font-size: 14px;
   line-height: 1.428571429;
   color: #3c3c3c;
-  background-color: #FFF; }
+  background-color: #F2F5F7; }
 
 input,
 button,
@@ -1109,7 +1109,7 @@ img {
 .img-thumbnail {
   padding: 4px;
   line-height: 1.428571429;
-  background-color: #FFF;
+  background-color: #F2F5F7;
   border: 1px solid #ddd;
   border-radius: 4px;
   -webkit-transition: all 0.2s ease-in-out;
@@ -2024,7 +2024,7 @@ th {
   .table > tbody + tbody {
     border-top: 2px solid #ddd; }
   .table .table {
-    background-color: #FFF; }
+    background-color: #F2F5F7; }
 
 .table-condensed > thead > tr > th,
 .table-condensed > thead > tr > td,
@@ -3556,7 +3556,7 @@ tbody.collapse.in {
         border-color: #eeeeee #eeeeee #ddd; }
     .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
       color: #555555;
-      background-color: #FFF;
+      background-color: #F2F5F7;
       border: 1px solid #ddd;
       border-bottom-color: transparent;
       cursor: default; }
@@ -3610,7 +3610,7 @@ tbody.collapse.in {
     .nav-tabs-justified > .active > a, .nav-tabs.nav-justified > .active > a,
     .nav-tabs-justified > .active > a:hover, .nav-tabs.nav-justified > .active > a:hover,
     .nav-tabs-justified > .active > a:focus, .nav-tabs.nav-justified > .active > a:focus {
-      border-bottom-color: #FFF; } }
+      border-bottom-color: #F2F5F7; } }
 
 .tab-content > .tab-pane {
   display: none; }
@@ -4057,7 +4057,7 @@ tbody.collapse.in {
       line-height: 1.428571429;
       text-decoration: none;
       color: #3c3c3c;
-      background-color: #FFF;
+      background-color: #F2F5F7;
       border: 1px solid transparent;
       margin-left: -1px; }
     .pagination > li:first-child > a,
@@ -4083,7 +4083,7 @@ tbody.collapse.in {
     z-index: 3;
     color: #3c3c3c;
     background-color: #fff;
-    border-color: #FFF;
+    border-color: #F2F5F7;
     cursor: default; }
   .pagination > .disabled > span,
   .pagination > .disabled > span:hover,
@@ -4144,7 +4144,7 @@ tbody.collapse.in {
     .pager li > span {
       display: inline-block;
       padding: 5px 14px;
-      background-color: #FFF;
+      background-color: #F2F5F7;
       border: 1px solid transparent;
       border-radius: 15px; }
     .pager li > a:hover,
@@ -4162,7 +4162,7 @@ tbody.collapse.in {
   .pager .disabled > a:focus,
   .pager .disabled > span {
     color: #ADA2A4;
-    background-color: #FFF;
+    background-color: #F2F5F7;
     cursor: not-allowed; }
 
 .label {
@@ -4294,7 +4294,7 @@ a.badge:hover, a.badge:focus {
   padding: 4px;
   margin-bottom: 20px;
   line-height: 1.428571429;
-  background-color: #FFF;
+  background-color: #F2F5F7;
   border: 1px solid #ddd;
   border-radius: 4px;
   -webkit-transition: border 0.2s ease-in-out;
@@ -8335,7 +8335,7 @@ body {
 .inner-wrapper {
   min-height: 100%;
   overflow: hidden;
-  background-color: #FFF; }
+  background-color: #F2F5F7; }
 
 .footer-attached .footer {
   position: absolute;
@@ -8663,6 +8663,7 @@ h6,
   font-weight: normal;
   font-style: normal; }
 
+/*-OLD styles-*/
 .toolbar-bar .toolbar-icon-examples:before {
   background-image: url(../images/2movepeopel.svg); }
 
@@ -8686,17 +8687,19 @@ a.has-child[aria-expanded="false"]::before {
 a.has-child[aria-expanded="true"]::before {
   content: '\25bc'; }
 
+/*-???-*/
 .left-container {
-  width: 200px;
+  width: 244px;
   position: fixed;
   height: 100%;
   margin-top: -15px;
   padding-top: 15px;
-  border-right: 1px solid black;
-  z-index: 1; }
+  /*  border-right: 1px solid black;*/
+  z-index: 1;
+  background-color: #FFF; }
 
 .main-container {
-  margin-left: 200px; }
+  margin-left: 244px; }
 
 .main-container__header {
   position: fixed;
@@ -8705,11 +8708,24 @@ a.has-child[aria-expanded="true"]::before {
   margin-top: -15px;
   padding-top: 15px; }
 
+.main-container__content {
+  padding-left: 62px;
+  padding-right: 62px; }
+
 .footer {
   margin-top: 45px;
   padding-top: 35px;
   padding-bottom: 36px;
   border-top: 1px solid #E5E5E5; }
+
+.blockBrand {
+  text-align: center;
+  padding-top: 22px;
+  padding-bottom: 34px; }
+
+.logoBrand {
+  display: inline-block;
+  width: 244px; }
 
 button.custom-checkbox-ok, button.custom-checkbox-trash {
   margin-right: 5px; }
