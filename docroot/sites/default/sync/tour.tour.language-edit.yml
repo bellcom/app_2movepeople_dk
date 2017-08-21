@@ -1,0 +1,51 @@
+uuid: 0e81d7e0-7f85-413b-b2f0-d2d8365bb761
+langcode: da
+status: true
+dependencies:
+  module:
+    - language
+_core:
+  default_config_hash: eYyOjXVghEin1Ed7t7vr9X0dSn018_zeZegu2Ao-j4Q
+id: language-edit
+label: 'Redigering af sprog'
+module: language
+routes:
+  -
+    route_name: entity.configurable_language.edit_form
+tips:
+  language-edit-overview:
+    id: language-edit-overview
+    plugin: text
+    label: 'Redigering af sprog'
+    body: '<p>På denne side kan du redigere sitets sprog, inklusive brugerdefinerede sprog.</p>'
+    weight: 1
+  language-edit-langcode:
+    id: language-edit-langcode
+    plugin: text
+    label: Sprogkode
+    body: '<p>Du kan ikke ændre en sprogkode på sitet. Det skyldes at systemet bruger koden til at holde styr på sproget.</p>'
+    weight: 2
+    attributes:
+      data-id: edit-langcode-view
+  language-edit-label:
+    id: language-edit-label
+    plugin: text
+    label: Sprognavn
+    body: '<p>The language name is used throughout the site for all users and is written in English. Names of built-in languages can be translated using the Interface Translation module, and names of both built-in and custom languages can be translated using the Configuration Translation module.</p>'
+    weight: 3
+    attributes:
+      data-id: edit-label
+  language-edit-direction:
+    id: language-edit-direction
+    plugin: text
+    label: Sprogretning
+    body: '<p>Choose if the language is a "Left to right" or "Right to left" language.</p><p>Note that not all themes support "Right to left" layouts, so test your theme if you are using "Right to left".</p>'
+    weight: 4
+    attributes:
+      data-id: edit-direction--wrapper--description
+  language-edit-continue:
+    id: language-edit-continue
+    plugin: text
+    label: 'Fortsætter på'
+    body: '<p>Nu hvor du har et overblik over funktionen "Redigér sprog", kan du fortsætte med at:<ul><li>Redigere et sprog</li><li><a href="[site:url]/admin/config/regional/language">Se konfigurerede sprog</a></li></ul></p>'
+    weight: 5

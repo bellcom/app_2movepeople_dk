@@ -1,0 +1,22 @@
+uuid: ffdcce04-dc17-4095-bb4c-0c1b498a6802
+langcode: da
+status: true
+dependencies:
+  config:
+    - node.type.progression_target
+id: node.progression_target.promote
+field_name: promote
+entity_type: node
+bundle: progression_target
+label: 'Forfremmet til forside'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Tilsluttet
+  off_label: Afbrudt
+field_type: boolean

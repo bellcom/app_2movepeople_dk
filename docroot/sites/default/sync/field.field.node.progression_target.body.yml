@@ -1,0 +1,22 @@
+uuid: d6030888-f377-499a-8400-2892860c6c6c
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.progression_target
+  module:
+    - text
+id: node.progression_target.body
+field_name: body
+entity_type: node
+bundle: progression_target
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+field_type: text_with_summary

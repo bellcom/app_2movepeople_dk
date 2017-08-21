@@ -1,0 +1,80 @@
+uuid: fa4d512b-1450-4a23-978f-0eb28a13ec2b
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.field.node.progression_target.body
+    - field.field.node.progression_target.field_goal_ids
+    - field.field.node.progression_target.field_priority
+    - field.field.node.progression_target.field_progression_status
+    - field.field.node.progression_target.field_progression_type
+    - field.field.node.progression_target.field_progression_user
+    - field.field.node.progression_target.field_purpose
+    - node.type.progression_target
+  module:
+    - text
+id: node.progression_target.default
+targetEntityType: node
+bundle: progression_target
+mode: default
+content:
+  body:
+    type: text_textarea_with_summary
+    weight: 1
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+    third_party_settings: {  }
+  field_goal_ids:
+    weight: 26
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+  field_priority:
+    weight: 29
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+  field_progression_status:
+    weight: 28
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+  field_progression_type:
+    weight: 27
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+  field_progression_user:
+    weight: 2
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+  field_purpose:
+    weight: 30
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+  title:
+    type: string_textfield
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  langcode: true
+  path: true
+  promote: true
+  sticky: true
+  uid: true

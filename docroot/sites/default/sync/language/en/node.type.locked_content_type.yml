@@ -1,0 +1,2 @@
+name: 'Example: Locked Content Type'
+description: 'Demo of a locked content type. Locking must be done in code. You must uninstall this module before you can delete the content type.'
