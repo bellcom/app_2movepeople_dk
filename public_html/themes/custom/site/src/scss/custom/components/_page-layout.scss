@@ -1,3 +1,30 @@
+// OLD styles ???
+.toolbar-bar .toolbar-icon-examples:before {
+  background-image: url(../images/2movepeopel.svg);
+}
+.toolbar-bar .toolbar-icon-examples:active:before,
+.toolbar-bar .toolbar-icon-examples.active:before {
+  background-image: url(../images/2movepeople.svg);
+}
+
+a.has-child,
+a.has-child:hover{
+  text-decoration: none;
+}
+a.has-child::before{
+  content: '\25ba';
+  margin-left: -1.5em;
+  font-size: 10px;
+  vertical-align:middle;
+}
+a.has-child[aria-expanded="false"]::before {
+    content: '\25ba';
+}
+a.has-child[aria-expanded="true"]::before {
+    content: '\25bc';
+}
+// ???
+
 .left-container {
   width: 200px;
   position: fixed;

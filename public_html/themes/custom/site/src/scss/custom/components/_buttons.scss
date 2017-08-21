@@ -1,0 +1,20 @@
+button.custom-checkbox-ok, button.custom-checkbox-trash {
+  margin-right: 5px;
+}
+button.custom-checkbox-ok:before {
+  content: '\e013';
+  font-family: 'Glyphicons Halflings';
+}
+button.custom-checkbox-trash:before {
+  content: '\e020';
+  font-family: 'Glyphicons Halflings';
+}
+.link-btn {
+  color: #FFF !important;
+}
+a.btn-progress {
+  //position: absolute;
+  top: 0;
+  right: 5px;
+  z-index: 999;
+}
