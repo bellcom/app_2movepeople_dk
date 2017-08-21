@@ -1,0 +1,28 @@
+.left-container {
+  width: 200px;
+  position: fixed;
+  height: 100%;
+  margin-top: -15px;
+  padding-top: 15px;
+  border-right: 1px solid black;
+  z-index: 1;
+}
+
+.main-container {
+  margin-left: 200px;
+}
+
+.main-container__header {
+  position: fixed;
+  z-index: 1;
+  background: white;
+  margin-top: -15px;
+  padding-top: 15px;
+}
+
+.footer {
+  margin-top: 45px;
+  padding-top: 35px;
+  padding-bottom: 36px;
+  border-top: 1px solid #E5E5E5;
+}
