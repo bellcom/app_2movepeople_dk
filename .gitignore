@@ -15,3 +15,4 @@ tmp
 *.zip
 *.sql
 /nbproject/private/
+vendor
