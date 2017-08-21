@@ -26,24 +26,28 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   field_priority:
     weight: 108
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
   field_progression_status:
     weight: 107
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
   field_progression_type:
     weight: 106
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
   field_progression_user:
     weight: 102
     label: above
@@ -51,16 +55,19 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   field_purpose:
     weight: 109
     label: above
     settings: {  }
     third_party_settings: {  }
     type: basic_string
+    region: content
   links:
     weight: 100
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden:
   body: true
   langcode: true

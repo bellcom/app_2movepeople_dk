@@ -10,3 +10,5 @@ recipients:
   - mail@2movepeople.dk
 reply: ''
 weight: 0
+message: null
+redirect: null

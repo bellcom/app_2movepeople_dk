@@ -23,9 +23,15 @@ content:
     settings:
       trim_length: 600
     third_party_settings: {  }
+    region: content
   links:
     weight: 100
+    region: content
 hidden:
   field_goal_ids: true
+  field_priority: true
+  field_progression_status: true
+  field_progression_type: true
   field_progression_user: true
+  field_purpose: true
   langcode: true

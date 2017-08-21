@@ -15,7 +15,6 @@ bundles:
   - article
   - page
 entity_type: node
-enabled: true
 global: false
 weight: 0
 flag_short: 'Bookmark this'
@@ -31,9 +30,10 @@ flagTypeConfig:
   show_in_links:
     - full
     - teaser
-  show_as_field: 1
-  show_on_form: 0
-  show_contextual_link: 0
+  show_as_field: true
+  show_on_form: false
+  show_contextual_link: false
+  extra_permissions: {  }
   i18n: null
   access_author: ''
 linkTypeConfig: {  }

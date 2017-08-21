@@ -24,10 +24,17 @@ content:
       trim_length: 600
     third_party_settings: {  }
     region: content
+  flag_bookmark:
+    weight: 10
+    region: content
   links:
     weight: 101
     region: content
   workbench_moderation_control:
     weight: -20
     region: content
-hidden: {  }
+hidden:
+  field_meta_tags: true
+  langcode: true
+  panelizer: true
+  scheduled_update: true

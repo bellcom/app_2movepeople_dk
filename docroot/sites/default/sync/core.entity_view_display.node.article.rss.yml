@@ -18,8 +18,12 @@ targetEntityType: node
 bundle: article
 mode: rss
 content:
+  flag_bookmark:
+    weight: 10
+    region: content
   links:
     weight: 100
+    region: content
 hidden:
   body: true
   comment: true

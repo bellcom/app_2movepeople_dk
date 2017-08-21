@@ -26,6 +26,7 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   field_organisation:
     weight: 10
     label: above
@@ -33,6 +34,7 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   field_user_firstname:
     weight: 8
     label: above
@@ -40,6 +42,7 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
   field_user_surname:
     weight: 7
     label: above
@@ -47,10 +50,13 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
   flag_following:
     weight: 10
+    region: content
   member_for:
     weight: 5
+    region: content
   user_picture:
     type: image
     weight: 0
@@ -59,4 +65,6 @@ content:
       image_link: content
     third_party_settings: {  }
     label: hidden
-hidden: {  }
+    region: content
+hidden:
+  langcode: true
