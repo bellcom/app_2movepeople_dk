@@ -15,3 +15,6 @@ tmp
 *.zip
 *.sql
 /nbproject/private/
+vendor
+docroot/modules/contrib
+docroot/sites/default/files

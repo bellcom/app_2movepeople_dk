@@ -1,0 +1,40 @@
+uuid: cedea2bd-89da-49d6-9bed-ec0c610a3799
+langcode: da
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.goal.body
+    - field.field.node.goal.field_activity_title
+    - field.field.node.goal.field_evaluation
+    - field.field.node.goal.field_subgoal
+    - field.field.node.goal.field_task_complete
+    - node.type.goal
+  module:
+    - text
+    - user
+id: node.goal.teaser
+targetEntityType: node
+bundle: goal
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_trimmed
+    weight: 1
+    settings:
+      trim_length: 150
+    third_party_settings: {  }
+    region: content
+  flag_status:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_activity_title: true
+  field_due_date: true
+  field_evaluation: true
+  field_subgoal: true
+  field_task_complete: true
+  links: true

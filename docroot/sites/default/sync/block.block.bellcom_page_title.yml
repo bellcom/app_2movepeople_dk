@@ -1,0 +1,20 @@
+uuid: 3fbd6c7f-f489-4dbe-b4db-15899e4933b7
+langcode: en
+status: true
+dependencies:
+  theme:
+    - bellcom
+_core:
+  default_config_hash: 7rR9chwXvdM2H8OYMAYx9Zj3GGlPMrZp_M3ZA4thYTk
+id: bellcom_page_title
+theme: bellcom
+region: content
+weight: -50
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility: {  }
