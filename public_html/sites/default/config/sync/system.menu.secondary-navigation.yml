@@ -1,8 +1,0 @@
-uuid: 00623648-9c53-4e84-ae9a-40b70ef326f7
-langcode: en
-status: true
-dependencies: {  }
-id: secondary-navigation
-label: 'Secondary navigation'
-description: ''
-locked: false
