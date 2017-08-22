@@ -29,17 +29,13 @@ $left-container-bg: #FFF;
 .main-container {
   margin-left: $left-container-width;
 
-  .main-container__header {
-    position: fixed;
-    z-index: 1;
-    background: white;
-    margin-top: -15px;
-    padding-top: 15px;
-  }
-
   .main-container__content {
     padding-left: 60px;
     padding-right: 60px;
+  }
+
+  h1.page-header {
+    color: $color-font-h1;
   }
 }
 

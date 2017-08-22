@@ -8686,15 +8686,11 @@ header.navbar {
 
 .main-container {
   margin-left: 244px; }
-  .main-container .main-container__header {
-    position: fixed;
-    z-index: 1;
-    background: white;
-    margin-top: -15px;
-    padding-top: 15px; }
   .main-container .main-container__content {
     padding-left: 60px;
     padding-right: 60px; }
+  .main-container h1.page-header, .main-container .page-header.heading-h1 {
+    color: #445c7e; }
 
 .blockBrand {
   text-align: center;
