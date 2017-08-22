@@ -18,3 +18,4 @@ tmp
 vendor
 docroot/modules/contrib
 docroot/sites/default/files
+docroot/sites/default/settings.php
