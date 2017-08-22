@@ -2775,7 +2775,7 @@ select[multiple].input-lg,
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px; }
   .btn:hover, .btn:focus, .btn.focus {
-    color: #333;
+    color: #FFFFFF;
     text-decoration: none; }
   .btn:active, .btn.active {
     outline: 0;
@@ -2795,29 +2795,29 @@ fieldset[disabled] a.btn {
   pointer-events: none; }
 
 .btn-default {
-  color: #333;
-  background-color: #fff;
-  border-color: #ccc; }
+  color: #FFFFFF;
+  background-color: #50afe8;
+  border-color: #50afe8; }
   .btn-default:focus, .btn-default.focus {
-    color: #333;
-    background-color: #e6e6e6;
-    border-color: #8c8c8c; }
+    color: #FFFFFF;
+    background-color: #239ae2;
+    border-color: #156ea3; }
   .btn-default:hover {
-    color: #333;
-    background-color: #e6e6e6;
-    border-color: #adadad; }
+    color: #FFFFFF;
+    background-color: #239ae2;
+    border-color: #1d95de; }
   .btn-default:active, .btn-default.active,
   .open > .btn-default.dropdown-toggle {
-    color: #333;
-    background-color: #e6e6e6;
-    border-color: #adadad; }
+    color: #FFFFFF;
+    background-color: #239ae2;
+    border-color: #1d95de; }
     .btn-default:active:hover, .btn-default:active:focus, .btn-default:active.focus, .btn-default.active:hover, .btn-default.active:focus, .btn-default.active.focus,
     .open > .btn-default.dropdown-toggle:hover,
     .open > .btn-default.dropdown-toggle:focus,
     .open > .btn-default.dropdown-toggle.focus {
-      color: #333;
-      background-color: #d4d4d4;
-      border-color: #8c8c8c; }
+      color: #FFFFFF;
+      background-color: #1a86c7;
+      border-color: #156ea3; }
   .btn-default:active, .btn-default.active,
   .open > .btn-default.dropdown-toggle {
     background-image: none; }
@@ -2825,11 +2825,11 @@ fieldset[disabled] a.btn {
   fieldset[disabled] .btn-default:hover,
   fieldset[disabled] .btn-default:focus,
   fieldset[disabled] .btn-default.focus {
-    background-color: #fff;
-    border-color: #ccc; }
+    background-color: #50afe8;
+    border-color: #50afe8; }
   .btn-default .badge {
-    color: #fff;
-    background-color: #333; }
+    color: #50afe8;
+    background-color: #FFFFFF; }
 
 .btn-primary {
   color: #fff;
@@ -5370,8 +5370,8 @@ button.close {
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url("//netdna.bootstrapcdn.com/font-awesome/4.6.3/fonts/fontawesome-webfont.eot?v=4.6.3");
-  src: url("//netdna.bootstrapcdn.com/font-awesome/4.6.3/fonts/fontawesome-webfont.eot?#iefix&v=4.6.3") format("embedded-opentype"), url("//netdna.bootstrapcdn.com/font-awesome/4.6.3/fonts/fontawesome-webfont.woff2?v=4.6.3") format("woff2"), url("//netdna.bootstrapcdn.com/font-awesome/4.6.3/fonts/fontawesome-webfont.woff?v=4.6.3") format("woff"), url("//netdna.bootstrapcdn.com/font-awesome/4.6.3/fonts/fontawesome-webfont.ttf?v=4.6.3") format("truetype"), url("//netdna.bootstrapcdn.com/font-awesome/4.6.3/fonts/fontawesome-webfont.svg?v=4.6.3#fontawesomeregular") format("svg");
+  src: url("../fonts/fontawesome-webfont.eot?v=4.6.3");
+  src: url("../fonts/fontawesome-webfont.eot?#iefix&v=4.6.3") format("embedded-opentype"), url("../fonts/fontawesome-webfont.woff2?v=4.6.3") format("woff2"), url("../fonts/fontawesome-webfont.woff?v=4.6.3") format("woff"), url("../fonts/fontawesome-webfont.ttf?v=4.6.3") format("truetype"), url("../fonts/fontawesome-webfont.svg?v=4.6.3#fontawesomeregular") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -7902,7 +7902,7 @@ button.close {
   border-top-left-radius: 0 !important;
   border-bottom-right-radius: 4px !important;
   border-bottom-left-radius: 4px !important;
-  background: #fff;
+  background: #50afe8;
   -webkit-filter: none;
           filter: none; }
   .input-group.select2-bootstrap-prepend .select2-dropdown-open.select2-drop-above [class^="select2-choice"] {
@@ -7945,16 +7945,16 @@ button.close {
  */
 .select2-container-multi .select2-choices .select2-search-choice {
   color: #555555;
-  background: #fff;
-  border-color: #ccc;
+  background: #50afe8;
+  border-color: #50afe8;
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
   -webkit-box-shadow: none;
   box-shadow: none; }
 
 .select2-container-multi .select2-choices .select2-search-choice-focus {
-  background: #ebebeb;
-  border-color: #adadad;
-  color: #333;
+  background: #2c9fe3;
+  border-color: #1d95de;
+  color: #FFFFFF;
   -webkit-box-shadow: none;
   box-shadow: none; }
 
@@ -8663,13 +8663,16 @@ h6,
   font-weight: normal;
   font-style: normal; }
 
+.icon.glyphicon {
+  font-family: 'Glyphicons Halflings'; }
+
 header.navbar {
   border-bottom-width: 2px;
   font-weight: bold; }
   header.navbar .navbar-header {
     float: none;
-    padding-right: 30px;
-    padding-left: 30px; }
+    padding-right: 60px;
+    padding-left: 60px; }
     header.navbar .navbar-header nav:first-child {
       float: left; }
     header.navbar .navbar-header nav:nth-child(2) {
@@ -8685,7 +8688,7 @@ header.navbar {
   background-color: #f1f7fd; }
 
 .left-container {
-  width: 244px;
+  width: 245px;
   position: fixed;
   height: 100%;
   margin-top: -15px;
@@ -8694,7 +8697,8 @@ header.navbar {
   background-color: #FFF; }
 
 .main-container {
-  margin-left: 244px; }
+  margin-left: 245px;
+  margin-bottom: 50px; }
   .main-container .main-container__content {
     padding-left: 60px;
     padding-right: 60px; }
@@ -8708,7 +8712,7 @@ header.navbar {
 
 .logoBrand {
   display: inline-block;
-  width: 244px; }
+  width: 245px; }
 
 button.custom-checkbox-ok, button.custom-checkbox-trash {
   margin-right: 5px; }

@@ -9,7 +9,7 @@
 // --------------------------------------------------
 // Variables
 // --------------------------------------------------
-$left-container-width: 244px;
+$left-container-width: 245px;
 $left-container-bg: #FFF;
 
 // --------------------------------------------------
@@ -28,10 +28,11 @@ $left-container-bg: #FFF;
 
 .main-container {
   margin-left: $left-container-width;
+  margin-bottom: 50px;
 
   .main-container__content {
-    padding-left: 60px;
-    padding-right: 60px;
+    padding-left: $main-container-content-padding;
+    padding-right: $main-container-content-padding;
   }
 
   h1.page-header {

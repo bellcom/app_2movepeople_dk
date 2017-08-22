@@ -21,8 +21,8 @@ header.navbar {
 
   .navbar-header {
     float: none;
-    padding-right: 30px;
-    padding-left: 30px;
+    padding-right: $main-container-content-padding;
+    padding-left: $main-container-content-padding;
 
     nav:first-child {
       float: left;
