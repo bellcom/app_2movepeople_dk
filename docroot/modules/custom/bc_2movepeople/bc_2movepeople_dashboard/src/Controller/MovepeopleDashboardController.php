@@ -135,7 +135,7 @@ class MovepeopleDashboardController extends ControllerBase {
    *   A renderable array.
    */
   public function getJsAccordionImplementation(AccountInterface $user) {
-    $title = t('Klik on each section to expand or collapse the progressions:');
+    $title = t('Click on each section to expand or collapse the progressions:');
     // Build using our theme. This gives us content, which is not a good
     // practice,.
 
@@ -163,7 +163,7 @@ class MovepeopleDashboardController extends ControllerBase {
   }
   
   public function getMilestoneJsAccordionImplementation(AccountInterface $user) {
-    $title = t('Klik on each section to expand or collapse the progressions:');
+    $title = t('Click on each section to expand or collapse the progressions:');
 
     $progression_targets = array();
     $entity_ids = self::getProgressionTargets($user->id(), 'target_milestone');
