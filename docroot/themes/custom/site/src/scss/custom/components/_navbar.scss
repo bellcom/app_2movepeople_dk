@@ -1,0 +1,87 @@
+// |--------------------------------------------------------------------------
+// | Navbar
+// |--------------------------------------------------------------------------
+// |
+// | This file contains styles for the following:
+// | - header.navbar
+// |
+
+// --------------------------------------------------
+// Variables
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Styling
+// --------------------------------------------------
+header.navbar {
+  //margin-left: -15px;
+  //margin-right: -15px;
+  border-bottom-width: 2px;
+  font-weight: bold;
+
+  .navbar-header {
+    float: none;
+    padding-right: 30px;
+    padding-left: 30px;
+
+    nav:first-child {
+      float: left;
+    }
+
+    nav:nth-child(2) {
+      float: right;
+    }
+  }
+}
+// --------------------------------------------------
+// Variants
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Responsive
+// --------------------------------------------------
+
+// Mobile - and up
+@include media-breakpoint-up(xs) {
+}
+
+// Mobile - only
+@include media-breakpoint-only(xs) {
+}
+
+// Tablet - and up
+@include media-breakpoint-up(sm) {
+}
+
+// Tablet - only
+@include media-breakpoint-only(sm) {
+}
+
+// Desktop - and up
+@include media-breakpoint-up(md) {
+}
+
+
+// Desktop - only
+@include media-breakpoint-only(md) {
+}
+
+// Large desktop - and up
+@include media-breakpoint-up(lg) {
+}
+
+// Print
+@media print {
+}
+
+// Touch
+.touchevents {
+}
+
+// No touch
+.no-touchevents {
+}
+
+// --------------------------------------------------
+// Mixins
+// --------------------------------------------------

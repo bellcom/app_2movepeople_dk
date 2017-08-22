@@ -77,6 +77,7 @@
         {%
           set navbar_classes = [
             'navbar',
+            'row',
             theme.settings.navbar_inverse ? 'navbar-inverse' : 'navbar-default',
             theme.settings.navbar_position ? 'navbar-' ~ theme.settings.navbar_position|clean_class : container,
           ]
@@ -105,16 +106,9 @@
       {% endblock %}
     {% endif %}
     
-{#    <div class="row">#}
+    <div class="row">
 
       {# Header #}
-{#      <header class="row main-container__header hidden-xs">
-        {% if page.header %}
-          {% block header %}
-            {{ page.header }}
-          {% endblock %}
-        {% endif %}
-      </header>#}
       {% if page.header %}
         {% block header %}
           <div class="col-sm-12" role="heading">
@@ -122,8 +116,10 @@
           </div>
         {% endblock %}
       {% endif %}
+    </div>
 
-      <div class="row main-container__content">
+    <div class="row">
+      <div class="main-container__content">
         {# Content #}
         {% 
           set content_classes = [
@@ -185,7 +181,7 @@
           {% endblock %}
         {% endif %}
       </div>
-{#    </div>#}
+  </div>
 
   {% if page.footer %}
     {% block footer %}
