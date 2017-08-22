@@ -32,7 +32,7 @@ $brand-danger:  #d9534f !default;
 $text-color: #3c3c3c;
 
 //** Global textual link color.
-$link-color:            #8e184e;
+$link-color:            #8e184e !default;
 //** Link hover color set via `darken()` function.
 $link-hover-color:      darken($link-color, 15%) !default;
 //** Link hover decoration.

@@ -1083,10 +1083,10 @@ textarea {
   line-height: inherit; }
 
 a {
-  color: #8e184e;
+  color: #355981;
   text-decoration: none; }
   a:hover, a:focus {
-    color: #4d0d2a;
+    color: #1f344b;
     text-decoration: underline; }
   a:focus {
     outline: 5px auto -webkit-focus-ring-color;
@@ -3017,7 +3017,7 @@ fieldset[disabled] a.btn {
     background-color: #fff; }
 
 .btn-link {
-  color: #8e184e;
+  color: #355981;
   font-weight: normal;
   border-radius: 0; }
   .btn-link, .btn-link:active, .btn-link.active, .btn-link[disabled],
@@ -3028,7 +3028,7 @@ fieldset[disabled] a.btn {
   .btn-link, .btn-link:hover, .btn-link:focus, .btn-link:active {
     border-color: transparent; }
   .btn-link:hover, .btn-link:focus {
-    color: #4d0d2a;
+    color: #1f344b;
     text-decoration: underline;
     background-color: transparent; }
   .btn-link[disabled]:hover, .btn-link[disabled]:focus,
@@ -3533,7 +3533,7 @@ tbody.collapse.in {
         cursor: not-allowed; }
   .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
     background-color: #eeeeee;
-    border-color: #8e184e; }
+    border-color: #355981; }
   .nav .nav-divider {
     height: 1px;
     margin: 9px 0;
@@ -4241,7 +4241,7 @@ a.label:hover, a.label:focus {
     padding: 1px 5px; }
   .list-group-item.active > .badge,
   .nav-pills > .active > a > .badge {
-    color: #8e184e;
+    color: #355981;
     background-color: #fff; }
   .list-group-item > .badge {
     float: right; }
@@ -4314,7 +4314,7 @@ a.badge:hover, a.badge:focus {
 a.thumbnail:hover,
 a.thumbnail:focus,
 a.thumbnail.active {
-  border-color: #8e184e; }
+  border-color: #355981; }
 
 .alert {
   padding: 15px;
@@ -8674,6 +8674,15 @@ header.navbar {
       float: left; }
     header.navbar .navbar-header nav:nth-child(2) {
       float: right; }
+
+#block-secondarynavigation .nav > li > a {
+  font-weight: bold;
+  font-size: 16px;
+  padding: 20px 15px 20px 50px; }
+
+#block-secondarynavigation .nav > li > a:hover, #block-secondarynavigation .nav > li > a:focus {
+  text-decoration: none;
+  background-color: #f1f7fd; }
 
 .left-container {
   width: 244px;
