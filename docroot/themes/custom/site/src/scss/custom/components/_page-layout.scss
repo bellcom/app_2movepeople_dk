@@ -1,29 +1,20 @@
-/*-OLD styles-*/
-.toolbar-bar .toolbar-icon-examples:before {
-  background-image: url(../images/2movepeopel.svg);
-}
-.toolbar-bar .toolbar-icon-examples:active:before,
-.toolbar-bar .toolbar-icon-examples.active:before {
-  background-image: url(../images/2movepeople.svg);
-}
+// |--------------------------------------------------------------------------
+// | Page layout
+// |--------------------------------------------------------------------------
+// |
+// | This file contains styles for the following:
+// | - .left-container, .main-container
+// |
 
-a.has-child,
-a.has-child:hover{
-  text-decoration: none;
-}
-a.has-child::before{
-  content: '\25ba';
-  margin-left: -1.5em;
-  font-size: 10px;
-  vertical-align:middle;
-}
-a.has-child[aria-expanded="false"]::before {
-    content: '\25ba';
-}
-a.has-child[aria-expanded="true"]::before {
-    content: '\25bc';
-}
-/*-???-*/
+// --------------------------------------------------
+// Variables
+// --------------------------------------------------
+$left-container-width: 244px;
+$left-container-bg: #FFF;
+
+// --------------------------------------------------
+// Styling
+// --------------------------------------------------
 
 .left-container {
   width: $left-container-width;
@@ -31,42 +22,87 @@ a.has-child[aria-expanded="true"]::before {
   height: 100%;
   margin-top: -15px;
   padding-top: 15px;
-/*  border-right: 1px solid black;*/
   z-index: 1;
   background-color: $left-container-bg;
 }
 
 .main-container {
   margin-left: $left-container-width;
-}
 
-.main-container__header {
-  position: fixed;
-  z-index: 1;
-  background: white;
-  margin-top: -15px;
-  padding-top: 15px;
-}
+  .main-container__header {
+    position: fixed;
+    z-index: 1;
+    background: white;
+    margin-top: -15px;
+    padding-top: 15px;
+  }
 
-.main-container__content {
-  padding-left: 62px;
-  padding-right: 62px;
+  .main-container__content {
+    padding-left: 62px;
+    padding-right: 62px;
+  }
 }
-
-.footer {
-  margin-top: 45px;
-  padding-top: 35px;
-  padding-bottom: 36px;
-  border-top: 1px solid #E5E5E5;
-}
-
 
 .blockBrand {
   text-align: center;
   padding-top: 22px;
   padding-bottom: 34px;
 }
+
 .logoBrand {
   display: inline-block;
   width: $left-container-width;
 }
+
+// --------------------------------------------------
+// Variants
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Responsive
+// --------------------------------------------------
+
+// Mobile - and up
+@include media-breakpoint-up(xs) {
+}
+
+// Mobile - only
+@include media-breakpoint-only(xs) {
+}
+
+// Tablet - and up
+@include media-breakpoint-up(sm) {
+}
+
+// Tablet - only
+@include media-breakpoint-only(sm) {
+}
+
+// Desktop - and up
+@include media-breakpoint-up(md) {
+}
+
+
+// Desktop - only
+@include media-breakpoint-only(md) {
+}
+
+// Large desktop - and up
+@include media-breakpoint-up(lg) {
+}
+
+// Print
+@media print {
+}
+
+// Touch
+.touchevents {
+}
+
+// No touch
+.no-touchevents {
+}
+
+// --------------------------------------------------
+// Mixins
+// --------------------------------------------------
