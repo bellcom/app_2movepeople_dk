@@ -49,9 +49,13 @@ class CommonFormUtils {
       $goal_id = $tid['target_id'];
       $goal = MovepeopleDashboardController::getGoal($goal_id, $node);
 
+      $form['goals'][$goal_id] = [
+        '#type' => 'container'
+      ];
+
       $form['goals'][$goal_id]['title'] = [
         '#type' => 'textfield',
-        '#value' => $goal['title'],
+        '#default_value' => $goal['title'],
         '#prefix' => '<div class="row custom-form-fields" id="goal_row_'.$goal_id.'">'
           . '<div class="col-md-3 col-sm-2 col-xs-2">',
         '#suffix' => '</div>'
@@ -60,14 +64,14 @@ class CommonFormUtils {
 
       $form['goals'][$goal_id]['activity_title'] = [
         '#type' => 'textfield',
-        '#value' => $goal['activity_title'],
+        '#default_value' => $goal['activity_title'],
         '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2">',
         '#suffix' => '</div>'
       ];
 
       $form['goals'][$goal_id]['due_date'] = [
         '#type' => 'date',
-        '#value' => $goal['date'],
+        '#default_value' => $goal['date'],
         '#prefix' => '<div class="col-md-3 col-sm-4 col-xs-4">',
         '#suffix' => '</div>'
 
@@ -75,7 +79,7 @@ class CommonFormUtils {
 
       $form['goals'][$goal_id]['evaluation'] = [
         '#type' => 'textfield',
-        '#value' => $goal['evaluation'],
+        '#default_value' => $goal['evaluation'],
         '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2">',
         '#suffix' => '</div>'
 
