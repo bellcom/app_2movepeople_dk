@@ -1,0 +1,63 @@
+
+// --------------------------------------------------
+// Variables
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Styling
+// --------------------------------------------------
+
+#block-secondarynavigation, #block-views-block-admin-s-users-block-1 {
+  .nav > li > a {
+    font-weight: bold;
+    font-size: 15px;
+    padding:20px 15px 20px 50px; 
+  }
+  .nav > li > a:hover, .nav > li > a:focus {
+    text-decoration: none;
+    background-color: #f1f7fd;
+  }
+}
+
+.ci-user::before {
+  content: '\e008';
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  text-decoration: inherit;
+}
+
+div.nav-divider {
+  border-bottom:1px solid #d4dfe9;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 0.01em;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  
+  i {
+    position: absolute;
+    bottom: -20px;
+    left: 15%;
+    margin-left: -20px;
+    border: 1px solid #d4dfe9;
+    color: $link-color;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background: #FFF;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    text-align: center;
+  }  
+}
