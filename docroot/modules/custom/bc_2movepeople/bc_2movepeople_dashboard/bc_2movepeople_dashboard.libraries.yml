@@ -40,3 +40,9 @@ bc_2movepeople_dashboard.user-tasks:
   css:
     component:
       css/bc_2movepeople_dashboard.css: {}
+  dependencies:
+      - core/jquery
+      - core/drupal.ajax
+      - core/drupal.dialog
+      - core/drupal.dialog.ajax
+      - core/drupalSettings
