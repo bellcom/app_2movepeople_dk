@@ -23,7 +23,17 @@ $left-container-bg: #FFF;
   margin-top: -15px;
   padding-top: 15px;
   z-index: 1;
-  background-color: $left-container-bg;
+  background-color: $left-container-bg;  
+  padding-bottom: 64px;
+  
+  div.region-sidebar-first {
+    height: 100%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 }
 
 .main-container {

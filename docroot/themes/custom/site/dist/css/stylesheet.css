@@ -8685,7 +8685,23 @@ header.navbar {
   margin-top: -15px;
   padding-top: 15px;
   z-index: 1;
-  background-color: #FFF; }
+  background-color: #FFF;
+  padding-bottom: 64px; }
+  .left-container div.region-sidebar-first {
+    height: 100%;
+    display: -webkit-flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between; }
 
 .main-container {
   margin-left: 245px;
@@ -8724,18 +8740,19 @@ a.btn-progress {
   right: 5px;
   z-index: 999; }
 
-#block-secondarynavigation .nav > li > a, #block-views-block-admin-s-users-block-1 .nav > li > a {
+#block-secondarynavigation .nav > li > a, #block-settingsmenu .nav > li > a,
+#block-views-block-admin-s-users-block-1 .nav > li > a {
   font-weight: bold;
   font-size: 15px;
   padding: 20px 15px 20px 50px; }
 
-#block-secondarynavigation .nav > li > a:hover, #block-secondarynavigation .nav > li > a:focus, #block-views-block-admin-s-users-block-1 .nav > li > a:hover, #block-views-block-admin-s-users-block-1 .nav > li > a:focus {
+#block-secondarynavigation .nav > li > a:hover, #block-secondarynavigation .nav > li > a:focus, #block-settingsmenu .nav > li > a:hover, #block-settingsmenu .nav > li > a:focus,
+#block-views-block-admin-s-users-block-1 .nav > li > a:hover,
+#block-views-block-admin-s-users-block-1 .nav > li > a:focus {
   text-decoration: none;
   background-color: #f1f7fd; }
 
-.ci-user::before {
-  content: '\e008';
-  font-family: 'Glyphicons Halflings';
+.customicon {
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -8744,6 +8761,14 @@ a.btn-progress {
   -webkit-font-smoothing: antialiased;
   display: inline-block;
   text-decoration: inherit; }
+  .customicon.ci-user::before {
+    content: '\e008';
+    font-family: 'Glyphicons Halflings';
+    font-size: 16px; }
+  .customicon.ci-gear::before {
+    content: '\e019';
+    font-family: 'Glyphicons Halflings';
+    font-size: 20px; }
 
 div.nav-divider {
   border-bottom: 1px solid #d4dfe9;
@@ -8763,10 +8788,12 @@ div.nav-divider {
     color: #355981;
     width: 40px;
     height: 40px;
-    line-height: 40px;
+    line-height: 37px;
     background: #FFF;
     border-radius: 50%;
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
     text-align: center; }
+  div.nav-divider i.customicon.ci-gear::before {
+    line-height: 39px; }
 /*# sourceMappingURL=stylesheet.css.map */

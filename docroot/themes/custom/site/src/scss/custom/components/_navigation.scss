@@ -7,7 +7,8 @@
 // Styling
 // --------------------------------------------------
 
-#block-secondarynavigation, #block-views-block-admin-s-users-block-1 {
+#block-secondarynavigation, #block-settingsmenu, 
+#block-views-block-admin-s-users-block-1 {
   .nav > li > a {
     font-weight: bold;
     font-size: 15px;
@@ -19,9 +20,7 @@
   }
 }
 
-.ci-user::before {
-  content: '\e008';
-  font-family: 'Glyphicons Halflings';
+.customicon {
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -30,10 +29,21 @@
   -webkit-font-smoothing: antialiased;
   display: inline-block;
   text-decoration: inherit;
+  
+  &.ci-user::before {
+    content: '\e008';
+    font-family: 'Glyphicons Halflings';
+    font-size: 16px;
+  }
+  &.ci-gear::before {
+    content: '\e019';
+    font-family: 'Glyphicons Halflings';
+    font-size: 20px;
+  }
 }
 
 div.nav-divider {
-  border-bottom:1px solid #d4dfe9;
+  border-bottom:1px solid $divider-color;
   text-transform: uppercase;
   text-align: center;
   letter-spacing: 0.01em;
@@ -47,11 +57,11 @@ div.nav-divider {
     bottom: -20px;
     left: 15%;
     margin-left: -20px;
-    border: 1px solid #d4dfe9;
+    border: 1px solid $divider-color;
     color: $link-color;
     width: 40px;
     height: 40px;
-    line-height: 40px;
+    line-height: 37px;
     background: #FFF;
     -webkit-border-radius: 50%;
     border-radius: 50%;
@@ -59,5 +69,8 @@ div.nav-divider {
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
     text-align: center;
-  }  
+  } 
+  i.customicon.ci-gear::before {
+    line-height: 39px;
+  }
 }
