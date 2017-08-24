@@ -1,0 +1,45 @@
+uuid: dcc6b1a5-bff1-4636-b402-dafa75fd0807
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.user.user.field_connected_users
+    - field.field.user.user.field_organisation
+    - field.field.user.user.field_user_firstname
+    - field.field.user.user.field_user_surname
+    - field.field.user.user.user_picture
+  module:
+    - panelizer
+    - user
+third_party_settings:
+  panelizer:
+    enable: false
+    custom: false
+    allow: false
+    default: default
+id: user.user.default
+targetEntityType: user
+bundle: user
+mode: default
+content:
+  field_user_firstname:
+    type: string
+    weight: 0
+    region: content
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_user_surname:
+    type: string
+    weight: 1
+    region: content
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  field_connected_users: true
+  field_organisation: true
+  member_for: true
+  user_picture: true

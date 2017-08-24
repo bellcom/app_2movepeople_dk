@@ -3,63 +3,38 @@
 // |--------------------------------------------------------------------------
 // |
 // | This file contains styles for the following:
-// | - .left-container, .main-container
+// | - .user
 // |
 
 // --------------------------------------------------
 // Variables
 // --------------------------------------------------
-$left-container-width: 245px;
-$left-container-bg: #FFF;
 
 // --------------------------------------------------
 // Styling
 // --------------------------------------------------
+.user {
+  &.user--compact {
+    outline: none;
 
-.left-container {
-  width: $left-container-width;
-  position: fixed;
-  height: 100%;
-  margin-top: -15px;
-  padding-top: 15px;
-  z-index: 1;
-  background-color: $left-container-bg;  
-  padding-bottom: 64px;
-  
-  div.region-sidebar-first {
-    height: 100%;
-    display: -webkit-flex;
     display: flex;
-    -webkit-flex-direction: column;
     flex-direction: column;
-    justify-content: flex-start;
+    align-items: center;
+    justify-content: center;
 
-    nav:last-child {
-      margin-top: auto;
-    }
-    .blockBrand {
-      text-align: center;
-      padding-top: 22px;
-      padding-bottom: 34px;
-    }
-    .logoBrand {
+    min-height: 255px;
+    padding: 20px;
+    text-align: center;
+    background: $body-bg-secondary;
+
+    div.field {
       display: inline-block;
-      width: $left-container-width;
     }
-  }
-}
-
-.main-container {
-  margin-left: $left-container-width;
-  margin-bottom: 50px;
-
-  .main-container__content {
-    padding-left: $main-container-content-padding;
-    padding-right: $main-container-content-padding;
-  }
-
-  h1.page-header {
-    color: $color-font-h1;
+    img {
+      width: 85px;
+      height: 85px;
+      @include opacity(.2);
+    }
   }
 }
 

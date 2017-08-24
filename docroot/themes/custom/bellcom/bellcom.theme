@@ -143,3 +143,20 @@ function bellcom_theme_suggestions_details_alter(array &$suggestions, array $var
 function bellcom_preprocess_menu_local_task(array &$variables) {
   //$variables['element']['#link']['url']->setOption('attributes', ['class'=>'rounded']);
 }
+
+/**
+ * Implements hook_theme_suggestions_hook
+ */
+function bellcom_theme_suggestions_user_alter(array &$suggestions, array $variables) {
+  $suggestions[] = $variables['theme_hook_original'] . '__' . str_replace('-', '_', $variables['elements']['#view_mode']);
+  return $suggestions;
+}
+
+/**
+ * Implements template_preprocess_user
+ * @param $variables
+ */
+function bellcom_preprocess_user(&$variables) {
+  $variables['attributes']['class'][] = 'user';
+  $variables['attributes']['class'][] = 'user--' . str_replace('-', '_', $variables['elements']['#view_mode']);
+}

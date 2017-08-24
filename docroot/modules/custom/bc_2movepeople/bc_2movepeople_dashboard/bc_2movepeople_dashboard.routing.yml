@@ -1,11 +1,3 @@
-bc_2movepeople_dashboard.dashboard:
-  path: '/dashboard'
-  defaults:
-    _title: 'Clients'
-    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getClientsImplementation'
-  requirements:
-    _user_is_logged_in: 'TRUE'
-
 bc_2movepeople_dashboard.user.overview:
   path: '/dashboard/users/{user}/overview'
   defaults:

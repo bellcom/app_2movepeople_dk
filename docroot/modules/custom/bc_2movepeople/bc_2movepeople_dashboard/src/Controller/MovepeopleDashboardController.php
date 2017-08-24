@@ -187,26 +187,6 @@ class MovepeopleDashboardController extends ControllerBase {
     return $build;
   }
 
-  public function getClientsImplementation() {
-    $current_user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
-    $connected_users_ids = $current_user->get('field_connected_users')->getValue();
-    $connected_users = array();
-    foreach ($connected_users_ids as $key => $user_id) {
-      $uid = $user_id['target_id'];
-      $user = \Drupal\user\Entity\User::load($uid);
-      $connected_users[$key]['name'] = $user->field_user_firstname->value . ' ' . $user->field_user_surname->value;
-      $connected_users[$key]['uid'] = $uid;
-    }
-
-    $build = array(
-      "#theme" => "bc_2movepeople_dashboard_clients",
-      "#title" => 'Clients',
-      "#users" => $connected_users
-    );
-
-    return $build;
-  }
-
   public function getUserOverviewImplementation(AccountInterface $user) {
     $entity_progression_ids = array_keys($this->getProgressionTargets($user->id(), 'progression'));
     $entity_milestone_ids = array_keys($this->getProgressionTargets($user->id(), 'target_milestone'));
