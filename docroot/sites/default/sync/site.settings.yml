@@ -20,3 +20,4 @@ navbar_position: static-top
 fluid_container: 1
 table_responsive: '-1'
 table: ''
+button_iconize: 0

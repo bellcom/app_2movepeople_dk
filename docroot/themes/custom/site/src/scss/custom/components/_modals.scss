@@ -5,19 +5,12 @@
     
     .close {
       color: #FFF;
-      margin-top: 0;
-      //opacity: 0.2;
+      margin-top: 5px;
     }
-/*    button.close::after {
-      content: 'a';
-    }
-    button.close::before {
-      content: 'b';
-    }*/
-    
+   
     .modal-title {
       color: #FFF !important;
-      font-weight: bold;
+      font-size: 24px;
     }
   }
   .modal-body {
@@ -25,6 +18,8 @@
     .form-item {
       .control-label {
         color: #576d8b;
+        font-size: 22px;
+        font-weight: normal;
       } 
     }
     .form-actions {
@@ -32,6 +27,15 @@
     }
     .form-group {
       margin-bottom: 10px;
+      input, select {
+        font-size: 18px;
+      }
+    }
+    textarea.form-control {
+      font-size: 18px;
+    }
+    div.form-type-textarea {
+      margin-bottom: -10px;
     }
   }
   .modal-footer {
@@ -41,7 +45,7 @@
     background-color: #FFF !important;
     
     button.button {
-      font-size: 20px;
+      font-size: 22px;
       padding: 10px 20px;
       background-color: #6dae22;
       border-color: #588f19;
