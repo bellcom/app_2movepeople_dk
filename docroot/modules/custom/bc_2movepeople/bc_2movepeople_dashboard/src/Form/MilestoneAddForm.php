@@ -65,6 +65,7 @@ class MilestoneAddForm extends FormBase {
       '#name' => 'submit',  
       '#value' => $this->t('Save'),
       '#button_type' => 'primary',
+      '#icon' => ''
     ];
 
     return $form;
