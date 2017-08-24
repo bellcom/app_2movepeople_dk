@@ -1,0 +1,8 @@
+uuid: 3893ec6c-f9bc-425d-8b2b-71a344cdb67d
+langcode: en
+status: true
+dependencies: {  }
+id: settings-menu
+label: 'Settings menu'
+description: ''
+locked: false
