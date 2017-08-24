@@ -32,7 +32,21 @@ $left-container-bg: #FFF;
     display: flex;
     -webkit-flex-direction: column;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
+
+    nav:last-child {
+      margin-top: auto;
+    }
+    .blockBrand {
+      text-align: center;
+      padding-top: 22px;
+      padding-bottom: 34px;
+    }
+
+    .logoBrand {
+      display: inline-block;
+      width: $left-container-width;
+    }
   }
 }
 
@@ -48,17 +62,6 @@ $left-container-bg: #FFF;
   h1.page-header {
     color: $color-font-h1;
   }
-}
-
-.blockBrand {
-  text-align: center;
-  padding-top: 22px;
-  padding-bottom: 34px;
-}
-
-.logoBrand {
-  display: inline-block;
-  width: $left-container-width;
 }
 
 // --------------------------------------------------
