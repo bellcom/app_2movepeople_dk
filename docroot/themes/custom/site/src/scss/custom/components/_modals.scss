@@ -15,24 +15,11 @@
   }
   .modal-body {
     padding: 15px 35px 0 35px;
-    .form-item {
-      .control-label {
-        color: #576d8b;
-        font-size: 22px;
-        font-weight: normal;
-      } 
-    }
     .form-actions {
       display: none;
     }
     .form-group {
       margin-bottom: 10px;
-      input, select {
-        font-size: 18px;
-      }
-    }
-    textarea.form-control {
-      font-size: 18px;
     }
     div.form-type-textarea {
       margin-bottom: -10px;

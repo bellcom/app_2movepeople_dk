@@ -1,6 +1,3 @@
-button.custom-checkbox-ok, button.custom-checkbox-trash {
-  margin-right: 5px;
-}
 button.custom-checkbox-ok:before {
   content: '\e013';
   font-family: 'Glyphicons Halflings';
@@ -8,6 +5,7 @@ button.custom-checkbox-ok:before {
 button.custom-checkbox-trash:before {
   content: '\e020';
   font-family: 'Glyphicons Halflings';
+  font-family: 12px;
 }
 .link-btn {
   color: #FFF !important;
@@ -19,7 +17,14 @@ a.btn-progress {
   z-index: 999;
 }
 .btn {
-  font-size: 18px;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 600;
+  padding: 9px 30px;
+  font-size: 18px !important;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-weight: 600 !important;
+}
+button.custom-checkbox-ok, button.custom-checkbox-trash {
+  padding: 8px;
+  width: 45px;
+  margin-right: 5px;
+  margin-bottom: 5px;
 }

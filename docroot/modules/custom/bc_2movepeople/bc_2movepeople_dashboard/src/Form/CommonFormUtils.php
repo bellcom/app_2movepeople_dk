@@ -6,7 +6,7 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Form;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
-//use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 
 class CommonFormUtils {
@@ -38,11 +38,11 @@ class CommonFormUtils {
       $form['goals']['header'] = [
         '#markup' => ''
             . '<div class="row custom-form-fields custom-form-label">'
-            . '<div class="col-md-3 col-sm-2 col-xs-2">Milestone</div>'
-            . '<div class="col-md-2 col-sm-2 col-xs-2">Activity</div>'
-            . '<div class="col-md-3 col-sm-4 col-xs-4">Deadline</div>'
-            . '<div class="col-md-2 col-sm-2 col-xs-2">Evaluation</div>'
-            . '<div class="col-md-2 col-sm-2 col-xs-2">Actions</div>'
+            . '<div class="col-md-3 col-sm-2 col-xs-2 custom-form-label">'.t('Milestone').'</div>'
+            . '<div class="col-md-2 col-sm-2 col-xs-2 custom-form-label">'.t('Activity').'</div>'
+            . '<div class="col-md-3 col-sm-4 col-xs-4 custom-form-label">'.t('Deadline').'</div>'
+            . '<div class="col-md-2 col-sm-2 col-xs-2 custom-form-label">'.t('Evaluation').'</div>'
+            . '<div class="col-md-2 col-sm-2 col-xs-2 custom-form-label">'.t('Actions').'</div>'
             . '</div>'
       ];
       
@@ -90,7 +90,7 @@ class CommonFormUtils {
         '#name' => 'complete_btn'.$goal_id,
         '#attributes' => [
           'data_goal_id' => $goal_id,
-          'class' => ['btn', 'btn-primary', 'custom-checkbox-ok'],
+          'class' => ['btn', 'btn-default', 'custom-checkbox-ok'],
           'data-toggle'  => ['button'],
           'aria-pressed' => ['false'],
           'autocomplete' => ['off']
@@ -114,7 +114,7 @@ class CommonFormUtils {
         '#name' => 'delete_btn'.$goal_id,
         '#attributes' => [
           'data_goal_id' => $goal_id,
-          'class' => ['btn', 'btn-primary', 'custom-checkbox-trash'],
+          'class' => ['btn', 'btn-default', 'custom-checkbox-trash'],
           'data-toggle' => ['button'],
           'aria-pressed' => ['false'],
           'autocomplete' => ['off']

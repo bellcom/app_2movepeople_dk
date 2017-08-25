@@ -1,11 +1,15 @@
 .custom-form-fields {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 .custom-form-label {
   font-weight: bold;
 }
 .col-right {
   text-align: right;
+}
+
+.form-control {
+  height: 45px;
 }
 
 select.form-select {
@@ -16,4 +20,20 @@ span.input-group-addon {
   border-right: solid 2px $btn-default-bg;
   border-bottom: solid 2px $btn-default-bg;
   background-color: #FFF;
+}
+
+.form-item {
+  .control-label {
+    color: #576d8b;
+    font-size: 22px;
+    font-weight: normal;
+  }
+  input, select, textarea {
+    font-size: 18px;
+  }
+}
+.custom-form-label {
+  color: #576d8b;
+  font-size: 22px;
+  font-weight: normal;
 }

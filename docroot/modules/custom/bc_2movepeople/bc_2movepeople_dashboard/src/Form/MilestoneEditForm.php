@@ -73,7 +73,7 @@ class MilestoneEditForm extends FormBase {
       '#prefix' => '<div class="row custom-form-fields"><div class="col-md-10 col-sm-10 col-xs-10">',
       '#suffix' => '</div>',
       '#attributes' => [
-        'class' => ['use-ajax', 'btn', 'btn-info', 'link-btn'],
+        'class' => ['use-ajax', 'btn', 'btn-default', 'link-btn'],
         'data-dialog-type' => 'modal',
 //        'data-dialog-options' => Json::encode([
 //          'width' => 700,
@@ -93,6 +93,9 @@ class MilestoneEditForm extends FormBase {
         '#button_type' => 'primary',
         '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2">',
         '#suffix' => '</div></div>',
+        '#attributes' => [
+          'class' => ['btn-default'],
+        ],
         '#ajax' => [
           'callback' => '::ajaxSubmitForm',
           'event' => 'click',
