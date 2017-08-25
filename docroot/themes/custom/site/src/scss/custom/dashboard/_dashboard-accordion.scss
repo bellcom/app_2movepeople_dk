@@ -1,50 +1,33 @@
 // |--------------------------------------------------------------------------
-// | Dashboard layout
+// | Dashboard accordion
 // |--------------------------------------------------------------------------
 // |
 // | This file contains styles for the following:
-// | - .dashboard-overview
+// | - .dashboard-accordion
 // |
 
 // --------------------------------------------------
 // Variables
 // --------------------------------------------------
-$dashboard-padding: 22px;
 
 // --------------------------------------------------
 // Styling
 // --------------------------------------------------
-.dashboard-overview {
-  padding: $dashboard-padding;
-  background-color: $body-bg-secondary;
-  color: $text-dashboard-color;
 
-  h2.subtitle {
-    font-size: 1.5em;
-    color: $color-font-h2;
-    font-weight: 600;
-    margin-top: 10px;
-    margin-bottom: 25px;
-  }
-
-  .dashboard-divider {
-    margin-bottom: 20px;
-    margin-left: -$dashboard-padding;
-    margin-right: -$dashboard-padding;
-    border-bottom: 2px solid $btn-nav-hover-color;
-  }
-
-  .dashboard-overview__control-buttons {
-    padding-bottom: 15px;
-    .btn:not(:first-child) {
-      margin-left: 24px;
+.dashboard-accordion {
+  margin-top: 10px;
+  .panel-heading {
+    padding: 0;
+    a {
+      display: block ;
+      padding: $panel-heading-padding;
     }
   }
-
-  .accordion {
-
+  .panel-body {
+    border-top: none !important;
   }
 }
+
 // --------------------------------------------------
 // Variants
 // --------------------------------------------------
