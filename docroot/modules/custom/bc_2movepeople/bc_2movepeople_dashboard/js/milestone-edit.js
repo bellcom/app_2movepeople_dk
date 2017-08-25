@@ -1,4 +1,4 @@
-(function ($, Drupal) {
+(function ($, Drupal, drupalSettings) {
     'use strict';
 
     var url = document.location.toString();
@@ -8,9 +8,7 @@
     }
 
     if (anchor) {
-        $('.collapse').collapse('hide');
-        $('#accordion-milestones-collapse-' + anchor).collapse('show');
-    } else {
-        $('.collapse').first().collapse('show');
+        $('#accordion-milestones-collapse-' + anchor).collapse({'show' : true, 'parent': '#accordion-milestones'});
     }
-})(jQuery, Drupal);
+
+})(jQuery, Drupal, drupalSettings);

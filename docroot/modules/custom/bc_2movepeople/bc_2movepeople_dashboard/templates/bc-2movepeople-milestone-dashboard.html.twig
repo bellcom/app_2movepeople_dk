@@ -8,7 +8,7 @@
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="accordion-milestones-heading-{{ milestone_target.id }}">
                 <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#accordion-milestones" href="#accordion-milestones-collapse-{{ milestone_target.id }}" aria-expanded="true" aria-controls="accordion-milestones-collapse-{{ milestone_target.id }}">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion-milestones" href="#accordion-milestones-collapse-{{ milestone_target.id }}" aria-expanded="{% if loop.first %} true {% else %} false {% endif %}" aria-controls="accordion-milestones-collapse-{{ milestone_target.id }}">
                         {{ milestone_target.title }}
                     </a>
                 </h4>
