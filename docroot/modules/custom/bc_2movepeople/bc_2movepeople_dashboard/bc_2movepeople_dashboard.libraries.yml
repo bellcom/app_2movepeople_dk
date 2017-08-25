@@ -1,37 +1,3 @@
-# A simple script using jquery ui accordion.
-bc_2movepeople_dashboard.accordion:
-  # Add css file.
-  css:
-    component:
-      css/bc_2movepeople_dashboard.css: {}
-  # Add js files.
-  js:
-    js/bc_2movepeople_dashboard_accordion.js: {}
-  # Build up our dependencies for this page as a library. Our accordion script
-  # needs jquery.ui.accordion. You can find the core scripts under core/assets/.
-  dependencies:
-    - core/jquery.ui.accordion
-    - core/jquery.ui.datepicker
-    - core/jquery.ui.dialog
-
-# Show how weights work.
-bc_2movepeople_dashboard.weights:
-  # Add css file.
-  css:
-    component:
-      css/jsweights.css: {}
-  # Add js files.
-  js:
-    # dependencies for order loading.
-    js/red.js: { weight: -4 }
-    js/blue.js: { weight: -2 }
-    js/green.js: { weight: -1 }
-    js/brown.js: { weight: -2 }
-    js/black.js: { weight: -1 }
-    js/purple.js: { weight: -5 }
-  dependencies:
-    - core/jquery
-    - core/drupalSettings
 bc_2movepeople_dashboard.milestone-edit:
   js:
     js/milestone-edit.js: {}

@@ -5,7 +5,7 @@
     <a class="btn btn-default" href="{{ path('bc_2movepeople_dashboard.user.progressions', {'user': user}) }}">{{ 'Show progression'|trans }}</a>
     <a class="btn btn-default btn-progress use-ajax"  data-dialog-type = "modal" href="/rates/user/{{ user }}/add">Rate progression</a>
   </div>
-  <div class="dasboard-devider clearfix"></div>
+  <div class="dashboard-divider clearfix"></div>
   {% if table_progression is defined %}
     {{ table_progression }}
   {% endif %}

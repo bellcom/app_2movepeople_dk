@@ -10,7 +10,6 @@
 // Variables
 // --------------------------------------------------
 $left-container-width: 245px;
-$left-container-bg: #FFF;
 
 // --------------------------------------------------
 // Styling
@@ -23,7 +22,7 @@ $left-container-bg: #FFF;
   margin-top: -15px;
   padding-top: 15px;
   z-index: 1;
-  background-color: $left-container-bg;  
+  background-color: $body-bg-secondary;
   padding-bottom: 64px;
   
   div.region-sidebar-first {
@@ -60,6 +59,7 @@ $left-container-bg: #FFF;
 
   h1.page-header {
     color: $color-font-h1;
+    border: none;
   }
 }
 

@@ -1,20 +1,83 @@
-.page-header {
-  border: none;
-}
+// |--------------------------------------------------------------------------
+// | Page layout
+// |--------------------------------------------------------------------------
+// |
+// | This file contains styles for the following:
+// | - .dashboard-overview
+// |
 
+// --------------------------------------------------
+// Variables
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Styling
+// --------------------------------------------------
 .dashboard-overview {
   padding: 22px;
-  background-color: #FFF;
+  background-color: $body-bg-secondary;
   color: $text-dashboard-color;
+
+  .dashboard-divider {
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    margin-left: -22px;
+    margin-right: -22px;
+    border-bottom: 2px solid $btn-nav-hover-color;
+  }
+
+  #milestone_total_table {
+    margin-top: 14px;
+  }
 }
-.dasboard-devider {
-  margin-bottom: 20px;
-  padding-bottom: 14px;
-  margin-left: -22px;
-  margin-right: -22px;
-  border-bottom: 2px solid $btn-nav-hover-color;
-}
-#milestone_total_table {
-  margin-top: 14px;
+// --------------------------------------------------
+// Variants
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Responsive
+// --------------------------------------------------
+
+// Mobile - and up
+@include media-breakpoint-up(xs) {
 }
 
+// Mobile - only
+@include media-breakpoint-only(xs) {
+}
+
+// Tablet - and up
+@include media-breakpoint-up(sm) {
+}
+
+// Tablet - only
+@include media-breakpoint-only(sm) {
+}
+
+// Desktop - and up
+@include media-breakpoint-up(md) {
+}
+
+
+// Desktop - only
+@include media-breakpoint-only(md) {
+}
+
+// Large desktop - and up
+@include media-breakpoint-up(lg) {
+}
+
+// Print
+@media print {
+}
+
+// Touch
+.touchevents {
+}
+
+// No touch
+.no-touchevents {
+}
+// --------------------------------------------------
+// Mixins
+// --------------------------------------------------
