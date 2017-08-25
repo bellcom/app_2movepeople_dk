@@ -1,18 +1,41 @@
+{% set custom_class = '' %}
+{% if type == 'progression' %}
+  {% set custom_class = 'table-unbordered-сhessboard' %}
+  {% set f = 1 %}
+{% endif %}
+{% if type == 'milestone' %}
+  {% set custom_class = 'table-bordered-сustom' %}
+{% endif %}
+
 <div id="{{ type }}_total_table">
-<table  class="table table-striped table-bordered">
+<table  class="table table-bordered {{ custom_class }}">
+{#<table  class="table table-striped table-bordered">#}
   <thead>
-    <tr>
+    {% if custom_class == 'table-unbordered-сhessboard' %}
+      <tr class="row_odd">
+    {% else %}
+      <tr>
+    {% endif %}
       {% for column in table_header %}
         <th data-target="col_{{ loop.index }}"> {{ column }} </th>
         {% endfor %}
     </tr>
-  </thead>
+  </thead>  
   {% for row in table_data %}
-    <tr>
+    {% if custom_class == 'table-unbordered-сhessboard' %}
+      {% set f = f + 1 %}
+      {% if f%2 %}
+        <tr class="row_odd">
+      {% else %}
+        <tr class="row_even">
+      {% endif %}
+    {% else %}
+      <tr>
+    {% endif %}
       {% for column in row %}
         <td data-target="col_{{ loop.index }}"> {{ column }} </td>
       {% endfor %}
-    </tr>
+      </tr>
   {% endfor %}
 </table>
 </div>

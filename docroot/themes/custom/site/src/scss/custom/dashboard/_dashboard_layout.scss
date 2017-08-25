@@ -1,0 +1,20 @@
+.page-header {
+  border: none;
+}
+
+.dashboard-overview {
+  padding: 22px;
+  background-color: #FFF;
+  color: $text-dashboard-color;
+}
+.dasboard-devider {
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  margin-left: -22px;
+  margin-right: -22px;
+  border-bottom: 2px solid $btn-nav-hover-color;
+}
+#milestone_total_table {
+  margin-top: 14px;
+}
+
