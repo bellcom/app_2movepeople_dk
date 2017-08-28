@@ -1,10 +1,10 @@
 favicon:
   mimetype: image/vnd.microsoft.icon
-  path: profiles/contrib/lightning/favicon.ico
-  url: 'http://2move_app.dd:8083/profiles/contrib/lightning/favicon.ico'
-  use_default: 0
+  path: ''
+  url: 'http://app.2movepeople.dev/themes/contrib/bootstrap/favicon.ico'
+  use_default: 1
 logo:
-  path: profiles/contrib/lightning/lightning.png
+  path: 'public://2MOVEPEOPLE_0.png'
   url: ''
   use_default: 0
 schemas:
