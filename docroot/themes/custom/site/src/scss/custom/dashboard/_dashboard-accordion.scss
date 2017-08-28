@@ -18,13 +18,36 @@
   margin-top: 10px;
   .panel-heading {
     padding: 0;
+    border-color: red !important;
     a {
+      font-size: 18px;
+      font-weight: 600;
       display: block ;
       padding: $panel-heading-padding;
+    }
+    a:link, a:hover, a:visited, a:active {
+      text-decoration: none;
+      color: $form-text-color;
+    }
+    a[aria-expanded="false"] {
+      span.glyphicon-triangle-custom:before {
+        content: "\e250";
+      }
+    }
+    a[aria-expanded="true"] {
+      span.glyphicon-triangle-custom:before {
+        content: "\e252";
+      }
     }
   }
   .panel-body {
     border-top: none !important;
+    div.div-goals {
+      padding: 0 24px;
+    }
+  }
+  .panel-default {
+    border-color: $btn-default-bg;
   }
 }
 

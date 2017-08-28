@@ -24,7 +24,7 @@ span.input-group-addon {
 
 .form-item {
   .control-label {
-    color: #576d8b;
+    color: $form-text-color;
     font-size: 1.125em;
     font-weight: normal;
   }
@@ -34,7 +34,7 @@ span.input-group-addon {
 }
 
 .custom-form-label {
-  color: #576d8b;
+  color: $form-text-color;
   font-size: 1.125em;
   font-weight: normal;
 }
