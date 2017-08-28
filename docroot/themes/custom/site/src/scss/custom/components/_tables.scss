@@ -49,4 +49,7 @@ table.table-bordered-сustom {
     font-weight: normal;
     text-transform: uppercase;
   }
+  thead > tr > th, thead > tr > td {
+    border-bottom-width: 1px; 
+  }
 }
