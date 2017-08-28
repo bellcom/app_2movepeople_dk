@@ -3,6 +3,3 @@ description: 'Module for measure the progress with each Goal'
 type: module
 package: '2Movepeople'
 core: 8.x
-dependencies:
-  - bc_2movepeople
-  - node

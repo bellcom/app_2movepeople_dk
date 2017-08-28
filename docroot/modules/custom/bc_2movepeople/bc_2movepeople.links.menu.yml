@@ -1,7 +1,0 @@
-bc_2movepeople.admin_settings_form:
-  title: '2 Move People'
-  route_name: bc_2movepeople.admin_settings_form
-  description: 'Manage all settings in regard to 2movepeople'
-  parent: system.admin_config_system
-  weight: 99
-

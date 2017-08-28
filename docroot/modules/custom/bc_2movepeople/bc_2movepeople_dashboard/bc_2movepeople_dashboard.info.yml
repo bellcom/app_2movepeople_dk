@@ -4,7 +4,5 @@ type: module
 package: '2Movepeople'
 core: 8.x
 dependencies:
-  - bc_2movepeople
-  - node
   - bc_2movepeople_rate_progression
 configure: bc_2movepeople_dashboard.admin.settings_form
