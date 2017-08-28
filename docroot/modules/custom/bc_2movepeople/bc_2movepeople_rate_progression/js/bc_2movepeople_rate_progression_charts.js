@@ -8,25 +8,37 @@
     attach: function (context, settings) {
       google.charts.load('current', {packages: ['corechart', 'bar']});
 
-      if (!$.isFunction($("#accordion", context).accordion))
-        return false;
-      $("#accordion", context).accordion({
-        activate: function (event, ui) {
-          loadGraph(ui.newHeader, ui.newPanel);
-        },
-        create: function (event, ui) {
-          loadGraph(ui.header, ui.panel);
-        }
+      //if (!$.isFunction($("#accordion", context).accordion))
+      //  return false;
+
+//      $("#accordion", context).accordion({
+//        activate: function (event, ui) {
+//          loadGraph(ui.newHeader, ui.newPanel);
+//        },
+//        create: function (event, ui) {
+//          loadGraph(ui.header, ui.panel);
+//        }
+//      });
+
+      $('#accordion-progressions .panel.panel-default').each(function(){
+          //console.log($(this).find('.panel-body'));
+
+          var header = $(this).find('.panel-heading');
+          var panel = $(this).find('.panel-body');
+
+          loadGraph(header, panel);
       });
-      $("#dialog-message").dialog({
-        modal: true,
-        autoOpen: false,
-        buttons: {
-          Ok: function () {
-            $(this).dialog("close");
-          }
-        }
-      });
+
+
+//      $("#dialog-message").dialog({
+//        modal: true,
+//        autoOpen: false,
+//        buttons: {
+//          Ok: function () {
+//            $(this).dialog("close");
+//          }
+//        }
+//      });
 
       $(".btn-update").click(function () {
         var progression_id = $(this).attr('data-progression-id');
@@ -56,6 +68,7 @@
       })
     }
   }
+
   Drupal.behaviors.totalChart = {
     attach: function (context, settings) {
       google.charts.load('current', {packages: ['corechart', 'bar']});
@@ -63,8 +76,8 @@
     }
   };
 
-  function loadGraph(header, panel, reload = false) {
-    if (panel.find('.div-chart div').length > 0 && reload == false)
+  function loadGraph(header, panel, reload) {
+    if ($(panel).find('.div-chart div').length > 0 && reload == false)
       return;
     var progression_id = header.attr('data-progression-id');
     $.ajax({
@@ -73,9 +86,10 @@
       dataType: 'json',
       success: function (data) {
         if (data.values.length) {
-          panel.find('.div-form').show();
+          $(panel).find('.div-form').show();
           google.charts.setOnLoadCallback(function () {
-            var element = panel.find('.div-chart').attr('id');
+            var element = $(panel).find('.div-chart').attr('id');
+
             var arr = [
               [''].concat(data.series),
             ];
@@ -84,13 +98,14 @@
               arr.push(item);
             });
 
-            drawChart(panel.find('.div-chart').attr('id'), arr, data.chart_title)
-            $('#' + element).parent('.ui-accordion-content').height($('#' + element).parent('.ui-accordion-content').children('.div-goals').height()
-                    + $('#' + element).parent('.ui-accordion-content').children('.div-form').height()
-                    + $('#' + element).height());
+            drawChart(element, arr, data.chart_title);
+
+//            $('#' + element).parent('.ui-accordion-content').height($('#' + element).parent('.ui-accordion-content').children('.div-goals').height()
+//                    + $('#' + element).parent('.ui-accordion-content').children('.div-form').height()
+//                    + $('#' + element).height());
           });
         } else {
-          panel.find('.div-form').hide();
+          $(panel)('.div-form').hide();
         }
       }
     });
@@ -114,12 +129,14 @@
     var chart = new google.visualization.ColumnChart(document.getElementById(element));
     chart.draw(cdata, options);
   }
+
   $.fn.graphReload = function (element) {
     var panel = $(element).parent('.ui-accordion-content');
     var header = $("#" + panel.attr('aria-labelledby'));
     loadGraph(header, panel, true);
 
   }
+
   $.fn.graphTotalLoad = function (){
     if ($('#progression_total_table').length > 0) {
         columns = GetColumnCount($("#progression_total_table table"));
