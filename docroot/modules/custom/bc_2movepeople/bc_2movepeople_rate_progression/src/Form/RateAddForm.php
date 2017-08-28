@@ -98,8 +98,8 @@ class RateAddForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $rates = $form_state->getValues('rate');
     foreach ($rates as $rate_id => $rate_value) {
-      $node_exists = !empty(\Drupal::entityQuery('node')->condition('nid', $rate_id)->execute());
-      if (!empty($rate_value) && $node_exists)
+      $node = \Drupal::entityQuery('node')->condition('nid', $rate_id)->execute();
+      if (!empty($rate_value) && !(empty($node)))
         \Drupal::database()->insert('bc_2movepeople_rate_progression')
           ->fields(array(
             'progression_target_id' => $this->node->id(),

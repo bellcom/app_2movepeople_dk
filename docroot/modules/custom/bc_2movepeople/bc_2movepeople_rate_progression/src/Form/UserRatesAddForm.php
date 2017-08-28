@@ -104,7 +104,8 @@ class UserRatesAddForm extends FormBase {
     foreach ($rates as $rate_id => $rate_value) {
       $progression_target_id = array_shift(explode('_', $rate_id));
       $goal_id = array_pop(explode('_', $rate_id));
-      $node_exists = isset($goal_id) ? !empty(\Drupal::entityQuery('node')->condition('nid', $goal_id)->execute()) : FALSE;
+      $node = \Drupal::entityQuery('node')->condition('nid', $goal_id)->execute();
+      $node_exists = isset($goal_id) ? !empty($node) : FALSE;
 
       if (!empty($rate_value) && $node_exists) {
         \Drupal::database()->insert('bc_2movepeople_rate_progression')
