@@ -1,10 +1,10 @@
 favicon:
   mimetype: image/vnd.microsoft.icon
-  path: ''
+  path: 'public://2MOVEPEOPLE.ico'
   url: 'http://app.2movepeople.dev/themes/contrib/bootstrap/favicon.ico'
   use_default: 1
 logo:
-  path: 'public://2MOVEPEOPLE_0.png'
+  path: 'public://2movepeople-logo.png'
   url: ''
   use_default: 0
 schemas:
