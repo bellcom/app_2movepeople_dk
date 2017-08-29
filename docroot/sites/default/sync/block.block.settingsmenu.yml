@@ -6,6 +6,7 @@ dependencies:
     - system.menu.settings-menu
   module:
     - system
+    - user
   theme:
     - site
 id: settingsmenu
@@ -21,4 +22,12 @@ settings:
   label_display: '0'
   level: 1
   depth: 0
-visibility: {  }
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      administrator: administrator
+      2mp_admin: 2mp_admin
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
