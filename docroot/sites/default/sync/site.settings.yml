@@ -1,8 +1,8 @@
 favicon:
   mimetype: image/vnd.microsoft.icon
-  path: 'public://2MOVEPEOPLE.ico'
+  path: 'public://favicon-32x32.ico'
   url: 'http://app.2movepeople.dev/themes/contrib/bootstrap/favicon.ico'
-  use_default: 1
+  use_default: 0
 logo:
   path: 'public://2movepeople-logo.png'
   url: ''
