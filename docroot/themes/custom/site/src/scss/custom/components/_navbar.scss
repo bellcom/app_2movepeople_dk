@@ -18,11 +18,12 @@ header.navbar {
   //margin-right: -15px;
   border-bottom-width: 2px;
   font-weight: bold;
+  margin-bottom: 0;
 
   .navbar-header {
     float: none;
     padding-right: $main-container-content-padding;
-    padding-left: $main-container-content-padding;
+    padding-left: 10px;
 
     nav:first-child {
       float: left;

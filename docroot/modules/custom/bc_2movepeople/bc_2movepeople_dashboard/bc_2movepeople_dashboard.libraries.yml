@@ -12,3 +12,6 @@ bc_2movepeople_dashboard.user-tasks:
       - core/drupal.dialog
       - core/drupal.dialog.ajax
       - core/drupalSettings
+bc_2movepeople_dashboard.sidebar-toggle:
+  js:
+    js/sidebar-toggle.js: {}

@@ -49,7 +49,7 @@ $left-container-width: 245px;
 }
 
 .main-container {
-  margin-left: $left-container-width;
+  //margin-left: $left-container-width;
   margin-bottom: 50px;
 
   .main-container__content {
@@ -60,6 +60,81 @@ $left-container-width: 245px;
   h1.page-header {
     color: $color-font-h1;
     border: none;
+  }
+}
+
+// toggle sidebar panel
+#page-wrapper {
+  height: 100%;
+  padding-left: 245px;
+  transition: all 0.4s ease 0s;
+  
+  &.active {
+    padding-left: 0;
+    
+    #sidebar-wrapper {
+      left: 0;
+    }
+  }
+  
+  header.navbar {
+    margin-left: -5px;
+  }
+  
+  #sidebar-wrapper {
+    top: 51px;
+    margin-left: -250px;
+    width: 245px;
+    background: #000;
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+    z-index: 1000;
+    transition: all 0.4s ease 0s;
+  }
+  
+  #page-content-wrapper {
+    width: 100%;
+    padding-top: 17px;
+    transition: all 0.4s ease 0s;
+  }
+  
+  #menu-toggle {
+    text-decoration: none;
+    float: left;
+    color: #fff;
+    padding-right: 15px;
+  }
+}
+
+// ??? doesnt work correctly in #page-wrapper {}
+#sidebar-wrapper {
+  left: 245px;
+}
+
+@media (max-width:767px) {
+
+  #page-wrapper {
+    padding-left: 0;
+  }
+
+  #sidebar-wrapper {
+    left: 0;
+  }
+
+  #page-wrapper.active {
+    position: relative;
+    left: 245px;
+  }
+
+  #page-wrapper.active #sidebar-wrapper {
+    left: 245px;
+    width: 245px;
+    transition: all 0.4s ease 0s;
+  }
+
+  #menu-toggle {
+    display: inline-block;
   }
 }
 

@@ -56,55 +56,77 @@
  * @see html.html.twig
  */
 #}
+
+{{ attach_library('bc_2movepeople_dashboard/bc_2movepeople_dashboard.sidebar-toggle') }}
+
 {% set container = theme.settings.fluid_container ? 'container-fluid' : 'container' %}
 
-<aside class="left-container" role="complementary">
-{# Sidebar First #}
-{% if page.sidebar_first %}
-  {% block sidebar_first %}
-    {{ page.sidebar_first }}
-  {% endblock %}
-{% endif %}
-</aside>
+<div id="page-wrapper">
+  
+  {# Navbar #}
+  {% if page.navigation or page.navigation_collapsible %}
+    {% block navbar %}
+      {%
+        set navbar_classes = [
+          'navbar',
+          'row',
+          theme.settings.navbar_inverse ? 'navbar-inverse' : 'navbar-default',
+          theme.settings.navbar_position ? 'navbar-' ~ theme.settings.navbar_position|clean_class : container,
+        ]
+      %}
+      <header{{ navbar_attributes.addClass(navbar_classes) }} id="navbar" role="banner">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+              <div  class="navbar-brand">
+                <a id="menu-toggle" href="#" class="btn-menu toggle">
+                  <i class="fa fa-bars"></i>
+                </a>
+                {#<a id="menu-toggle" href="#" class="glyphicon glyphicon-align-justify btn-menu toggle">
+                  <i class="fa fa-bars"></i>
+                </a>
+                <a href="#">Project name</a>#}
+              </div>
+          <div id="navbar" class="collapse navbar-collapse">
+            {{ page.navigation }}
+          </div>
+          {% if page.navigation_collapsible %}
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">{{ 'Toggle navigation'|t }}</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          {% endif %}
+        </div>
+
+        {% if page.navigation_collapsible %}
+          <div class="navbar-collapse collapse">
+            {{ page.navigation_collapsible }}
+          </div>
+        {% endif %}
+      </header>
+    {% endblock %}
+  {% endif %}
+
+  {# Sidebar First #}
+  <div id="sidebar-wrapper">
+    <aside class="left-container" role="complementary">
+    {% if page.sidebar_first %}
+      {% block sidebar_first %}
+        {{ page.sidebar_first }}
+      {% endblock %}
+    {% endif %}
+    </aside>
+  </div>
 
 {# Main #}
 {% block main %}
-  <div role="main" class="main-container {{ container }} js-quickedit-main-content">
-    
-    {# Navbar #}
-    {% if page.navigation or page.navigation_collapsible %}
-      {% block navbar %}
-        {%
-          set navbar_classes = [
-            'navbar',
-            'row',
-            theme.settings.navbar_inverse ? 'navbar-inverse' : 'navbar-default',
-            theme.settings.navbar_position ? 'navbar-' ~ theme.settings.navbar_position|clean_class : container,
-          ]
-        %}
-        <header{{ navbar_attributes.addClass(navbar_classes) }} id="navbar" role="banner">
-          <div class="navbar-header">
-            {{ page.navigation }}
-            {# .btn-navbar is used as the toggle for collapsed navbar content #}
-            {% if page.navigation_collapsible %}
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">{{ 'Toggle navigation'|t }}</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-            {% endif %}
-          </div>
-
-          {# Navigation (collapsible) #}
-          {% if page.navigation_collapsible %}
-            <div class="navbar-collapse collapse">
-              {{ page.navigation_collapsible }}
-            </div>
-          {% endif %}
-        </header>
-      {% endblock %}
-    {% endif %}
+  <div id="page-content-wrapper" role="main" class="main-container {{ container }} js-quickedit-main-content">
     
     <div class="row">
 
@@ -193,3 +215,4 @@
 
   </div>
 {% endblock %}
+</div>
