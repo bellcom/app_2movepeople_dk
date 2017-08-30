@@ -17,14 +17,9 @@ $left-container-width: 245px;
 
 .left-container {
   width: $left-container-width;
-  position: fixed;
   height: 100%;
-  margin-top: -15px;
-  padding-top: 15px;
-  z-index: 1;
   background-color: $body-bg-secondary;
-  padding-bottom: 64px;
-  
+
   div.region-sidebar-first {
     height: 100%;
     display: -webkit-flex;
@@ -65,8 +60,7 @@ $left-container-width: 245px;
 
 // toggle sidebar panel
 #page-wrapper {
-  height: 100%;
-  padding-left: 245px;
+  padding-left: $left-container-width;
   transition: all 0.4s ease 0s;
   
   &.active {
@@ -76,18 +70,12 @@ $left-container-width: 245px;
       left: 0;
     }
   }
-  
-  header.navbar {
-    margin-left: -5px;
-  }
-  
+
   #sidebar-wrapper {
-    top: 51px;
-    margin-left: -250px;
-    width: 245px;
-    background: #000;
+    top: 0;
+    margin-left: -$left-container-width;
     position: fixed;
-    height: 100%;
+    height: 100vh;
     overflow-y: auto;
     z-index: 1000;
     transition: all 0.4s ease 0s;
@@ -95,52 +83,37 @@ $left-container-width: 245px;
   
   #page-content-wrapper {
     width: 100%;
-    padding-top: 17px;
     transition: all 0.4s ease 0s;
   }
   
   #menu-toggle {
     text-decoration: none;
     float: left;
-    color: #fff;
+    color: $navbar-default-link-color;
     padding-right: 15px;
-  }
-}
-
-// ??? doesnt work correctly in #page-wrapper {}
-#sidebar-wrapper {
-  left: 245px;
-}
-
-@media (max-width:767px) {
-
-  #page-wrapper {
-    padding-left: 0;
-  }
-
-  #sidebar-wrapper {
-    left: 0;
-  }
-
-  #page-wrapper.active {
-    position: relative;
-    left: 245px;
-  }
-
-  #page-wrapper.active #sidebar-wrapper {
-    left: 245px;
-    width: 245px;
-    transition: all 0.4s ease 0s;
-  }
-
-  #menu-toggle {
-    display: inline-block;
   }
 }
 
 // --------------------------------------------------
 // Variants
 // --------------------------------------------------
+body.toolbar-fixed {
+  #page-wrapper #sidebar-wrapper {
+    padding-top: 39px;
+  }
+
+  &.toolbar-tray-open {
+    #page-wrapper #sidebar-wrapper {
+      padding-top: 79px;
+    }
+  }
+
+  &.toolbar-tray-open.toolbar-vertical {
+    #page-wrapper #sidebar-wrapper {
+      padding-top: 39px;
+    }
+  }
+}
 
 // --------------------------------------------------
 // Responsive
@@ -152,6 +125,37 @@ $left-container-width: 245px;
 
 // Mobile - only
 @include media-breakpoint-only(xs) {
+  #page-wrapper {
+    padding-left: 0;
+  }
+
+  #sidebar-wrapper {
+    left: 0;
+  }
+
+  #page-wrapper.active {
+    position: relative;
+    left: $left-container-width;
+  }
+
+  #page-wrapper.active #sidebar-wrapper {
+    left: $left-container-width;
+    width: $left-container-width;
+    transition: all 0.4s ease 0s;
+  }
+
+  #menu-toggle {
+    display: inline-block;
+  }
+
+  body.toolbar-fixed {
+    &.toolbar-tray-open.toolbar-vertical {
+      #page-wrapper #sidebar-wrapper {
+        //240px is the admin toolbar width, when vertical
+        margin-left: 240-$left-container-width;
+      }
+    }
+  }
 }
 
 // Tablet - and up
