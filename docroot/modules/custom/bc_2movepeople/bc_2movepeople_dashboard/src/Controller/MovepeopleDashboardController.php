@@ -152,6 +152,7 @@ class MovepeopleDashboardController extends ControllerBase {
         $progression_targets[$progrdata->id()]['goals'][$gettid] = self::getGoal($gettid, $progrdata);
       }
     }
+
     $build = array(
       '#theme' => 'bc_2movepeople_dashboard',
       "#title" => 'Dashboard',
@@ -244,7 +245,8 @@ class MovepeopleDashboardController extends ControllerBase {
       $goal_id = $tid['target_id'];
       $subgoals[$goal_id] = self::getGoal($goal_id, $progression_target);
     }
-    $result = array('id' => $nodeid,
+    $result = array(
+      'id' => $nodeid,
       'title' => $nodetitle,
       'type' => $type,
       'completed' => $is_completed,
@@ -405,4 +407,16 @@ class MovepeopleDashboardController extends ControllerBase {
     return $build;
   }
 
+  static function getProgressionGoalsList($progression_node) {
+    
+    $goal_ids = $progression_node->get('field_goal_ids')->getValue();
+
+    $result = [];
+    foreach ($goal_ids as $tid) {
+      $goal_node = \Drupal::entityTypeManager()->getStorage('node')->load($tid['target_id']);
+      $result[$goal_node->id()] = $goal_node->get('title')->value;
+    }
+    
+    return $result;
+  }
 }

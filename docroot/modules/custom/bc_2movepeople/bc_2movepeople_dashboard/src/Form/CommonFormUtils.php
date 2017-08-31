@@ -38,7 +38,7 @@ class CommonFormUtils {
       $form['goals']['header'] = [
         '#markup' => ''
             . '<div class="row custom-form-fields custom-form-label">'
-            . '<div class="col-md-3 col-sm-2 col-xs-2 custom-form-label">'.t('Milestone').'</div>'
+            . '<div class="col-md-3 col-sm-2 col-xs-2 custom-form-label">'.t('Task').'</div>'
             . '<div class="col-md-2 col-sm-2 col-xs-2 custom-form-label">'.t('Activity').'</div>'
             . '<div class="col-md-3 col-sm-4 col-xs-4 custom-form-label">'.t('Deadline').'</div>'
             . '<div class="col-md-2 col-sm-2 col-xs-2 custom-form-label">'.t('Evaluation').'</div>'
@@ -131,6 +131,81 @@ class CommonFormUtils {
 
     return $form;
   }
+  
+  public static function tasksContainer($form, $node) {
+    
+    $goal_ids = $node->get('field_goal_ids')->getValue();
+
+    $form['goals'] = [
+      '#type' => 'container',
+      '#attributes' => ['id' => 'goals-box-'.$node->id()],
+    ];
+            
+    foreach ($goal_ids as $tid) {
+     
+      $form['goals']['#tree'] = TRUE;
+      
+      $form['goals']['header'] = [
+        '#markup' => ''
+            . '<div class="row custom-form-fields custom-form-label">'
+            . '<div class="col-md-10 col-sm-10 col-xs-10 custom-form-label">'.t('Task').'</div>'
+            . '<div class="col-md-2 col-sm-2 col-xs-2 custom-form-label">'.t('Actions').'</div>'
+            . '</div>'
+      ];
+      
+      $goal_id = $tid['target_id'];
+      $goal = MovepeopleDashboardController::getGoal($goal_id, $node);
+      
+      $form = self::_getTasksRow($form, $goal);      
+    }
+
+    return $form;
+  }
+  
+  private static function _getTasksRow($form, $goal, $parent_subgoal_id = 0) {
+
+    $form['goals'][$goal['id']] = [
+      '#type' => 'container'
+    ];
+
+    $form['goals'][$goal['id']]['title'] = [
+      '#type' => 'textfield',
+      '#default_value' => $goal['title'],
+      '#prefix' => '<div class="row custom-form-fields" id="goal_row_'.$goal['id'].'">'
+        . ($parent_subgoal_id ? '<div class="col-md-2 col-sm-2 col-xs-2"></div><div class="col-md-8 col-sm-8 col-xs-8">' 
+            : '<div class="col-md-10 col-sm-10 col-xs-10">'),
+      '#suffix' => '</div>'
+
+    ];
+
+    $form['goals'][$goal['id']]['delete_btn'] = [
+      '#type' => 'button',
+      '#name' => 'delete_btn'.$goal['id'],
+      '#attributes' => [
+        'data_goal_id' => $goal['id'],
+        'data_parent_id' => $parent_subgoal_id,
+        'class' => ['btn', 'btn-default', 'custom-checkbox-trash'],
+        'data-toggle' => ['button'],
+        'aria-pressed' => ['false'],
+        'autocomplete' => ['off']
+      ],
+      '#ajax' => [
+        'event' => 'click',
+        'callback' => '::ajaxGoalDelete',
+        'progress' => ['type' => 'none']
+      ],
+      '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2">',
+      '#suffix' => '</div></div>'
+    ];
+    if (sizeof($goal['subgoals']) > 0) {
+      foreach ($goal['subgoals'] AS $subgoal) {
+        $form = self::_getTasksRow($form, $subgoal, $goal['id']);
+      }
+    }
+    
+    return $form;
+  }
+  
   
   /**
    * Simply send mail function

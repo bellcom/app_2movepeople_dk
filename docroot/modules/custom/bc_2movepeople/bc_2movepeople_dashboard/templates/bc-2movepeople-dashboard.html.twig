@@ -34,9 +34,15 @@
                aria-labelledby="accordion-progressions-heading-{{ progression_target.id }}">
               <div class="panel-body">
                   <div>
-                    <div class="text-right">
-                      <a class="btn btn-default btn-sm btn-progress use-ajax"  data-dialog-type = "modal"
-                        href="/rates/{{ progression_target.id }}/add">{{ 'Rate progression'|trans }}</a>
+                    <div class="row">
+                      <div class="col-sm-6 text-left">
+                        <a href="{{ path('bc_2movepeople_dashboard.progressions.edit', {'node': progression_target.id }) }}" 
+                           class="btn btn-default btn-sm btn-progress">{{ 'Edit progression'|trans }}</a>
+                      </div>
+                      <div class="col-sm-6 text-right">
+                        <a class="btn btn-default btn-sm btn-progress use-ajax"  data-dialog-type = "modal"
+                          href="/rates/{{ progression_target.id }}/add">{{ 'Rate progression'|trans }}</a>
+                      </div>
                     </div>
                     <div class="div-goals">
                       {% for goal in progression_target.goals %}

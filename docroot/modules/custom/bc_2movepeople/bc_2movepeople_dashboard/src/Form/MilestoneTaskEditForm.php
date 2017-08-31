@@ -35,8 +35,8 @@ class MilestoneTaskEditForm extends FormBase {
 
     $form['title'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Milestone'),
-      '#placeholder' => $this->t('Milestone'),
+      '#title' => $this->t('Task'),
+      '#placeholder' => $this->t('Task'),
       '#required' => TRUE,
     ];
     $form['activity_title'] = [

@@ -128,14 +128,14 @@ class MilestoneEditForm extends FormBase {
 
       $purpose = $form_state->getValue('purpose');
       
-      $node = \Drupal\node\Entity\Node::load($nid);
+      $node = Node::load($nid);
       $node->set("field_purpose", $purpose);
       $node->save();
       
       $goals_arr = $form_state->getValue('goals');
 
       foreach($goals_arr as $gid => $goal) {
-        $goal_node = \Drupal\node\Entity\Node::load($gid);
+        $goal_node = Node::load($gid);
         $goal_node->set("title", $goal['title']);
         $goal_node->set("field_activity_title", $goal['activity_title']);
         $goal_node->set("field_due_date", $goal['due_date']);
@@ -169,7 +169,7 @@ class MilestoneEditForm extends FormBase {
     
     $goal_id = $form_state->getTriggeringElement()['#attributes']['data_goal_id']; 
     $goal = MovepeopleDashboardController::getGoal($goal_id, $this->node);
-    $goal_node = \Drupal\node\Entity\Node::load($goal_id);
+    $goal_node = Node::load($goal_id);
 
     if(is_object($goal_node)) {
       
@@ -215,7 +215,7 @@ class MilestoneEditForm extends FormBase {
     $ajax_response = new AjaxResponse();
     
     $goal_id = $form_state->getTriggeringElement()['#attributes']['data_goal_id'];
-    $this->node = Node::load($this->node->id());
+    //$this->node = Node::load($this->node->id());
     $old_goal_ids = $this->node->get('field_goal_ids')->getValue();
 
     $is_deleted = 0;
@@ -224,6 +224,8 @@ class MilestoneEditForm extends FormBase {
       if($tid['target_id'] != $goal_id) {
         $new_goal_ids[] = $tid['target_id'];
       } else {
+        $goal_node = Node::load($goal_id);
+        $goal_node->delete();
         $is_deleted = 1;
       }
     }

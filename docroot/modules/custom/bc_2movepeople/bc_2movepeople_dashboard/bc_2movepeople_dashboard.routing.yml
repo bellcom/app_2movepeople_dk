@@ -36,6 +36,30 @@ bc_2movepeople_dashboard.user.progressions.add:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionAddForm'
   requirements:
     _permission: 'access content'
+    
+bc_2movepeople_dashboard.progressions.edit:
+  path: '/dashboard/progressions/{node}/edit'
+  options:
+    parameters:
+      node:
+        type: entity:node
+  defaults:
+    _title: 'Edit progression'
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionEditForm'
+  requirements:
+    _permission: 'access content'
+    
+bc_2movepeople_dashboard.progression.tasks.add:
+  path: '/dashboard/progressions/{node}/tasks/add'
+  options:
+    parameters:
+      node:
+        type: entity:node
+  defaults:
+    _title: 'Add new progression task'
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionTaskEditForm'
+  requirements:
+    _permission: 'access content'
 
 bc_2movepeople_dashboard.user.milestones.add:
   path: '/dashboard/users/{user}/milestones/add'
