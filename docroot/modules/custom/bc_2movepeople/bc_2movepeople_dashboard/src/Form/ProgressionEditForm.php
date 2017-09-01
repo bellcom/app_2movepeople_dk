@@ -63,17 +63,24 @@ class ProgressionEditForm extends FormBase {
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#name' => 'submit',  
-      '#value' => $this->t('Save'),
+      '#value' => $this->t('Update'),
       '#button_type' => 'primary',
-//      '#attributes' => [
-//          'class' => ['btn-default'],
-//        ],
+      '#ajax' => [
+        'callback' => '::ajaxSubmitForm',
+        'event' => 'click',
+        'progress' => [
+          'type' => 'throbber',
+        ],
+      ],
+      '#attributes' => [
+          'class' => ['btn-default'],
+        ],
       '#prefix' => '<div class="col-md-6 col-sm-6 col-xs-6 text-right">',
       //'#suffix' => '</div>',
     ];
     
-    $form['actions']['cancel'] = [
-      '#title' => $this->t('Cancel'),
+    $form['actions']['back'] = [
+      '#title' => $this->t('Back'),
       '#type' => 'link',
       '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user[0]['target_id']]),
       '#attributes' => array(
@@ -93,11 +100,20 @@ class ProgressionEditForm extends FormBase {
     return 'bc_2movepeople-dashboard-progression-edit-form';
   }
   
+  public function ajaxFakeDelete(array &$form, FormStateInterface $form_state) {
+    $ajax_response = new AjaxResponse();
+    dpm('ajaxFakeDelete');
+    
+    return $ajax_response;
+  }
+  
   /**
    * {@inheritdoc}
    */
   public function ajaxGoalDelete(array &$form, FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
+    
+   // $this->node = Node::load($this->node->id());
     
     $goal_id = $form_state->getTriggeringElement()['#attributes']['data_goal_id'];
     $parent_task_id = $form_state->getTriggeringElement()['#attributes']['data_parent_id'];
@@ -139,12 +155,12 @@ class ProgressionEditForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function ajaxSubmitForm(array &$form, FormStateInterface $form_state) {
+    $ajax_response = new AjaxResponse();
     
     if (!$form_state->getErrors()) {
 
       $title = $form_state->getValue('title');
-      
       $this->node->set("title", $title);
       $this->node->save();
       
@@ -160,13 +176,19 @@ class ProgressionEditForm extends FormBase {
         
         drupal_set_message($this->t($this->updated_msg));
         
-        $user = $this->node->get('field_progression_user')->getValue();
-        $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user[0]['target_id']]));
+      //  $user = $this->node->get('field_progression_user')->getValue();
+      //  $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user[0]['target_id']]));
       }
     } else {
       drupal_set_message($this->t($this->wrong_msg));
     }
-
+    
+    return $ajax_response;
   }
+  
+  /**
+   * {@inheritdoc}
+   */
+  public function submitForm(array &$form, FormStateInterface $form_state) {}
        
 }
