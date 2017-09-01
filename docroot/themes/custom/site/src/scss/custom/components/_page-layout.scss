@@ -85,6 +85,11 @@ $left-container-width: 245px;
   #page-content-wrapper {
     width: 100%;
     transition: all 0.4s ease 0s;
+    
+    .alert {
+      margin: 20px 60px 0 60px;
+      
+    }
   }
   
   #menu-toggle {
