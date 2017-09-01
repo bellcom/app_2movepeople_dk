@@ -47,6 +47,7 @@ class AdminSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Task complete\'s email body'),
       '#default_value' => $config->get('task_complete_email_body'),
       '#description' => '
+        @name = '.$this->t('The name of the user who will get this email').'<br />
         @user = '.$this->t('The name of the user that finished the task').'<br />
         @task_title  = '.$this->t('The title of the task that is being complete')
     ];

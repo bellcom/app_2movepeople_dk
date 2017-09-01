@@ -1,5 +1,0 @@
-name: Settings
-type: module
-description: Site settings module
-core: 8.x
-package: Bellcom

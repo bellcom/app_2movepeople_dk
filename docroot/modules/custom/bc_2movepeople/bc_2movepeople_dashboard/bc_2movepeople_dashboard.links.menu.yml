@@ -1,5 +1,7 @@
 # Define default links for this module.
 bc_2movepeople_dashboard.user.progressions:
-  title: 2Movepeople Dashboard 
-  description: 2Movepeople Dashboard
-  route_name: bc_2movepeople_dashboard.user.progressions
+  title: '2Movepeople Dashboard settings'
+  description: 'Varisous settings related with 2Movepeople Dashboard'
+  route_name: bc_2movepeople_dashboard.admin.settings_form
+  parent: system.admin_config_system
+  weight: 99
