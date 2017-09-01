@@ -65,8 +65,10 @@
                        {% endif %}
                       {% endfor %}
                     </div>
+
                     <div class = "div-chart" id="div_chart_{{ progression_target.id }}">
                     </div>
+
                     <div class="div-form row form-inline" id="div_form_{{ progression_target.id }}" style="display:none">
                       <div class='col-sm-4'>
                         <input type="date" class="form-date form-control" id ="date_from_{{ progression_target.id }}" placeholder="From date"/>
@@ -84,8 +86,4 @@
         </div>
       {% endfor %}
     </div>
-
-  <div id="dialog-message" title="Notification">
-    <p>Not found rates in selected period</p>
-  </div>
 </div>
