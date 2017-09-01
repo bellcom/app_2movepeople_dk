@@ -74,6 +74,7 @@ $left-container-width: 245px;
   #sidebar-wrapper {
     top: 0;
     margin-left: -$left-container-width;
+    left: 0;
     position: fixed;
     height: 100vh;
     overflow-y: auto;
@@ -129,10 +130,6 @@ body.toolbar-fixed {
     padding-left: 0;
   }
 
-  #sidebar-wrapper {
-    left: 0;
-  }
-
   #page-wrapper.active {
     position: relative;
     left: $left-container-width;
@@ -160,6 +157,27 @@ body.toolbar-fixed {
 
 // Tablet - and up
 @include media-breakpoint-up(sm) {
+  #page-wrapper #sidebar-wrapper {
+    left: $left-container-width;
+  }
+
+  body.toolbar-fixed {
+    &.toolbar-tray-open.toolbar-vertical {
+      #page-wrapper {
+        #sidebar-wrapper {
+          //240px is the admin toolbar width, when vertical
+          left: 240+$left-container-width;
+        }
+        &.active {
+          #sidebar-wrapper {
+            left: 0;
+          }
+        }
+      }
+    }
+  }
+
+
 }
 
 // Tablet - only
