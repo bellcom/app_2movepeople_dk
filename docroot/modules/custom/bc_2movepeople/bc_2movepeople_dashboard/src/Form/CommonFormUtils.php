@@ -110,7 +110,7 @@ class CommonFormUtils {
       }
       
       $form['goals'][$goal_id]['delete_btn'] = [
-        '#type' => 'button',
+        '#type' => 'submit',
         '#name' => 'delete_btn'.$goal_id,
         '#attributes' => [
           'data_goal_id' => $goal_id,
@@ -179,7 +179,7 @@ class CommonFormUtils {
     ];
 
     $form['goals'][$goal['id']]['delete_btn'] = [
-      '#type' => 'button',
+      '#type' => 'submit',
       '#name' => 'delete_btn'.$goal['id'],
       '#attributes' => [
         'data_goal_id' => $goal['id'],

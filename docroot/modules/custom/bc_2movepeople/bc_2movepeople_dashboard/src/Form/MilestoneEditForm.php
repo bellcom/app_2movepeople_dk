@@ -23,6 +23,7 @@ class MilestoneEditForm extends FormBase {
 
   protected $node;
   private $updated_msg = 'Records successfully updated.';
+  private $deleted_msg = 'Records successfully deleted.';
   private $wrong_msg = 'Something wrong.';
   
   public function __construct($nodedata) {
@@ -147,15 +148,10 @@ class MilestoneEditForm extends FormBase {
     
     $message = [
       '#theme' => 'status_messages',
-      '#message_list' => drupal_get_messages(),
-      '#status_headings' => [
-        'status' => $this->t('Status message'),
-        'error'  => $this->t('Error message'),
-        'warning'=> $this->t('Warning message'),
-      ],
+      '#message_list' => drupal_get_messages()
     ];
     $messages = \Drupal::service('renderer')->render($message);
-    $ajax_response->addCommand(new HtmlCommand('#form-system-messages', $messages));
+    $ajax_response->addCommand(new HtmlCommand('#custom-form-system-messages', $messages));
 
     return $ajax_response;
   }
@@ -232,21 +228,18 @@ class MilestoneEditForm extends FormBase {
     if ($is_deleted) {
       $this->node->set('field_goal_ids', $new_goal_ids);
       $this->node->save();
+      drupal_set_message($this->t($this->deleted_msg));
     } else {
       drupal_set_message($this->t($this->wrong_msg));
-      $message = [
-        '#theme' => 'status_messages',
-        '#message_list' => drupal_get_messages(),
-        '#status_headings' => [
-          'status' => $this->t('Status message'),
-          'error'  => $this->t('Error message'),
-          'warning'=> $this->t('Warning message'),
-        ],
-      ];
-      $messages = \Drupal::service('renderer')->render($message);
-      $ajax_response->addCommand(new HtmlCommand('#form-system-messages', $messages));
     }
     $ajax_response->addCommand(new RemoveCommand('#goal_row_'.$goal_id));
+    
+    $message = [
+      '#theme' => 'status_messages',
+      '#message_list' => drupal_get_messages()
+    ];
+    $messages = \Drupal::service('renderer')->render($message);
+    $ajax_response->addCommand(new HtmlCommand('#custom-form-system-messages', $messages));
     
     return $ajax_response;
   }
