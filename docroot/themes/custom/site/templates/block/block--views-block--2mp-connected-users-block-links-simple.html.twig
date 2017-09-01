@@ -68,7 +68,6 @@
     {{ content }}
   {% endblock %}
   <div class="text-center">
-    <a class="btn btn-default" href="/admin/people">{{ 'Add new user'|trans }}</a>
+    <a class="btn btn-default" href="{{ url('user.admin_create') }}">{{ 'Add new user'|trans }}</a>
   </div>
 </section>
-
