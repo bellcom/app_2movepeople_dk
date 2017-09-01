@@ -129,6 +129,7 @@ class ProgressionEditForm extends FormBase {
       $subgoal_ids = $goal_node->get('field_subgoal')->getValue();    
       foreach ($subgoal_ids as $tid) {
         Node::load($tid['target_id'])->delete();
+        $ajax_response->addCommand(new RemoveCommand('#goal_row_'.$tid['target_id']));
       }
     }
     
