@@ -9,7 +9,7 @@ libraries:
 
 regions:
   navigation: 'Navigation'
-  navigation_collapsible: 'Navigation (Collapsible)'
+#  navigation_collapsible: 'Navigation (Collapsible)'
   header: 'Top Bar'
   help: 'Help'
 #  search: 'Search'
