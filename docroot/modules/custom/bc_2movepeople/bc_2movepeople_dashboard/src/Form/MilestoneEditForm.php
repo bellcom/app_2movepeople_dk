@@ -48,7 +48,7 @@ class MilestoneEditForm extends FormBase {
       '#resizable' => 'none',
       '#rows' => 2,
       '#default_value' => $purpose,
-      '#prefix' => '<div class="row"><div class="col-sm-12">',
+      '#prefix' => '<div class="row"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">',
       '#suffix' => '</div></div>'
 //          . '<div class="row custom-form-fields custom-form-label">'
 //          . '<div class="col-md-3 col-sm-2 col-xs-2">'.$this->t('Milestone').'</div>'
@@ -71,7 +71,7 @@ class MilestoneEditForm extends FormBase {
       '#title' => 'Add new task',
       '#name' => 'add_task_btn',
       '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.tasks.add', array('node' => $this->node->id())),
-      '#prefix' => '<div class="row custom-form-fields"><div class="col-md-10 col-sm-10 col-xs-10">',
+      '#prefix' => '<div class="row custom-form-fields"><div class="col-lg-10 col-md-10 col-sm-6 col-xs-12">',
       '#suffix' => '</div>',
       '#attributes' => [
         'class' => ['use-ajax', 'btn', 'btn-default', 'link-btn'],
@@ -92,7 +92,7 @@ class MilestoneEditForm extends FormBase {
         '#name' => 'submit',  
         '#value' => $this->t('Update'),
         '#button_type' => 'primary',
-        '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2">',
+        '#prefix' => '<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">',
         '#suffix' => '</div></div>',
         '#attributes' => [
           'class' => ['btn-default'],

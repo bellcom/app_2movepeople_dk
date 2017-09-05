@@ -1,3 +1,7 @@
+// --------------------------------------------------
+// Styling
+// --------------------------------------------------
+
 button.custom-checkbox-ok:before {
   content: '\e013';
   font-family: 'Glyphicons Halflings';
@@ -17,6 +21,7 @@ a.btn-progress {
   z-index: 999;
 }
 .btn {
+  width: 100%;
   padding: 9px 30px;
   font-size: 18px !important;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
@@ -28,3 +33,75 @@ button.custom-checkbox-ok, button.custom-checkbox-trash {
   margin-right: 5px;
   margin-bottom: 5px;
 }
+
+// --------------------------------------------------
+// Variants
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Responsive
+// --------------------------------------------------
+
+// Mobile - and up
+@include media-breakpoint-up(xs) {
+  .btn {
+    width: 100%;
+  }
+}
+
+// Mobile - only
+@include media-breakpoint-only(xs) {
+  .btn {
+    width: 100%;
+  }
+}
+
+// Tablet - and up
+@include media-breakpoint-up(sm) {
+  .btn {
+    width: 100%;
+  }
+}
+
+// Tablet - only
+@include media-breakpoint-only(sm) {
+  .btn {
+    width: 100%;
+  }
+}
+
+// Desktop - and up
+@include media-breakpoint-up(md) {
+  .btn {
+    width: auto;
+  }
+}
+
+// Desktop - only
+@include media-breakpoint-only(md) {
+  .btn {
+    width: auto;
+  }
+}
+
+// Large desktop - and up
+@include media-breakpoint-up(lg) {
+  .btn {
+    width: auto;
+  }
+}
+
+// Print
+@media print {
+}
+
+// Touch
+.touchevents {
+}
+
+// No touch
+.no-touchevents {
+}
+// --------------------------------------------------
+// Mixins
+// --------------------------------------------------

@@ -18,7 +18,6 @@ $left-container-width: 245px;
 .left-container {
   width: $left-container-width;
   height: 100%;
-  background-color: $body-bg-secondary;
 
   div.region-sidebar-first {
     height: 100%;
@@ -47,10 +46,9 @@ $left-container-width: 245px;
   //margin-left: $left-container-width;
   margin-bottom: 50px;
 
-  .main-container__content {
-    padding-left: $main-container-content-padding;
-    padding-right: $main-container-content-padding;
-  }
+/*  .main-container__content {
+    padding-right: $main-container-content-padding - 45px;
+  }*/
 
   h1.page-header {
     color: $color-font-h1;
@@ -80,6 +78,7 @@ $left-container-width: 245px;
     overflow-y: auto;
     z-index: 1000;
     transition: all 0.4s ease 0s;
+    background-color: $body-bg-secondary;
   }
   
   #page-content-wrapper {
@@ -87,7 +86,7 @@ $left-container-width: 245px;
     transition: all 0.4s ease 0s;
     
     .alert {
-      margin: 20px 60px 0 60px;
+      margin: 20px calc($main-container-content-padding - 30px) 0 calc($main-container-content-padding - 30px);
       
     }
   }
@@ -98,6 +97,10 @@ $left-container-width: 245px;
     color: $navbar-default-link-color;
     padding-right: 15px;
   }
+}
+
+.main-container__user-compact-wrapper {
+  padding-right: 0;
 }
 
 // --------------------------------------------------
@@ -154,7 +157,7 @@ body.toolbar-fixed {
     &.toolbar-tray-open.toolbar-vertical {
       #page-wrapper #sidebar-wrapper {
         //240px is the admin toolbar width, when vertical
-        margin-left: 240-$left-container-width;
+        margin-left: 240px-$left-container-width;
       }
     }
   }
@@ -182,24 +185,121 @@ body.toolbar-fixed {
     }
   }
 
+  // toggle sidebar panel
+  #page-wrapper {
+    #page-content-wrapper {
+      .alert {
+        margin: 20px $main-container-content-padding 0 $main-container-content-padding;
+      }
+    }
+  }
+  
+  .main-container {
+    .main-container__content {
+      padding-left: $main-container-content-padding;
+      padding-right: $main-container-content-padding;
+    }
+  }
 
+  .main-container__user-compact-wrapper {
+    padding: 0 15px;
+  }
 }
 
 // Tablet - only
 @include media-breakpoint-only(sm) {
+  
+  // toggle sidebar panel
+  #page-wrapper {
+    #page-content-wrapper {
+      .alert {
+        margin: 20px $main-container-content-padding 0 $main-container-content-padding;
+      }
+    }
+  }
+  
+  .main-container {
+    .main-container__content {
+      padding-left: $main-container-content-padding - 30px;
+      padding-right: $main-container-content-padding - 30px;
+    }
+  }
+  
+  .main-container__user-compact-wrapper {
+    padding: 0 15px;
+  }
 }
 
 // Desktop - and up
 @include media-breakpoint-up(md) {
-}
 
+  // toggle sidebar panel
+  #page-wrapper {
+    #page-content-wrapper {
+      .alert {
+        margin: 20px $main-container-content-padding 0 $main-container-content-padding;
+      }
+    }
+  }
+
+  .main-container {
+    .main-container__content {
+      padding-left: $main-container-content-padding;
+      padding-right: $main-container-content-padding;
+    }
+  }
+  
+  .main-container__user-compact-wrapper {
+    padding: 0 15px;
+  }
+}
 
 // Desktop - only
 @include media-breakpoint-only(md) {
+  
+  // toggle sidebar panel
+  #page-wrapper {
+    #page-content-wrapper {
+      .alert {
+        margin: 20px $main-container-content-padding 0 $main-container-content-padding;
+      }
+    }
+  }
+  
+  .main-container {
+    .main-container__content {
+      padding-left: $main-container-content-padding;
+      padding-right: $main-container-content-padding;
+    }
+  }
+
+  .main-container__user-compact-wrapper {
+    padding: 0 15px;
+  }
 }
 
 // Large desktop - and up
 @include media-breakpoint-up(lg) {
+
+  // toggle sidebar panel
+  #page-wrapper {
+    #page-content-wrapper {
+      .alert {
+        margin: 20px $main-container-content-padding 0 $main-container-content-padding;
+      }
+    }
+  }
+  
+  .main-container {
+    .main-container__content {
+      padding-left: $main-container-content-padding;
+      padding-right: $main-container-content-padding;
+    }
+  }
+
+  .main-container__user-compact-wrapper {
+    padding: 0 15px;
+  }
 }
 
 // Print

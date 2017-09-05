@@ -50,6 +50,20 @@
   .panel-default {
     border-color: $btn-default-bg;
   }
+  .btn {
+    margin-bottom: $form-control-margin-bottom;
+  }
+  
+  .left-btn-box, .right-btn-box {
+    text-align: right;
+  }
+  
+  .div-chart {
+    overflow-x: auto;
+  }
+  .dashboard-accordion__action-btn {
+    text-align: center;
+  }
 }
 
 // --------------------------------------------------
@@ -62,31 +76,104 @@
 
 // Mobile - and up
 @include media-breakpoint-up(xs) {
+
 }
 
 // Mobile - only
 @include media-breakpoint-only(xs) {
+
 }
 
 // Tablet - and up
 @include media-breakpoint-up(sm) {
+
+  .dashboard-accordion {
+    .left-btn-box, .right-btn-box {
+      text-align: right;
+    }
+    .dashboard-accordion__action-btn {
+      text-align: center;
+    }
+    .btn {
+      margin-bottom: $form-control-margin-bottom;
+    }
+  }
 }
 
 // Tablet - only
 @include media-breakpoint-only(sm) {
+  
+  .dashboard-accordion {
+    .left-btn-box, .right-btn-box {
+      text-align: right;
+    }
+    .dashboard-accordion__action-btn {
+      text-align: center;
+    }
+    .btn {
+      margin-bottom: $form-control-margin-bottom;
+    }
+  }
 }
 
 // Desktop - and up
 @include media-breakpoint-up(md) {
-}
+  
+  .dashboard-accordion {
+    .left-btn-box {
+      text-align: left;
+    }
+    .right-btn-box {
+      text-align: right;
+    }
+    .dashboard-accordion__action-btn {
+      text-align: center;
+    }
+    .btn {
+      margin-bottom: $form-control-margin-bottom - 8px;
+    }
+  }
 
+}
 
 // Desktop - only
 @include media-breakpoint-only(md) {
+  
+  .dashboard-accordion {
+    .left-btn-box {
+      text-align: left;
+    }
+    .right-btn-box {
+      text-align: right;
+    }
+    .dashboard-accordion__action-btn {
+      text-align: left;
+    }
+    .btn {
+      margin-bottom: $form-control-margin-bottom - 8px;
+    }
+  }
+ 
 }
 
 // Large desktop - and up
 @include media-breakpoint-up(lg) {
+  
+  .dashboard-accordion {
+    .left-btn-box {
+      text-align: left;
+    }
+    .right-btn-box {
+      text-align: right;
+    }
+    .dashboard-accordion__action-btn {
+      text-align: left;
+    }
+    .btn {
+      margin-bottom: $form-control-margin-bottom - 8px;
+    }
+  }
+  
 }
 
 // Print

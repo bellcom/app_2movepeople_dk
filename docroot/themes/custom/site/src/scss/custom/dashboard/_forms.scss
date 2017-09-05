@@ -1,3 +1,7 @@
+// --------------------------------------------------
+// Styling
+// --------------------------------------------------
+
 .custom-form-fields {
   margin-top: 5px;
 }
@@ -13,7 +17,8 @@
 }
 
 select.form-select {
-  border:solid 2px $btn-default-bg !important; 
+  border:solid 2px $btn-default-bg !important;
+  min-width: 100px;
 }
 span.input-group-addon {
   border-top: solid 2px $btn-default-bg;
@@ -46,3 +51,95 @@ span.input-group-addon {
     }
   }
 }
+
+.div-form {
+    input, select, textarea {
+    margin-bottom: $form-control-margin-bottom;
+  }
+}
+
+// --------------------------------------------------
+// Variants
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Responsive
+// --------------------------------------------------
+
+// Mobile - and up
+@include media-breakpoint-up(xs) {
+  .div-form {
+      input, select, textarea {
+      margin-bottom: $form-control-margin-bottom;
+    }
+  }
+}
+
+// Mobile - only
+@include media-breakpoint-only(xs) {
+  .div-form {
+      input, select, textarea {
+      margin-bottom: $form-control-margin-bottom;
+    }
+  }
+}
+
+// Tablet - and up
+@include media-breakpoint-up(sm) {
+  .div-form {
+      input, select, textarea {
+      margin-bottom: $form-control-margin-bottom;
+    }
+  }
+}
+
+// Tablet - only
+@include media-breakpoint-only(sm) {
+  .div-form {
+      input, select, textarea {
+      margin-bottom: $form-control-margin-bottom;
+    }
+  }
+}
+
+// Desktop - and up
+@include media-breakpoint-up(md) {
+  .div-form {
+      input, select, textarea {
+      margin-bottom: $form-control-margin-bottom - 8px;
+    }
+  }
+}
+
+// Desktop - only
+@include media-breakpoint-only(md) {
+  .div-form {
+      input, select, textarea {
+      margin-bottom: $form-control-margin-bottom - 8px;
+    }
+  }
+}
+
+// Large desktop - and up
+@include media-breakpoint-up(lg) {
+  .div-form {
+      input, select, textarea {
+      margin-bottom: $form-control-margin-bottom - 8px;
+    }
+  }
+}
+
+// Print
+@media print {
+}
+
+// Touch
+.touchevents {
+}
+
+// No touch
+.no-touchevents {
+}
+// --------------------------------------------------
+// Mixins
+// --------------------------------------------------

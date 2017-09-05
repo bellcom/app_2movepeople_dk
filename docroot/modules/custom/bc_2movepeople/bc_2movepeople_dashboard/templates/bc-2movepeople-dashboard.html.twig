@@ -35,11 +35,11 @@
               <div class="panel-body">
                   <div>
                     <div class="row">
-                      <div class="col-sm-6 text-left">
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 left-btn-box">
                         <a href="{{ path('bc_2movepeople_dashboard.progressions.edit', {'node': progression_target.id }) }}" 
                            class="btn btn-default btn-sm btn-progress">{{ 'Edit progression'|trans }}</a>
                       </div>
-                      <div class="col-sm-6 text-right">
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 right-btn-box">
                         <a class="btn btn-default btn-sm btn-progress use-ajax"  data-dialog-type = "modal"
                           href="/rates/{{ progression_target.id }}/add">{{ 'Rate progression'|trans }}</a>
                       </div>
@@ -70,13 +70,13 @@
                     </div>
 
                     <div class="div-form row form-inline" id="div_form_{{ progression_target.id }}" style="display:none">
-                      <div class='col-sm-4'>
+                      <div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
                         <input type="date" class="form-date form-control" id ="date_from_{{ progression_target.id }}" placeholder="From date"/>
                       </div>
-                      <div class='col-sm-4'>
+                      <div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
                         <input type="date" class="form-date form-control" id ="date_to_{{ progression_target.id }}" placeholder="From date"/>
                       </div>
-                      <div class='col-sm-4'>
+                      <div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>
                         <button type="button" class="btn btn-default btn-update" data-progression-id="{{ progression_target.id }}" id="update_graph_{{ progression_target.id }}">Update graph</button>
                       </div>
                     </div>

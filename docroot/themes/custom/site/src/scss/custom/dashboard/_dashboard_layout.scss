@@ -35,16 +35,34 @@ $dashboard-padding: 22px;
   }
 
   .dashboard-overview__control-buttons {
-    padding-bottom: 15px;
+    padding-bottom: 13px;
     .btn:not(:first-child) {
-      margin-left: 24px;
+      margin-left: 0;
+    }
+    .btn {
+      margin-bottom: $form-control-margin-bottom;
     }
   }
+}
 
-  .accordion {
-
+.bc-2movepeople-dashboard-progression-edit-form {
+  .left-btn-box, .right-btn-box  {
+    text-align: left;
   }
 }
+
+/*.btn {
+    margin-bottom: 2px;
+  }*/
+
+#progression_total_table, #milestone_total_table, #progression_total_chart {
+  overflow-x: auto;
+}
+
+.view-id-2mp_connected_users {
+  padding-right: $main-container-content-padding - 45px;
+}
+
 // --------------------------------------------------
 // Variants
 // --------------------------------------------------
@@ -63,23 +81,140 @@ $dashboard-padding: 22px;
 
 // Tablet - and up
 @include media-breakpoint-up(sm) {
+  
+  .bc-2movepeople-dashboard-progression-edit-form {
+    .left-btn-box, .right-btn-box {
+      text-align: right;
+    }
+  }
+  
+  .view-id-2mp_connected_users {
+    padding-right: 0;
+  }
+  
+  .dashboard-overview {
+    .dashboard-overview__control-buttons {
+      padding-bottom: 13px;
+      .btn:not(:first-child) {
+        margin-left: 0;
+      }
+      .btn {
+        margin-bottom: $form-control-margin-bottom;
+      }
+    }
+  }
 }
 
 // Tablet - only
 @include media-breakpoint-only(sm) {
+  
+  .bc-2movepeople-dashboard-progression-edit-form {
+    .left-btn-box {
+      text-align: left;
+    }
+    .right-btn-box {
+      text-align: right;
+    }
+  }
+  
+  .view-id-2mp_connected_users {
+    padding-right: 0;
+  }
+  .dashboard-overview {
+    .dashboard-overview__control-buttons {
+      padding-bottom: 13px;
+      .btn:not(:first-child) {
+        margin-left: 0;
+      }
+      .btn {
+        margin-bottom: $form-control-margin-bottom;
+      }
+    }
+  }
 }
 
 // Desktop - and up
 @include media-breakpoint-up(md) {
+  
+  .bc-2movepeople-dashboard-progression-edit-form {
+    .left-btn-box {
+      text-align: left;
+    }
+    .right-btn-box {
+      text-align: right;
+    }
+  }
+  
+  .view-id-2mp_connected_users {
+    padding-right: 0;
+  }
+  .dashboard-overview {
+    .dashboard-overview__control-buttons {
+      padding-bottom: 13px;
+      .btn:not(:first-child) {
+        margin-left: 24px;
+      }
+      .btn {
+        margin-bottom: $form-control-margin-bottom - 8px;
+      }
+    }
+  }
 }
-
 
 // Desktop - only
 @include media-breakpoint-only(md) {
+  
+  .bc-2movepeople-dashboard-progression-edit-form {
+    .left-btn-box {
+      text-align: left;
+    }
+    .right-btn-box {
+      text-align: right;
+    }
+  }
+  
+  .view-id-2mp_connected_users {
+    padding-right: 0;
+  }
+  .dashboard-overview {
+    .dashboard-overview__control-buttons {
+      padding-bottom: 13px;
+      .btn:not(:first-child) {
+        margin-left: 24px;
+      }
+      .btn {
+        margin-bottom: $form-control-margin-bottom - 8px;
+      }
+    }
+  }
 }
 
 // Large desktop - and up
 @include media-breakpoint-up(lg) {
+  
+  .bc-2movepeople-dashboard-progression-edit-form {
+    .left-btn-box {
+      text-align: left;
+    }
+    .right-btn-box {
+      text-align: right;
+    }
+  }
+  
+  .view-id-2mp_connected_users {
+    padding-right: 0;
+  }
+  .dashboard-overview {
+    .dashboard-overview__control-buttons {
+      padding-bottom: 13px;
+      .btn:not(:first-child) {
+        margin-left: 24px;
+      }
+      .btn {
+        margin-bottom: $form-control-margin-bottom - 8px;
+      }
+    }
+  }
 }
 
 // Print

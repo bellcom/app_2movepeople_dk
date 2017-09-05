@@ -26,6 +26,7 @@
     padding: 20px;
     text-align: center;
     background: $body-bg-secondary;
+    margin-bottom: 15px;
 
     div.field {
       display: inline-block;
@@ -56,23 +57,47 @@
 
 // Tablet - and up
 @include media-breakpoint-up(sm) {
+  .user {
+    &.user--compact {
+      margin-bottom: 20px;
+    }
+  }
 }
 
 // Tablet - only
 @include media-breakpoint-only(sm) {
+  .user {
+    &.user--compact {
+      margin-bottom: 20px;
+    }
+  }
 }
 
 // Desktop - and up
 @include media-breakpoint-up(md) {
+  .user {
+    &.user--compact {
+      margin-bottom: 20px;
+    }
+  }
 }
-
 
 // Desktop - only
 @include media-breakpoint-only(md) {
+  .user {
+    &.user--compact {
+      margin-bottom: 20px;
+    }
+  }
 }
 
 // Large desktop - and up
 @include media-breakpoint-up(lg) {
+  .user {
+    &.user--compact {
+      margin-bottom: 20px;
+    }
+  }
 }
 
 // Print
