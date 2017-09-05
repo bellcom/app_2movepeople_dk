@@ -1,0 +1,14 @@
+uuid: a8d9ec00-995e-4174-9003-dc0ea2fcd799
+langcode: en
+status: true
+dependencies:
+  module:
+    - lightning_core
+third_party_settings:
+  lightning_core:
+    description: ''
+id: 2mp_manager
+label: '2MP Manager'
+weight: 7
+is_admin: null
+permissions: {  }

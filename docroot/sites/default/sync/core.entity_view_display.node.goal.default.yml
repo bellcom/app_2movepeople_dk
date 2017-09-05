@@ -7,6 +7,7 @@ dependencies:
     - field.field.node.goal.field_activity_title
     - field.field.node.goal.field_due_date
     - field.field.node.goal.field_evaluation
+    - field.field.node.goal.field_is_manager_task
     - field.field.node.goal.field_subgoal
     - field.field.node.goal.field_task_complete
     - node.type.goal
@@ -58,6 +59,16 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: basic_string
+    region: content
+  field_is_manager_task:
+    weight: 112
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
     region: content
   field_status:
     weight: 104

@@ -66,19 +66,35 @@ class MilestoneEditForm extends FormBase {
 //      '#weight' => -100,
 //    ];
 //    
+    
     $form['add_mt'] = [ 
       '#type' => 'link',
       '#title' => 'Add new task',
       '#name' => 'add_task_btn',
       '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.tasks.add', array('node' => $this->node->id())),
-      '#prefix' => '<div class="row custom-form-fields"><div class="col-lg-10 col-md-10 col-sm-6 col-xs-12">',
-      '#suffix' => '</div>',
+      '#prefix' => '<div class="row custom-form-fields"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">',
+      '#suffix' => '</div></div>',
       '#attributes' => [
         'class' => ['use-ajax', 'btn', 'btn-default', 'link-btn'],
         'data-dialog-type' => 'modal',
 //        'data-dialog-options' => Json::encode([
 //          'width' => 700,
 //        ]),
+      ]
+    ];
+    
+    $form = CommonFormUtils::goalsContainer($form, $this->node, TRUE);
+    
+    $form['add_manager_mt'] = [ 
+      '#type' => 'link',
+      '#title' => 'Add new manager task',
+      '#name' => 'add_manager_task_btn',
+      '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.manager.tasks.add', array('node' => $this->node->id())),
+      '#prefix' => '<div class="row custom-form-fields"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">',
+      '#suffix' => '</div></div>',
+      '#attributes' => [
+        'class' => ['use-ajax', 'btn', 'btn-default', 'link-btn'],
+        'data-dialog-type' => 'modal',
       ]
     ];
     
@@ -92,7 +108,7 @@ class MilestoneEditForm extends FormBase {
         '#name' => 'submit',  
         '#value' => $this->t('Update'),
         '#button_type' => 'primary',
-        '#prefix' => '<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">',
+        '#prefix' => '<div class="row custom-form-fields"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-right">',
         '#suffix' => '</div></div>',
         '#attributes' => [
           'class' => ['btn-default'],
@@ -134,7 +150,6 @@ class MilestoneEditForm extends FormBase {
       $node->save();
       
       $goals_arr = $form_state->getValue('goals');
-
       foreach($goals_arr as $gid => $goal) {
         $goal_node = Node::load($gid);
         $goal_node->set("title", $goal['title']);
@@ -142,7 +157,18 @@ class MilestoneEditForm extends FormBase {
         $goal_node->set("field_due_date", $goal['due_date']);
         $goal_node->set("field_evaluation", $goal['evaluation']);        
         $goal_node->save();
-      }      
+      }
+      // see prefix in CommonFormUtils
+      $goals_manager_arr = $form_state->getValue('manager_goals');
+      foreach($goals_manager_arr as $gid => $goal) {
+        $goal_node = Node::load($gid);
+        $goal_node->set("title", $goal['title']);
+        $goal_node->set("field_activity_title", $goal['activity_title']);
+        $goal_node->set("field_due_date", $goal['due_date']);
+        $goal_node->set("field_evaluation", $goal['evaluation']);        
+        $goal_node->save();
+      } 
+      
       drupal_set_message($this->t($this->updated_msg));
     }
     
@@ -163,26 +189,27 @@ class MilestoneEditForm extends FormBase {
   public function ajaxGoalComplete(array &$form, FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
     
-    $goal_id = $form_state->getTriggeringElement()['#attributes']['data_goal_id']; 
+    $goal_id = $form_state->getTriggeringElement()['#attributes']['data_goal_id'];
+    $prefix = $form_state->getTriggeringElement()['#attributes']['data_prefix']; 
     $goal = MovepeopleDashboardController::getGoal($goal_id, $this->node);
     $goal_node = Node::load($goal_id);
 
     if(is_object($goal_node)) {
       
-      unset($form['goals'][$goal_id]['complete_btn']['#prefix']);
-      unset($form['goals'][$goal_id]['complete_btn']['#suffix']);
+      unset($form[$prefix.'goals'][$goal_id]['complete_btn']['#prefix']);
+      unset($form[$prefix.'goals'][$goal_id]['complete_btn']['#suffix']);
 
-      $form['goals'][$goal_id]['complete_btn']['#prefix'] = '<span id="complete_btn_box'.$goal_id.'">';
-      $form['goals'][$goal_id]['complete_btn']['#suffix'] = '</span>';
+      $form[$prefix.'goals'][$goal_id]['complete_btn']['#prefix'] = '<span id="complete_btn_box'.$goal_id.'">';
+      $form[$prefix.'goals'][$goal_id]['complete_btn']['#suffix'] = '</span>';
       
       if ($goal['completed']) {
         $goal_node->set("field_task_complete", 0);
-        $form['goals'][$goal_id]['complete_btn']['#attributes']['aria-pressed'] = ['false'];
-        $form['goals'][$goal_id]['complete_btn']['#attributes']['class'] = ['btn', 'btn-primary', 'custom-checkbox-ok'];
+        $form[$prefix.'goals'][$goal_id]['complete_btn']['#attributes']['aria-pressed'] = ['false'];
+        $form[$prefix.'goals'][$goal_id]['complete_btn']['#attributes']['class'] = ['btn', 'btn-primary', 'custom-checkbox-ok'];
       } else {
         $goal_node->set("field_task_complete", 1);
-        $form['goals'][$goal_id]['complete_btn']['#attributes']['aria-pressed'] = ['true'];
-        $form['goals'][$goal_id]['complete_btn']['#attributes']['class'] = ['btn', 'btn-primary', 'custom-checkbox-ok', 'active'];
+        $form[$prefix.'goals'][$goal_id]['complete_btn']['#attributes']['aria-pressed'] = ['true'];
+        $form[$prefix.'goals'][$goal_id]['complete_btn']['#attributes']['class'] = ['btn', 'btn-primary', 'custom-checkbox-ok', 'active'];
       }      
       $goal_node->save();
       
@@ -195,10 +222,11 @@ class MilestoneEditForm extends FormBase {
           'error'  => $this->t('Error message'),
           'warning'=> $this->t('Warning message'),
         ],
-      ];  
+      ];
+      
       $messages = \Drupal::service('renderer')->render($message);
-      $ajax_response->addCommand(new HtmlCommand('#form-system-messages', $messages));
-      $ajax_response->addCommand(new ReplaceCommand('#complete_btn_box'.$goal_id, $form['goals'][$goal_id]['complete_btn']));
+      $ajax_response->addCommand(new HtmlCommand('#custom-form-system-messages', $messages));
+      $ajax_response->addCommand(new ReplaceCommand('#complete_btn_box'.$goal_id, $form[$prefix.'goals'][$goal_id]['complete_btn']));
     }
     
     return $ajax_response;

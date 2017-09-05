@@ -11,8 +11,9 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 class CommonFormUtils {
 
-  public static function goalsContainer($form, $node) {
+  public static function goalsContainer($form, $node, $is_manager = FALSE) {
     
+    $prefix = $is_manager ? 'manager_' : '';
     $goal_ids = $node->get('field_goal_ids')->getValue();
  
 //    $form['goals_header'] = [
@@ -26,17 +27,24 @@ class CommonFormUtils {
 //          . '</div>'
 //    ];
 
-    $form['goals'] = [
+    $form[$prefix.'goals'] = [
       '#type' => 'container',
-      '#attributes' => ['id' => 'goals-box-'.$node->id()],
+      '#attributes' => ['id' => $prefix.'goals-box-'.$node->id()],
     ];
             
-    foreach ($goal_ids as $tid) {      
-     
-      $form['goals']['#tree'] = TRUE;
+    foreach ($goal_ids as $tid) {
       
-      $form['goals']['header'] = [
-        '#markup' => ''
+      $goal_id = $tid['target_id'];
+      $goal = MovepeopleDashboardController::getGoal($goal_id, $node);
+      
+      if ($goal['is_manager'] XOR $is_manager) {
+        continue;
+      }
+     
+      $form[$prefix.'goals']['#tree'] = TRUE;
+      
+      $form[$prefix.'goals']['header'] = [
+        '#markup' => ($is_manager ? '<br/>' : '')
             . '<div class="row custom-form-fields custom-form-label hidden-xs hidden-sm">'
             . '<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 custom-form-label">'.t('Task').'</div>'
             . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 custom-form-label">'.t('Activity').'</div>'
@@ -45,15 +53,12 @@ class CommonFormUtils {
             . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 custom-form-label">'.t('Actions').'</div>'
             . '</div>'
       ];
-      
-      $goal_id = $tid['target_id'];
-      $goal = MovepeopleDashboardController::getGoal($goal_id, $node);
 
-      $form['goals'][$goal_id] = [
+      $form[$prefix.'goals'][$goal_id] = [
         '#type' => 'container'
       ];
 
-      $form['goals'][$goal_id]['title'] = [
+      $form[$prefix.'goals'][$goal_id]['title'] = [
         '#type' => 'textfield',
         '#default_value' => $goal['title'],
         '#prefix' => '<div class="row custom-form-fields div-form" id="goal_row_'.$goal_id.'">'
@@ -63,7 +68,7 @@ class CommonFormUtils {
 
       ];
 
-      $form['goals'][$goal_id]['activity_title'] = [
+      $form[$prefix.'goals'][$goal_id]['activity_title'] = [
         '#type' => 'textfield',
         '#default_value' => $goal['activity_title'],
         '#prefix' => '<div class="visible-xs visible-sm col-sm-12 col-xs-12 custom-form-label">'.t('Activity').'</div>'
@@ -71,7 +76,7 @@ class CommonFormUtils {
         '#suffix' => '</div>'
       ];
 
-      $form['goals'][$goal_id]['due_date'] = [
+      $form[$prefix.'goals'][$goal_id]['due_date'] = [
         '#type' => 'date',
         '#default_value' => $goal['date'],
         '#prefix' => '<div class="visible-xs visible-sm col-sm-12 col-xs-12 custom-form-label">'.t('Deadline').'</div>'
@@ -80,7 +85,7 @@ class CommonFormUtils {
 
       ];
 
-      $form['goals'][$goal_id]['evaluation'] = [
+      $form[$prefix.'goals'][$goal_id]['evaluation'] = [
         '#type' => 'textfield',
         '#default_value' => $goal['evaluation'],
         '#prefix' => '<div class="visible-xs visible-sm col-sm-12 col-xs-12 custom-form-label">'.t('Evaluation').'</div>'
@@ -89,11 +94,12 @@ class CommonFormUtils {
 
       ];
 
-      $form['goals'][$goal_id]['complete_btn'] = [
+      $form[$prefix.'goals'][$goal_id]['complete_btn'] = [
         '#type' => 'button',
         '#name' => 'complete_btn'.$goal_id,
         '#attributes' => [
           'data_goal_id' => $goal_id,
+          'data_prefix' => $prefix,
           'class' => ['btn', 'btn-default', 'custom-checkbox-ok'],
           'data-toggle'  => ['button'],
           'aria-pressed' => ['false'],
@@ -110,11 +116,11 @@ class CommonFormUtils {
       ];
 
       if ($goal['completed']) {
-        $form['goals'][$goal_id]['complete_btn']['#attributes']['class'][] = 'active';
-        $form['goals'][$goal_id]['complete_btn']['#attributes']['aria-pressed'] = ['true'];
+        $form[$prefix.'goals'][$goal_id]['complete_btn']['#attributes']['class'][] = 'active';
+        $form[$prefix.'goals'][$goal_id]['complete_btn']['#attributes']['aria-pressed'] = ['true'];
       }
       
-      $form['goals'][$goal_id]['delete_btn'] = [
+      $form[$prefix.'goals'][$goal_id]['delete_btn'] = [
         '#type' => 'submit',
         '#name' => 'delete_btn'.$goal_id,
         '#attributes' => [

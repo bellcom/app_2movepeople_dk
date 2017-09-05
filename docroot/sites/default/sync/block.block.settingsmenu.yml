@@ -28,6 +28,7 @@ visibility:
     roles:
       administrator: administrator
       2mp_admin: 2mp_admin
+      2mp_manager: 2mp_manager
     negate: false
     context_mapping:
       user: '@user.current_user_context:current_user'

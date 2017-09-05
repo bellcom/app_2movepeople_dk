@@ -23,6 +23,7 @@ class MilestoneTaskEditForm extends FormBase {
   protected $isSaved;
   private $updated_msg = 'Records successfully updated.';
   private $wrong_msg = 'Something wrong.';
+  protected $is_manager = FALSE;
 
   /**
    * {@inheritdoc}
@@ -140,7 +141,8 @@ class MilestoneTaskEditForm extends FormBase {
       'title' => $title,
       'field_activity_title' => $activity_title,
       'field_due_date' => $due_date,
-      'field_evaluation' => $evaluation
+      'field_evaluation' => $evaluation,
+      'field_is_manager_task' => $this->is_manager
     ));
 
     if ($node->save() == SAVED_NEW) {
