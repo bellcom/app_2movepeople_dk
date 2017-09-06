@@ -44,7 +44,7 @@ class CommonFormUtils {
       $form[$prefix.'goals']['#tree'] = TRUE;
       
       $form[$prefix.'goals']['header'] = [
-        '#markup' => ($is_manager ? '<br/>' : '')
+        '#markup' => ($is_manager ? '<h2>'.t('Manager\'s tasks').'</h2>' : '')
             . '<div class="row custom-form-fields custom-form-label hidden-xs hidden-sm">'
             . '<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 custom-form-label">'.t('Task').'</div>'
             . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 custom-form-label">'.t('Activity').'</div>'
