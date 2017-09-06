@@ -8,7 +8,9 @@
     }
 
     if (anchor) {
-        $('#accordion-milestones-collapse-' + anchor).collapse({'show' : true, 'parent': '#accordion-milestones'});
+      $('.collapse.in').collapse('hide');
+      $('#accordion-milestones-collapse-' + anchor).collapse("show");
+    //  $('#accordion-milestones-collapse-' + anchor).collapse({'show' : true, 'parent': '#accordion-milestones'});
     }
 
 })(jQuery, Drupal, drupalSettings);

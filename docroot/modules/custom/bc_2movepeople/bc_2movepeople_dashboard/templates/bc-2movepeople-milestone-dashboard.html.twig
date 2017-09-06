@@ -22,7 +22,7 @@
                     </a>
                 </div>
                 <div id="accordion-milestones-collapse-{{ milestone_target.id }}"
-                     class="panel-collapse collapse {% if loop.first %} in {% endif %}" role="tabpanel"
+                     class="panel-collapse collapse{% if loop.first %} in{% endif %}" role="tabpanel"
                      aria-labelledby="accordion-milestones-heading-{{ milestone_target.id }}">
                     <div class="panel-body">
                         {{ milestone_target.form }}
