@@ -46,6 +46,13 @@ button.custom-checkbox-ok, button.custom-checkbox-trash {
 @include media-breakpoint-up(xs) {
   .btn {
     width: 100%;
+  }  
+  .left-container {
+    .region-sidebar-first {
+      .btn {
+        max-width: $left-container-width - 50px;
+      }
+    }
   }
 }
 
@@ -54,6 +61,13 @@ button.custom-checkbox-ok, button.custom-checkbox-trash {
   .btn {
     width: 100%;
   }
+  .left-container {
+    .region-sidebar-first {
+      .btn {
+        max-width: $left-container-width - 50px;
+      }
+    }
+  }
 }
 
 // Tablet - and up
@@ -61,12 +75,26 @@ button.custom-checkbox-ok, button.custom-checkbox-trash {
   .btn {
     width: 100%;
   }
+  .left-container {
+    .region-sidebar-first {
+      .btn {
+        max-width: $left-container-width - 50px;
+      }
+    }
+  }
 }
 
 // Tablet - only
 @include media-breakpoint-only(sm) {
   .btn {
     width: 100%;
+  }
+  .left-container {
+    .region-sidebar-first {
+      .btn {
+        max-width: $left-container-width - 50px;
+      }
+    }
   }
 }
 

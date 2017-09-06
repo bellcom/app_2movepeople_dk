@@ -59,9 +59,9 @@ $dashboard-padding: 22px;
   overflow-x: auto;
 }
 
-.view-id-2mp_connected_users {
+/*.view-id-2mp_connected_users {
   padding-right: $main-container-content-padding - 45px;
-}
+}*/
 
 // --------------------------------------------------
 // Variants
@@ -88,10 +88,6 @@ $dashboard-padding: 22px;
     }
   }
   
-  .view-id-2mp_connected_users {
-    padding-right: 0;
-  }
-  
   .dashboard-overview {
     .dashboard-overview__control-buttons {
       padding-bottom: 13px;
@@ -116,10 +112,7 @@ $dashboard-padding: 22px;
       text-align: right;
     }
   }
-  
-  .view-id-2mp_connected_users {
-    padding-right: 0;
-  }
+
   .dashboard-overview {
     .dashboard-overview__control-buttons {
       padding-bottom: 13px;
@@ -145,9 +138,6 @@ $dashboard-padding: 22px;
     }
   }
   
-  .view-id-2mp_connected_users {
-    padding-right: 0;
-  }
   .dashboard-overview {
     .dashboard-overview__control-buttons {
       padding-bottom: 13px;
@@ -173,9 +163,6 @@ $dashboard-padding: 22px;
     }
   }
   
-  .view-id-2mp_connected_users {
-    padding-right: 0;
-  }
   .dashboard-overview {
     .dashboard-overview__control-buttons {
       padding-bottom: 13px;
@@ -201,9 +188,6 @@ $dashboard-padding: 22px;
     }
   }
   
-  .view-id-2mp_connected_users {
-    padding-right: 0;
-  }
   .dashboard-overview {
     .dashboard-overview__control-buttons {
       padding-bottom: 13px;

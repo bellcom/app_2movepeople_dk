@@ -12,14 +12,13 @@
   .nav > li > a {
     font-weight: bold;
     font-size: 15px;
-    padding:20px 15px 20px 50px; 
+    padding: 15px 30px 15px 50px; 
   }
   .nav > li > a:hover, .nav > li > a:focus {
     text-decoration: none;
     background-color: $btn-nav-hover-color;
   }
 }
-
 
 .customicon {
   font-style: normal;
@@ -49,7 +48,7 @@ div.custom-nav-divider {
   text-align: center;
   letter-spacing: 0.01em;
   position: relative;
-  padding-bottom: 28px;
+  padding-bottom: 26px;
   margin-bottom: 25px;
   
   i {
@@ -78,3 +77,84 @@ div.custom-nav-divider {
     line-height: 39px;
   }
 }
+
+// --------------------------------------------------
+// Variants
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Responsive
+// --------------------------------------------------
+
+// Mobile - and up
+@include media-breakpoint-up(xs) {
+}
+
+// Mobile - only
+@include media-breakpoint-only(xs) {
+}
+
+// Tablet - and up
+@include media-breakpoint-up(sm) {
+  #block-secondarynavigation, #block-settingsmenu,
+  #block-views-block-2mp-connected-users-block-links-simple {
+    .nav > li > a {
+      padding: 20px 15px 20px 50px; 
+    }
+  }
+}
+
+// Tablet - only
+@include media-breakpoint-only(sm) {
+  #block-secondarynavigation, #block-settingsmenu,
+  #block-views-block-2mp-connected-users-block-links-simple {
+    .nav > li > a {
+      padding: 20px 15px 20px 50px; 
+    }
+  }
+}
+
+// Desktop - and up
+@include media-breakpoint-up(md) {
+  #block-secondarynavigation, #block-settingsmenu,
+  #block-views-block-2mp-connected-users-block-links-simple {
+    .nav > li > a {
+      padding: 20px 15px 20px 50px; 
+    }
+  }
+}
+
+// Desktop - only
+@include media-breakpoint-only(md) {
+  #block-secondarynavigation, #block-settingsmenu,
+  #block-views-block-2mp-connected-users-block-links-simple {
+    .nav > li > a {
+      padding: 20px 15px 20px 50px; 
+    }
+  }
+}
+
+// Large desktop - and up
+@include media-breakpoint-up(lg) {
+  #block-secondarynavigation, #block-settingsmenu,
+  #block-views-block-2mp-connected-users-block-links-simple {
+    .nav > li > a {
+      padding: 20px 15px 20px 50px; 
+    }
+  }
+}
+
+// Print
+@media print {
+}
+
+// Touch
+.touchevents {
+}
+
+// No touch
+.no-touchevents {
+}
+// --------------------------------------------------
+// Mixins
+// --------------------------------------------------

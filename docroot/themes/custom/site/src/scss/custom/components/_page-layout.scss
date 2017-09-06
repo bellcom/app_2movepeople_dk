@@ -9,7 +9,6 @@
 // --------------------------------------------------
 // Variables
 // --------------------------------------------------
-$left-container-width: 245px;
 
 // --------------------------------------------------
 // Styling
@@ -32,8 +31,8 @@ $left-container-width: 245px;
     }
     .blockBrand {
       text-align: center;
-      padding-top: 22px;
-      padding-bottom: 34px;
+      padding-top: 10px;
+      padding-bottom: auto;
     }
     .logoBrand {
       display: inline-block;
@@ -227,6 +226,15 @@ body.toolbar-fixed {
   .main-container__user-compact-wrapper {
     padding: 0 15px;
   }
+  
+  .left-container {
+    div.region-sidebar-first {
+      .blockBrand {
+        padding-top: 22px;
+        padding-bottom: 34px;
+      }
+    }
+  }
 }
 
 // Tablet - only
@@ -250,6 +258,15 @@ body.toolbar-fixed {
   
   .main-container__user-compact-wrapper {
     padding: 0 15px;
+  }
+  
+  .left-container {
+    div.region-sidebar-first {
+      .blockBrand {
+        padding-top: 22px;
+        padding-bottom: 34px;
+      }
+    }
   }
 }
 
@@ -275,6 +292,15 @@ body.toolbar-fixed {
   .main-container__user-compact-wrapper {
     padding: 0 15px;
   }
+
+  .left-container {
+    div.region-sidebar-first {
+      .blockBrand {
+        padding-top: 22px;
+        padding-bottom: 34px;
+      }
+    }
+  }
 }
 
 // Desktop - only
@@ -299,6 +325,15 @@ body.toolbar-fixed {
   .main-container__user-compact-wrapper {
     padding: 0 15px;
   }
+  
+  .left-container {
+    div.region-sidebar-first {
+      .blockBrand {
+        padding-top: 22px;
+        padding-bottom: 34px;
+      }
+    }
+  }
 }
 
 // Large desktop - and up
@@ -322,6 +357,15 @@ body.toolbar-fixed {
 
   .main-container__user-compact-wrapper {
     padding: 0 15px;
+  }
+  
+  .left-container {
+    div.region-sidebar-first {
+      .blockBrand {
+        padding-top: 22px;
+        padding-bottom: 34px;
+      }
+    }
   }
 }
 
