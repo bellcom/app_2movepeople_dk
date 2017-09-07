@@ -34,6 +34,11 @@ $btn-default-color: #FFFFFF;
 $btn-default-bg: #50afe8;
 $btn-default-border: #50afe8;
 
+$brand-secondary: #FFF;
+$btn-secondary-color: #4f5050;
+$btn-secondary-bg: $brand-secondary;
+$btn-secondary-border: lighten($btn-secondary-color, 60%);
+
 //== Custom
 //
 //##
@@ -45,5 +50,3 @@ $text-dashboard-color: #72859f;
 $form-control-margin-bottom: 10px;
 
 $left-container-width: 245px;
-
-//$fa-font-path: '../fonts';

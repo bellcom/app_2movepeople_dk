@@ -52,6 +52,7 @@
   h1.page-header {
     color: $color-font-h1;
     border: none;
+    text-align: center;
   }
 }
 
@@ -215,13 +216,6 @@ body.toolbar-fixed {
       }
     }
   }
-  
-  .main-container {
-    .main-container__content {
-      padding-left: $main-container-content-padding;
-      padding-right: $main-container-content-padding;
-    }
-  }
 
   .main-container__user-compact-wrapper {
     padding: 0 15px;
@@ -235,19 +229,16 @@ body.toolbar-fixed {
       }
     }
   }
+  .main-container {
+    h1.page-header {
+      text-align: left;
+    }
+  }
+
 }
 
 // Tablet - only
 @include media-breakpoint-only(sm) {
-  
-  // toggle sidebar panel
-  #page-wrapper {
-    #page-content-wrapper {
-      .alert {
-        margin: 20px $main-container-content-padding 0 $main-container-content-padding;
-      }
-    }
-  }
   
   .main-container {
     .main-container__content {
@@ -255,118 +246,29 @@ body.toolbar-fixed {
       padding-right: $main-container-content-padding - 30px;
     }
   }
-  
-  .main-container__user-compact-wrapper {
-    padding: 0 15px;
-  }
-  
-  .left-container {
-    div.region-sidebar-first {
-      .blockBrand {
-        padding-top: 22px;
-        padding-bottom: 34px;
-      }
-    }
-  }
+
 }
 
 // Desktop - and up
 @include media-breakpoint-up(md) {
 
-  // toggle sidebar panel
-  #page-wrapper {
-    #page-content-wrapper {
-      .alert {
-        margin: 20px $main-container-content-padding 0 $main-container-content-padding;
-      }
-    }
-  }
-
   .main-container {
     .main-container__content {
       padding-left: $main-container-content-padding;
       padding-right: $main-container-content-padding;
     }
   }
-  
-  .main-container__user-compact-wrapper {
-    padding: 0 15px;
-  }
 
-  .left-container {
-    div.region-sidebar-first {
-      .blockBrand {
-        padding-top: 22px;
-        padding-bottom: 34px;
-      }
-    }
-  }
 }
 
 // Desktop - only
 @include media-breakpoint-only(md) {
-  
-  // toggle sidebar panel
-  #page-wrapper {
-    #page-content-wrapper {
-      .alert {
-        margin: 20px $main-container-content-padding 0 $main-container-content-padding;
-      }
-    }
-  }
-  
-  .main-container {
-    .main-container__content {
-      padding-left: $main-container-content-padding;
-      padding-right: $main-container-content-padding;
-    }
-  }
 
-  .main-container__user-compact-wrapper {
-    padding: 0 15px;
-  }
-  
-  .left-container {
-    div.region-sidebar-first {
-      .blockBrand {
-        padding-top: 22px;
-        padding-bottom: 34px;
-      }
-    }
-  }
 }
 
 // Large desktop - and up
 @include media-breakpoint-up(lg) {
 
-  // toggle sidebar panel
-  #page-wrapper {
-    #page-content-wrapper {
-      .alert {
-        margin: 20px $main-container-content-padding 0 $main-container-content-padding;
-      }
-    }
-  }
-  
-  .main-container {
-    .main-container__content {
-      padding-left: $main-container-content-padding;
-      padding-right: $main-container-content-padding;
-    }
-  }
-
-  .main-container__user-compact-wrapper {
-    padding: 0 15px;
-  }
-  
-  .left-container {
-    div.region-sidebar-first {
-      .blockBrand {
-        padding-top: 22px;
-        padding-bottom: 34px;
-      }
-    }
-  }
 }
 
 // Print

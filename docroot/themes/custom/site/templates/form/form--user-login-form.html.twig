@@ -1,0 +1,22 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a 'form' element.
+ *
+ * Available variables
+ * - attributes: A list of HTML attributes for the wrapper element.
+ * - children: The child elements of the form.
+ *
+ * @see template_preprocess_form()
+ *
+ * @ingroup themeable
+ */
+#}
+
+<div class="custom-login-form">
+  <form{{ attributes }}>
+    {{ children }}
+  </form>
+  <br/><br/>
+  <a href="/dashboard/progressions/11/tasks/add" class="use-ajax btn btn-secondary link-btn" data-dialog-type="modal" data-drupal-selector="edit-add-task" id="edit-add-task">Create Account</a>
+</div>

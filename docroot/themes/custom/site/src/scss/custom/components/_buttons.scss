@@ -12,7 +12,13 @@ button.custom-checkbox-trash:before {
   font-family: 12px;
 }
 .link-btn {
-  color: #FFF !important;
+  color: #FFF;
+  &.btn-secondary {
+    color: $btn-secondary-color;
+  }
+  &.btn-secondary:hover {
+    background-color: lighten($btn-secondary-color, 70%);
+  }
 }
 a.btn-progress {
   //position: absolute;
@@ -44,6 +50,12 @@ button.custom-checkbox-ok, button.custom-checkbox-trash {
     .btn {
       max-width: $left-container-width - 50px;
     }
+  }
+}
+
+.custom-login-form {
+  .btn {
+    max-width: none;
   }
 }
 

@@ -1,0 +1,5 @@
+services:
+  route_subscriber:
+    class: Drupal\bc_2movepeople_dashboard\Routing\RouteSubscriber
+    tags: 
+      - { name: event_subscriber }
