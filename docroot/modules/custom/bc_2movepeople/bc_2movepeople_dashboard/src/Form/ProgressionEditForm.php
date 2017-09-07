@@ -34,7 +34,7 @@ class ProgressionEditForm extends FormBase {
     
     $form['title'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Progression'),
+      '#title' => $this->t('Category'),
       '#default_value' => $this->node->get('title')->value,
       '#required' => TRUE,
     ];
