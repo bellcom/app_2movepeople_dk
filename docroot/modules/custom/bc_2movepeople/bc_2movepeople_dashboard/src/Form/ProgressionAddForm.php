@@ -27,7 +27,7 @@ class ProgressionAddForm extends FormBase {
     
     $form['title'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Progression'),
+      '#title' => $this->t('Category'),
       '#required' => TRUE,
     ];
     

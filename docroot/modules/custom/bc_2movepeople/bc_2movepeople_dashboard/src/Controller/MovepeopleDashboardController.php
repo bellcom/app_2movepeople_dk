@@ -135,7 +135,7 @@ class MovepeopleDashboardController extends ControllerBase {
    *   A renderable array.
    */
   public function getJsAccordionImplementation(AccountInterface $user) {
-    $title = t('Click on each section to expand or collapse the progressions:');
+    $title = t('Click on each section to expand or collapse the categories:');
     // Build using our theme. This gives us content, which is not a good
     // practice,.
 

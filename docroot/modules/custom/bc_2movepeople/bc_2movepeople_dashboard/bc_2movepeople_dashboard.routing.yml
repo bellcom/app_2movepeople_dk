@@ -32,7 +32,7 @@ bc_2movepeople_dashboard.user.progressions.add:
       user:
         type: entity:user
   defaults:
-    _title: 'Add new progression'
+    _title: 'Add new category'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionAddForm'
   requirements:
     _permission: 'access content'
@@ -134,3 +134,11 @@ bc_2movepeople_dashboard.admin.settings_form:
     _permission: 'access administration pages'
   options:
     _admin_route: TRUE
+
+bc_2movepeople_dashboard.users.create:
+  path: '/dashboard/users/create'
+  defaults:
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\NewUserCreateForm'
+    _title: 'Create account'
+  requirements:
+    _permission: 'access content'

@@ -48,7 +48,7 @@ class ProgressionEditForm extends FormBase {
     
     $form['actions']['add_task'] = [ 
       '#type' => 'link',
-      '#title' => $this->t('Add new task'),
+      '#title' => $this->t('Add new Question'),
       '#name' => 'add_task_btn',
       '#url' => Url::fromRoute('bc_2movepeople_dashboard.progression.tasks.add', array('node' => $this->node->id())),
       '#prefix' => '<div class="row custom-form-fields edit-progression__control-buttons"><div class="col-md-6 col-sm-6 col-xs-12 left-btn-box">',

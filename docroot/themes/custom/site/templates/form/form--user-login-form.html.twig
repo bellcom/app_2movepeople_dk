@@ -18,5 +18,7 @@
     {{ children }}
   </form>
   <br/><br/>
-  <a href="/dashboard/progressions/11/tasks/add" class="use-ajax btn btn-secondary link-btn" data-dialog-type="modal" data-drupal-selector="edit-add-task" id="edit-add-task">Create Account</a>
+  <a href="{{ path('bc_2movepeople_dashboard.users.create') }}"
+   class="btn btn-secondary link-btn use-ajax" data-dialog-type="modal" data-dialog-options='{"width":640}'
+   role="button">{{ 'Create Account'|trans }}</a>
 </div>

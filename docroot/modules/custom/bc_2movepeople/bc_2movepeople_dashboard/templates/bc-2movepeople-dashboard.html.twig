@@ -15,7 +15,7 @@
   <div class="dashboard-overview__control-buttons">
     <a href="{{ path('bc_2movepeople_dashboard.user.progressions.add', {'user': user}) }}"
        class="btn btn-default use-ajax" data-dialog-type="modal" data-dialog-options='{"width":640}'
-       role="button">{{ 'Add new progression'|trans }}</a>
+       role="button">{{ 'Add new category'|trans }}</a>
   </div>
     <div class="dashboard-accordion panel-group" id="accordion-progressions" role="tablist" aria-multiselectable="true">
       {% for progression_target in progression_targets %}
@@ -37,11 +37,11 @@
                     <div class="row">
                       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 left-btn-box">
                         <a href="{{ path('bc_2movepeople_dashboard.progressions.edit', {'node': progression_target.id }) }}" 
-                           class="btn btn-default btn-sm btn-progress">{{ 'Edit progression'|trans }}</a>
+                           class="btn btn-default btn-sm btn-progress">{{ 'Edit category'|trans }}</a>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 right-btn-box">
                         <a class="btn btn-default btn-sm btn-progress use-ajax"  data-dialog-type = "modal"
-                          href="/rates/{{ progression_target.id }}/add">{{ 'Rate progression'|trans }}</a>
+                          href="/rates/{{ progression_target.id }}/add">{{ 'Rate category'|trans }}</a>
                       </div>
                     </div>
                     <div class="div-goals">
