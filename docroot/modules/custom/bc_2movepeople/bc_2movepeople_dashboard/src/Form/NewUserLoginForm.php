@@ -7,7 +7,7 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Form;
 
-//use Drupal\Core\Url;
+use Drupal\Core\Url;
 //use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 //use Drupal\node\NodeInterface;
@@ -35,11 +35,26 @@ class NewUserLoginForm extends UserLoginForm {
     unset($form['name']['#description']);
     unset($form['pass']['#description']);
     
-    $form['pass']['#suffix'] = '<div class="forgot-pass-box">'.$this->t('Forgot Password').'?</div>';
+    $form['forgot_pass'] = [ 
+      '#type' => 'link',
+      '#title' => $this->t('Forgot Password?'),
+      '#name' => 'forgot_pass_link',
+      '#url' => Url::fromRoute('bc_2movepeople_dashboard.admin.settings_form'),
+      '#attributes' => [
+        'class' => ['use-ajax'],
+        'data-dialog-type' => 'modal',
+      ],
+      '#prefix' => '<div class="row"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 forgot-pass-box">',
+      '#suffix' => '</div></div>'
+    ];
     
-    $form['actions']['submit']['#value'] = $this->t('Login');
-    $form['actions']['submit']['#attributes'] = [
-      'class' => ['btn-default']
+    $form['actions'] = ['#type' => 'actions'];
+    $form['actions']['submit'] = [
+      '#type' => 'submit', 
+      '#value' => $this->t('Login'),
+      '#attributes' => [
+        'class' => ['btn-default']
+      ]
     ];
 
     return $form;
