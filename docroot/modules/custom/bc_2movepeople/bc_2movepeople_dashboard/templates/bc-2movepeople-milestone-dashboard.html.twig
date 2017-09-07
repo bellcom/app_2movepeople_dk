@@ -3,10 +3,12 @@
 <div class="dashboard-overview">
     <h2 class="subtitle">{{ subtitle }}</h2>
 
-    <div class="dashboard-overview__control-buttons">
+    <div class="row dashboard-milestone__control-buttons left-btn-box">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left-btn-box">
         <a href="{{ path('bc_2movepeople_dashboard.user.milestones.add', {'user': user}) }}"
            class="btn btn-default use-ajax" data-dialog-type="modal" data-dialog-options='{"width":640}'
            role="button">{{ 'Add new milestone'|trans }}</a>
+      </div>
     </div>
 
     <div class="dashboard-accordion panel-group" id="accordion-milestones" role="tablist" aria-multiselectable="true">

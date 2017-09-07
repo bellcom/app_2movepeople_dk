@@ -51,7 +51,7 @@ class ProgressionEditForm extends FormBase {
       '#title' => $this->t('Add new task'),
       '#name' => 'add_task_btn',
       '#url' => Url::fromRoute('bc_2movepeople_dashboard.progression.tasks.add', array('node' => $this->node->id())),
-      '#prefix' => '<div class="row custom-form-fields dashboard-overview__control-buttons"><div class="col-md-6 col-sm-6 col-xs-12 left-btn-box">',
+      '#prefix' => '<div class="row custom-form-fields edit-progression__control-buttons"><div class="col-md-6 col-sm-6 col-xs-12 left-btn-box">',
       '#suffix' => '</div>',
       '#attributes' => [
         'class' => ['use-ajax', 'btn', 'btn-default', 'link-btn'],

@@ -34,8 +34,11 @@ $dashboard-padding: 22px;
     border-bottom: 2px solid $btn-nav-hover-color;
   }
 
-  .dashboard-overview__control-buttons {
+  .dashboard-overview__control-buttons, 
+  .edit-progression__control-buttons, 
+  .dashboard-milestone__control-buttons {
     padding-bottom: 13px;
+    text-align: center;
     .btn:not(:first-child) {
       margin-left: 0;
     }
@@ -47,7 +50,7 @@ $dashboard-padding: 22px;
 
 .bc-2movepeople-dashboard-progression-edit-form {
   .left-btn-box, .right-btn-box  {
-    text-align: left;
+    text-align: center;
   }
 }
 
@@ -77,25 +80,44 @@ $dashboard-padding: 22px;
 
 // Mobile - only
 @include media-breakpoint-only(xs) {
+  .dashboard-overview {
+    .dashboard-milestone__control-buttons {
+      .btn {
+        margin-right: 0;
+      }
+    }
+  }
 }
 
 // Tablet - and up
 @include media-breakpoint-up(sm) {
   
   .bc-2movepeople-dashboard-progression-edit-form {
-    .left-btn-box, .right-btn-box {
+    .left-btn-box {
+      text-align: left;
+    }
+    .right-btn-box {
       text-align: right;
     }
   }
   
   .dashboard-overview {
     .dashboard-overview__control-buttons {
+      text-align: right;
       padding-bottom: 13px;
       .btn:not(:first-child) {
-        margin-left: 0;
+        margin-left: 14px;
       }
       .btn {
         margin-bottom: $form-control-margin-bottom;
+      }
+    }
+    .dashboard-milestone__control-buttons {
+      .left-btn-box {
+        text-align: left;
+      }
+      .right-btn-box {
+        text-align: right;
       }
     }
   }
@@ -103,47 +125,13 @@ $dashboard-padding: 22px;
 
 // Tablet - only
 @include media-breakpoint-only(sm) {
-  
-  .bc-2movepeople-dashboard-progression-edit-form {
-    .left-btn-box {
-      text-align: left;
-    }
-    .right-btn-box {
-      text-align: right;
-    }
-  }
-
-  .dashboard-overview {
-    .dashboard-overview__control-buttons {
-      padding-bottom: 13px;
-      .btn:not(:first-child) {
-        margin-left: 0;
-      }
-      .btn {
-        margin-bottom: $form-control-margin-bottom;
-      }
-    }
-  }
 }
 
 // Desktop - and up
 @include media-breakpoint-up(md) {
   
-  .bc-2movepeople-dashboard-progression-edit-form {
-    .left-btn-box {
-      text-align: left;
-    }
-    .right-btn-box {
-      text-align: right;
-    }
-  }
-  
   .dashboard-overview {
     .dashboard-overview__control-buttons {
-      padding-bottom: 13px;
-      .btn:not(:first-child) {
-        margin-left: 24px;
-      }
       .btn {
         margin-bottom: $form-control-margin-bottom - 8px;
       }
@@ -153,52 +141,10 @@ $dashboard-padding: 22px;
 
 // Desktop - only
 @include media-breakpoint-only(md) {
-  
-  .bc-2movepeople-dashboard-progression-edit-form {
-    .left-btn-box {
-      text-align: left;
-    }
-    .right-btn-box {
-      text-align: right;
-    }
-  }
-  
-  .dashboard-overview {
-    .dashboard-overview__control-buttons {
-      padding-bottom: 13px;
-      .btn:not(:first-child) {
-        margin-left: 24px;
-      }
-      .btn {
-        margin-bottom: $form-control-margin-bottom - 8px;
-      }
-    }
-  }
 }
 
 // Large desktop - and up
 @include media-breakpoint-up(lg) {
-  
-  .bc-2movepeople-dashboard-progression-edit-form {
-    .left-btn-box {
-      text-align: left;
-    }
-    .right-btn-box {
-      text-align: right;
-    }
-  }
-  
-  .dashboard-overview {
-    .dashboard-overview__control-buttons {
-      padding-bottom: 13px;
-      .btn:not(:first-child) {
-        margin-left: 24px;
-      }
-      .btn {
-        margin-bottom: $form-control-margin-bottom - 8px;
-      }
-    }
-  }
 }
 
 // Print

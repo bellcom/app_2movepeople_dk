@@ -72,7 +72,7 @@ class MilestoneEditForm extends FormBase {
       '#title' => 'Add new task',
       '#name' => 'add_task_btn',
       '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.tasks.add', array('node' => $this->node->id())),
-      '#prefix' => '<div class="row custom-form-fields"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">',
+      '#prefix' => '<div class="row custom-form-fields dashboard-milestone__control-buttons"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left-btn-box">',
       '#suffix' => '</div></div>',
       '#attributes' => [
         'class' => ['use-ajax', 'btn', 'btn-default', 'link-btn'],
@@ -90,7 +90,7 @@ class MilestoneEditForm extends FormBase {
       '#title' => 'Add new manager task',
       '#name' => 'add_manager_task_btn',
       '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.manager.tasks.add', array('node' => $this->node->id())),
-      '#prefix' => '<div class="row custom-form-fields"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">',
+      '#prefix' => '<div class="row custom-form-fields dashboard-milestone__control-buttons"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left-btn-box">',
       '#suffix' => '</div></div>',
       '#attributes' => [
         'class' => ['use-ajax', 'btn', 'btn-default', 'link-btn'],
@@ -108,7 +108,7 @@ class MilestoneEditForm extends FormBase {
         '#name' => 'submit',  
         '#value' => $this->t('Update'),
         '#button_type' => 'primary',
-        '#prefix' => '<div class="row custom-form-fields"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-right">',
+        '#prefix' => '<div class="row custom-form-fields dashboard-milestone__control-buttons"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 right-btn-box">',
         '#suffix' => '</div></div>',
         '#attributes' => [
           'class' => ['btn-default'],

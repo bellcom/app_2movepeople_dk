@@ -1,7 +1,7 @@
 {{ attach_library('bc_2movepeople_rate_progression/bc_2movepeople_rate_progression.charts') }}
 
 <div class="dashboard-overview">
-  <div class="dashboard-overview__control-buttons text-right">
+  <div class="dashboard-overview__control-buttons">
     <a class="btn btn-default" href="{{ path('bc_2movepeople_dashboard.user.progressions', {'user': user}) }}">{{ 'Show progression'|trans }}</a>
     <a class="btn btn-default btn-progress use-ajax"  data-dialog-type = "modal" href="/rates/user/{{ user }}/add">Rate progression</a>
   </div>
@@ -13,7 +13,7 @@
   </div>
   {% if table_milestone is defined %}
   <div style="margin-top:50px">&nbsp;</div>
-  <div class="dashboard-overview__control-buttons text-right">
+  <div class="dashboard-overview__control-buttons">
     <a class="btn btn-default" href="{{ path('bc_2movepeople_dashboard.user.milestones', {'user': user}) }}">{{ 'Show Target Milestoens'|trans }}</a>
   </div>  
   <div class="clearfix"></div>

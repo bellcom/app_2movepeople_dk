@@ -22,16 +22,29 @@ a.btn-progress {
 }
 .btn {
   width: 100%;
+  max-width: 260px;
   padding: 9px 30px;
   font-size: 18px !important;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   font-weight: 600 !important;
+}
+.modal-content {
+  .btn {
+    width: auto;
+  }
 }
 button.custom-checkbox-ok, button.custom-checkbox-trash {
   padding: 8px;
   width: 45px;
   margin-right: 5px;
   margin-bottom: 5px;
+}
+.left-container {
+  .region-sidebar-first {
+    .btn {
+      max-width: $left-container-width - 50px;
+    }
+  }
 }
 
 // --------------------------------------------------
@@ -43,59 +56,19 @@ button.custom-checkbox-ok, button.custom-checkbox-trash {
 // --------------------------------------------------
 
 // Mobile - and up
-@include media-breakpoint-up(xs) {
-  .btn {
-    width: 100%;
-  }  
-  .left-container {
-    .region-sidebar-first {
-      .btn {
-        max-width: $left-container-width - 50px;
-      }
-    }
-  }
+@include media-breakpoint-up(xs) { 
 }
 
 // Mobile - only
 @include media-breakpoint-only(xs) {
-  .btn {
-    width: 100%;
-  }
-  .left-container {
-    .region-sidebar-first {
-      .btn {
-        max-width: $left-container-width - 50px;
-      }
-    }
-  }
 }
 
 // Tablet - and up
 @include media-breakpoint-up(sm) {
-  .btn {
-    width: 100%;
-  }
-  .left-container {
-    .region-sidebar-first {
-      .btn {
-        max-width: $left-container-width - 50px;
-      }
-    }
-  }
 }
 
 // Tablet - only
 @include media-breakpoint-only(sm) {
-  .btn {
-    width: 100%;
-  }
-  .left-container {
-    .region-sidebar-first {
-      .btn {
-        max-width: $left-container-width - 50px;
-      }
-    }
-  }
 }
 
 // Desktop - and up
@@ -107,16 +80,11 @@ button.custom-checkbox-ok, button.custom-checkbox-trash {
 
 // Desktop - only
 @include media-breakpoint-only(md) {
-  .btn {
-    width: auto;
-  }
+
 }
 
 // Large desktop - and up
 @include media-breakpoint-up(lg) {
-  .btn {
-    width: auto;
-  }
 }
 
 // Print
