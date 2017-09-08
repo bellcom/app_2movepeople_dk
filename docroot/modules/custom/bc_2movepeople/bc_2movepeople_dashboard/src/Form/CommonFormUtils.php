@@ -159,7 +159,7 @@ class CommonFormUtils {
       $form['goals']['header'] = [
         '#markup' => ''
             . '<div class="row custom-form-fields custom-form-label">'
-            . '<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 custom-form-label">'.t('Task').'</div>'
+            . '<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 custom-form-label">'.t('Question').'</div>'
             . '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 custom-form-label">'.t('Actions').'</div>'
             . '</div>'
       ];

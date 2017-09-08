@@ -34,16 +34,16 @@ class ProgressionTaskEditForm extends FormBase {
     
     $form['parent_task_id'] = [
       '#type' => 'select',
-      '#title' => $this->t('Parent task'),
+      '#title' => $this->t('Parent question'),
       '#options' => $goals_options,
-      '#empty_option' => $this->t('-Select parent task-'),
+      '#empty_option' => $this->t('-Select parent question-'),
       '#required' => FALSE
     ];
 
     $form['title'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Task'),
-      '#placeholder' => $this->t('Task'),
+      '#title' => $this->t('Question'),
+      '#placeholder' => $this->t('Question'),
       '#required' => TRUE,
     ];
     

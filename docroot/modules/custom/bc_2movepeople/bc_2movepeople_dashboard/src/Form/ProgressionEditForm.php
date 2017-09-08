@@ -39,6 +39,8 @@ class ProgressionEditForm extends FormBase {
       '#required' => TRUE,
     ];
     
+    $form = CommonFormUtils::tasksContainer($form, $this->node);
+    
     // Disable caching on this form.
     $form_state->setCached(FALSE);
     
@@ -58,8 +60,6 @@ class ProgressionEditForm extends FormBase {
         'data-dialog-type' => 'modal',
       ]
     ];
-    
-    $form = CommonFormUtils::tasksContainer($form, $this->node);
     
     $form['actions']['submit'] = [
       '#type' => 'submit',
