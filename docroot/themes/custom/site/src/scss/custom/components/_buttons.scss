@@ -2,12 +2,17 @@
 // Styling
 // --------------------------------------------------
 
-button.custom-checkbox-ok:before {
+.custom-checkbox-ok:before {
   content: '\e013';
   font-family: 'Glyphicons Halflings';
 }
-button.custom-checkbox-trash:before {
+.custom-checkbox-trash:before {
   content: '\e020';
+  font-family: 'Glyphicons Halflings';
+  font-family: 12px;
+}
+.custom-checkbox-clone:before {
+  content: '\e224';
   font-family: 'Glyphicons Halflings';
   font-family: 12px;
 }
@@ -39,7 +44,9 @@ a.btn-progress {
     width: auto;
   }
 }
-button.custom-checkbox-ok, button.custom-checkbox-trash {
+.custom-checkbox-ok, 
+.custom-checkbox-trash, 
+.custom-checkbox-clone {
   padding: 8px;
   width: 45px;
   margin-right: 5px;
@@ -96,6 +103,11 @@ button.custom-checkbox-ok, button.custom-checkbox-trash {
 @include media-breakpoint-up(md) {
   .btn {
     width: auto;
+  }
+  .custom-checkbox-ok, 
+  .custom-checkbox-trash, 
+  .custom-checkbox-clone {
+    width: 45px;
   }
 }
 

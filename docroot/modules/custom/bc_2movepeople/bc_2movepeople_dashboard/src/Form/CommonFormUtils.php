@@ -7,6 +7,7 @@
 namespace Drupal\bc_2movepeople_dashboard\Form;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Url;
 
 
 class CommonFormUtils {
@@ -15,6 +16,7 @@ class CommonFormUtils {
     
     $prefix = $is_manager ? 'manager_' : '';
     $goal_ids = $node->get('field_goal_ids')->getValue();
+    $user_id = $node->get('field_progression_user')->getValue()[0]['target_id'];
  
 //    $form['goals_header'] = [
 //      '#markup' => ''
@@ -114,7 +116,7 @@ class CommonFormUtils {
           . '<span id="complete_btn_box'.$goal_id.'">',
         '#suffix' => '</span>'
       ];
-
+      
       if ($goal['completed']) {
         $form[$prefix.'goals'][$goal_id]['complete_btn']['#attributes']['class'][] = 'active';
         $form[$prefix.'goals'][$goal_id]['complete_btn']['#attributes']['aria-pressed'] = ['true'];
@@ -135,7 +137,26 @@ class CommonFormUtils {
           'callback' => '::ajaxGoalDelete',
           'progress' => ['type' => 'none']
         ],
+      ];
+      
+      $form[$prefix.'goals'][$goal_id]['clone_btn'] = [
+        '#type' => 'link',
+        '#name' => 'clone_btn'.$goal_id,
+        '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.tasks.clone', array('user' => $user_id, 'node' => $goal_id)),
+        '#attributes' => [
+          'data_goal_id' => $goal_id,
+          'data_prefix' => $prefix,
+          'data-dialog-type' => 'modal',
+          'class' => ['use-ajax', 'btn', 'btn-default', 'link-btn', 'custom-checkbox-clone'],
+          'data-toggle'  => ['button'],
+          'aria-pressed' => ['false'],
+          'autocomplete' => ['off'],
+        ],
         '#suffix' => '</div></div>'
+//        '#ajax' => [
+//          'event' => 'click',
+//          'progress' => ['type' => 'none']
+//        ],
       ];
       
     }
