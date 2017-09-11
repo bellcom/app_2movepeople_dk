@@ -9,14 +9,19 @@ namespace Drupal\bc_2movepeople_dashboard\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\node\NodeInterface;
+use Drupal\Core\Ajax\AjaxResponse;
+//use Drupal\node\NodeInterface;
 use Drupal\Core\Url;
-use Drupal\node\Entity\Node;
-use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
+//use Drupal\node\Entity\Node;
+//use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
+//use Drupal\Core\Ajax\CloseModalDialogCommand;
+use Drupal\Core\Ajax\RedirectCommand;
+//use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\user\Entity\User;
 
 class NewUserCreateForm extends FormBase {
 
-  protected $parent_node;
   protected $isSaved;
   private $updated_msg = 'Records successfully updated.';
   private $wrong_msg = 'Something wrong.';
@@ -30,13 +35,55 @@ class NewUserCreateForm extends FormBase {
     
     $form['#prefix'] = '<div id="bc_2movepeople-dashboard-user-create-form">';
     $form['#suffix'] = '</div>';
-
-    $form['title'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Task'),
-      '#placeholder' => $this->t('Task'),
-      '#required' => TRUE,
+    
+    $form['system_messages'] = [
+      '#markup' => '<div id="form-system-messages"></div>',
+      '#weight' => -100,
     ];
+    
+    $form['title'] = [
+      '#markup' => '<h1 class="page-header">'.$this->t('Create Account').'</h1>'
+    ];
+
+    $form['firstname'] = [
+      '#type' => 'textfield',
+      '#placeholder' => $this->t('First Name'),
+      //'#required' => TRUE,
+//      '#ajax' => [
+//        'callback' => '::ajaxFullnameValidate',
+//        'event' => 'blur',
+//        'progress' => ['type' => 'none', 'message' => NULL],
+//      ],
+    ];
+    
+    $form['surname'] = [
+      '#type' => 'textfield',
+      '#placeholder' => $this->t('Surname'),
+      //'#required' => TRUE,
+    ];
+    
+    $form['username'] = [
+      '#type' => 'textfield',
+      '#placeholder' => $this->t('Username'),
+      //'#required' => TRUE,
+    ];     
+    $form['email'] = [
+      '#type' => 'email',
+      '#placeholder' => $this->t('Email'),
+      //'#required' => TRUE,       
+    ];
+    $form['password'] = array(
+      '#type' => 'password',
+      '#placeholder' => $this->t('Password'),
+      //'#required' => TRUE,
+      '#size' => 10,
+    );
+    $form['password_confirm'] = array(
+      '#type' => 'password',
+      '#placeholder' => $this->t('Confirm Password'),
+      //'#required' => TRUE,
+      '#size' => 10,
+    );
     
     // Disable caching on this form.
     $form_state->setCached(FALSE);
@@ -48,8 +95,17 @@ class NewUserCreateForm extends FormBase {
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#name' => 'submit',  
-      '#value' => $this->t('Save'),
-    ];    
+      '#value' => $this->t('Create Account'),
+      '#attributes' => [
+        'class' => ['btn-submit-default'],
+      ],
+      '#ajax' => [
+        'callback' => '::ajaxSubmitForm',
+        'event' => 'click',
+      ],
+    ];
+    
+//    $form['#validate'][] = '::validateUsername';
 
     return $form;
   }
@@ -60,43 +116,100 @@ class NewUserCreateForm extends FormBase {
   public function getFormId() {
     return 'bc_2movepeople-dashboard-user-create-form';
   }
+  
+  /**
+   * AJAX callback handler that displays any errors or a success message.
+   */
+  public function ajaxSubmitForm(array $form, FormStateInterface $form_state) {
+    $ajax_response = new AjaxResponse();
+    
+    if ($this->isSaved == SAVED_NEW) {
+      //$ajax_response->addCommand(new CloseModalDialogCommand());
+      $ajax_response->addCommand(new RedirectCommand(Url::fromRoute('<front>')->toString()));
+    } else {
+      $message = [
+        '#theme' => 'status_messages',
+        '#message_list' => drupal_get_messages(),
+      ];
+      $ajax_response->addCommand(new HtmlCommand('#form-system-messages', $message));
+      // $ajax_response->addCommand(new ReplaceCommand('#bc_2movepeople-dashboard-user-create-form', $form));
+    }
+    //$form_state->setRebuild(true);
+
+    return $ajax_response;
+  }
 
   /**
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    
-//    $title = $form_state->getValue('title');
-//    $parent_task_id = $form_state->getValue('parent_task_id');
-//   
-//    $new_node = Node::create(array(
-//      'type' => 'goal',
-//      'status' => 1,
-//      'title' => $title,
-//    ));
-//
-//    if ($new_node->save() == SAVED_NEW) {
-//      
-//      $node = $parent_task_id ? Node::load($parent_task_id) : $this->parent_node;
-//      $field_name = $parent_task_id ? 'field_subgoal' : 'field_goal_ids';
-//      $old_goal_ids = $node->get($field_name)->getValue();
-//      
-//      $new_goal_ids = [];
-//      foreach($old_goal_ids as $tid) {
-//        $new_goal_ids[] = $tid['target_id'];
-//      }
-//      $new_goal_ids[] = $new_node->id();
-//      
-//      $node->set($field_name, $new_goal_ids);
-//      
-//      if ($node->save() == SAVED_UPDATED) {
-//        $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.progressions.edit', ['node' => $this->parent_node->id()]));
-//      } else {
-//        drupal_set_message($this->t($this->wrong_msg));
-//      }
-//    } else {
-//      drupal_set_message($this->t($this->wrong_msg));
-//    }
+  
+    //$url = \Drupal\Core\Url::fromInternalUrl('<front>');
+    //$url = Url::fromRoute('<front>');
+    // $form_state->setRedirect(Url::fromInternalUri('<front>'));
+     
+    if (!$form_state->getErrors()) { // $form_state->hasAnyErrors()
+      
+      $user = User::create();
+      
+      // Mandatory.
+      $user->setEmail($form_state->getValue('email'));
+      $user->setUsername($form_state->getValue('username'));
+      $user->setPassword($form_state->getValue('password'));
+      $user->enforceIsNew();
+
+      // Optional.
+      $user->set('field_user_firstname', $form_state->getValue('firstname'));
+      $user->set('field_user_surname', $form_state->getValue('surname'));
+      $user->addRole('2mp_user');
+      $user->activate();
+
+      // Save user account.
+      $this->isSaved = $user->save();
+      
+      if ($this->isSaved != SAVED_NEW) {
+        drupal_set_message($this->wrong_msg, 'error');
+      }
+    }
   }
-       
+  
+  /**
+   * {@inheritdoc}
+   */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+
+    // check Firstname
+    $firstname = CommonFormUtils::cleanInput($form_state->getValue('firstname'));
+    if (strlen($firstname) < 4) {
+      $form_state->setErrorByName('firstname', $this->t('The First Name %firstname is not valid.', array('%firstname' => $firstname)));
+    }
+    
+    // check Lastname
+    $surname = CommonFormUtils::cleanInput($form_state->getValue('surname'));
+    if (strlen($surname) < 4) {
+      $form_state->setErrorByName('surname', $this->t('The Surname %surname is not valid.', array('%surname' => $surname)));
+    }
+    
+    // check Username
+    $username = CommonFormUtils::cleanInput($form_state->getValue('username'));
+    if (strlen($username) < 4) {
+      $form_state->setErrorByName('username', $this->t('The Username %username is not valid.', array('%username' => $username)));
+    }
+    
+    // check Email
+    $email = trim($form_state->getValue('email'));
+    // $form_state->setValueForElement(['#email'], $email);
+    if (!\Drupal::service('email.validator')->isValid($email)) {
+      // $form_state->setError(['#email'], t('The email address %mail is not valid.', array('%mail' => $value)));
+      $form_state->setErrorByName('email', $this->t('The Email address %mail is not valid.', array('%mail' => $email)));
+    }
+    
+    // check Password
+    $password = CommonFormUtils::cleanInput($form_state->getValue('password'));
+    $password_confirm = CommonFormUtils::cleanInput($form_state->getValue('password_confirm'));
+    if (strlen($password) < 4 || $password != $password_confirm) {
+      $form_state->setErrorByName('password', $this->t('The passwords do not match.'));
+    } 
+    
+  }
 }

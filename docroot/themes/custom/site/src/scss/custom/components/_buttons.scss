@@ -59,6 +59,15 @@ button.custom-checkbox-ok, button.custom-checkbox-trash {
   }
 }
 
+.modal-dialog {
+  .btn-submit-default {
+    background-color: $btn-default-bg !important;
+    border-color: $btn-default-border !important;
+    width: 100%;
+    max-width: none;
+  }
+}
+
 // --------------------------------------------------
 // Variants
 // --------------------------------------------------

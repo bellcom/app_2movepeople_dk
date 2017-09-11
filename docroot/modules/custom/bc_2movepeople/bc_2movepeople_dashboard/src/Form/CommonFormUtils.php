@@ -241,4 +241,12 @@ class CommonFormUtils {
     );
     return $send_mail->mail($message);
   }
+  
+  public static function cleanInput($data) {
+    //real_escape_string ? 
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+  }
 }

@@ -131,6 +131,16 @@ body.toolbar-fixed {
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+  h1.page-header {
+    border-bottom: 0;
+    text-align: center;
+    color: $color-font-h1;
+  }
+  #bc_2movepeople-dashboard-user-create-form {
+    input {
+      margin-bottom: 20px;
+    }
+  }
 }
 
 // Modal background background
