@@ -46,6 +46,11 @@ class MilestoneTaskCloneForm extends FormBase {
     $form['#prefix'] = '<div id="bc_2movepeople-dashboard-task-clone-form">';
     $form['#suffix'] = '</div>';
     
+    $form['system_messages'] = [
+      '#markup' => '<div id="clone-task-form-system-messages"></div>',
+      '#weight' => -100,
+    ];
+    
     $form['progression_id'] = [
       '#type' => 'select',
       '#title' => $this->t('Category'),
@@ -67,9 +72,6 @@ class MilestoneTaskCloneForm extends FormBase {
       '#required' => FALSE,
       '#prefix' => '<div id="parent_task_wrapper">',
       '#suffix' => '</div>',
-      '#attributes' => [
-        'id' => 'aaaaaa',
-      ],
     ];
     
     $form['actions']['#type'] = 'actions';
@@ -100,13 +102,17 @@ class MilestoneTaskCloneForm extends FormBase {
   public function ajaxSubmitForm(array $form, FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
    
-    $ajax_response->addCommand(new CloseModalDialogCommand());
-    
     $message = [
       '#theme' => 'status_messages',
       '#message_list' => drupal_get_messages(),
     ];
-    $ajax_response->addCommand(new HtmlCommand('#custom-form-system-messages', $message));
+    
+    if ($this->isSaved == SAVED_UPDATED) {
+      $ajax_response->addCommand(new CloseModalDialogCommand());
+      $ajax_response->addCommand(new HtmlCommand('#custom-form-system-messages', $message));
+    } else {
+      $ajax_response->addCommand(new HtmlCommand('#clone-task-form-system-messages', $message));
+    }
 
     return $ajax_response;
   }
@@ -141,6 +147,10 @@ class MilestoneTaskCloneForm extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
 
+//    if ($form_state->getErrors()) {
+//      return false;
+//    }
+
     $title = $this->node->get('title')->value;
 
     $progression_id = $form_state->getValue('progression_id');
@@ -167,7 +177,7 @@ class MilestoneTaskCloneForm extends FormBase {
       $node->set($field_name, $new_goal_ids);
       $this->isSaved = $node->save();
       
-      if ($node->save() == SAVED_UPDATED) {
+      if ($this->isSaved == SAVED_UPDATED) {
         drupal_set_message($this->t($this->updated_msg));
       } else {
         drupal_set_message($this->t($this->wrong_msg));
@@ -176,5 +186,13 @@ class MilestoneTaskCloneForm extends FormBase {
       drupal_set_message($this->t($this->wrong_msg));
     }
   }
-       
+  
+  /**
+   * {@inheritdoc}
+   */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    if (!$form_state->getValue('progression_id')) {
+      $form_state->setErrorByName('progression_id', $this->t('Category field is required.'));
+    }
+  }
 }
