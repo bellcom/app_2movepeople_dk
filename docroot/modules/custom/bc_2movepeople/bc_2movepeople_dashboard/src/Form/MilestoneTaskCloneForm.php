@@ -13,14 +13,18 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\user\UserInterface;
 use Drupal\node\NodeInterface;
 use Drupal\node\Entity\Node;
-use Drupal\Core\Url;
-use Drupal\Core\Ajax\ReplaceCommand;
+//use Drupal\Core\Url;
+use Drupal\Core\Ajax\HtmlCommand;
+//use Drupal\Core\Ajax\AppendCommand;
+//use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\Ajax\CloseModalDialogCommand;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 
 class MilestoneTaskCloneForm extends FormBase {
 
-  private $node;
-  private $user;
+  protected $node;
+  protected $user;
+  protected $isSaved;
   private $updated_msg = 'Records successfully updated.';
   private $wrong_msg = 'Something wrong.';
 
@@ -30,7 +34,7 @@ class MilestoneTaskCloneForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state, UserInterface $user = NULL, NodeInterface $node = NULL) {
     $this->node = $node;
     $this->user = $user;
-    
+
     $progression_options = array();
     $entity_ids = MovepeopleDashboardController::getProgressionTargets($user->id());
     $progression_nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
@@ -47,21 +51,25 @@ class MilestoneTaskCloneForm extends FormBase {
       '#title' => $this->t('Category'),
       '#options' => $progression_options,
       '#empty_option' => $this->t('-Select category-'),
-      '#required' => TRUE,
+      '#required' => FALSE,
       '#ajax' => [
-        'callback' => '::ajaxGetQuestionsForm',
+        'callback' => '::changeParentQuestionOptionsAjax',
         'event' => 'change',
-      //  'progress' => ['type' => 'none', 'message' => NULL],
+        'progress' => ['type' => 'throbber', 'message' => ''],
+        'wrapper' => 'parent_task_wrapper',
       ],
     ];
     $form['parent_task_id'] = [
       '#type' => 'select',
       '#title' => $this->t('Parent question'),
-      '#options' => array(),
+      '#options' => $this->getParentQuestionOptions($form_state),
       '#empty_option' => $this->t('-Select parent question-'),
       '#required' => FALSE,
-      '#prefix' => '<div id="parent_task_box">',
-      '#suffix' => '</div>'
+      '#prefix' => '<div id="parent_task_wrapper">',
+      '#suffix' => '</div>',
+      '#attributes' => [
+        'id' => 'aaaaaa',
+      ],
     ];
     
     $form['actions']['#type'] = 'actions';
@@ -69,7 +77,11 @@ class MilestoneTaskCloneForm extends FormBase {
       '#type' => 'submit',
       '#name' => 'submit',  
       '#value' => $this->t('Save'),
-      '#button_type' => 'primary'
+      '#button_type' => 'primary',
+      '#ajax' => [
+        'callback' => '::ajaxSubmitForm',
+        'event' => 'click',
+      ],
     ];
 
     return $form;
@@ -83,37 +95,57 @@ class MilestoneTaskCloneForm extends FormBase {
   }
   
   /**
-   * {@inheritdoc}
+   * AJAX callback handler that displays any errors or a success message.
    */
-  public function ajaxGetQuestionsForm(array &$form, FormStateInterface $form_state) {
+  public function ajaxSubmitForm(array $form, FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
+   
+    $ajax_response->addCommand(new CloseModalDialogCommand());
     
-    $progression_id = $form_state->getValue('progression_id');
-    if ($progression_id) {
-      $progression = Node::load($progression_id);
-      $goals_options = MovepeopleDashboardController::getProgressionGoalsList($progression);
-      
-      if (sizeof($goals_options) < 1) {
-        $goals_options = array(0 => $this->t('-Select parent question-'));
-      }
+    $message = [
+      '#theme' => 'status_messages',
+      '#message_list' => drupal_get_messages(),
+    ];
+    $ajax_response->addCommand(new HtmlCommand('#custom-form-system-messages', $message));
 
-      $form['parent_task_id']['#options'] = $goals_options;
-      $form['parent_task_id']['#empty_option'] = $this->t('-Select parent question-');
-      $ajax_response->addCommand(new ReplaceCommand('#parent_task_box', $form['parent_task_id']));
-    }
-    
     return $ajax_response;
   }
+  
+  /**
+   * Ajax callback to change options for Parent Question.
+   */
+  public function changeParentQuestionOptionsAjax(array &$form, FormStateInterface $form_state) {
+	return $form['parent_task_id'];
+  }
+  
+  /**
+   * Get options for Parent Question.
+   */
+  public function getParentQuestionOptions(FormStateInterface $form_state) {
+    
+    $options = array();
+    $progression_id = $form_state->getValue('progression_id');
+
+	if ($progression_id) {
+      $progression = Node::load($progression_id);
+      $options = MovepeopleDashboardController::getProgressionGoalsList($progression);
+    }
+
+	return $options;
+  }
+
+
   
   /**
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    
+
     $title = $this->node->get('title')->value;
+
     $progression_id = $form_state->getValue('progression_id');
     $parent_task_id = $form_state->getValue('parent_task_id');
-   
+
     $new_node = Node::create(array(
       'type' => 'goal',
       'status' => 1,
@@ -133,13 +165,13 @@ class MilestoneTaskCloneForm extends FormBase {
       $new_goal_ids[] = $new_node->id();
       
       $node->set($field_name, $new_goal_ids);
+      $this->isSaved = $node->save();
       
       if ($node->save() == SAVED_UPDATED) {
-        $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $this->user->id()]));
+        drupal_set_message($this->t($this->updated_msg));
       } else {
         drupal_set_message($this->t($this->wrong_msg));
       }
-      
     } else {
       drupal_set_message($this->t($this->wrong_msg));
     }
