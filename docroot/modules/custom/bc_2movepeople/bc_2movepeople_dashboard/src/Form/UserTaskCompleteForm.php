@@ -148,10 +148,10 @@ class UserTaskCompleteForm extends FormBase {
       foreach ($mp_admin_ids as $mp_id) {
         $mp_admin = \Drupal\user\Entity\User::load($mp_id);
         $to = $mp_admin->get('mail')->value;
-
+        
         CommonFormUtils::sendMail([
             'to' => $to,
-            'from' => $from = \Drupal::config('system.site')->get('mail'),
+            'from' => \Drupal::config('system.site')->get('mail'),
             'subject' => $subject,
             'body' => $body,
             'sender' => $this->t('System notify')

@@ -173,7 +173,7 @@ class MovepeopleDashboardController extends ControllerBase {
       $progression_targets[$progrdata->id()]['id'] = $progrdata->id();
       $progression_targets[$progrdata->id()]['title'] = $progrdata->get('title')->value; 
       
-      $milestone_edit_form = new MilestoneEditForm($progrdata);
+      $milestone_edit_form = new MilestoneEditForm($progrdata, $user);
       $progression_targets[$progrdata->id()]['form'] = \Drupal::formBuilder()->getForm($milestone_edit_form);
 
       //$progression_targets[$progrdata->id()]['form'] = \Drupal::formBuilder()->getForm(\Drupal\bc_2movepeople_dashboard\Form\MilestoneEditForm::class, $progrdata);

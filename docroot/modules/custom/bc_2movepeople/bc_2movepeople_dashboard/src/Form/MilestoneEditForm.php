@@ -22,12 +22,14 @@ use Drupal\node\Entity\Node;
 class MilestoneEditForm extends FormBase {
 
   protected $node;
+  protected $user;
   private $updated_msg = 'Records successfully updated.';
   private $deleted_msg = 'Records successfully deleted.';
   private $wrong_msg = 'Something wrong.';
   
-  public function __construct($nodedata) {
+  public function __construct($nodedata, $user) {
     $this->node = $nodedata;
+    $this->user = $user;
   }  
   
   /**
@@ -210,10 +212,31 @@ class MilestoneEditForm extends FormBase {
         $goal_node->set("field_task_complete", 1);
         $form[$prefix.'goals'][$goal_id]['complete_btn']['#attributes']['aria-pressed'] = ['true'];
         $form[$prefix.'goals'][$goal_id]['complete_btn']['#attributes']['class'] = ['btn', 'btn-primary', 'custom-checkbox-ok', 'active'];
-      }      
-      $goal_node->save();
+      } 
+
+      if ($goal_node->save() == SAVED_UPDATED) {
+        
+        if($goal_node->get('field_task_complete')->value && $this->user->get('mail')->value) {
+          
+          $config = $this->config('bc_2movepeople_dashboard.AdminSettings');
+          $subject = $config->get('task_complete_email_subject');
+          $body = $config->get('task_complete_email_body');
+
+          $body = str_replace("@name", $this->user->get('name')->value, $body);
+          $body = str_replace("@user", \Drupal::currentUser()->getDisplayName(), $body);
+          $body = str_replace("@task_title", $goal_node->get('title')->value, $body);
+          
+          CommonFormUtils::sendMail([
+            'to' => $this->user->get('mail')->value,
+            'from' => \Drupal::config('system.site')->get('mail'),
+            'subject' => $subject,
+            'body' => $body,
+            'sender' => $this->t('System notify')
+          ]);
+        }
+        drupal_set_message($this->t($this->updated_msg));
+      }
       
-      drupal_set_message($this->t($this->updated_msg));
       $message = [
         '#theme' => 'status_messages',
         '#message_list' => drupal_get_messages(),
