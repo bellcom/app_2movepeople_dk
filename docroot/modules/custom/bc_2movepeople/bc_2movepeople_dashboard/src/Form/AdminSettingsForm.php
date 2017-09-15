@@ -52,6 +52,16 @@ class AdminSettingsForm extends ConfigFormBase {
         @task_title  = '.$this->t('The title of the task that is being complete')
     ];
     
+    $form['task_reminder_due_date'] = [
+      '#type' => 'textfield',
+      '#maxlength' => 2,
+      '#size' => 2,
+      '#title' => $this->t('Task reminder due date'),
+      '#default_value' => $config->get('task_reminder_due_date'),
+      '#description' => 'Allowable value is integer: 1, 2, 3'.'<br />
+        Value define the number of days.'
+    ];
+    
     return parent::buildForm($form, $form_state);
   }
 
@@ -60,6 +70,12 @@ class AdminSettingsForm extends ConfigFormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     parent::validateForm($form, $form_state);
+    
+    // check task_reminder_due_date
+    if ($form_state->getValue('task_reminder_due_date')) {
+      $task_reminder_due_date = (integer)CommonFormUtils::cleanInput($form_state->getValue('task_reminder_due_date'));
+      $form_state->setValue('task_reminder_due_date', $task_reminder_due_date);
+    }
   }
 
   /**
@@ -71,6 +87,7 @@ class AdminSettingsForm extends ConfigFormBase {
     $this->config('bc_2movepeople_dashboard.AdminSettings')
       ->set('task_complete_email_subject', $form_state->getValue('task_complete_email_subject'))
       ->set('task_complete_email_body', $form_state->getValue('task_complete_email_body'))
+      ->set('task_reminder_due_date', $form_state->getValue('task_reminder_due_date'))
       ->save();
   }
 

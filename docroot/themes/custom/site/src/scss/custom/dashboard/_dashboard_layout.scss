@@ -54,6 +54,12 @@ $dashboard-padding: 22px;
   }
 }
 
+.user-task-box {
+  .right-btn-box  {
+    text-align: center;
+  }
+}
+
 /*.btn {
     margin-bottom: 2px;
   }*/
@@ -119,6 +125,12 @@ $dashboard-padding: 22px;
       .right-btn-box {
         text-align: right;
       }
+    }
+  }
+  
+  .user-task-box {
+    .right-btn-box  {
+      text-align: right;
     }
   }
 }

@@ -1,22 +1,17 @@
 {{ attach_library('bc_2movepeople_dashboard/bc_2movepeople_dashboard.user-tasks') }}
 
 {% macro recursiveTasks(tasks, user) %}
-  
+
   {% for task in tasks %}
-    <div class="row" id="task-row-{{task.id}}">
-      <div class="col-sm-2"></div>
-      <div class="col-sm-6 user-task-box">
-        <div class="row">
-          <div class="col-sm-10">
-            {{ task.title }}<br/>
-            {{ 'Date'|trans }}: {{ task.date|date("d-m-Y") }}
-          </div>
-          <div class="col-sm-2">
-            <a href="{{ path('bc_2movepeople_dashboard.user.task.complete', {'user': user, 'node': task.id}) }}" class="btn btn-info use-ajax link-btn" data-dialog-type="modal" data-dialog-options='{"width":640}' role="button">{{ 'Complete'|trans }}</a>
-          </div>
-        </div>
+    {% set is_remind_class = (task.is_remind ? (task.is_remind == 2 ? 'is-remind-expired' : 'is-remind-warning') : '') %}
+    <div class="row user-task-box" id="task-row-{{task.id}}">
+      <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 {{is_remind_class}}">
+        {{ task.title }}<br/>
+        {{ 'Date'|trans }}: {{ task.date|date("d-m-Y") }}
       </div>
-      <div class="col-sm-2"></div>
+      <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 right-btn-box">
+        <a href="{{ path('bc_2movepeople_dashboard.user.task.complete', {'user': user, 'node': task.id}) }}" class="btn btn-info use-ajax link-btn" data-dialog-type="modal" data-dialog-options='{"width":640}' role="button">{{ 'Complete'|trans }}</a>
+      </div>
     </div>
     {% if task.subgoals is not null %}
       {{ _self.recursiveTasks(task.subgoals, user) }}
@@ -25,4 +20,6 @@
   
 {% endmacro %}
 
+<div class="dashboard-overview">
 {{ _self.recursiveTasks(tasks, user) }}
+</div>

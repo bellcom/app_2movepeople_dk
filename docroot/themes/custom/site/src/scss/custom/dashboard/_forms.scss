@@ -4,7 +4,15 @@
 
 .custom-form-fields {
   margin-top: 5px;
+  padding-top: 2px;
 }
+.is-remind-warning {
+  background-color: $form-remind-warning-bg !important;
+}
+.is-remind-expired {
+  background-color: $form-remind-expired-bg !important;
+}
+
 .custom-form-label {
   font-weight: bold;
 }

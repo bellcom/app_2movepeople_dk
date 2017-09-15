@@ -5,6 +5,8 @@
  * Functions to support theming in the site theme.
  */
 
+use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
+
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
  */
@@ -47,11 +49,17 @@ function site_preprocess_page(array &$variables) {
   $current_url = \Drupal\Core\Url::fromRoute('<current>')->toString();
   $front_uri = array(\Drupal\Core\Url::fromRoute('<front>')->toString, '/dashboard', '/system/403');
   
-  if (in_array("2mp_user", $user_roles) && in_array($current_url, $front_uri)) {
-    
-    $path = \Drupal\Core\Url::fromRoute('bc_2movepeople_dashboard.user.tasks', ['user' => \Drupal::currentUser()->id()])->toString();
-    $response = new \Symfony\Component\HttpFoundation\RedirectResponse($path);
-    $response->send();
+  if (in_array("2mp_user", $user_roles)) {
+    if (in_array($current_url, $front_uri)) {
+      $path = \Drupal\Core\Url::fromRoute('bc_2movepeople_dashboard.user.tasks', ['user' => \Drupal::currentUser()->id()])->toString();
+      $response = new \Symfony\Component\HttpFoundation\RedirectResponse($path);
+      $response->send();
+    }
+    //MovepeopleDashboardController::setUserTasksReminder(2);
+    //\Drupal::service('user.private_tempstore')->get('bc_2movepeople_dashboard')->delete('is_reminded');
+    if (MovepeopleDashboardController::checkUserSessionReminder()) {
+      MovepeopleDashboardController::setUserTasksReminder(\Drupal::currentUser()->id());
+    }
   }
 }
 

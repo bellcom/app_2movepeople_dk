@@ -15,6 +15,7 @@ use Drupal\bc_2movepeople_dashboard\bc_2movepeople_dashboardStorage;
 use Drupal\bc_2movepeople_dashboard\Form\MilestonePriorityEditForm;
 use Drupal\bc_2movepeople_dashboard\Form\MilestoneEditForm;
 use Drupal\bc_2movepeople_dashboard\Form\MilestoneStatusEditForm;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Controller for js_example pages.
@@ -397,6 +398,9 @@ class MovepeopleDashboardController extends ControllerBase {
         list($year, $month, $day) = explode('-', $goal['date']);
         $timestamp = mktime($hour, $minute, $second, $month, $day, $year); 
         
+        $is_remind = self::isRemind($goal['date']);
+        $goal['is_remind'] = $is_remind;
+        
         $tasks[$timestamp] = $goal;
         $second++;
       }
@@ -424,4 +428,82 @@ class MovepeopleDashboardController extends ControllerBase {
     
     return $result;
   }
+  
+  public static function isRemind($date) {
+  
+    $is_remind = 0;
+    $timezone = drupal_get_user_timezone();
+    
+    $config = \Drupal::config('bc_2movepeople_dashboard.AdminSettings');
+    $reminder_days = $config->get('task_reminder_due_date');
+    
+    $current_date = new \DateTime('now', new \DateTimezone($timezone));
+    $current_unixtimestamp = $current_date->getTimestamp();
+    
+    $due_date = new \DateTime($date, new \DateTimezone($timezone));
+    $due_date_unixtimestamp = $due_date->getTimestamp();
+
+    //$reminder_date_unixtimestamp = $reminder_days * 24 * 60 * 60;  
+    //$current_date->setTimestamp($current_unixtimestamp - $reminder_date_unixtimestamp);
+    
+    if ($due_date_unixtimestamp > $current_unixtimestamp) {
+      $diff_date = $current_date->diff($due_date);
+      $is_remind = $diff_date->d < $reminder_days ? 1 : 0; 
+    } else { // due date expire
+      $is_remind = 2; // date expired
+    }
+    
+    return $is_remind;
+  }
+  
+  public static function checkUserSessionReminder() {
+    //  $session = new \Symfony\Component\HttpFoundation\Session\Session();
+    //  $session->start();
+
+    $is_remind = FALSE;
+    $current_date = new \DateTime('now', new \DateTimezone(drupal_get_user_timezone()));
+    $current_unixtimestamp = $current_date->getTimestamp();
+
+
+    $tempstore = \Drupal::service('user.private_tempstore')->get('bc_2movepeople_dashboard');
+
+    $offset = 86400; // 86400 = 24h
+    $offset = 30; // for test
+    if ($tempstore->get('is_reminded') && $tempstore->get('is_reminded')['expire'] < $current_unixtimestamp) {
+
+      $tempstore->delete('is_reminded');
+      $expire_unixtimestamp = $current_unixtimestamp + $offset;
+      $tempstore->set('is_reminded', ['expire'=> $expire_unixtimestamp]);
+   
+      $is_remind = TRUE;
+      
+    } elseif (!$tempstore->get('is_reminded')) {
+      $expire_unixtimestamp = $current_unixtimestamp + $offset;
+      $tempstore->set('is_reminded', ['expire'=> $expire_unixtimestamp]);
+      $is_remind = TRUE;
+    }
+    
+    return $is_remind;
+  }
+  
+  public static function setUserTasksReminder($user_id) {
+  
+    $entity_ids = self::getProgressionTargets($user_id, 'target_milestone');
+    $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
+    
+    foreach ($nodes as $progrdata) {
+      $goal_ids = $progrdata->get('field_goal_ids')->getValue();
+      
+      foreach ($goal_ids as $tid) {
+
+        $goal = self::getGoal($tid['target_id'], $progrdata);
+        $is_remind = self::isRemind($goal['date']);
+        if (!$goal['is_manager'] && !$goal['completed'] && $is_remind) {
+          drupal_set_message($goal['title'].' - '.($is_remind == 2 ? t('due date expired') : t('due to expire')).': '.$goal['date']);
+        }
+      }
+    }
+  }
+  
+  
 }

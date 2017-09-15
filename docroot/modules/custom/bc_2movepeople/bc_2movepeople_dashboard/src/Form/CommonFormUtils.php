@@ -28,13 +28,27 @@ class CommonFormUtils {
 //          . '<div class="col-md-2 col-sm-2 col-xs-2">Actions</div>'
 //          . '</div>'
 //    ];
+    
+  //  use Drupal\Core\Cache\CacheableMetadata;
+    
+//   $cacheable_metadata = new \Drupal\Core\Cache\CacheableMetadata();
+//   $cacheable_metadata->setCacheMaxAge(86400); // 24h = 86400sec
+//   $cacheable_metadata->setCacheTags(['dfsdf', ['24234']]);
+//   
+//   dpm($cacheable_metadata->getCacheTags());
 
     $form[$prefix.'goals'] = [
       '#type' => 'container',
       '#attributes' => ['id' => $prefix.'goals-box-'.$node->id()],
     ];
+    
+    $remind_types = [
+        1 => 'is-remind-warning',
+        2 => 'is-remind-expired'
+    ];
             
     foreach ($goal_ids as $tid) {
+           
       
       $goal_id = $tid['target_id'];
       $goal = MovepeopleDashboardController::getGoal($goal_id, $node);
@@ -42,7 +56,9 @@ class CommonFormUtils {
       if ($goal['is_manager'] XOR $is_manager) {
         continue;
       }
-     
+
+      $is_remind = MovepeopleDashboardController::isRemind($goal['date']);
+      
       $form[$prefix.'goals']['#tree'] = TRUE;
       
       $form[$prefix.'goals']['header'] = [
@@ -59,11 +75,16 @@ class CommonFormUtils {
       $form[$prefix.'goals'][$goal_id] = [
         '#type' => 'container'
       ];
+      
+      $remind_class = '';
+      if ($is_remind) {
+        $remind_class = ' '.$remind_types[$is_remind];
+      }
 
       $form[$prefix.'goals'][$goal_id]['title'] = [
         '#type' => 'textfield',
         '#default_value' => $goal['title'],
-        '#prefix' => '<div class="row custom-form-fields div-form" id="goal_row_'.$goal_id.'">'
+        '#prefix' => '<div class="row custom-form-fields div-form'.$remind_class.'" id="goal_row_'.$goal_id.'">'
           . '<div class="visible-xs visible-sm col-sm-12 col-xs-12 custom-form-label">'.t('Task').'</div>'
           . '<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">',
         '#suffix' => '</div>'
@@ -270,4 +291,5 @@ class CommonFormUtils {
     $data = htmlspecialchars($data);
     return $data;
   }
+
 }
