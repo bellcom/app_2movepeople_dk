@@ -80,6 +80,24 @@ a.btn-progress {
   }
 }
 
+// complete button fix
+.btn-default:hover, 
+.btn-default:focus, 
+.btn-default:active {
+  background-color: lighten($btn-default-bg, 10%) !important;
+  border-color: lighten($btn-default-bg, 10%) !important;
+}
+// complete button fix
+.btn-default.active {
+  background-color: lighten($btn-default-bg, 15%) !important;
+  border-color: lighten($btn-default-bg, 5%) !important;
+}
+.btn:active, .btn.active {
+  -webkit-box-shadow: inset 1px 3px 7px rgba(0, 0, 0, 0.325) !important;
+  box-shadow: inset 1px 3px 7px rgba(0, 0, 0, 0.325) !important;
+}
+
+
 // --------------------------------------------------
 // Variants
 // --------------------------------------------------

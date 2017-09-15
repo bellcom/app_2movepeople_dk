@@ -207,11 +207,11 @@ class MilestoneEditForm extends FormBase {
       if ($goal['completed']) {
         $goal_node->set("field_task_complete", 0);
         $form[$prefix.'goals'][$goal_id]['complete_btn']['#attributes']['aria-pressed'] = ['false'];
-        $form[$prefix.'goals'][$goal_id]['complete_btn']['#attributes']['class'] = ['btn', 'btn-primary', 'custom-checkbox-ok'];
+        $form[$prefix.'goals'][$goal_id]['complete_btn']['#attributes']['class'] = ['btn', 'btn-default', 'custom-checkbox-ok'];
       } else {
         $goal_node->set("field_task_complete", 1);
         $form[$prefix.'goals'][$goal_id]['complete_btn']['#attributes']['aria-pressed'] = ['true'];
-        $form[$prefix.'goals'][$goal_id]['complete_btn']['#attributes']['class'] = ['btn', 'btn-primary', 'custom-checkbox-ok', 'active'];
+        $form[$prefix.'goals'][$goal_id]['complete_btn']['#attributes']['class'] = ['btn', 'btn-default', 'custom-checkbox-ok', 'active'];
       } 
 
       if ($goal_node->save() == SAVED_UPDATED) {

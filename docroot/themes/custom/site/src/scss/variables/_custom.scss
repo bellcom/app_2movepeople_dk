@@ -30,9 +30,10 @@ $form-text-color: #576d8b;
 //== Buttons
 //
 //##
+
 $btn-default-color: #FFFFFF;
 $btn-default-bg: #50afe8;
-$btn-default-border: #50afe8;
+$btn-default-border: $btn-default-bg;
 
 $brand-secondary: #FFF;
 $btn-secondary-color: #4f5050;
