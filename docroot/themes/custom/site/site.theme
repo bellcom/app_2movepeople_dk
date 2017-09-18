@@ -47,7 +47,7 @@ function site_preprocess_page(array &$variables) {
   
   $user_roles = \Drupal::currentUser()->getRoles();
   $current_url = \Drupal\Core\Url::fromRoute('<current>')->toString();
-  $front_uri = array(\Drupal\Core\Url::fromRoute('<front>')->toString, '/dashboard', '/system/403');
+  $front_uri = array(\Drupal\Core\Url::fromRoute('<front>')->toString(), '/dashboard', '/system/403');
   
   if (in_array("2mp_user", $user_roles)) {
     if (in_array($current_url, $front_uri)) {

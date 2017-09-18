@@ -1,0 +1,3 @@
+task_complete_email_subject: 'Opgave udført'
+task_complete_email_body: "Hej @name<br><br>\r\n\r\n@user har lige markeret:\r\n\r\n@task_title<br><br>\r\n\r\nSom udført."
+task_reminder_due_date: 1
