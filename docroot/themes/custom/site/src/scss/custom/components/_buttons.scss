@@ -3,9 +3,15 @@
 // --------------------------------------------------
 
 .custom-checkbox-ok:before {
-  content: '\e013';
+  content: '\e157';
   font-family: 'Glyphicons Halflings';
 }
+
+.active.custom-checkbox-ok:before {
+  content: '\e067'; //'\e013';
+  font-family: 'Glyphicons Halflings';
+}
+
 .custom-checkbox-trash:before {
   content: '\e020';
   font-family: 'Glyphicons Halflings';
@@ -57,6 +63,13 @@ a.btn-progress {
   }
 }
 
+.custom-checkbox-ok {
+  padding-top: 9px;
+  padding-bottom: 7px;
+  padding-left: 9px;
+  padding-right: 7px;
+}
+
 .left-container {
   .region-sidebar-first {
     .btn {
@@ -89,12 +102,16 @@ a.btn-progress {
 }
 // complete button fix
 .btn-default.active {
-  background-color: lighten($btn-default-bg, 15%) !important;
-  border-color: lighten($btn-default-bg, 5%) !important;
+  background-color: $btn-default-bg !important;
+  border-color: $btn-default-bg !important;
+/*  background-color: lighten($btn-default-bg, 15%) !important;
+  border-color: lighten($btn-default-bg, 5%) !important;*/
 }
 .btn:active, .btn.active {
-  -webkit-box-shadow: inset 1px 3px 7px rgba(0, 0, 0, 0.325) !important;
-  box-shadow: inset 1px 3px 7px rgba(0, 0, 0, 0.325) !important;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+/*  -webkit-box-shadow: inset 1px 3px 7px rgba(0, 0, 0, 0.325) !important;
+  box-shadow: inset 1px 3px 7px rgba(0, 0, 0, 0.325) !important;*/
 }
 
 
