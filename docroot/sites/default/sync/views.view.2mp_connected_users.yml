@@ -6,6 +6,9 @@ dependencies:
     - core.entity_view_mode.user.compact
     - field.storage.user.field_user_firstname
     - field.storage.user.field_user_surname
+    - user.role.2mp_admin
+    - user.role.2mp_manager
+    - user.role.administrator
   module:
     - user
 id: 2mp_connected_users
@@ -24,9 +27,12 @@ display:
     position: 0
     display_options:
       access:
-        type: perm
+        type: role
         options:
-          perm: 'access user profiles'
+          role:
+            administrator: administrator
+            2mp_admin: 2mp_admin
+            2mp_manager: 2mp_manager
       cache:
         type: tag
         options: {  }
@@ -376,7 +382,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url.query_args
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.user.field_user_firstname'
         - 'config:field.storage.user.field_user_surname'
@@ -450,7 +456,7 @@ display:
         - 'languages:language_interface'
         - url.query_args
         - user
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.user.field_user_firstname'
         - 'config:field.storage.user.field_user_surname'
@@ -676,7 +682,7 @@ display:
         - 'languages:language_interface'
         - url.query_args
         - user
-        - user.permissions
+        - user.roles
       tags:
         - 'config:core.entity_view_display.user.user.compact'
         - 'config:core.entity_view_display.user.user.default'

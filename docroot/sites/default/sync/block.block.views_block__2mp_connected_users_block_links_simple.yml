@@ -5,6 +5,7 @@ dependencies:
   config:
     - views.view.2mp_connected_users
   module:
+    - user
     - views
   theme:
     - site
@@ -21,4 +22,13 @@ settings:
   label_display: '0'
   views_label: ''
   items_per_page: none
-visibility: {  }
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      administrator: administrator
+      2mp_admin: 2mp_admin
+      2mp_manager: 2mp_manager
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

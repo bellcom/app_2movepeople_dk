@@ -16,6 +16,10 @@ use Drupal\bc_2movepeople_dashboard\Form\MilestonePriorityEditForm;
 use Drupal\bc_2movepeople_dashboard\Form\MilestoneEditForm;
 use Drupal\bc_2movepeople_dashboard\Form\MilestoneStatusEditForm;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Access\AccessResult;
+
+use Drupal\node\NodeInterface;
+use Drupal\user\UserInterface;
 
 /**
  * Controller for js_example pages.
@@ -368,7 +372,7 @@ class MovepeopleDashboardController extends ControllerBase {
   }
   
   public function getUserTasks(AccountInterface $user) {
-    $user_name = \Drupal::currentUser()->getDisplayName();
+    $user_name = $user->getDisplayName();
     
     $title = t("Hi"). ', '.$user_name.' '.t(" here are your tasks");   
  
@@ -505,5 +509,46 @@ class MovepeopleDashboardController extends ControllerBase {
     }
   }
   
+ /**
+  * Checks access for this controller.
+  */
+  public function access(AccountInterface $account, UserInterface $user = NULL) {
+    
+    $account_roles = $account->getRoles();
+    
+    if (in_array("administrator", $account_roles) || 
+            in_array("2mp_admin", $account_roles)) {
+      return AccessResult::allowed();
+    }
+    $route_name = \Drupal::routeMatch()->getRouteName();
+
+    $access = AccessResult::forbidden();
+   
+    switch ($route_name) {
+
+      case "bc_2movepeople_dashboard.user.tasks":
+        $user_roles = $user->getRoles();
+        if (in_array("2mp_manager", $account_roles)) {
+          $manager_ids = self::getManagerIds($user->id());
+          if (in_array($account->id(), $manager_ids)) {
+            $access = AccessResult::allowed();
+          }
+        } elseif (in_array("2mp_user", $user_roles)) {
+          if ($account->id() == $user->id()) {
+            $access = AccessResult::allowed();
+          }
+        }
+        break;
+    }
+   
+    return $access;
+  }
+  
+  public static function getManagerIds($user_id) {
+    $query = \Drupal::entityQuery('user');
+    $query->condition('status', 1);
+    $query->condition('field_connected_users', $user_id);
+    return $query->execute();
+  }
   
 }
