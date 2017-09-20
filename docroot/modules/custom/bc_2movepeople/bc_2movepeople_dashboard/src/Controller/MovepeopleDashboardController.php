@@ -280,7 +280,6 @@ class MovepeopleDashboardController extends ControllerBase {
    * @return array
    *
    */
-
   public static function getProgressionTargets($user_id, $progression_type = 'progression') {
 //    $query = \Drupal::database()->select('node', 'n')
 //      ->extend('\Drupal\Core\Database\Query\PagerSelectExtender')
@@ -296,12 +295,12 @@ class MovepeopleDashboardController extends ControllerBase {
   }
 
   /**
-   * return progression targets for user
+   * get average target rate
    *
    * @params
-   * $target_id - progression target nid
+   * $target_id - progression target id
    *
-   * @return array
+   * @return float 
    *
    */
   public static function getTargetAveragePoints($target_id) {
@@ -315,11 +314,11 @@ class MovepeopleDashboardController extends ControllerBase {
     return $result;
   }
 
-  /**
-   * return progression targets for user
+  /*
+   * prepare progression data by entity id
    *
    * @params
-   * $target_id - progression target nid
+   * $entity_ids - progresson ids
    *
    * @return array
    *
@@ -350,10 +349,19 @@ class MovepeopleDashboardController extends ControllerBase {
       }
       $table[$key] = array_merge(array($title), $table[$key]);
     }
-    return array('header' => $header, 
-      'data' => $table);
+
+    return array('header' => $header, 'data' => $table);
   }
   
+  /**
+   * return progression targets for user
+   *
+   * @params
+   * $target_id - progression target nid
+   *
+   * @return array
+   *
+   */
   public static function getMilestoneTable($entity_ids) {
     $table = array();
     $header = array_merge(array(t('Target Milestones'), t('Priority'), t('Status')));
@@ -379,6 +387,15 @@ class MovepeopleDashboardController extends ControllerBase {
       'data' => $table);
   }
   
+  /**
+   * return progression targets for user
+   *
+   * @params
+   * $target_id - progression target nid
+   *
+   * @return array
+   *
+   */
   public function getUserTasks(AccountInterface $user) {
     $user_name = $user->getDisplayName();
     
@@ -428,6 +445,15 @@ class MovepeopleDashboardController extends ControllerBase {
     return $build;
   }
 
+  /**
+   * get progression goals list (key - goal id, value - goal title)
+   *
+   * @params
+   * $progression_node - progression node object
+   *
+   * @return array
+   *
+   */
   static function getProgressionGoalsList($progression_node) {
     
     $goal_ids = $progression_node->get('field_goal_ids')->getValue();
@@ -441,6 +467,15 @@ class MovepeopleDashboardController extends ControllerBase {
     return $result;
   }
   
+  /**
+   * compare current date and task due date
+   *
+   * @params
+   * $date - task due date
+   *
+   * @return integer flag (0 - false, 1 - is remind true, 2 - is expired true)
+   *
+   */
   public static function isRemind($date) {
   
     $is_remind = 0;
@@ -468,6 +503,14 @@ class MovepeopleDashboardController extends ControllerBase {
     return $is_remind;
   }
   
+  /**
+   * check reminder time for current user
+   *
+   * @params
+   *
+   * @return boolean
+   *
+   */
   public static function checkUserSessionReminder() {
     //  $session = new \Symfony\Component\HttpFoundation\Session\Session();
     //  $session->start();
@@ -498,6 +541,15 @@ class MovepeopleDashboardController extends ControllerBase {
     return $is_remind;
   }
   
+  /**
+   * set reminder message (drupal alert) for user tasks
+   *
+   * @params
+   * $user_id - user id
+   *
+   * @return nothing
+   *
+   */
   public static function setUserTasksReminder($user_id) {
   
     $entity_ids = self::getProgressionTargets($user_id, 'target_milestone');
@@ -517,9 +569,17 @@ class MovepeopleDashboardController extends ControllerBase {
     }
   }
   
- /**
-  * Checks access for this controller.
-  */
+  /**
+   * check access permission for current user
+   * function implements in routing.yml
+   *
+   * @params
+   * $account - current logged user object
+   * $user - user object from routing 
+   *
+   * @return access object - forbidden/allowed
+   *
+   */
   public function access(AccountInterface $account, UserInterface $user = NULL) {
     
     $account_roles = $account->getRoles();
@@ -552,6 +612,15 @@ class MovepeopleDashboardController extends ControllerBase {
     return $access;
   }
   
+  /**
+   * return connected users for admin/manager
+   *
+   * @params
+   * $user_id - admin/manager user id
+   *
+   * @return array
+   *
+   */
   public static function getManagerIds($user_id) {
     $query = \Drupal::entityQuery('user');
     $query->condition('status', 1);
