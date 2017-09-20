@@ -67,7 +67,7 @@
   {% block content %}
     {{ content }}
   {% endblock %}
-  {% if 'administrator' in user.getroles or '2mp_admin' in user.getroles %}
+  {% if 'administrator' in user.getroles or '2mp_manager' in user.getroles %}
   <div class="text-center">
     <a class="btn btn-default" href="{{ url('user.admin_create') }}">{{ 'Add new user'|trans }}</a>
   </div>

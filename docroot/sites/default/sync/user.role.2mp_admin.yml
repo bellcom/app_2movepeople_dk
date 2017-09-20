@@ -1,9 +1,0 @@
-uuid: a17cd49d-1858-4c72-b987-14d70dd31ae4
-langcode: en
-status: true
-dependencies: {  }
-id: 2mp_admin
-label: '2MP Admin'
-weight: 6
-is_admin: null
-permissions: {  }

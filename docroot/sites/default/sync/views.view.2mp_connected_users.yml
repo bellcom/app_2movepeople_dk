@@ -6,7 +6,6 @@ dependencies:
     - core.entity_view_mode.user.compact
     - field.storage.user.field_user_firstname
     - field.storage.user.field_user_surname
-    - user.role.2mp_admin
     - user.role.2mp_manager
     - user.role.administrator
   module:
@@ -31,7 +30,6 @@ display:
         options:
           role:
             administrator: administrator
-            2mp_admin: 2mp_admin
             2mp_manager: 2mp_manager
       cache:
         type: tag
@@ -483,6 +481,7 @@ display:
         filter_groups: false
         css_class: false
         title: false
+        header: false
       row:
         type: fields
         options:
@@ -675,6 +674,7 @@ display:
       path: dashboard
       css_class: row
       title: Clients
+      header: {  }
     cache_metadata:
       max-age: -1
       contexts:

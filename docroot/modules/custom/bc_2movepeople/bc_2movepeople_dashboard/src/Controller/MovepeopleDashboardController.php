@@ -295,7 +295,7 @@ class MovepeopleDashboardController extends ControllerBase {
     return $entity_ids;
   }
 
-  /*
+  /**
    * return progression targets for user
    *
    * @params
@@ -304,7 +304,6 @@ class MovepeopleDashboardController extends ControllerBase {
    * @return array
    *
    */
-
   public static function getTargetAveragePoints($target_id) {
     $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
     $query->condition('progression_target_id', $target_id, '=');
@@ -316,6 +315,15 @@ class MovepeopleDashboardController extends ControllerBase {
     return $result;
   }
 
+  /**
+   * return progression targets for user
+   *
+   * @params
+   * $target_id - progression target nid
+   *
+   * @return array
+   *
+   */
   public static function getProgressionsTable($entity_ids) {
     $dates = array();
     $table = array();
@@ -517,7 +525,7 @@ class MovepeopleDashboardController extends ControllerBase {
     $account_roles = $account->getRoles();
     
     if (in_array("administrator", $account_roles) || 
-            in_array("2mp_admin", $account_roles)) {
+            in_array("2mp_manager", $account_roles)) {
       return AccessResult::allowed();
     }
     $route_name = \Drupal::routeMatch()->getRouteName();
