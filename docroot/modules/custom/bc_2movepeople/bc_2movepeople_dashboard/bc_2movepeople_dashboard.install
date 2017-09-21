@@ -1,0 +1,33 @@
+<?php
+
+function bc_2movepeople_dashboard_schema() {
+  $schema['bc_2movepeople_dashboard_task_reminder'] = array(
+    'description' => 'This table stores reminded tasks',
+    'fields' => array(
+      'nid' => array(
+        'description' => 'Goal id',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'reminded_count' => array(
+        'description' => 'Reminded count (1..n)',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'email' => array(
+        'description' => 'User is email of who got last remind',
+        'type' => 'varchar',
+        'length' => 64,
+        'default' => '',
+        'not null' => TRUE,
+      ),
+      'reminded_date' => array(
+        'description' => 'Timestamp of last remind',
+        'type' => 'int',
+        'unsigned' => TRUE,
+      ),
+    ),
+    'primary key' => array('nid')
+  );
+  return $schema;
+}

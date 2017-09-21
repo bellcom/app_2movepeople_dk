@@ -17,6 +17,7 @@ use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 use Drupal\node\Entity\Node;
+use Drupal\bc_2movepeople_dashboard\Misc\TaskReminderUtils;
 
 
 class MilestoneEditForm extends FormBase {
@@ -41,7 +42,7 @@ class MilestoneEditForm extends FormBase {
 //    $form['#attached']['library'][] = 'core/drupal.ajax';
 //    $form['#attached']['library'][] = 'core/drupal.dialog';
 //    $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
-    
+
     $purpose = $this->node->get('field_purpose')->value;
     
     $form['purpose'] = [
@@ -226,7 +227,7 @@ class MilestoneEditForm extends FormBase {
           $body = str_replace("@user", \Drupal::currentUser()->getDisplayName(), $body);
           $body = str_replace("@task_title", $goal_node->get('title')->value, $body);
           
-          CommonFormUtils::sendMail([
+          MovepeopleDashboardController::sendMail([
             'to' => $this->user->get('mail')->value,
             'from' => \Drupal::config('system.site')->get('mail'),
             'subject' => $subject,

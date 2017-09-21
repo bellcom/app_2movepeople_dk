@@ -7,6 +7,7 @@
 
 use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Drupal\bc_2movepeople_dashboard\Misc\TaskReminderUtils;
 
 /**
  * @defgroup bc_2movepeople_dashboard.module: JavaScript
@@ -86,4 +87,11 @@ function bc_2movepeople_dashboard_user_login($account) {
     }  
     $response = new RedirectResponse($path);
     $response->send(); 
+}
+
+/**
+ * Implements hook_cron().
+ */
+function bc_2movepeople_dashboard_cron() {
+  TaskReminderUtils::bulkReminder();
 }

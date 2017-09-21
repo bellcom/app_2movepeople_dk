@@ -18,8 +18,10 @@ use Drupal\bc_2movepeople_dashboard\Form\MilestoneStatusEditForm;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Access\AccessResult;
 
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\node\NodeInterface;
 use Drupal\user\UserInterface;
+use Drupal\user\Entity\User;
 
 /**
  * Controller for js_example pages.
@@ -427,7 +429,7 @@ class MovepeopleDashboardController extends ControllerBase {
         list($year, $month, $day) = explode('-', $goal['date']);
         $timestamp = mktime($hour, $minute, $second, $month, $day, $year); 
         
-        $is_remind = self::isRemind($goal['date']);
+        $is_remind = self::isRemindSession($goal['date']);
         $goal['is_remind'] = $is_remind;
         
         $tasks[$timestamp] = $goal;
@@ -476,7 +478,7 @@ class MovepeopleDashboardController extends ControllerBase {
    * @return integer flag (0 - false, 1 - is remind true, 2 - is expired true)
    *
    */
-  public static function isRemind($date) {
+  public static function isRemindSession($date) {
   
     $is_remind = 0;
     $timezone = drupal_get_user_timezone();
@@ -561,7 +563,7 @@ class MovepeopleDashboardController extends ControllerBase {
       foreach ($goal_ids as $tid) {
 
         $goal = self::getGoal($tid['target_id'], $progrdata);
-        $is_remind = self::isRemind($goal['date']);
+        $is_remind = self::isRemindSession($goal['date']);
         if (!$goal['is_manager'] && !$goal['completed'] && $is_remind) {
           drupal_set_message($goal['title'].' - '.($is_remind == 2 ? t('due date expired') : t('due to expire')).': '.$goal['date']);
         }
@@ -627,5 +629,27 @@ class MovepeopleDashboardController extends ControllerBase {
     $query->condition('field_connected_users', $user_id);
     return $query->execute();
   }
-  
+
+  /**
+   * Simply send mail function
+   *
+   * @param array $message with keys
+   * - to
+   * - from
+   * - body
+   * - sender
+   * - subject
+   * @return BOOLEAN
+   */  
+  public static function sendMail($message) {
+    $send_mail = new \Drupal\Core\Mail\Plugin\Mail\PhpMail(); 
+    $message['headers'] = array(
+      'content-type' => 'text/html',
+      'MIME-Version' => '1.0',
+      'reply-to' => $message['from'],
+      'from' => $message['sender'].' <'.$message['from'].'>'
+    );
+    return $send_mail->mail($message);
+  }
+
 }

@@ -6,7 +6,7 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Form;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
+//use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 
 
@@ -57,7 +57,7 @@ class CommonFormUtils {
         continue;
       }
 
-      $is_remind = MovepeopleDashboardController::isRemind($goal['date']);
+      $is_remind = MovepeopleDashboardController::isRemindSession($goal['date']);
       
       $form[$prefix.'goals']['#tree'] = TRUE;
       
@@ -259,29 +259,6 @@ class CommonFormUtils {
     }
     
     return $form;
-  }
-  
-  
-  /**
-   * Simply send mail function
-   *
-   * @param array $message with keys
-   * - to
-   * - from
-   * - body
-   * - sender
-   * - subject
-   * @return BOOLEAN
-   */  
-  public static function sendMail($message) {
-    $send_mail = new \Drupal\Core\Mail\Plugin\Mail\PhpMail(); 
-    $message['headers'] = array(
-      'content-type' => 'text/html',
-      'MIME-Version' => '1.0',
-      'reply-to' => $message['from'],
-      'from' => $message['sender'].' <'.$message['from'].'>'
-    );
-    return $send_mail->mail($message);
   }
   
   public static function cleanInput($data) {

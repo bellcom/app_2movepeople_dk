@@ -14,6 +14,7 @@ use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
 use Drupal\user\UserInterface;
+use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 //use Drupal\node\Entity\Node;
 //use Drupal\Core\Url;
 
@@ -149,7 +150,7 @@ class UserTaskCompleteForm extends FormBase {
         $mp_admin = \Drupal\user\Entity\User::load($mp_id);
         $to = $mp_admin->get('mail')->value;
         
-        CommonFormUtils::sendMail([
+        MovepeopleDashboardController::sendMail([
             'to' => $to,
             'from' => \Drupal::config('system.site')->get('mail'),
             'subject' => $subject,
