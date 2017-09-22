@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains \Drupal\bc_2movepeople_dashboard\Misc\TaskReminderUtils.
+ */
+
 namespace Drupal\bc_2movepeople_dashboard\Misc;
 
 use Drupal\node\Entity\Node;
@@ -9,9 +14,9 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 
 /**
- * Controller for js_example pages.
+ * Class TaskReminderUtils.
  *
- * @ingroup js_example
+ * @package Drupal\bc_2movepeople_dashboard\\Misc
  */
 class TaskReminderUtils  {
  
