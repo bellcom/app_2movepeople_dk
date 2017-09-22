@@ -9,6 +9,16 @@
   {% if table_progression is defined %}
     {{ table_progression }}
   {% endif %}
+  <div class="text-center">
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-default active">
+        <input type="radio" name="chart_type" class="line-graph-btn" autocomplete="off" checked> Line
+      </label>
+      <label class="btn btn-default">
+        <input type="radio" name="chart_type" class="bar-graph-btn" autocomplete="off"> Bar
+      </label>
+    </div>
+  </div>
   <div id="progression_total_chart">
   </div>
   {% if table_milestone is defined %}

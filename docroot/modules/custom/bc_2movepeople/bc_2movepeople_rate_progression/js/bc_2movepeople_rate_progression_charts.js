@@ -6,7 +6,8 @@
 (function ($) {
     Drupal.behaviors.dashboardCharts = {
         attach: function (context, settings) {
-            google.charts.load('current', {packages: ['corechart', 'bar']});
+            //google.charts.load('current', {packages: ['corechart', 'bar']});
+            google.charts.load('current', {packages: ['corechart', 'line']});
 
             $('#accordion-progressions').on('show.bs.collapse', function (e) {
                 var header = $(e.target).parent().find('.panel-heading');
@@ -36,43 +37,48 @@
 
             $(".btn-update").click(function () {
                 var progression_id = $(this).attr('data-progression-id');
-                var date_from = $('#date_from_' + progression_id).val();
-                var date_to = $('#date_to_' + progression_id).val();
-                $.ajax({
-                    type: 'GET',
-                    data: {from: date_from, to: date_to},
-                    url: '/rates/' + progression_id + '/get',
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.values.length) {
-                            google.charts.setOnLoadCallback(function () {
-                                var arr = [
-                                    [''].concat(Object.values(data.series)),
-                                ];
-                                data.values.forEach(function (item) {
-                                    arr.push(item);
-                                });
-                                drawChart("div_chart_" + progression_id, arr, data.chart_title)
-                            });
-                        } else {
-                            $("#dialog-message").dialog("open");
-                        }
-                    }
-                });
-            })
+                updateProgressionChart(progression_id);
+            });
+            
+            $(".line-graph-btn").change(function () {
+              var progression_id = $(this).attr('data-progression-id');
+              var header = $("#accordion-progressions-heading-" + progression_id);
+              var panel = $(header).parent().find('.panel-body');
+              $("#div_chart_" + progression_id).text('');
+              loadGraph(header, panel, true, 'line');
+            });
+            $(".bar-graph-btn").change(function () {
+              var progression_id = $(this).attr('data-progression-id');
+              var header = $("#accordion-progressions-heading-" + progression_id);
+              var panel = $(header).parent().find('.panel-body');
+              $("#div_chart_" + progression_id).text('');
+              loadGraph(header, panel, true, 'bar');
+            });
+            
         }
     }
 
     Drupal.behaviors.totalChart = {
         attach: function (context, settings) {
-            google.charts.load('current', {packages: ['corechart', 'bar']});
+            //google.charts.load('current', {packages: ['corechart', 'bar']});
+            google.charts.load('current', {packages: ['corechart', 'line']});
             $(this).graphTotalLoad();
+            
+            $(".line-graph-btn").change(function () {
+              $("#progression_total_chart").text('');
+              $(this).graphTotalLoad('line');
+            });
+            $(".bar-graph-btn").change(function () {
+              $('#progression_total_chart').text('');
+              $(this).graphTotalLoad('bar');
+            });
         }
     };
 
-    function loadGraph(header, panel, reload) {
+    function loadGraph(header, panel, reload, chart_type = 'line') {
         if ($(panel).find('.div-chart div').length > 0 && reload == false)
             return;
+          
         var progression_id = header.attr('data-progression-id');
         $.ajax({
             type: 'GET',
@@ -92,7 +98,7 @@
                             arr.push(item);
                         });
 
-                        drawChart(element, arr, data.chart_title);
+                        drawChart(element, arr, data.chart_title, chart_type);
                     });
                 } else {
                     $(panel).find('.div-form').hide();
@@ -101,7 +107,7 @@
         });
     }
 
-    function drawChart(element, data, title = "") {
+    function drawChart(element, data, title = "", chart_type = 'line') {
         var cdata = google.visualization.arrayToDataTable(data);
 
         var options = {
@@ -118,9 +124,41 @@
             pointSize: 10
         };
 
-        var chart = new google.visualization.ColumnChart(document.getElementById(element));
+        var chart = (chart_type == 'line' ? 
+                new google.visualization.LineChart(document.getElementById(element)) : 
+                new google.visualization.ColumnChart(document.getElementById(element)));
+        
         chart.draw(cdata, options);
     }
+    
+    function updateProgressionChart(progression_id, chart_type = 'line') {
+      var date_from = $('#date_from_' + progression_id).val();
+      var date_to = $('#date_to_' + progression_id).val();
+      var chart_type = $("input[name='chart_type-" + progression_id + "']:checked").val();
+
+      $.ajax({
+          type: 'GET',
+          data: {from: date_from, to: date_to},
+          url: '/rates/' + progression_id + '/get',
+          dataType: 'json',
+          success: function (data) {
+              if (data.values.length) {
+                  google.charts.setOnLoadCallback(function () {
+                      var arr = [
+                          [''].concat(Object.values(data.series)),
+                      ];
+                      data.values.forEach(function (item) {
+                          arr.push(item);
+                      });
+                      drawChart("div_chart_" + progression_id, arr, data.chart_title, chart_type)
+                  });
+              } else {
+                //  $("#dialog-message").dialog("open");
+              }
+          }
+      });
+    }
+    
 
     $.fn.graphReload = function (element) {
         var panel = $(element).parent('.ui-accordion-content');
@@ -128,7 +166,7 @@
         loadGraph(header, panel, true);
     }
 
-    $.fn.graphTotalLoad = function () {
+    $.fn.graphTotalLoad = function (chart_type = 'line') {
         if ($('#progression_total_table').length > 0) {
             columns = GetColumnCount($("#progression_total_table table"));
             var arr = [];
@@ -143,7 +181,7 @@
 
             }
             google.charts.setOnLoadCallback(function () {
-                drawChart("progression_total_chart", arr);
+                drawChart("progression_total_chart", arr, '', chart_type);
             });
         }
     }

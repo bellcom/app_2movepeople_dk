@@ -102,16 +102,21 @@ a.btn-progress {
 }
 // complete button fix
 .btn-default.active {
-  background-color: $btn-default-bg !important;
-  border-color: $btn-default-bg !important;
-/*  background-color: lighten($btn-default-bg, 15%) !important;
-  border-color: lighten($btn-default-bg, 5%) !important;*/
+/*  background-color: $btn-default-bg !important;
+  border-color: $btn-default-bg !important;*/
+  background-color: lighten($btn-default-bg, 15%) !important;
+  border-color: lighten($btn-default-bg, 5%) !important;
 }
 .btn:active, .btn.active {
   -webkit-box-shadow: none;
   box-shadow: none;
 /*  -webkit-box-shadow: inset 1px 3px 7px rgba(0, 0, 0, 0.325) !important;
   box-shadow: inset 1px 3px 7px rgba(0, 0, 0, 0.325) !important;*/
+}
+
+.custom-checkbox-ok.btn-default.active {
+  background-color: $btn-default-bg !important;
+  border-color: $btn-default-bg !important;
 }
 
 
