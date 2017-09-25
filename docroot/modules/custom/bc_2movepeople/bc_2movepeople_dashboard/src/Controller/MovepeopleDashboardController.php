@@ -644,7 +644,7 @@ class MovepeopleDashboardController extends ControllerBase {
   public static function sendMail($message) {
     $send_mail = new \Drupal\Core\Mail\Plugin\Mail\PhpMail(); 
     $message['headers'] = array(
-      'content-type' => 'text/html',
+      'content-type' => 'text/html; charset=UTF-8; format=flowed; delsp=yes',
       'MIME-Version' => '1.0',
       'reply-to' => $message['from'],
       'from' => $message['sender'].' <'.$message['from'].'>'
