@@ -42,7 +42,7 @@ class MilestoneEditForm extends FormBase {
 //    $form['#attached']['library'][] = 'core/drupal.ajax';
 //    $form['#attached']['library'][] = 'core/drupal.dialog';
 //    $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
-
+    
     $purpose = $this->node->get('field_purpose')->value;
     
     $form['purpose'] = [
@@ -216,7 +216,7 @@ class MilestoneEditForm extends FormBase {
       } 
 
       if ($goal_node->save() == SAVED_UPDATED) {
-        
+
         if($goal_node->get('field_task_complete')->value && $this->user->get('mail')->value) {
           
           $config = $this->config('bc_2movepeople_dashboard.AdminSettings');
@@ -226,7 +226,7 @@ class MilestoneEditForm extends FormBase {
           $body = str_replace("@name", $this->user->get('name')->value, $body);
           $body = str_replace("@user", \Drupal::currentUser()->getDisplayName(), $body);
           $body = str_replace("@task_title", $goal_node->get('title')->value, $body);
-          
+
           MovepeopleDashboardController::sendMail([
             'to' => $this->user->get('mail')->value,
             'from' => \Drupal::config('system.site')->get('mail'),
