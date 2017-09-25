@@ -1,0 +1,20 @@
+uuid: eaa08469-adaa-4ca8-9ffb-667330742cb6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_diagnose
+  module:
+    - user
+id: user.user.field_diagnose
+field_name: field_diagnose
+entity_type: user
+bundle: user
+label: Diagnose
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

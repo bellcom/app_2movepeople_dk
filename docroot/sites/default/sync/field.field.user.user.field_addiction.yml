@@ -1,0 +1,20 @@
+uuid: 4b416e55-842e-423b-a39d-5ae2ffae8b42
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_addiction
+  module:
+    - user
+id: user.user.field_addiction
+field_name: field_addiction
+entity_type: user
+bundle: user
+label: Addiction
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
