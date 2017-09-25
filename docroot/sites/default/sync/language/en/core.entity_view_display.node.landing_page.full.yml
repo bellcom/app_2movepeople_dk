@@ -1,0 +1,12 @@
+third_party_settings:
+  panelizer:
+    displays:
+      default:
+        label: 'Single Column'
+        page_title: '[node:title]'
+      two_column:
+        label: 'Two Column'
+        page_title: '[node:title]'
+      three_column:
+        label: 'Three Column'
+        page_title: '[node:title]'

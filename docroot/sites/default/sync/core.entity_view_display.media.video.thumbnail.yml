@@ -1,5 +1,5 @@
 uuid: 05d76810-4b97-4aca-9704-a263945ada1a
-langcode: en
+langcode: da
 status: true
 dependencies:
   config:
@@ -30,5 +30,6 @@ hidden:
   created: true
   field_media_in_library: true
   field_media_video_embed_field: true
+  langcode: true
   name: true
   uid: true

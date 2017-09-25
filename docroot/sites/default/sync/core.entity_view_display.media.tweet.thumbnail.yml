@@ -1,5 +1,5 @@
 uuid: 82bf836b-3e52-4240-a5b0-976bf4b57c11
-langcode: en
+langcode: da
 status: true
 dependencies:
   config:
@@ -30,5 +30,6 @@ hidden:
   created: true
   embed_code: true
   field_media_in_library: true
+  langcode: true
   name: true
   uid: true

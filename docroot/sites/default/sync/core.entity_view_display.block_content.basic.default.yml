@@ -1,5 +1,5 @@
 uuid: 029177e3-0271-41b7-963e-fcc097a83fb8
-langcode: en
+langcode: da
 status: true
 dependencies:
   config:
@@ -21,4 +21,5 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
-hidden: {  }
+hidden:
+  langcode: true

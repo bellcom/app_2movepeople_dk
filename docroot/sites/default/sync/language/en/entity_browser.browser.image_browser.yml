@@ -1,0 +1,6 @@
+label: 'Image Browser'
+widgets:
+  44d52e51-9627-43b5-a637-3b0462041d1c:
+    label: Upload
+  58383135-0f34-4a4a-85fc-5cf9b5de2fdd:
+    label: Library

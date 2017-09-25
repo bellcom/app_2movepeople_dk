@@ -1,5 +1,5 @@
 uuid: 993f640f-e2a8-4662-876f-1fbb9fe59762
-langcode: en
+langcode: da
 status: true
 dependencies:
   config:
@@ -33,6 +33,12 @@ content:
       progress_indicator: throbber
     third_party_settings: {  }
     region: content
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   name:
     type: string_textfield
     weight: 3

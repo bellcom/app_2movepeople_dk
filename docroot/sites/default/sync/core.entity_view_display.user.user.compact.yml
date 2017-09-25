@@ -42,5 +42,6 @@ content:
 hidden:
   field_connected_users: true
   field_organisation: true
+  langcode: true
   member_for: true
   user_picture: true

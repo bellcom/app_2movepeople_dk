@@ -38,3 +38,4 @@ content_roles:
       - 'view moderation states'
 _core:
   default_config_hash: s0DQ96S4Q7lvAlNnSv52u3vDsYFN1OSBlqyVP1fd9WA
+langcode: da

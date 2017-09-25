@@ -1,5 +1,5 @@
 uuid: 782dc28c-f082-41c3-8077-70db6502622a
-langcode: en
+langcode: da
 status: true
 dependencies:
   config:
@@ -87,4 +87,5 @@ content:
     region: content
 hidden:
   body: true
+  langcode: true
   panelizer: true

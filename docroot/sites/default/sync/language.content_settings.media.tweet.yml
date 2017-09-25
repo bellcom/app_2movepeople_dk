@@ -1,0 +1,11 @@
+uuid: 1496ed76-a143-465a-ade2-42cc3cb0dc09
+langcode: da
+status: true
+dependencies:
+  config:
+    - media_entity.bundle.tweet
+id: media.tweet
+target_entity_type_id: media
+target_bundle: tweet
+default_langcode: site_default
+language_alterable: false

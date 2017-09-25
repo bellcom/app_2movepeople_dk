@@ -1,10 +1,11 @@
 uuid: 58e84f0f-829e-4cd7-a409-38a32689fb10
-langcode: en
+langcode: da
 status: true
 dependencies:
   config:
     - field.field.node.page.body
     - field.field.node.page.field_meta_tags
+    - field.field.node.page.panelizer
     - field.field.node.page.scheduled_update
     - node.type.page
   module:
@@ -39,6 +40,12 @@ content:
     type: metatag_firehose
     region: content
     weight: 27
+    settings: {  }
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
     settings: {  }
     third_party_settings: {  }
   path:

@@ -1,5 +1,5 @@
 uuid: e442ad3c-2709-49b5-8664-8a7d8f551eff
-langcode: en
+langcode: da
 status: true
 dependencies:
   config:
@@ -764,7 +764,7 @@ display:
           exposed: true
           expose:
             operator_id: langcode_op
-            label: Language
+            label: Sprog
             description: ''
             use_operator: false
             operator: langcode_op

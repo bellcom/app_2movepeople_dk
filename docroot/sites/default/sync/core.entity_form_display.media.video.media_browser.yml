@@ -1,5 +1,5 @@
 uuid: fe0545e1-6198-41e4-903a-354a3c13b11a
-langcode: en
+langcode: da
 status: true
 dependencies:
   config:
@@ -23,6 +23,12 @@ content:
       display_label: true
     third_party_settings: {  }
     region: content
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   name:
     type: string_textfield
     weight: 0

@@ -1,5 +1,5 @@
 uuid: bd1c28ce-9404-4fac-873a-c8015c44ec19
-langcode: en
+langcode: da
 status: true
 dependencies:
   module:
@@ -543,7 +543,7 @@ display:
           exposed: true
           expose:
             operator_id: langcode_op
-            label: Language
+            label: Sprog
             description: ''
             use_operator: false
             operator: langcode_op

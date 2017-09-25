@@ -1,5 +1,5 @@
 uuid: 5052ac60-3f60-4c02-a77a-e8891f00edd7
-langcode: en
+langcode: da
 status: true
 dependencies:
   config:
@@ -30,6 +30,12 @@ content:
     weight: 3
     third_party_settings: {  }
     region: content
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   name:
     type: string_textfield
     weight: 2

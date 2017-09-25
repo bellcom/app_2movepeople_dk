@@ -1,5 +1,5 @@
 uuid: e35069d7-94c2-442e-a557-96f82968445b
-langcode: en
+langcode: da
 status: true
 dependencies:
   config:
@@ -39,6 +39,12 @@ content:
     type: metatag_firehose
     region: content
     weight: 26
+    settings: {  }
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
     settings: {  }
     third_party_settings: {  }
   panelizer:

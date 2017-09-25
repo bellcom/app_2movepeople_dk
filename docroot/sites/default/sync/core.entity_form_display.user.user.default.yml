@@ -3,10 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.user.user.field_addiction
-    - field.field.user.user.field_age
     - field.field.user.user.field_connected_users
-    - field.field.user.user.field_diagnose
     - field.field.user.user.field_organisation
     - field.field.user.user.field_user_firstname
     - field.field.user.user.field_user_surname
@@ -28,21 +25,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_addiction:
-    weight: 9
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_age:
-    weight: 10
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-    type: number
-    region: content
   field_connected_users:
     type: entity_reference_autocomplete
     weight: 7
@@ -52,14 +34,6 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_diagnose:
-    weight: 8
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_organisation:
     type: entity_reference_autocomplete
     weight: 6
@@ -96,4 +70,5 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  langcode: true
   user_picture: true

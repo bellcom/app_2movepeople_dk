@@ -6,7 +6,11 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.progression_target.body
     - field.field.node.progression_target.field_goal_ids
+    - field.field.node.progression_target.field_priority
+    - field.field.node.progression_target.field_progression_status
+    - field.field.node.progression_target.field_progression_type
     - field.field.node.progression_target.field_progression_user
+    - field.field.node.progression_target.field_purpose
     - node.type.progression_target
   module:
     - text
@@ -34,3 +38,4 @@ hidden:
   field_progression_type: true
   field_progression_user: true
   field_purpose: true
+  langcode: true

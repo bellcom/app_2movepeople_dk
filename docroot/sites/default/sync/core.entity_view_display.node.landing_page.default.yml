@@ -1,5 +1,5 @@
 uuid: d579c233-64d1-4839-9dbf-da68edd05ac8
-langcode: en
+langcode: da
 status: true
 dependencies:
   config:
@@ -44,4 +44,5 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
+  langcode: true
   panelizer: true
