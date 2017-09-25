@@ -44,7 +44,7 @@ class RateController extends ControllerBase {
       $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($goal_id);
       $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
       $query->fields('rates', array('rate'))
-        ->condition('uid', \Drupal::currentUser()->id(), '=')
+       // ->condition('uid', \Drupal::currentUser()->id(), '=')
         ->condition('goal_id', $goal_id, '=')
         ->condition('progression_target_id', $progression_target_id, '=');
      if (isset($date_to))
@@ -63,8 +63,10 @@ class RateController extends ControllerBase {
         $rates[$key][] = (int) $row->rate;
       }
     }
-    array_unshift($rates, null);
-    $rates = array_reverse(call_user_func_array("array_map", $rates));
+    if (is_array($rates) && sizeof($rates) > 0) {
+      array_unshift($rates, null);
+      $rates = array_reverse(call_user_func_array("array_map", $rates));
+    }
     foreach ($rates as $key => $val) {
       if (!is_array($val))
         $val = array($val);

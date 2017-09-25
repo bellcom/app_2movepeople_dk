@@ -16,7 +16,6 @@
                 loadGraph(header, panel);
             });
 
-
             $('#accordion-progressions .panel.panel-default').each(function () {
                 var header = $(this).find('.panel-heading');
                 var panel = $(this).find('.panel-body');
