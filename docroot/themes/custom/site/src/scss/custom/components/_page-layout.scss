@@ -73,8 +73,8 @@
     top: 0;
     margin-left: -$left-container-width;
     left: 0;
+    height: 100%;
     position: fixed;
-    height: 100vh;
     overflow-y: auto;
     z-index: 1000;
     transition: all 0.4s ease 0s;
