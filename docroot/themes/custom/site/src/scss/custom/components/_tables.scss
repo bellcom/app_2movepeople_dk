@@ -1,4 +1,21 @@
+// |--------------------------------------------------------------------------
+// | Page layout
+// |--------------------------------------------------------------------------
+// |
+// | This file contains styles for the following:
+// | - table.table-unbordered-сhessboard, table.table-bordered-сustom
+// |
+
+// --------------------------------------------------
+// Variables
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Styling
+// --------------------------------------------------
+
 table.table-bordered-сustom, table.table-unbordered-сhessboard {
+  border: 0;
   thead > tr > th, tbody > tr > td {
     padding: 10px 15px;
   }
@@ -53,3 +70,141 @@ table.table-bordered-сustom {
     border-bottom-width: 1px; 
   }
 }
+
+table.table-unbordered-сhessboard,table.table-bordered-сustom {
+  thead {
+    display: none;
+  }
+  tr {
+    margin-bottom: 10px;
+    display: block;
+    border-bottom: 2px solid #ddd;
+  }
+  td {
+    display: block;
+    border-bottom: 1px dotted #ccc;
+    span.column-data-box {
+      display: inline-block;
+    }
+    span.column-header-box {
+      display: inline-block;
+      width: 40%;
+      min-width: 150px;
+      text-align: left;
+      margin-right: 5px;
+    }
+    span.column-header-box:before {
+      content: attr(data-label);
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+  }
+  td:last-child {
+    border-bottom: 0;
+  }
+}
+
+table.table-bordered-сustom {
+  td {
+    span.column-data-box {
+      display: inline-block;
+      width: 100%;
+    }
+  }
+}
+
+// --------------------------------------------------
+// Responsive
+// --------------------------------------------------
+
+// Mobile - and up
+@include media-breakpoint-up(xs) {
+}
+
+// Mobile - only
+@include media-breakpoint-only(xs) {
+}
+
+// Tablet - and up
+@include media-breakpoint-up(sm) {
+}
+
+// Tablet - only
+@include media-breakpoint-only(sm) {
+}
+
+// Desktop - and up
+@include media-breakpoint-up(md) {
+  table.table-unbordered-сhessboard, table.table-bordered-сustom {
+    thead {
+      display: table-header-group;
+    }
+    td {
+      span.column-header-box {
+        display: none;
+      }
+      span.column-header-box:before {
+        content: '';
+      }
+    }
+  }
+  
+  table.table-unbordered-сhessboard {
+    tr {
+      margin-bottom: 0;
+      display: table-row;
+      border-bottom: 0;
+    }
+    td {
+      display: table-cell;
+      text-align: left;
+      border-bottom: 0;
+    }
+    td:last-child {
+      border-bottom: 0;
+    }
+  }
+  
+  table.table-bordered-сustom {
+    border: 1px solid #ddd;
+    tr {
+      margin-bottom: 0;
+      display: table-row;
+      border-bottom: 1px;
+    }
+    td {
+      display: table-cell; //table-column;
+      text-align: left;
+      border-bottom: 0;
+    }
+    td:last-child {
+      border-bottom: 1px solid #ddd;
+    }
+  }
+}
+
+// Desktop - only
+@include media-breakpoint-only(md) {
+
+}
+
+// Large desktop - and up
+@include media-breakpoint-up(lg) {
+
+}
+
+// Print
+@media print {
+}
+
+// Touch
+.touchevents {
+}
+
+// No touch
+.no-touchevents {
+}
+
+// --------------------------------------------------
+// Mixins
+// --------------------------------------------------
