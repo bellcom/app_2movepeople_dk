@@ -16,13 +16,14 @@
  * @see template_preprocess_user()
  *
  * @ingroup themeable
+ *
  */
 #}
 <article{{ attributes }}>
-    {% if content %}
-        <img src="{{ base_path ~ directory }}/dist/img/icon-user.svg">
-        <h2 class="content">
-            {{- content -}}
-        </h2>
-    {% endif %}
+  {% if content %}
+    <img src="/{{ base_path ~ directory }}/dist/img/icon-user.svg">
+    <h2 class="content">
+        {{- content -}}
+    </h2>
+  {% endif %}
 </article>
