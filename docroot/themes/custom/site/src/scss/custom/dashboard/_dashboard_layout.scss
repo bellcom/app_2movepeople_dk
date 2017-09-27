@@ -64,8 +64,17 @@ $dashboard-padding: 22px;
     margin-bottom: 2px;
   }*/
 
-#progression_total_table, #milestone_total_table, #progression_total_chart {
+#progression_total_table, #milestone_total_table {
   overflow-x: auto;
+}
+
+#progression_total_chart {
+  width: 100%; 
+  min-height: 450px;
+  div {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
 }
 
 /*.view-id-2mp_connected_users {

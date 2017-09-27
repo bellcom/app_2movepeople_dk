@@ -59,7 +59,10 @@
   }
   
   .div-chart {
-    overflow-x: auto;
+    div {
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
   }
   .dashboard-accordion__action-btn {
     text-align: center;
