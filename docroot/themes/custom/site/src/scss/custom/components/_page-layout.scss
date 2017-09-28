@@ -13,6 +13,68 @@
 // --------------------------------------------------
 // Styling
 // --------------------------------------------------
+.tabs-left {
+  border-bottom: none;
+  padding-top: 2px;
+  border-right: 1px solid #ddd;
+  li {
+    float: none;
+    margin-bottom: 2px;
+    margin-right: -1px;
+    a {
+      border-radius: 4px 0 0 4px;
+      margin-right: 0;
+      display:block;
+    }
+  }
+  li.active {
+    a, a:hover, a:focus {
+      border-bottom-color: #ddd;
+      border-right-color: transparent;
+    }
+  }
+}
+
+.vertical-text {
+  margin-top:50px;
+  border: none;
+  position: relative;
+  li {
+    height: 20px;
+    width: 120px;
+    margin-bottom: 100px;
+    a {
+      border-bottom: 1px solid #ddd;
+      border-right-color: transparent;
+      text-align: center;
+      border-radius: 4px 4px 0px 0px;
+      
+      display: inline-block;
+      white-space: nowrap; 
+      width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis; 
+    }
+    &.active {
+      a, a:hover, a:focus {
+        border-bottom-color: transparent;
+        border-right-color: #ddd;
+        border-left-color: #ddd;
+      }
+    }
+  }
+  &.tabs-left {
+    left: -50px;
+    li {
+      -webkit-transform: rotate(-90deg);
+      -moz-transform: rotate(-90deg);
+      -ms-transform: rotate(-90deg);
+      -o-transform: rotate(-90deg);
+      transform: rotate(-90deg);
+    }
+  }
+}
+
 
 .left-container {
   width: $left-container-width;
@@ -240,6 +302,45 @@ body.toolbar-fixed {
   .main-container {
     h1.page-header {
       text-align: left;
+    }
+  }
+
+  .vertical-text {
+    margin-top: initial;
+    border-right: 1px solid #ddd;
+    position: initial;
+    li {
+      height: initial;
+      width: initial;
+      margin-bottom: 2px;
+      a {
+        border-bottom: initial;
+        border-right-color: transparent;
+        text-align: center;
+        border-radius: 4px 0 0 4px;
+
+        display: block;
+        white-space: initial; 
+        width: initial;
+        overflow: initial;
+        text-overflow: initial; 
+      }
+      &.active {
+        a, a:hover, a:focus {
+          border-bottom-color: #ddd;
+          border-right-color: transparent;
+        }
+      }
+    }
+    &.tabs-left {
+      left: initial; //-50px;
+      li {
+        -webkit-transform: initial;
+        -moz-transform: initial;
+        -ms-transform: initial;
+        -o-transform: initial;
+        transform: initial;
+      }
     }
   }
 

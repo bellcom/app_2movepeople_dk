@@ -40,23 +40,45 @@ class UserRatesAddForm extends FormBase {
     $this->user = $user;
     $progression_targets_ids = \Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getProgressionTargets($this->user->id());
 
+    $form['tabs_start'] = [
+      '#markup' => ''
+          . '<div class="modal-body__progression-tabs">'
+          . '<div class="col-sm-4 col-xs-2">'
+          . '<ul class="nav nav-tabs tabs-left vertical-text" role="tablist">'
+    ];
+
+    $is_active = 0;
     foreach ($progression_targets_ids as $key => $target) {
       $progression_target = new Target($target);
       $goals = $progression_target->getAllGoals();
-      $form['rates_' . $target] = array(
-        '#type' => 'fieldset',
-        '#title' => $progression_target->getProgressionTargetTitle(),
-      );
+      $title = $progression_target->getProgressionTargetTitle();
 
-      foreach ($goals as $id) {
-        $goaldata = \Drupal::entityTypeManager()->getStorage('node')->load($id);
+      $form['tabs_start']['#markup'] .= ''
+        . '<li class="'.($is_active ? '' : 'active').'" role="presentation">'
+        . '<a href="#tab_'.$target.'" aria-controls="tab_'.$target.'" role="tab" data-toggle="tab">'
+        . $title
+        . '</a></li>';
+
+      $form['rates_'.$target] = [
+        '#markup' => '<div class="tab-pane'.($is_active ? '' : ' active')
+          . '" id="tab_'.$target.'" role="tabpanel">'
+          . '<h2 class="visible-xs">'.$title.'</h2>'
+      ];   
+      $is_active = 1;
+      
+      $last_goal_id = 0;
+      foreach ($goals as $goal_id) {
+        $goaldata = \Drupal::entityTypeManager()->getStorage('node')->load($goal_id);
         if (empty($goaldata->get('field_due_date')->value)) {
           $goaltitle = $goaldata->get('title')->value;
-          $form['rates_' . $target][$target . '_' . $id] = [
+
+          $last_goal_id = $goal_id;
+          $form['rates_'.$target][$target.'_'.$goal_id] = [
             '#type' => 'select',
             '#title' => $goaltitle,
             '#required' => FALSE,
-            '#empty_option' => 'None',
+            '#empty_option' => $this->t('None'),
+            '#suffix' => '',
             '#options' => [
               1 => '1',
               2 => '2',
@@ -67,7 +89,22 @@ class UserRatesAddForm extends FormBase {
           ];
         }
       }
+      $form['rates_'.$target][$target.'_'.$last_goal_id]['#suffix'] = '</div>';
     }
+    $form['tabs_start']['#markup'] .= ''
+      . '</ul>'
+      . '</div>'
+      . '<div class="col-sm-8 col-xs-10">'
+      . '<div class="tab-content">';
+    
+    $form['tabs_end'] = [
+      '#markup' => ''
+        . '</div>'
+        . '</div>'
+        . '</div>'
+        . '<div class="clearfix"></div>'
+    ];
+    
 
     // Group submit handlers in an actions element with a key of "actions" so
     // that it gets styled correctly, and so that other modules may add actions

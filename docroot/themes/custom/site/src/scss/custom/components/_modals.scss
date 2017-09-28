@@ -1,3 +1,7 @@
+// --------------------------------------------------
+// Styling
+// --------------------------------------------------
+
 .modal-dialog {
   .modal-header {
     background-color: #50afe9 !important;
@@ -39,3 +43,85 @@
     }
   }
 }
+
+.bc-2movepeople-rate-progression-user-rates-add-form {
+  margin-left: -30px;
+  margin-right: -15px;
+  h2 {
+    color: $form-text-color;
+    border-bottom: 1px solid $btn-nav-hover-color;
+    padding-bottom: 4px;
+    margin-bottom: 30px;
+  }
+}
+
+.modal-body__progression-tabs {
+  min-height:300px;
+  max-height: 450px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+// --------------------------------------------------
+// Variants
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Responsive
+// --------------------------------------------------
+
+// Mobile - and up
+@include media-breakpoint-up(xs) { 
+}
+
+// Mobile - only
+@include media-breakpoint-only(xs) {
+}
+
+// Tablet - and up
+@include media-breakpoint-up(sm) {
+  
+  .modal-body__progression-tabs {
+    width:700px; 
+    min-height:300px;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
+  .bc-2movepeople-rate-progression-user-rates-add-form {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+}
+
+// Tablet - only
+@include media-breakpoint-only(sm) {
+}
+
+// Desktop - and up
+@include media-breakpoint-up(md) {
+}
+
+// Desktop - only
+@include media-breakpoint-only(md) {
+
+}
+
+// Large desktop - and up
+@include media-breakpoint-up(lg) {
+}
+
+// Print
+@media print {
+}
+
+// Touch
+.touchevents {
+}
+
+// No touch
+.no-touchevents {
+}
+// --------------------------------------------------
+// Mixins
+// --------------------------------------------------
