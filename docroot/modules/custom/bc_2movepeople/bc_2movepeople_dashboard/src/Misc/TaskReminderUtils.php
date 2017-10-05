@@ -54,7 +54,6 @@ class TaskReminderUtils  {
           $body = str_replace("@due_date", $goal->get('field_due_date')->value, $body);
           
           $to = $user->get('mail')->value;
-          $to = 'evgeny@bellcom.ee'; // test HACK
 
           // Send email
           MovepeopleDashboardController::sendMail([
