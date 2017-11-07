@@ -11,3 +11,4 @@ theme:
     - core/drupal
     - core/jquery
     - core/jquery.once
+    - core/drupal.dialog.ajax
