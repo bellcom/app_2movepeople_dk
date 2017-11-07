@@ -141,7 +141,7 @@ bc_2movepeople_dashboard.user.task.complete:
     _user_is_logged_in: 'TRUE'
 
 bc_2movepeople_dashboard.admin.settings_form:
-  path: '/admin/config/bc_2movepeople_dashboard/settings'
+  path: '/admin/bc_2movepeople/dashboard/settings'
   defaults:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\AdminSettingsForm'
     _title: '2Move People settings form'

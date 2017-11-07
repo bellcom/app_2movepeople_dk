@@ -1,0 +1,17 @@
+bc_2movepeople.main:
+  path: '/admin/bc_2movepeople'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: '2Movepeople configuration'
+  requirements:
+    _permission: 'access administration pages'
+
+bc_2movepeople.config:
+  path: '/admin/config/bc_2movepeople/config'
+  defaults:
+    _form: '\Drupal\bc_2movepeople\Form\ConfigForm'
+    _title: '2Movepeople Configuration form'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE

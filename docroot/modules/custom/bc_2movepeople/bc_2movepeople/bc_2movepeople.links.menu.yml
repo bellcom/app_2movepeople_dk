@@ -1,0 +1,13 @@
+bc_2movepeople.main:
+  title: 2Movepeople
+  description: '2Movepeople configuration.'
+  route_name: bc_2movepeople.main
+  weight: 8
+  parent: system.admin
+
+bc_2movepeople.config:
+  title: Configuration
+  description: '2Movepeople configuration form.'
+  route_name: bc_2movepeople.config
+  weight: -10
+  parent: bc_2movepeople.main

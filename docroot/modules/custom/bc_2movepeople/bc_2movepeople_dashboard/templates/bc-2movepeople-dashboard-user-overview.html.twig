@@ -22,7 +22,7 @@
   </div>
   <div id="progression_total_chart">
   </div>
-  {% if table_milestone is defined %}
+  {% if table_milestone %}
   <div style="margin-top:50px">&nbsp;</div>
   <div class="dashboard-overview__control-buttons">
     <a class="btn btn-default" href="{{ path('bc_2movepeople_dashboard.user.milestones', {'user': user}) }}">{{ 'Show Target Milestones'|trans }}</a>

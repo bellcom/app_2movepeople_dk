@@ -215,8 +215,9 @@ class MovepeopleDashboardController extends ControllerBase {
           "#table_header" => $result_progression['header'],
           "#table_data" => $result_progression['data']);
       }
-      
-      if (!empty($entity_milestone_ids)) {
+
+      $config = \Drupal::config('bc_2movepeople.settings');
+      if (!empty($entity_milestone_ids) && !empty($config->get('enable_milestones'))) {
         $result_milestone = $this->getMilestoneTable($entity_milestone_ids);
         $build['#table_milestone'] = array(
           "#theme" => "bc_2movepeople_dashboard_progression_total_table",
