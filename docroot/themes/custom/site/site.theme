@@ -167,3 +167,12 @@ function site_theme_suggestions_details_alter(array &$suggestions, array $variab
 function site_preprocess_menu_local_task(array &$variables) {
 //$variables['element']['#link']['url']->setOption('attributes', ['class'=>'rounded']);
 }
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function site_form_user_login_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if (isset($form['name']['#attributes']['autofocus'])) {
+    unset($form['name']['#attributes']['autofocus']);
+  }
+}

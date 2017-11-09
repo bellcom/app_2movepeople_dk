@@ -22,7 +22,11 @@ var pageLayout = (function ($) {
     /**
      * Register boot event handlers
      */
-    function registerBootEventHandlers() {}
+    function registerBootEventHandlers() {
+      $(window).load(function() {
+        $("#page-wrapper").removeClass("preload");
+      });
+    }
 
     /**
      * Register event handlers
