@@ -161,6 +161,7 @@ class NewUserCreateForm extends FormBase {
       // Optional.
       $user->set('field_user_firstname', $form_state->getValue('firstname'));
       $user->set('field_user_surname', $form_state->getValue('surname'));
+      $user->set('field_connected_users', \Drupal::currentUser()->id());
       $user->addRole('2mp_user');
       $user->activate();
 
