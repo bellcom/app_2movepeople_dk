@@ -1,0 +1,31 @@
+@mixin text-trimmed() {
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: normal;
+}
+
+.view.view-id-2mp_connected_users{
+  &.view-display-id-page_link_boxes{
+    .user.user--compact {
+      h2.content{
+        width:100%;
+        .field{
+          @include text-trimmed(); 
+        }
+      }
+    }
+  }
+  &.view-display-id-block_links_simple{
+    .item-list{
+      ul{
+        li{
+          a{
+            @include text-trimmed();
+          }
+        }
+      }
+    }
+  }
+}
