@@ -22,7 +22,11 @@ var pageLayout = (function ($) {
     /**
      * Register boot event handlers
      */
-    function registerBootEventHandlers() {}
+    function registerBootEventHandlers() {
+      $(window).load(function() {
+        $("#page-wrapper").removeClass("preload");
+      });
+    }
 
     /**
      * Register event handlers
@@ -131,6 +135,7 @@ $("body").click(function () { // show
     $(".info-modal-bottom, .info-modal-left, .info-modal-right, .info-modal").hide();
 });
     });
+
 // Document ready
 (function ($) {
     'use strict';

@@ -8678,6 +8678,12 @@ header.navbar {
     header.navbar .navbar-header nav:nth-child(2) {
       float: right; }
 
+.preload, * {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important; }
+
 .tabs-left {
   border-bottom: none;
   padding-top: 2px;
