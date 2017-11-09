@@ -12,6 +12,7 @@ dependencies:
     - field.field.user.user.field_user_firstname
     - field.field.user.user.field_user_surname
     - field.field.user.user.user_picture
+    - image.style.user_picture_compact
   module:
     - image
     - panelizer
@@ -49,7 +50,7 @@ content:
     region: content
     label: hidden
     settings:
-      image_style: ''
+      image_style: user_picture_compact
       image_link: ''
     third_party_settings: {  }
 hidden:
