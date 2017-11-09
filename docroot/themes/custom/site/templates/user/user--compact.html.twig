@@ -21,9 +21,13 @@
 #}
 <article{{ attributes }}>
   {% if content %}
-    <img src="/{{ base_path ~ directory }}/dist/img/icon-user.svg">
+    {% if content.user_picture|render %}
+      {{- content.user_picture -}}
+    {% else %}
+      <img src="/{{ base_path ~ directory }}/dist/img/icon-user.svg">
+    {% endif %}
     <h2 class="content">
-        {{- content -}}
+      {{- content|without('user_picture') -}}
     </h2>
   {% endif %}
 </article>
