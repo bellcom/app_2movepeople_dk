@@ -11,4 +11,5 @@ theme:
     - core/drupal
     - core/jquery
     - core/jquery.once
+    - core/jquery.ui.datepicker
     - core/drupal.dialog.ajax

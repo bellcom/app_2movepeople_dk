@@ -6,10 +6,15 @@
   .modal-header {
     background-color: #50afe9 !important;
     padding: 15px 35px;
+    position: relative;
     
     .close {
       color: #FFF;
-      margin-top: 5px;
+      padding: 5px 10px;
+      position: absolute;
+      right: 25px;
+      top: 50%;
+      transform: translateY(-50%);
     }
    
     .modal-title {

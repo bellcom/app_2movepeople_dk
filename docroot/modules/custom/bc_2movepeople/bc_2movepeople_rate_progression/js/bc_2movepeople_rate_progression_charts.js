@@ -168,6 +168,8 @@
           },
           chartArea: {
               //height: "450px",
+              top: '5%',
+              bottom: '20%',
               width: "90%"
           },
           legend: {position: "bottom"},
