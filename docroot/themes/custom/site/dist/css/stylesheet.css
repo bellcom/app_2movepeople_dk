@@ -8677,6 +8677,8 @@ header.navbar {
       float: left; }
     header.navbar .navbar-header nav:nth-child(2) {
       float: right; }
+  header.navbar a {
+    outline: none; }
 
 .view.view-id-2mp_connected_users.view-display-id-page_link_boxes .user.user--compact h2.content, .view.view-id-2mp_connected_users.view-display-id-page_link_boxes .user.user--compact .content.heading-h2 {
   width: 100%; }
@@ -8694,7 +8696,7 @@ header.navbar {
   text-overflow: ellipsis;
   line-height: normal; }
 
-.preload, * {
+.preload, .preload * {
   -webkit-transition: none !important;
   -moz-transition: none !important;
   -ms-transition: none !important;
@@ -9140,10 +9142,17 @@ div.custom-nav-divider {
 
 .modal-dialog .modal-header {
   background-color: #50afe9 !important;
-  padding: 15px 35px; }
+  padding: 15px 35px;
+  position: relative; }
   .modal-dialog .modal-header .close {
     color: #FFF;
-    margin-top: 5px; }
+    padding: 5px 10px;
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+         -o-transform: translateY(-50%);
+            transform: translateY(-50%); }
   .modal-dialog .modal-header .modal-title {
     color: #FFF !important;
     font-size: 24px; }
@@ -9334,6 +9343,9 @@ table.table-bordered-сustom td span.column-data-box {
   }*/
 #progression_total_table, #milestone_total_table {
   overflow-x: auto; }
+
+.progression-chart {
+  margin: 20px 0 0; }
 
 #progression_total_chart {
   width: 100%;

@@ -26,6 +26,8 @@ var pageLayout = (function ($) {
       $(window).load(function() {
         $("#page-wrapper").removeClass("preload");
       });
+
+      $(".datepicker" ).datepicker();
     }
 
     /**
