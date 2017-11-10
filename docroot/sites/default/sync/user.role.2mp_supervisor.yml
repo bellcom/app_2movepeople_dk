@@ -1,0 +1,14 @@
+uuid: ccc68bab-96d0-4e23-82de-ca2472954405
+langcode: da
+status: true
+dependencies:
+  module:
+    - lightning_core
+third_party_settings:
+  lightning_core:
+    description: ''
+id: 2mp_supervisor
+label: '2MP Supervisor'
+weight: 8
+is_admin: null
+permissions: {  }

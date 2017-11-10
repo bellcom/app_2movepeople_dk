@@ -1,3 +1,12 @@
+bc_2movepeople_dashboard.main:
+  path: '/dashboard'
+  defaults:
+    _title: 'Connected users'
+    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getConnectedUsers'
+  requirements:
+    _permission: 'access content'
+    _user_is_logged_in: 'TRUE'
+
 bc_2movepeople_dashboard.user.overview:
   path: '/dashboard/users/{user}/overview'
   defaults:

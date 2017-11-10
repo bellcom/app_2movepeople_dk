@@ -20,6 +20,7 @@ use Drupal\Core\Access\AccessResult;
 
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\node\NodeInterface;
+use \Drupal\views\Views;
 use Drupal\user\UserInterface;
 use Drupal\user\Entity\User;
 
@@ -195,18 +196,48 @@ class MovepeopleDashboardController extends ControllerBase {
     return $build;
   }
 
+  /**
+   * Callback function for Connected users list page.
+   */
+  public function getConnectedUsers() {
+    $user = \Drupal::currentUser();
+    $build['content'] = $this->renderConnectedUsers($user->getAccount());
+    if (in_array('2mp_supervisor', $user->getRoles())) {
+      $build['#title'] = $this->t('Managers');
+    }
+    return $build;
+  }
+
   public function getUserOverviewImplementation(AccountInterface $user) {
+    $build = [];
+    $roles = $user->getRoles();
+    if (in_array('2mp_user', $roles)) {
+      $build = $this->getUserOverview($user);
+    }
+
+    if (in_array('2mp_manager', $roles)) {
+      $build['#title'] = $this->t('Clients');
+      $build['content'] = $this->renderConnectedUsers($user);
+    }
+
+    return $build;
+  }
+
+  /**
+   * Render callback function for user overview page.
+   */
+  private function getUserOverview($user) {
     $entity_progression_ids = array_keys($this->getProgressionTargets($user->id(), 'progression'));
     $entity_milestone_ids = array_keys($this->getProgressionTargets($user->id(), 'target_milestone'));
 
     if (!empty($entity_progression_ids) || !empty($entity_milestone_ids)) {
-      
+
       $build = array(
         "#theme" => "bc_2movepeople_dashboard_user_overview",
         "#title" => $user->field_user_firstname->value . ' ' . $user->field_user_surname->value,
-        "#user" => $user->id()
+        "#user" => $user->id(),
       );
-      
+
       if (!empty($entity_progression_ids)) {
         $result_progression = $this->getProgressionsTable($entity_progression_ids);
         $build['#table_progression'] = array(
@@ -224,19 +255,33 @@ class MovepeopleDashboardController extends ControllerBase {
           "#type" => 'milestone',
           "#table_header" => $result_milestone['header'],
           "#table_data" => $result_milestone['data']);
-        
-       
       }
     }
     else {
       $build = array(
         "#theme" => "bc_2movepeople_dashboard_user_overview",
         "#title" => $user->field_user_firstname->value . ' ' . $user->field_user_surname->value,
-        "#user" => $user->id()
+        "#user" => $user->id(),
       );
     }
 
     return $build;
+  }
+
+  /**
+   * Render callback function for Connected users list.
+   */
+  private function renderConnectedUsers(AccountInterface $user) {
+    $args = [$user->id()];
+    $view = Views::getView('2mp_connected_users');
+    if (!is_object($view)) {
+      return '';
+    }
+    $view->setArguments($args);
+    $view->setDisplay('block_link_boxes');
+    $view->preExecute();
+    $view->execute();
+    return $view->render();
   }
 
   static function getGoal($nodeid, $progression_target = NULL) {
