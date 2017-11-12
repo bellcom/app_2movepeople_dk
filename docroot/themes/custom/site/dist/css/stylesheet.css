@@ -8680,9 +8680,9 @@ header.navbar {
   header.navbar a {
     outline: none; }
 
-.view.view-id-2mp_connected_users.view-display-id-page_link_boxes .user.user--compact h2.content, .view.view-id-2mp_connected_users.view-display-id-page_link_boxes .user.user--compact .content.heading-h2 {
+.view.view-id-2mp_connected_users.view-display-id-block_link_boxes .user.user--compact h2.content, .view.view-id-2mp_connected_users.view-display-id-block_link_boxes .user.user--compact .content.heading-h2 {
   width: 100%; }
-  .view.view-id-2mp_connected_users.view-display-id-page_link_boxes .user.user--compact h2.content .field, .view.view-id-2mp_connected_users.view-display-id-page_link_boxes .user.user--compact .content.heading-h2 .field {
+  .view.view-id-2mp_connected_users.view-display-id-block_link_boxes .user.user--compact h2.content .field, .view.view-id-2mp_connected_users.view-display-id-block_link_boxes .user.user--compact .content.heading-h2 .field {
     white-space: nowrap;
     width: 100%;
     overflow: hidden;
