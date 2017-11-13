@@ -162,7 +162,7 @@ class NewUserCreateForm extends FormBase {
       // Optional.
       $user->set('field_user_firstname', $form_state->getValue('firstname'));
       $user->set('field_user_surname', $form_state->getValue('surname'));
-      $user->set('field_connected_users', $current_user->id());
+      //$user->set('field_connected_users', $current_user->id());
       $current_user_roles = $current_user->getRoles();
       if (in_array('2mp_supervisor', $current_user_roles)) {
         $user->addRole('2mp_manager');
@@ -177,6 +177,11 @@ class NewUserCreateForm extends FormBase {
       
       if ($this->isSaved != SAVED_NEW) {
         drupal_set_message($this->wrong_msg, 'error');
+      }else{
+        //If user saved, update current user
+        $current_user = \Drupal\user\Entity\User::load($current_user->id());
+        $current_user->field_connected_users[] = $user;
+        $current_user->save();
       }
     }
   }
