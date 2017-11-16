@@ -11,4 +11,6 @@ id: 2mp_supervisor
 label: '2MP Supervisor'
 weight: 8
 is_admin: null
-permissions: {  }
+permissions:
+  - 'access user profiles'
+  - 'administer users'
