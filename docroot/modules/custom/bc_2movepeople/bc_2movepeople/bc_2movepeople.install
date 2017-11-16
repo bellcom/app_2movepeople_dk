@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the 2Movepeople common module.
+ */
+
+/**
+ * Remove menu from db to override them from code.
+ */
+function bc_2movepeople_update_8001() {
+  $menu_name = 'settings-menu';
+  $menu_tree = \Drupal::menuTree();
+  $parameters = $menu_tree->getCurrentRouteMenuTreeParameters($menu_name);
+  $tree = $menu_tree->load($menu_name, $parameters);
+  foreach ($tree as $menu_item) {
+    if ($menu_item->link->isDeletable()) {
+      $menu_item->link->deleteLink();
+    }
+  }
+}

@@ -11,3 +11,21 @@ bc_2movepeople.config:
   route_name: bc_2movepeople.config
   weight: -10
   parent: bc_2movepeople.main
+
+bc_2movepeople.settings.account:
+  title: 'Account'
+  weight: -10
+  route_name: user.page
+  menu_name: settings-menu
+
+bc_2movepeople.settings.logout:
+  weight: -9
+  menu_name: settings-menu
+  class: Drupal\user\Plugin\Menu\LoginLogoutMenuLink
+
+bc_2movepeople.settings.main:
+  title: Admin settings
+  description: '2Movepeople configuration.'
+  route_name: bc_2movepeople.main
+  weight: -8
+  menu_name: settings-menu

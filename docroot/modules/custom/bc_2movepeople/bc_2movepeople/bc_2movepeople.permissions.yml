@@ -1,0 +1,4 @@
+administer bc_2movepeople settings:
+  title: 'Administer 2Movepeople settings'
+  description: 'Manage 2Movepeople configuration settings.'
+  restrict access: TRUE
