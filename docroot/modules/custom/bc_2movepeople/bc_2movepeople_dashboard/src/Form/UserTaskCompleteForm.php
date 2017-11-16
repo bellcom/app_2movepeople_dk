@@ -35,6 +35,19 @@ class UserTaskCompleteForm extends FormBase {
     
     list($year, $month, $day) = explode('-', $node->get('field_due_date')->value);
     
+    //We show Evaluation only for specific roles
+    $current_user_roles = \Drupal::currentUser()->getRoles();
+    $evaluation_enable_roles = array('2mp_manager');
+    
+    if(!empty(array_intersect($evaluation_enable_roles, $current_user_roles))){
+      $evalution_markup = '<div class="row task-complete-ajax-form-row">'
+          . '<div class="col-sm-12 task-complete-ajax-form-title">'.$this->t('Evaluation').'</div></div>'
+          . '<div class="row task-complete-ajax-form-row">'
+          . '<div class="col-sm-12 task-complete-ajax-form-box">'.$node->get('field_evaluation')->value.'</div></div>';
+    }else{
+      $evalution_markup = NULL;
+    }
+
     $form['info'] = [
       '#markup' => ''
           . '<br/>'
@@ -50,10 +63,8 @@ class UserTaskCompleteForm extends FormBase {
           . '<div class="col-sm-12 task-complete-ajax-form-title">'.$this->t('Deadline').'</div></div>'
           . '<div class="row task-complete-ajax-form-row">'
           . '<div class="col-sm-12 task-complete-ajax-form-box">'.$day.'-'.$month.'-'.$year.'</div></div>'
-          . '<div class="row task-complete-ajax-form-row">'
-          . '<div class="col-sm-12 task-complete-ajax-form-title">'.$this->t('Evaluation').'</div></div>'
-          . '<div class="row task-complete-ajax-form-row">'
-          . '<div class="col-sm-12 task-complete-ajax-form-box">'.$node->get('field_evaluation')->value.'</div></div><br/>'
+          . $evalution_markup
+          . '<br/>'
     ];
     
     $form['actions']['#type'] = 'actions';
