@@ -22,4 +22,5 @@ bc_2movepeople.user_edit:
     _controller: '\Drupal\bc_2movepeople\Controller\MovepeopleController::user_edit'
     _title: 'Edit profile'
   requirements:
+    _permission: 'access content'
     user: '^[0-9]+'

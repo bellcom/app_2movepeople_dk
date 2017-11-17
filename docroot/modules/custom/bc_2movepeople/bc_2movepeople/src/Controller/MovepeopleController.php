@@ -19,12 +19,22 @@ class MovepeopleController extends ControllerBase {
    */
   public function user_edit(AccountInterface $user, Request $request) {
 
-//$user_form  = $this->formBuilder->getForm($user, 'default');
-    $user_form = \Drupal::service('entity.form_builder')->getForm($user, 'default');
+//Allow access only if current user have permission to edit users of its role 
+    $access = FALSE;
+    foreach ($user->getRoles() as $role) {
+      if (\Drupal::currentUser()->hasPermission($role)) {
+        $access = TRUE;
+      }
+    }
+    if (!empty($access)) {
+      $user_form = \Drupal::service('entity.form_builder')->getForm($user, 'default');
+      $build[] = $user_form;
 
-    $build[] = $user_form;
-
-    return $build;
+      return $build;
+    }
+    else {
+      throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
+    }
   }
 
 }
