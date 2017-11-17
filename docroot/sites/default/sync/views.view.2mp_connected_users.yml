@@ -522,7 +522,7 @@ display:
             alter_text: true
             text: Edit
             make_link: true
-            path: 'user/{{ uid }}/edit'
+            path: 'user_edit/{{ uid }}'
             absolute: false
             external: false
             replace_spaces: false
