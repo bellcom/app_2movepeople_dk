@@ -242,14 +242,7 @@ class MovepeopleDashboardController extends ControllerBase {
 
     if (!empty($entity_progression_ids)) {
       $result_progression = $this->getProgressionsTable($entity_progression_ids);
-      $build['#table_progression']['data'] = [
-        "#theme" => "bc_2movepeople_dashboard_progression_total_table",
-        "#type" => 'progression',
-        "#table_header" => $result_progression['header'],
-        "#table_data" => $result_progression['data']
-      ];
-
-      $controls[] = [
+      $controls['rate_category'] = [
         '#title' => $this->t('Rate category'),
         '#url' => Url::fromRoute('bc_2movepeople_rate_progression.user_rates_add', ['user' => $user->id()]),
         '#attributes' => [
@@ -257,6 +250,18 @@ class MovepeopleDashboardController extends ControllerBase {
           'data-dialog-type' => 'modal',
         ],
       ];
+
+      if (!empty($result_progression['data'])) {
+        $build['#table_progression']['data'] = [
+          "#theme" => "bc_2movepeople_dashboard_progression_total_table",
+          "#type" => 'progression',
+          "#table_header" => $result_progression['header'],
+          "#table_data" => $result_progression['data']
+        ];
+      }
+      else {
+        $controls['rate_category']['#attributes']['disabled'] = 'disabled';
+      }
     }
     $build['#table_progression']['controls'] = $this->getControlButtons($controls, ['class' => 'dashboard-overview__control-buttons']);
 
@@ -401,15 +406,17 @@ class MovepeopleDashboardController extends ControllerBase {
     }
     $header = array_merge(array(t('Categories')), $dates);
 
-    foreach ($entity_ids as $key => $target_id) {
-      $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($target_id);
-      $title = $nodedata->get('title')->value;
-      $table[$key] = array_fill(1, count($dates), 0);
-      $avg_rates = self::getTargetAveragePoints($target_id);
-      foreach ($avg_rates as $row) {
-        $table[$key][array_search($row->dates, $header)] = round((float) $row->avg_rates, 2);
+    if ($dates) {
+      foreach ($entity_ids as $key => $target_id) {
+        $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($target_id);
+        $title = $nodedata->get('title')->value;
+        $table[$key] = array_fill(1, count($dates), 0);
+        $avg_rates = self::getTargetAveragePoints($target_id);
+        foreach ($avg_rates as $row) {
+          $table[$key][array_search($row->dates, $header)] = round((float) $row->avg_rates, 2);
+        }
+        $table[$key] = array_merge(array($title), $table[$key]);
       }
-      $table[$key] = array_merge(array($title), $table[$key]);
     }
 
     return array('header' => $header, 'data' => $table);
