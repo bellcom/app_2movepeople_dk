@@ -255,7 +255,8 @@ class MovepeopleDashboardController extends ControllerBase {
             "#table_header" => $result_milestone['header'],
             "#table_data" => $result_milestone['data']);
       }
-    }else {
+    }
+    else {
       $build = array(
           "#theme" => "bc_2movepeople_dashboard_user_overview",
           "#title" => $user->field_user_firstname->value . ' ' . $user->field_user_surname->value,
@@ -326,7 +327,6 @@ class MovepeopleDashboardController extends ControllerBase {
    * @return array
    *
    */
-
   public static function getProgressionTargets($user_id, $progression_type = 'progression') {
 //    $query = \Drupal::database()->select('node', 'n')
 //      ->extend('\Drupal\Core\Database\Query\PagerSelectExtender')
@@ -370,7 +370,6 @@ class MovepeopleDashboardController extends ControllerBase {
    * @return array
    *
    */
-
   public static function getProgressionsTable($entity_ids) {
     $dates = array();
     $table = array();
@@ -484,7 +483,8 @@ class MovepeopleDashboardController extends ControllerBase {
 
     if (empty($tasks)) {
       $title = t('Hi %name you have no scheduled tasks.', array('%name' => $user_name));
-    }else {
+    }
+    else {
       $title = t('Hi %name here are your tasks', array('%name' => $user_name));
     }
 
@@ -549,7 +549,8 @@ class MovepeopleDashboardController extends ControllerBase {
     if ($due_date_unixtimestamp > $current_unixtimestamp) {
       $diff_date = $current_date->diff($due_date);
       $is_remind = $diff_date->d < $reminder_days ? 1 : 0;
-    }else { // due date expire
+    }
+    else { // due date expire
       $is_remind = 2; // date expired
     }
 
@@ -584,7 +585,8 @@ class MovepeopleDashboardController extends ControllerBase {
       $tempstore->set('is_reminded', ['expire' => $expire_unixtimestamp]);
 
       $is_remind = TRUE;
-    }elseif (!$tempstore->get('is_reminded')) {
+    }
+    elseif (!$tempstore->get('is_reminded')) {
       $expire_unixtimestamp = $current_unixtimestamp + $offset;
       $tempstore->set('is_reminded', ['expire' => $expire_unixtimestamp]);
       $is_remind = TRUE;
@@ -653,7 +655,8 @@ class MovepeopleDashboardController extends ControllerBase {
           if (in_array($account->id(), $manager_ids)) {
             $access = AccessResult::allowed();
           }
-        }elseif (in_array("2mp_user", $user_roles)) {
+        }
+        elseif (in_array("2mp_user", $user_roles)) {
           if ($account->id() == $user->id()) {
             $access = AccessResult::allowed();
           }
