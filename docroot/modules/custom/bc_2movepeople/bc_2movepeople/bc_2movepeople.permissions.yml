@@ -1,0 +1,2 @@
+permission_callbacks:
+  - Drupal\bc_2movepeople\Permissions\MovepeoplePermissions::permissions
