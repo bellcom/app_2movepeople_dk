@@ -226,42 +226,57 @@ class MovepeopleDashboardController extends ControllerBase {
    * Render callback function for user overview page.
    */
   private function getUserOverview($user) {
+    $build = array(
+      "#theme" => "bc_2movepeople_dashboard_user_overview",
+      "#title" => $user->field_user_firstname->value . ' ' . $user->field_user_surname->value,
+      "#user" => $user->id(),
+    );
+
     $entity_progression_ids = array_keys($this->getProgressionTargets($user->id(), 'progression'));
     $entity_milestone_ids = array_keys($this->getProgressionTargets($user->id(), 'target_milestone'));
 
-    if (!empty($entity_progression_ids) || !empty($entity_milestone_ids)) {
+    $controls = [[
+      '#title' => $this->t('Show category'),
+      '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
+    ]];
 
-      $build = array(
-          "#theme" => "bc_2movepeople_dashboard_user_overview",
-          "#title" => $user->field_user_firstname->value . ' ' . $user->field_user_surname->value,
-          "#user" => $user->id(),
-      );
+    if (!empty($entity_progression_ids)) {
+      $result_progression = $this->getProgressionsTable($entity_progression_ids);
+      $build['#table_progression']['data'] = [
+        "#theme" => "bc_2movepeople_dashboard_progression_total_table",
+        "#type" => 'progression',
+        "#table_header" => $result_progression['header'],
+        "#table_data" => $result_progression['data']
+      ];
 
-      if (!empty($entity_progression_ids)) {
-        $result_progression = $this->getProgressionsTable($entity_progression_ids);
-        $build['#table_progression'] = array(
-            "#theme" => "bc_2movepeople_dashboard_progression_total_table",
-            "#type" => 'progression',
-            "#table_header" => $result_progression['header'],
-            "#table_data" => $result_progression['data']);
-      }
-
-      $config = \Drupal::config('bc_2movepeople.settings');
-      if (!empty($entity_milestone_ids) && !empty($config->get('enable_milestones'))) {
-        $result_milestone = $this->getMilestoneTable($entity_milestone_ids);
-        $build['#table_milestone'] = array(
-            "#theme" => "bc_2movepeople_dashboard_progression_total_table",
-            "#type" => 'milestone',
-            "#table_header" => $result_milestone['header'],
-            "#table_data" => $result_milestone['data']);
-      }
+      $controls[] = [
+        '#title' => $this->t('Rate category'),
+        '#url' => Url::fromRoute('bc_2movepeople_rate_progression.user_rates_add', ['user' => $user->id()]),
+        '#attributes' => [
+          'class' => ['btn-progress', 'use-ajax'],
+          'data-dialog-type' => 'modal',
+        ],
+      ];
     }
-    else {
-      $build = array(
-          "#theme" => "bc_2movepeople_dashboard_user_overview",
-          "#title" => $user->field_user_firstname->value . ' ' . $user->field_user_surname->value,
-          "#user" => $user->id(),
-      );
+    $build['#table_progression']['controls'] = $this->getControlButtons($controls, ['class' => 'dashboard-overview__control-buttons']);
+
+    $config = \Drupal::config('bc_2movepeople.settings');
+    if (!empty($config->get('enable_milestones'))) {
+      $conrtol_links = [[
+        '#title' => $this->t('Show Target Milestones'),
+        '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.milestones', ['user' => $user->id()]),
+      ]];
+      $build['#table_milestone']['controls'] = $this->getControlButtons($conrtol_links, ['class' => ['dashboard-overview__control-buttons']]);
+
+      if (!empty($entity_milestone_ids)) {
+        $result_milestone = $this->getMilestoneTable($entity_milestone_ids);
+        $build['#table_milestone']['data'] = array(
+          "#theme" => "bc_2movepeople_dashboard_progression_total_table",
+          "#type" => 'milestone',
+          "#table_header" => $result_milestone['header'],
+          "#table_data" => $result_milestone['data'],
+        );
+      }
     }
 
     return $build;
@@ -356,7 +371,7 @@ class MovepeopleDashboardController extends ControllerBase {
     $query->addExpression("FROM_UNIXTIME(created,  '%d.%m')", 'dates');
     $query->addExpression("AVG(rate)", 'avg_rates');
     $query->GroupBy('dates');
-    $query->orderBy('created', 'ASC');
+    //$query->orderBy('created', 'ASC');
     $result = $query->execute()->fetchAll();
     return $result;
   }
@@ -378,7 +393,7 @@ class MovepeopleDashboardController extends ControllerBase {
     $query->condition('progression_target_id', $entity_ids, 'IN');
     $query->addExpression("FROM_UNIXTIME(created,  '%d.%m')", 'dates');
     $query->GroupBy('dates');
-    $query->orderBy('created', 'ASC');
+    //$query->orderBy('created', 'ASC');
 
     $result = $query->execute()->fetchAll();
     foreach ($result as $row) {
@@ -703,6 +718,36 @@ class MovepeopleDashboardController extends ControllerBase {
         'from' => $message['sender'] . ' <' . $message['from'] . '>'
     );
     return $send_mail->mail($message);
+  }
+
+  /**
+   * Control buttons block definition.
+   *
+   * @param array $links with keys
+   * - url
+   * - title
+   * - ajax
+   * - sender
+   * - subject
+   *
+   * @return array
+   */
+  private function getControlButtons(array $links , array $attributes = []) {
+    $build = [
+      '#type' => 'container',
+      '#attributes' => array_merge_recursive($attributes, ['class' => ['controll-buttons']])
+    ];
+
+    foreach ($links as $key => $link) {
+      $build[$key] = array_merge_recursive($link, [
+        '#type' => 'link',
+        '#attributes' => [
+          'class' => ['btn', 'btn-default'],
+        ],
+      ]);
+    }
+
+    return $build;
   }
 
 }

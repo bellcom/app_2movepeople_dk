@@ -170,19 +170,69 @@
               //height: "450px",
               top: '5%',
               bottom: '20%',
-              width: "90%"
+              width: "90%",
+              is3D: true
           },
           legend: {position: "bottom"},
-          pointSize: 10
+          pointSize: 10,
+          is3D: true
       };
 
       var chart = (chart_type == 'line' ? 
               new google.visualization.LineChart(document.getElementById(element)) : 
               new google.visualization.ColumnChart(document.getElementById(element)));
 
+      google.visualization.events.addOneTimeListener(chart, 'ready', function () {
+        addChartGradient(chart);
+      });
       chart.draw(cdata, options);
   }
-    
+
+  function addChartGradient(chart) {
+    var chartDiv = chart.getContainer();
+    var svg = chartDiv.getElementsByTagName('svg')[0];
+    var properties = {
+      id: "chartGradient",
+      x1: "0%",
+      y1: "0%",
+      x2: "0%",
+      y2: "100%",
+      stops: [
+        { offset: '5%', 'stop-color': '#f60' },
+        { offset: '95%', 'stop-color': '#ff6' }
+      ]
+    };
+
+
+    createGradient(svg, properties);
+    var chartPath = svg.getElementsByTagName('path')[1];  //0 path corresponds to legend path
+    chartPath.setAttribute('stroke', 'url(#chartGradient)');
+    //chartPath.attr('fill', 'url(#chartGradient)');
+  }
+
+  function createGradient(svg, properties) {
+    var svgNS = svg.namespaceURI;
+    var grad = document.createElementNS(svgNS, 'linearGradient');
+    grad.setAttribute('id', properties.id);
+    ["x1","y1","x2","y2"].forEach(function(name) {
+      if (properties.hasOwnProperty(name)) {
+        grad.setAttribute(name, properties[name]);
+      }
+    });
+    for (var i = 0; i < properties.stops.length; i++) {
+      var attrs = properties.stops[i];
+      var stop = document.createElementNS(svgNS, 'stop');
+      for (var attr in attrs) {
+        if (attrs.hasOwnProperty(attr)) stop.setAttribute(attr, attrs[attr]);
+      }
+      grad.appendChild(stop);
+    }
+
+    var defs = svg.querySelector('defs') ||
+      svg.insertBefore(document.createElementNS(svgNS, 'defs'), svg.firstChild);
+    return defs.appendChild(grad);
+  }
+
   function updateProgressionChart(progression_id, chart_type = 'line') {
     var date_from = $('#date_from_' + progression_id).val();
     var date_to = $('#date_to_' + progression_id).val();
