@@ -447,8 +447,6 @@ class MovepeopleDashboardController extends ControllerBase {
   public function getUserTasks(AccountInterface $user) {
     $user_name = $user->getDisplayName();
 
-    $title = t("Hi") . ', ' . $user_name . ' ' . t(" here are your tasks");
-
     $query = \Drupal::entityQuery('node');
     $query->condition('status', 1);
     $query->condition('type', 'progression_target');
@@ -483,6 +481,13 @@ class MovepeopleDashboardController extends ControllerBase {
       }
     }
     ksort($tasks, SORT_NUMERIC);
+
+    if (empty($tasks)) {
+      $title = t('Hi %name you have no scheduled tasks.', array('%name' => $user_name));
+    }else {
+      $title = t('Hi %name here are your tasks', array('%name' => $user_name));
+    }
+
     $build = array(
         "#theme" => 'bc_2movepeople_dashboard_user_tasks_overview',
         "#title" => $title,
