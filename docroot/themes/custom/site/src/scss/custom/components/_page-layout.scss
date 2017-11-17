@@ -173,6 +173,11 @@
   padding: 0 5px;
   .main-container__user-compact-wrapper {
     padding: 0 10px;
+    .field-content.edit-user{
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+    }
   }
 }
 

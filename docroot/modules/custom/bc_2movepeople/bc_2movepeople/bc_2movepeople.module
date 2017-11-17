@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * @file
+ * Contains bc_2movepeople.module.
+ */
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function bc_2movepeople_form_user_form_alter(&$form, FormStateInterface $form_state) {
+
+  $current_user_roles = \Drupal::currentUser()->getRoles();
+
+  //Hide some fields according user role
+  $supervisor_hidden_fields = array('field_organisation');
+  $manager_hidden_fields = array('field_organisation', 'field_diagnose');
+  $user_hidden_fields = array('field_organisation', 'field_diagnose', 'field_addiction');
+
+  //Not hide for administrators
+  if (!in_array('administrator', $current_user_roles)) {
+
+    if (in_array('2mp_supervisor', $current_user_roles)) {
+      _bc_2movepeople_hide_field($form, $supervisor_hidden_fields);
+    }
+    elseif (in_array('2mp_manager', $current_user_roles)) {
+      _bc_2movepeople_hide_field($form, $manager_hidden_fields);
+    }
+    elseif (in_array('2mp_user', $current_user_roles)) {
+      _bc_2movepeople_hide_field($form, $user_hidden_fields);
+    }
+  }
+}
+
+/**
+ * Hide some fields in a form.
+ *
+ * @param array $form
+ *   Nested array of form elements that comprise the form.
+ * @param array $field_names
+ *   Array of field names to be hidden.
+ * @return void
+ */
+function _bc_2movepeople_hide_field(&$form, $field_names) {
+
+  foreach ($field_names as $field_name) {
+    $form[$field_name]['#disabled'] = TRUE;
+    $form[$field_name]['#type'] = 'hidden';
+  }
+}

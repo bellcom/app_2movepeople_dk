@@ -2,3 +2,6 @@ administer bc_2movepeople settings:
   title: 'Administer 2Movepeople settings'
   description: 'Manage 2Movepeople configuration settings.'
   restrict access: TRUE
+permission_callbacks:
+  - Drupal\bc_2movepeople\Permissions\MovepeoplePermissions::permissions
+
