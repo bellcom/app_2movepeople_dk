@@ -15,3 +15,11 @@ bc_2movepeople.config:
     _permission: 'access administration pages'
   options:
     _admin_route: TRUE
+
+bc_2movepeople.user_edit:
+  path: '/user_edit/{user}'
+  defaults:
+    _controller: '\Drupal\bc_2movepeople\Controller\MovepeopleController::user_edit'
+    _title: 'Edit profile'
+  requirements:
+    user: '^[0-9]+'
