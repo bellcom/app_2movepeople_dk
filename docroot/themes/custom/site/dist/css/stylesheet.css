@@ -8800,7 +8800,7 @@ header.navbar {
     left: 0;
     height: 100%;
     position: fixed;
-    overflow-y: auto;
+    overflow: hidden;
     z-index: 1000;
     -webkit-transition: all 0.4s ease 0s;
          -o-transition: all 0.4s ease 0s;

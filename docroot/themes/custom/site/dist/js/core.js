@@ -28,6 +28,10 @@ var pageLayout = (function ($) {
       });
 
       $(".datepicker" ).datepicker();
+
+      $(window).scroll(function() {
+        $('#sidebar-wrapper').scrollTop($(this).scrollTop());
+      });
     }
 
     /**
