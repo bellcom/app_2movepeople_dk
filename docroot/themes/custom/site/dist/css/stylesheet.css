@@ -8799,7 +8799,7 @@ header.navbar {
   #page-wrapper #sidebar-wrapper {
     display: block;
     float: left;
-    margin-top: -50px;
+    top: 0;
     margin-left: -245px;
     left: 0;
     height: 100%;
