@@ -115,6 +115,7 @@
 .main-container {
   //margin-left: $left-container-width;
   margin-bottom: 50px;
+  float: right;
 
 /*  .main-container__content {
     padding-right: $main-container-content-padding - 45px;
@@ -137,17 +138,17 @@
     
     #sidebar-wrapper {
       left: 0;
+      display: none
     }
   }
 
   #sidebar-wrapper {
+    display: block;
+    float: left;
     top: 0;
     margin-left: -$left-container-width;
     left: 0;
     height: 100%;
-    position: fixed;
-    overflow-y: auto;
-    z-index: 1000;
     transition: all 0.4s ease 0s;
     background-color: $body-bg-secondary;
   }
