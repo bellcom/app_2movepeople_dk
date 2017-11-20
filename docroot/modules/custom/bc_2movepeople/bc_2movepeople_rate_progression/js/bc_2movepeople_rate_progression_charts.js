@@ -226,8 +226,9 @@
               $("#progression_total_table table td[data-target=col_" + i + "]").each(function () {
                   if (!isNaN(parseFloat($(this).text())))
                       arr[i - 1].push(parseFloat($(this).text()));
-                  else
-                      arr[i - 1].push($(this).text());
+                  else {
+                    arr[i - 1].push($(this).text().trim());
+                  }
               });
 
           }
