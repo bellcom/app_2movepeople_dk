@@ -376,7 +376,7 @@ class MovepeopleDashboardController extends ControllerBase {
     $query->addExpression("FROM_UNIXTIME(created,  '%d.%m')", 'dates');
     $query->addExpression("AVG(rate)", 'avg_rates');
     $query->GroupBy('dates');
-    //$query->orderBy('created', 'ASC');
+    $query->orderBy('created', 'ASC');
     $result = $query->execute()->fetchAll();
     return $result;
   }
@@ -398,7 +398,7 @@ class MovepeopleDashboardController extends ControllerBase {
     $query->condition('progression_target_id', $entity_ids, 'IN');
     $query->addExpression("FROM_UNIXTIME(created,  '%d.%m')", 'dates');
     $query->GroupBy('dates');
-    //$query->orderBy('created', 'ASC');
+    $query->orderBy('created', 'ASC');
 
     $result = $query->execute()->fetchAll();
     foreach ($result as $row) {
