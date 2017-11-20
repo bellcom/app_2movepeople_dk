@@ -185,23 +185,6 @@
 // --------------------------------------------------
 // Variants
 // --------------------------------------------------
-body.toolbar-fixed {
-  #page-wrapper #sidebar-wrapper {
-    padding-top: 39px;
-  }
-
-  &.toolbar-tray-open {
-    #page-wrapper #sidebar-wrapper {
-      padding-top: 79px;
-    }
-  }
-
-  &.toolbar-tray-open.toolbar-vertical {
-    #page-wrapper #sidebar-wrapper {
-      padding-top: 39px;
-    }
-  }
-}
 
 // Modal dialog position
 .modal-dialog {
