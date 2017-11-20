@@ -8777,7 +8777,6 @@ header.navbar {
 
 .main-container {
   margin-bottom: 50px;
-  float: right;
   /*  .main-container__content {
     padding-right: $main-container-content-padding - 45px;
   }*/ }
@@ -8794,15 +8793,15 @@ header.navbar {
   #page-wrapper.active {
     padding-left: 0; }
     #page-wrapper.active #sidebar-wrapper {
-      left: 0;
-      display: none; }
+      left: 0; }
   #page-wrapper #sidebar-wrapper {
-    display: block;
-    float: left;
     top: 0;
     margin-left: -245px;
     left: 0;
     height: 100%;
+    position: fixed;
+    overflow-y: auto;
+    z-index: 1000;
     -webkit-transition: all 0.4s ease 0s;
          -o-transition: all 0.4s ease 0s;
             transition: all 0.4s ease 0s;
