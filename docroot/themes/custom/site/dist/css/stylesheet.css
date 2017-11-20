@@ -8777,6 +8777,7 @@ header.navbar {
 
 .main-container {
   margin-bottom: 50px;
+  float: right;
   /*  .main-container__content {
     padding-right: $main-container-content-padding - 45px;
   }*/ }
@@ -8793,15 +8794,15 @@ header.navbar {
   #page-wrapper.active {
     padding-left: 0; }
     #page-wrapper.active #sidebar-wrapper {
-      left: 0; }
+      left: 0;
+      display: none; }
   #page-wrapper #sidebar-wrapper {
-    top: 0;
+    display: block;
+    float: left;
+    margin-top: -50px;
     margin-left: -245px;
     left: 0;
     height: 100%;
-    position: fixed;
-    overflow-y: auto;
-    z-index: 1000;
     -webkit-transition: all 0.4s ease 0s;
          -o-transition: all 0.4s ease 0s;
             transition: all 0.4s ease 0s;
@@ -8827,15 +8828,6 @@ header.navbar {
       position: absolute;
       bottom: 20px;
       right: 20px; }
-
-body.toolbar-fixed #page-wrapper #sidebar-wrapper {
-  padding-top: 39px; }
-
-body.toolbar-fixed.toolbar-tray-open #page-wrapper #sidebar-wrapper {
-  padding-top: 79px; }
-
-body.toolbar-fixed.toolbar-tray-open.toolbar-vertical #page-wrapper #sidebar-wrapper {
-  padding-top: 39px; }
 
 .modal-dialog {
   height: 100%;
