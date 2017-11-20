@@ -41,54 +41,56 @@
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 right-btn-box">
                         <a class="btn btn-default btn-sm btn-progress use-ajax"  data-dialog-type = "modal"
-                          href="/rates/{{ progression_target.id }}/add">{{ 'Rate category'|trans }}</a>
+                          href="/rates/{{ progression_target.id }}/add" {% if progression_target.goals is empty %} disabled {%
+                        endif %}>{{ 'Rate category'|trans }}</a>
                       </div>
                     </div>
-                    <div class="div-goals">
-                      {% for goal in progression_target.goals %}
-                        <p> {% if goal.type == 'task' %} <span class="task {% if goal.completed %} completed {% else %} uncompleted {% endif %} ">&nbsp;</span> {% endif %} {% if goal.subgoals %} <a data-toggle="collapse" href="#subgoals_{{ goal.id }}" class="has-child" > {% endif %}
-                         {{ goal.title }} {% if goal.type == 'task' %} ({{ goal.date|date("d.m.Y H:i")}}){% endif %}
-                         <span id="progress_rates_{{ progression_target.id }}_{{ goal.id }}">
-                         </span>
-                          {% if goal.subgoals %} </a > {% endif %}
-                        </p>
-                        {% if goal.subgoals %}
-                        <div id = "subgoals_{{ goal.id }}" class='collapse subgoals'>
-                        {% for subgoal in goal.subgoals %}
+                    {% if progression_target.goals %}
+                      <div class="div-goals">
+                        {% for goal in progression_target.goals %}
+                          <p> {% if goal.type == 'task' %} <span class="task {% if goal.completed %} completed {% else %} uncompleted {% endif %} ">&nbsp;</span> {% endif %} {% if goal.subgoals %} <a data-toggle="collapse" href="#subgoals_{{ goal.id }}" class="has-child" > {% endif %}
+                           {{ goal.title }} {% if goal.type == 'task' %} ({{ goal.date|date("d.m.Y H:i")}}){% endif %}
+                           <span id="progress_rates_{{ progression_target.id }}_{{ goal.id }}">
+                           </span>
+                            {% if goal.subgoals %} </a > {% endif %}
+                          </p>
+                          {% if goal.subgoals %}
+                          <div id = "subgoals_{{ goal.id }}" class='collapse subgoals'>
+                          {% for subgoal in goal.subgoals %}
 
-                          <p> {{ subgoal.title }}
-                          <span id="progress_rates_{{ progression_target.id }}_{{ subgoal.id }}">
-                          </span>
-                        </p>
+                            <p> {{ subgoal.title }}
+                            <span id="progress_rates_{{ progression_target.id }}_{{ subgoal.id }}">
+                            </span>
+                          </p>
+                          {% endfor %}
+                        </div>
+                         {% endif %}
                         {% endfor %}
                       </div>
-                       {% endif %}
-                      {% endfor %}
-                    </div>
-                    <div class="text-center">
-                      <div class="btn-group graph-type-btn" data-toggle="buttons">
-                        <label class="btn btn-default active">
-                          <input type="radio" name="chart_type-{{ progression_target.id }}" class="line-graph-btn" autocomplete="off" data-progression-id="{{ progression_target.id }}" value="line" checked> Line
-                        </label>
-                        <label class="btn btn-default">
-                          <input type="radio" name="chart_type-{{ progression_target.id }}" class="bar-graph-btn" autocomplete="off" data-progression-id="{{ progression_target.id }}" value="bar"> Bar
-                        </label>
+                      <div class="text-center">
+                        <div class="btn-group graph-type-btn" data-toggle="buttons">
+                          <label class="btn btn-default active">
+                            <input type="radio" name="chart_type-{{ progression_target.id }}" class="line-graph-btn" autocomplete="off" data-progression-id="{{ progression_target.id }}" value="line" checked> Line
+                          </label>
+                          <label class="btn btn-default">
+                            <input type="radio" name="chart_type-{{ progression_target.id }}" class="bar-graph-btn" autocomplete="off" data-progression-id="{{ progression_target.id }}" value="bar"> Bar
+                          </label>
+                        </div>
                       </div>
-                    </div>
-                    <div class = "div-chart" id="div_chart_{{ progression_target.id }}">
-                    </div>
-
-                    <div class="div-form row form-inline" id="div_form_{{ progression_target.id }}" style="display:none">
-                      <div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
-                        <input type="text" class="form-date form-control datepicker" id="date_from_{{ progression_target.id }}" placeholder="From date"/>
+                      <div class = "div-chart" id="div_chart_{{ progression_target.id }}">
                       </div>
-                      <div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
-                        <input type="text" class="form-date form-control datepicker" id ="date_to_{{ progression_target.id }}" placeholder="To date"/>
+                      <div class="div-form row form-inline" id="div_form_{{ progression_target.id }}" style="display:none">
+                        <div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
+                          <input type="text" class="form-date form-control datepicker" id="date_from_{{ progression_target.id }}" placeholder="From date"/>
+                        </div>
+                        <div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
+                          <input type="text" class="form-date form-control datepicker" id ="date_to_{{ progression_target.id }}" placeholder="To date"/>
+                        </div>
+                        <div class='col-lg-4 col-md-4 col-sm-12 col-xs-12 right-btn-box'>
+                          <button type="button" class="btn btn-default btn-update" data-progression-id="{{ progression_target.id }}" id="update_graph_{{ progression_target.id }}">Update graph</button>
+                        </div>
                       </div>
-                      <div class='col-lg-4 col-md-4 col-sm-12 col-xs-12 right-btn-box'>
-                        <button type="button" class="btn btn-default btn-update" data-progression-id="{{ progression_target.id }}" id="update_graph_{{ progression_target.id }}">Update graph</button>
-                      </div>
-                    </div>
+                    {% endif %}
                   </div>
               </div>
           </div>
