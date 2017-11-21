@@ -8680,15 +8680,6 @@ header.navbar {
   header.navbar a {
     outline: none; }
 
-.view.view-id-2mp_connected_users.view-display-id-block_link_boxes .user.user--compact h2.content, .view.view-id-2mp_connected_users.view-display-id-block_link_boxes .user.user--compact .content.heading-h2 {
-  width: 100%; }
-  .view.view-id-2mp_connected_users.view-display-id-block_link_boxes .user.user--compact h2.content .field, .view.view-id-2mp_connected_users.view-display-id-block_link_boxes .user.user--compact .content.heading-h2 .field {
-    white-space: nowrap;
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: normal; }
-
 .view.view-id-2mp_connected_users.view-display-id-block_links_simple .item-list ul li a {
   white-space: nowrap;
   width: 100%;
@@ -9605,6 +9596,14 @@ span.task.completed {
     height: 85px;
     opacity: 0.2;
     filter: alpha(opacity=20); }
+  .user.user--compact h2.content, .user.user--compact .content.heading-h2 {
+    width: 100%; }
+    .user.user--compact h2.content .field, .user.user--compact .content.heading-h2 .field {
+      white-space: nowrap;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: normal; }
 
 @media (min-width: 768px) {
   .user.user--compact {
