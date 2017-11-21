@@ -8687,6 +8687,9 @@ header.navbar {
   text-overflow: ellipsis;
   line-height: normal; }
 
+html {
+  overflow: hidden; }
+
 .preload, .preload * {
   -webkit-transition: none !important;
   -moz-transition: none !important;
@@ -8743,13 +8746,13 @@ header.navbar {
   height: 100%; }
   .left-container div.region-sidebar-first {
     height: 100%;
-    display: -webkit-flex;
     display: -webkit-box;
+    display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-flex-direction: column;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
     -webkit-box-pack: start;
@@ -8760,8 +8763,7 @@ header.navbar {
       margin-top: auto; }
     .left-container div.region-sidebar-first .blockBrand {
       text-align: center;
-      padding-top: 10px;
-      padding-bottom: auto; }
+      padding-top: 10px; }
     .left-container div.region-sidebar-first .logoBrand {
       display: inline-block;
       width: 245px; }
