@@ -34,7 +34,10 @@
     img {
       width: 85px;
       height: 85px;
-      @include opacity(.2);
+
+      &.default {
+        @include opacity(.2);
+      }
     }
 
     h2.content{
