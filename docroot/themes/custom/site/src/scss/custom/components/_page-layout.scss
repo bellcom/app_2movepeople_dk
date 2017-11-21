@@ -13,6 +13,10 @@
 // --------------------------------------------------
 // Styling
 // --------------------------------------------------
+html {
+  overflow: hidden;
+}
+
 .preload {
   &, & * {
     -webkit-transition: none !important;
@@ -91,9 +95,7 @@
 
   div.region-sidebar-first {
     height: 100%;
-    display: -webkit-flex;
     display: flex;
-    -webkit-flex-direction: column;
     flex-direction: column;
     justify-content: flex-start;
 
@@ -103,7 +105,6 @@
     .blockBrand {
       text-align: center;
       padding-top: 10px;
-      padding-bottom: auto;
     }
     .logoBrand {
       display: inline-block;
