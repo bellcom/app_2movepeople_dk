@@ -16,7 +16,7 @@ function bc_2movepeople_form_user_form_alter(&$form, FormStateInterface $form_st
   //Hide some fields according user role
   $supervisor_hidden_fields = array('field_organisation', 'field_diagnose', 'field_addiction', 'contact', 'timezone', 'language');
   $manager_hidden_fields = array('field_organisation', 'field_diagnose', 'field_addiction', 'contact', 'timezone', 'language');
-  $user_hidden_fields = array('field_organisation', 'field_diagnose', 'field_addiction', 'contact', 'timezone', 'language');
+  $user_hidden_fields = array('field_organisation', 'field_diagnose', 'field_addiction', 'contact', 'timezone', 'language', 'field_connected_users');
 
   //Not hide for administrators
   if (!in_array('administrator', $current_user_roles)) {
@@ -31,6 +31,12 @@ function bc_2movepeople_form_user_form_alter(&$form, FormStateInterface $form_st
       _bc_2movepeople_hide_field($form, $user_hidden_fields);
     }
   }
+  
+  // Hide field_connected_users when we edit person of 2mp_user role
+    if(\Drupal::request()->get('user')->hasRole('2mp_user')){
+    _bc_2movepeople_hide_field($form, array('field_connected_users'));
+  }
+
 }
 
 /**
