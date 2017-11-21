@@ -33,7 +33,6 @@ function bc_2movepeople_form_user_form_alter(&$form, FormStateInterface $form_st
   }
 }
 
-
 /**
  * Implements hook_module_implements_alter().
  */
@@ -41,10 +40,12 @@ function bc_2movepeople_module_implements_alter(&$implementations, $hook) {
   switch ($hook) {
     // Move our bc_2movepeople_form_user_form_alter implementation to the end of the list.
     case 'form_alter':
+      if (array_key_exists('bc_2movepeople', $implementations)){
       $group = $implementations['bc_2movepeople'];
       unset($implementations['bc_2movepeople']);
       $implementations['bc_2movepeople'] = $group;
       break;
+      }
   }
 }
 
