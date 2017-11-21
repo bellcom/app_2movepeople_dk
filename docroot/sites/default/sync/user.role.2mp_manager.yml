@@ -12,4 +12,5 @@ label: '2MP Manager'
 weight: 7
 is_admin: null
 permissions:
+  - 2mp_user
   - 'access user profiles'
