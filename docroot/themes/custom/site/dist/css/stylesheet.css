@@ -9593,9 +9593,10 @@ span.task.completed {
     display: inline-block; }
   .user.user--compact img {
     width: 85px;
-    height: 85px;
-    opacity: 0.2;
-    filter: alpha(opacity=20); }
+    height: 85px; }
+    .user.user--compact img.default {
+      opacity: 0.2;
+      filter: alpha(opacity=20); }
   .user.user--compact h2.content, .user.user--compact .content.heading-h2 {
     width: 100%; }
     .user.user--compact h2.content .field, .user.user--compact .content.heading-h2 .field {
