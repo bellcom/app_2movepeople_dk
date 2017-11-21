@@ -36,6 +36,13 @@
       height: 85px;
       @include opacity(.2);
     }
+
+    h2.content{
+      width:100%;
+      .field{
+        @include text-trimmed();
+      }
+    }
   }
 }
 
