@@ -251,6 +251,15 @@ class MovepeopleDashboardController extends ControllerBase {
         ],
       ];
 
+      $controls['save_to_tpl'] = [
+        '#title' => $this->t('Save to template'),
+        '#url' => Url::fromRoute('bc_2movepeople_dashboard.save_to_tpl', ['user' => $user->id()]),
+        '#attributes' => [
+          'class' => ['btn-progress', 'use-ajax'],
+          'data-dialog-type' => 'modal',
+        ],
+      ];
+
       if (!empty($result_progression['data'])) {
         $build['#table_progression']['data'] = [
           "#theme" => "bc_2movepeople_dashboard_progression_total_table",
@@ -260,6 +269,7 @@ class MovepeopleDashboardController extends ControllerBase {
         ];
       }
       else {
+        $controls['save_to_tpl']['#attributes']['disabled'] = 'disabled';
         $controls['rate_category']['#attributes']['disabled'] = 'disabled';
       }
     }

@@ -166,3 +166,13 @@ bc_2movepeople_dashboard.users.create:
     _title: 'Create account'
   requirements:
     _permission: 'access content'
+
+bc_2movepeople_dashboard.save_to_tpl:
+  path: '/dashboard/users/{user}/save-to-tpl'
+  defaults:
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\SaveToTemplateForm'
+    _title: '2Move People settings form'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE
