@@ -171,7 +171,7 @@ bc_2movepeople_dashboard.save_to_tpl:
   path: '/dashboard/users/{user}/save-to-tpl'
   defaults:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\SaveToTemplateForm'
-    _title: '2Move People settings form'
+    _title: 'Save category and questions to template'
   requirements:
     _permission: 'access administration pages'
   options:
