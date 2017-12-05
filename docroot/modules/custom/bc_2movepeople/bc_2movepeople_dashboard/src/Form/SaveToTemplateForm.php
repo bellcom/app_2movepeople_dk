@@ -17,6 +17,7 @@ use Drupal\node\Entity\Node;
 class SaveToTemplateForm extends FormBase {
 
   protected $isSaved;
+  public static $configName = 'user_template.settings';
 
   /**
    * {@inheritdoc}
@@ -31,7 +32,7 @@ class SaveToTemplateForm extends FormBase {
       '#type' => 'textfield',
       '#placeholder' => $this->t('Template name'),
       '#required' => TRUE,
-];
+    ];
 
 // Disable caching on this form.
     $form_state->setCached(FALSE);
@@ -53,7 +54,6 @@ class SaveToTemplateForm extends FormBase {
       ],
     ];
 
-
     return $form;
   }
 
@@ -74,8 +74,8 @@ class SaveToTemplateForm extends FormBase {
       //$ajax_response->addCommand(new CloseModalDialogCommand());
       //drupal_set_message(t('Saved'), 'status');
       $ajax_response->addCommand(new CloseModalDialogCommand());
-      
-    } else {
+    }
+    else {
       $message = [
         '#theme' => 'status_messages',
         '#message_list' => drupal_get_messages(),
@@ -84,7 +84,7 @@ class SaveToTemplateForm extends FormBase {
       // $ajax_response->addCommand(new ReplaceCommand('#bc_2movepeople-dashboard-user-create-form', $form));
     }
     //$form_state->setRebuild(true);
-    
+
     return $ajax_response;
   }
 
@@ -92,61 +92,72 @@ class SaveToTemplateForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    
+
     if (!$form_state->getErrors()) {
 
-    $user = \Drupal::request()->get('user');  
-    $template_name = $form_state->getValue('template_name');
-    
-    $type = 'progression_target';
-  
-    
-    $categories_nids = \Drupal::entityQuery('node')
-        ->condition('type', $type)
-        ->condition('field_progression_user', $user)
-        ->execute();
+      $user = \Drupal::request()->get('user');
+      $template_name = $form_state->getValue('template_name');
 
-$categories_nodes = Node::loadMultiple($categories_nids);
- 
-  if (!empty($categories_nodes)) {
-    //print_r($nodes);
-    foreach($categories_nodes as $categories_node){
+      $type = 'progression_target';
+
+
+      $categories_nids = \Drupal::entityQuery('node')
+          ->condition('type', $type)
+          ->condition('field_progression_user', $user)
+          ->execute();
+
+      $categories_nodes = Node::loadMultiple($categories_nids);
+
+      if (!empty($categories_nodes)) {
+        //print_r($nodes);
+        foreach ($categories_nodes as $categories_node) {
+
+          $result_array[$user][$template_name][] = array($categories_node->get('title')->getValue()[0]['value'] => $this->getGoalsTitlesByCategory($categories_node));
+
+          //$goal_nids = $categories_node->get('field_goal_ids')->getValue();
+          //$test = $this->getGoalsTitlesByCategoryNid($categories_node->get('field_goal_ids')->getValue());
+        }
+      }
+
+      $confObject = \Drupal::configFactory()->getEditable(self::$configName);
+
+      $template = $confObject->get('template');
+      if(empty($template)){
+        $template = array();
+      }
+      foreach($result_array as $user => $categories){
+        $template[$user] = $categories;
+      }
+      $confObject->set('template', $template);
+      $confObject->save();
       
-     $result_array[$user][] =  $categories_node->get('title')->getValue()[0]['value'];
-     
-   //print_r( $this->getGoalsTitlesByCategoryNid($categories_node)) ;
-     
-     
-   }
-  }
-    
-    print_r($result_array);
-    $this->isSaved = TRUE;
-    
-    
+      
+      $this->isSaved = TRUE;
+      //print_r($goal_nids);
     }
   }
-  
-private  function getGoalsTitlesByCategoryNid($categories_node) {
-    
-      $goal_nids = $categories_node->get('field_goal_ids')->getValue();
-     foreach($goal_nids as $goal_nid){
-       $goals_array[$goal_nid['target_id']] = $goal_nid['target_id'];
-     }
 
-     
-     $goals = Node::loadMultiple($goals_array);
-        foreach($goals as $goal){
-          $output[] = $goal->get('title');
-        }  
+  private function getGoalsTitlesByCategory($categories_node) {
 
-    return $output;
-    
+    $goal_nids = $categories_node->get('field_goal_ids')->getValue();
+    foreach ($goal_nids as $goal_nid) {
+      $goals_array[] = $goal_nid['target_id'];
+    }
+    $goals = Node::loadMultiple($goals_array);
+    if (is_array($goals)) {
+      foreach ($goals as $goal) {
+        $output[] = $goal->get('title')->getValue()[0]['value'];
+      }
+      return $output;
+    }
+    return array();
   }
+
   /**
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-
+    
   }
+
 }
