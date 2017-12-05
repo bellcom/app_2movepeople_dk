@@ -198,7 +198,7 @@ class NewUserCreateForm extends FormBase {
         $template = array();
       }
       $template = $template[$form_state->getValue('template_select')];
-      dpm($template);
+
       // Save user account.
       $this->isSaved = $user->save();
 
