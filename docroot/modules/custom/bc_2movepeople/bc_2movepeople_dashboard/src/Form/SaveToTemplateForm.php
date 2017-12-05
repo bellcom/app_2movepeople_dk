@@ -94,13 +94,9 @@ class SaveToTemplateForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
 
     if (!$form_state->getErrors()) {
-
       $user = \Drupal::request()->get('user');
       $template_name = $form_state->getValue('template_name');
-
       $type = 'progression_target';
-
-
       $categories_nids = \Drupal::entityQuery('node')
           ->condition('type', $type)
           ->condition('field_progression_user', $user)
@@ -109,44 +105,47 @@ class SaveToTemplateForm extends FormBase {
       $categories_nodes = Node::loadMultiple($categories_nids);
 
       if (!empty($categories_nodes)) {
-        //print_r($nodes);
+        $result_array[$user]['template_name'] = $template_name;
         foreach ($categories_nodes as $categories_node) {
-
-          $result_array[$user][$template_name][] = array($categories_node->get('title')->getValue()[0]['value'] => $this->getGoalsTitlesByCategory($categories_node));
-
-          //$goal_nids = $categories_node->get('field_goal_ids')->getValue();
-          //$test = $this->getGoalsTitlesByCategoryNid($categories_node->get('field_goal_ids')->getValue());
+          $result_array[$user]['categories'][] = [
+            'title' => $categories_node->get('title')->getValue()[0]['value'],
+            'goals' => $this->_getGoalsTitlesByCategory($categories_node),
+          ];
         }
       }
-
       $confObject = \Drupal::configFactory()->getEditable(self::$configName);
 
       $template = $confObject->get('template');
-      if(empty($template)){
+      if (empty($template)) {
         $template = array();
       }
-      foreach($result_array as $user => $categories){
+      foreach ($result_array as $user => $categories) {
         $template[$user] = $categories;
       }
       $confObject->set('template', $template);
       $confObject->save();
-      
-      
+
       $this->isSaved = TRUE;
-      //print_r($goal_nids);
     }
   }
+  
+  /**
+   * {@inheritdoc}
+   */
+  private function _getGoalsTitlesByCategory($categories_node) {
 
-  private function getGoalsTitlesByCategory($categories_node) {
-
-    $goal_nids = $categories_node->get('field_goal_ids')->getValue();
-    foreach ($goal_nids as $goal_nid) {
-      $goals_array[] = $goal_nid['target_id'];
-    }
-    $goals = Node::loadMultiple($goals_array);
+    $goals = $categories_node->field_goal_ids->referencedEntities();
     if (is_array($goals)) {
+      $output = array();
       foreach ($goals as $goal) {
-        $output[] = $goal->get('title')->getValue()[0]['value'];
+        $sub_goals_names = array();
+        if (!empty($goal->field_subgoal)) {
+          $sub_goals = $goal->field_subgoal->referencedEntities();
+          foreach ($sub_goals as $sub_goal) {
+            $sub_goals_names[] = $sub_goal->get('title')->getValue()[0]['value'];
+          }
+        }
+        $output[] = array('title' => $goal->get('title')->getValue()[0]['value'], 'subgoals' => $sub_goals_names);
       }
       return $output;
     }

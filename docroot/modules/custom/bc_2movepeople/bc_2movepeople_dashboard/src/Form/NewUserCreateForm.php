@@ -20,29 +20,29 @@ use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\user\Entity\User;
 use \Drupal\node\Entity\Node;
+use \Drupal\bc_2movepeople_dashboard\Form\SaveToTemplateForm;
 
 class NewUserCreateForm extends FormBase {
 
   protected $isSaved;
   private $updated_msg = 'Records successfully updated.';
   private $wrong_msg = 'Something wrong.';
-  public static $configName = 'user_template.settings';
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
-    //$goals_options = MovepeopleDashboardController::getProgressionGoalsList($this->parent_node);  
+    //$goals_options = MovepeopleDashboardController::getProgressionGoalsList($this->parent_node);
     //Loading user templates
-    $confObject = \Drupal::configFactory()->getEditable(self::$configName);
-    $template = $confObject->get('template');
+    $confObject = \Drupal::configFactory()->getEditable(SaveToTemplateForm::$configName);
+    $templates = $confObject->get('template');
     $list[0] = t('none');
-    if (empty($template)) {
-      $template = array();
+    if (empty($templates)) {
+      $templates = array();
     }
-    foreach ($template as $user => $categories) {
-      $list[$user] = key($categories);
+    foreach ($templates as $user => $template) {
+      $list[$user] = $template['template_name'];
     }
 
     $form['#prefix'] = '<div id="bc_2movepeople-dashboard-user-create-form">';
@@ -82,7 +82,7 @@ class NewUserCreateForm extends FormBase {
     $form['email'] = [
       '#type' => 'email',
       '#placeholder' => $this->t('Email'),
-        //'#required' => TRUE,       
+        //'#required' => TRUE,
     ];
 
     $form['template_select'] = [
@@ -192,36 +192,28 @@ class NewUserCreateForm extends FormBase {
       $user->activate();
 
       //Loading user templates
-      $confObject = \Drupal::configFactory()->getEditable(self::$configName);
+      $confObject = \Drupal::configFactory()->getEditable(SaveToTemplateForm::$configName);
       $template = $confObject->get('template');
       if (empty($template)) {
         $template = array();
       }
-      $template = array_shift($template[$form_state->getValue('template_select')]);
-
+      $template = $template[$form_state->getValue('template_select')];
+      dpm($template);
       // Save user account.
       $this->isSaved = $user->save();
 
       //Attach category to the user
-
-
-      foreach ($template as $category) {
-
-        $category_name = key($category);
-
+      foreach ($template['categories'] as $category) {
+        $category_name = $category['title'];
         $category_node = Node::create([
               'type' => 'progression_target',
-              'title' => 'My_' . $category_name,
+              'title' => $category_name,
               'field_progression_user' => $user->id(),
               'field_progression_type' => 'progression',
-              'field_goal_ids' => $this->_createGoals(array_shift($category)),
+              'field_goal_ids' => $this->_createGoals($category['goals']),
         ]);
         $category_node->save();
       }
-
-
-
-
 
       if ($this->isSaved != SAVED_NEW) {
         drupal_set_message($this->wrong_msg, 'error');
@@ -235,18 +227,34 @@ class NewUserCreateForm extends FormBase {
     }
   }
 
-  private function _createGoals($titles) {
+  /**
+   * {@inheritdoc}
+   * @
+   * @return array
+   */
+  private function _createGoals($goals) {
     $output = array();
 
-    foreach ($titles as $title) {
+    foreach ($goals as $goal) {
+      if (!empty($goal['subgoals'])) {
+        $sub_goal_array = array();
+        foreach ($goal['subgoals'] as $subgoal) {
+          $sub_goal_node = Node::create([
+                'type' => 'goal',
+                'title' => $subgoal['title'],
+          ]);
+          $sub_goal_node->save();
+          $sub_goal_array[] = $sub_goal_node->id();
+        }
+      }
       $goal_node = Node::create([
             'type' => 'goal',
-            'title' => 'My_' . $title,
+            'title' => $goal['title'],
+            'field_subgoal' => $sub_goal_array,
       ]);
       $goal_node->save();
       $output[] = $goal_node->id();
     }
-
     return $output;
   }
 
