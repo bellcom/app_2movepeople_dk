@@ -19,59 +19,78 @@ use Drupal\Core\Ajax\RedirectCommand;
 //use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\user\Entity\User;
+use \Drupal\node\Entity\Node;
 
 class NewUserCreateForm extends FormBase {
 
   protected $isSaved;
   private $updated_msg = 'Records successfully updated.';
   private $wrong_msg = 'Something wrong.';
+  public static $configName = 'user_template.settings';
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    
+
     //$goals_options = MovepeopleDashboardController::getProgressionGoalsList($this->parent_node);  
-    
+    //Loading user templates
+    $confObject = \Drupal::configFactory()->getEditable(self::$configName);
+    $template = $confObject->get('template');
+    $list[0] = t('none');
+    if (empty($template)) {
+      $template = array();
+    }
+    foreach ($template as $user => $categories) {
+      $list[$user] = key($categories);
+    }
+
     $form['#prefix'] = '<div id="bc_2movepeople-dashboard-user-create-form">';
     $form['#suffix'] = '</div>';
-    
+
     $form['system_messages'] = [
       '#markup' => '<div id="form-system-messages"></div>',
       '#weight' => -100,
     ];
-    
+
     $form['title'] = [
-      '#markup' => '<h1 class="page-header">'.$this->t('Create Account').'</h1>'
+      '#markup' => '<h1 class="page-header">' . $this->t('Create Account') . '</h1>'
     ];
 
     $form['firstname'] = [
       '#type' => 'textfield',
       '#placeholder' => $this->t('First Name'),
-      //'#required' => TRUE,
+        //'#required' => TRUE,
 //      '#ajax' => [
 //        'callback' => '::ajaxFullnameValidate',
 //        'event' => 'blur',
 //        'progress' => ['type' => 'none', 'message' => NULL],
 //      ],
     ];
-    
+
     $form['surname'] = [
       '#type' => 'textfield',
       '#placeholder' => $this->t('Surname'),
-      //'#required' => TRUE,
+        //'#required' => TRUE,
     ];
-    
+
     $form['username'] = [
       '#type' => 'textfield',
       '#placeholder' => $this->t('Username'),
-      //'#required' => TRUE,
-    ];     
+        //'#required' => TRUE,
+    ];
     $form['email'] = [
       '#type' => 'email',
       '#placeholder' => $this->t('Email'),
-      //'#required' => TRUE,       
+        //'#required' => TRUE,       
     ];
+
+    $form['template_select'] = [
+      '#type' => 'select',
+      '#title' => $this->t('User template'),
+      '#options' => $list,
+    ];
+
     $form['password'] = array(
       '#type' => 'password',
       '#placeholder' => $this->t('Password'),
@@ -84,17 +103,17 @@ class NewUserCreateForm extends FormBase {
       //'#required' => TRUE,
       '#size' => 10,
     );
-    
+
     // Disable caching on this form.
     $form_state->setCached(FALSE);
-    
+
     $form['actions'] = [
       '#type' => 'actions',
     ];
-    
+
     $form['actions']['submit'] = [
       '#type' => 'submit',
-      '#name' => 'submit',  
+      '#name' => 'submit',
       '#value' => $this->t('Create Account'),
       '#attributes' => [
         'class' => ['btn-submit-default'],
@@ -104,7 +123,7 @@ class NewUserCreateForm extends FormBase {
         'event' => 'click',
       ],
     ];
-    
+
 //    $form['#validate'][] = '::validateUsername';
 
     return $form;
@@ -116,17 +135,18 @@ class NewUserCreateForm extends FormBase {
   public function getFormId() {
     return 'bc_2movepeople-dashboard-user-create-form';
   }
-  
+
   /**
    * AJAX callback handler that displays any errors or a success message.
    */
   public function ajaxSubmitForm(array $form, FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
-    
+
     if ($this->isSaved == SAVED_NEW) {
       //$ajax_response->addCommand(new CloseModalDialogCommand());
       $ajax_response->addCommand(new RedirectCommand(Url::fromRoute('<front>')->toString()));
-    } else {
+    }
+    else {
       $message = [
         '#theme' => 'status_messages',
         '#message_list' => drupal_get_messages(),
@@ -143,13 +163,12 @@ class NewUserCreateForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-  
+
     //$url = \Drupal\Core\Url::fromInternalUrl('<front>');
     //$url = Url::fromRoute('<front>');
     // $form_state->setRedirect(Url::fromInternalUri('<front>'));
-     
+
     if (!$form_state->getErrors()) { // $form_state->hasAnyErrors()
-      
       $user = User::create();
       $current_user = \Drupal::currentUser();
 
@@ -172,12 +191,42 @@ class NewUserCreateForm extends FormBase {
       }
       $user->activate();
 
+      //Loading user templates
+      $confObject = \Drupal::configFactory()->getEditable(self::$configName);
+      $template = $confObject->get('template');
+      if (empty($template)) {
+        $template = array();
+      }
+      $template = array_shift($template[$form_state->getValue('template_select')]);
+
       // Save user account.
       $this->isSaved = $user->save();
-      
+
+      //Attach category to the user
+
+
+      foreach ($template as $category) {
+
+        $category_name = key($category);
+
+        $category_node = Node::create([
+              'type' => 'progression_target',
+              'title' => 'My_' . $category_name,
+              'field_progression_user' => $user->id(),
+              'field_progression_type' => 'progression',
+              'field_goal_ids' => $this->_createGoals(array_shift($category)),
+        ]);
+        $category_node->save();
+      }
+
+
+
+
+
       if ($this->isSaved != SAVED_NEW) {
         drupal_set_message($this->wrong_msg, 'error');
-      }else{
+      }
+      else {
         //If user saved, update current user
         $current_user = \Drupal\user\Entity\User::load($current_user->id());
         $current_user->field_connected_users[] = $user;
@@ -185,7 +234,22 @@ class NewUserCreateForm extends FormBase {
       }
     }
   }
-  
+
+  private function _createGoals($titles) {
+    $output = array();
+
+    foreach ($titles as $title) {
+      $goal_node = Node::create([
+            'type' => 'goal',
+            'title' => 'My_' . $title,
+      ]);
+      $goal_node->save();
+      $output[] = $goal_node->id();
+    }
+
+    return $output;
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -196,19 +260,19 @@ class NewUserCreateForm extends FormBase {
     if (strlen($firstname) < 4) {
       $form_state->setErrorByName('firstname', $this->t('The First Name %firstname is not valid.', array('%firstname' => $firstname)));
     }
-    
+
     // check Lastname
     $surname = CommonFormUtils::cleanInput($form_state->getValue('surname'));
     if (strlen($surname) < 4) {
       $form_state->setErrorByName('surname', $this->t('The Surname %surname is not valid.', array('%surname' => $surname)));
     }
-    
+
     // check Username
     $username = CommonFormUtils::cleanInput($form_state->getValue('username'));
     if (strlen($username) < 4) {
       $form_state->setErrorByName('username', $this->t('The Username %username is not valid.', array('%username' => $username)));
     }
-    
+
     // check Email
     $email = trim($form_state->getValue('email'));
     // $form_state->setValueForElement(['#email'], $email);
@@ -216,13 +280,19 @@ class NewUserCreateForm extends FormBase {
       // $form_state->setError(['#email'], t('The email address %mail is not valid.', array('%mail' => $value)));
       $form_state->setErrorByName('email', $this->t('The Email address %mail is not valid.', array('%mail' => $email)));
     }
-    
+
+    // check template_select
+    $template_select = CommonFormUtils::cleanInput($form_state->getValue('template_select'));
+    if (!is_numeric($template_select)) {
+      $form_state->setErrorByName('template_select', $this->t('The Template %template_select is not valid.', array('%template_select' => $template_select)));
+    }
+
     // check Password
     $password = CommonFormUtils::cleanInput($form_state->getValue('password'));
     $password_confirm = CommonFormUtils::cleanInput($form_state->getValue('password_confirm'));
     if (strlen($password) < 4 || $password != $password_confirm) {
       $form_state->setErrorByName('password', $this->t('The passwords do not match.'));
-    } 
-    
+    }
   }
+
 }
