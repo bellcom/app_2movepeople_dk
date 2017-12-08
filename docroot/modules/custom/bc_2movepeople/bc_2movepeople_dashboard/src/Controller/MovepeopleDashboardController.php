@@ -272,6 +272,7 @@ class MovepeopleDashboardController extends ControllerBase {
       }
       else {
         $controls['save_to_tpl']['#attributes']['disabled'] = 'disabled';
+        // @TODO Button still disabled when user has categories.
         $controls['rate_category']['#attributes']['disabled'] = 'disabled';
       }
     }

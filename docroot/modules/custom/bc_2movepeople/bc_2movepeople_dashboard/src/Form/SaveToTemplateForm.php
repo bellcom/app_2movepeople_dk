@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\bc_2movepeople_dashboard\Form\ProgressionTaskEditForm.
+ * Contains \Drupal\bc_2movepeople_dashboard\Form\SaveToTemplateForm.
  */
 
 namespace Drupal\bc_2movepeople_dashboard\Form;
@@ -34,7 +34,7 @@ class SaveToTemplateForm extends FormBase {
       '#required' => TRUE,
     ];
 
-// Disable caching on this form.
+    // Disable caching on this form.
     $form_state->setCached(FALSE);
 
     $form['actions'] = [
@@ -71,8 +71,6 @@ class SaveToTemplateForm extends FormBase {
     $ajax_response = new AjaxResponse();
 
     if ($this->isSaved == TRUE) {
-      //$ajax_response->addCommand(new CloseModalDialogCommand());
-      //drupal_set_message(t('Saved'), 'status');
       $ajax_response->addCommand(new CloseModalDialogCommand());
     }
     else {
@@ -81,9 +79,7 @@ class SaveToTemplateForm extends FormBase {
         '#message_list' => drupal_get_messages(),
       ];
       $ajax_response->addCommand(new HtmlCommand('#form-system-messages', $message));
-      // $ajax_response->addCommand(new ReplaceCommand('#bc_2movepeople-dashboard-user-create-form', $form));
     }
-    //$form_state->setRebuild(true);
 
     return $ajax_response;
   }
@@ -113,30 +109,33 @@ class SaveToTemplateForm extends FormBase {
           ];
         }
       }
-      $confObject = \Drupal::configFactory()->getEditable(self::$configName);
+      $conf_object = \Drupal::configFactory()->getEditable(self::$configName);
 
-      $template = $confObject->get('template');
+      $template = $conf_object->get('template');
       if (empty($template)) {
         $template = array();
       }
       foreach ($result_array as $user => $categories) {
         $template[$user] = $categories;
       }
-      $confObject->set('template', $template);
-      $confObject->save();
+      $conf_object->set('template', $template);
+      $conf_object->save();
 
       $this->isSaved = TRUE;
     }
   }
-  
+
   /**
-   * {@inheritdoc}
+   * Helper get function to collect information about goals from category node.
+   *
+   * @return array
+   *   Goals array.
    */
   private function _getGoalsTitlesByCategory($categories_node) {
 
     $goals = $categories_node->field_goal_ids->referencedEntities();
     if (is_array($goals)) {
-      $output = array();
+      $result = array();
       foreach ($goals as $goal) {
         $sub_goals_names = array();
         if (!empty($goal->field_subgoal)) {
@@ -145,9 +144,9 @@ class SaveToTemplateForm extends FormBase {
             $sub_goals_names[] = $sub_goal->get('title')->getValue()[0]['value'];
           }
         }
-        $output[] = array('title' => $goal->get('title')->getValue()[0]['value'], 'subgoals' => $sub_goals_names);
+        $result[] = array('title' => $goal->get('title')->getValue()[0]['value'], 'subgoals' => $sub_goals_names);
       }
-      return $output;
+      return $result;
     }
     return array();
   }
@@ -155,8 +154,6 @@ class SaveToTemplateForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-    
-  }
+  public function validateForm(array &$form, FormStateInterface $form_state) {}
 
 }
