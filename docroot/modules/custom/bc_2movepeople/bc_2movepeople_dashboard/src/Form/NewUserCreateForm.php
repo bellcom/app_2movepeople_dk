@@ -33,6 +33,8 @@ class NewUserCreateForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
+    $current_user = \Drupal::currentUser();
+
     //$goals_options = MovepeopleDashboardController::getProgressionGoalsList($this->parent_node);
     //Loading user templates
     $confObject = \Drupal::configFactory()->getEditable(SaveToTemplateForm::$configName);
@@ -85,11 +87,13 @@ class NewUserCreateForm extends FormBase {
         //'#required' => TRUE,
     ];
 
-    $form['template_select'] = [
-      '#type' => 'select',
-      '#title' => $this->t('User template'),
-      '#options' => $list,
-    ];
+    if ($current_user->hasPermission('access category template') && !empty($templates)) {
+      $form['template_select'] = [
+        '#type' => 'select',
+        '#title' => $this->t('User template'),
+        '#options' => $list,
+      ];
+    }
 
     $form['password'] = array(
       '#type' => 'password',

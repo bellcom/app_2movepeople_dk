@@ -173,6 +173,4 @@ bc_2movepeople_dashboard.save_to_tpl:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\SaveToTemplateForm'
     _title: 'Save category and questions to template'
   requirements:
-    _permission: 'access administration pages'
-  options:
-    _admin_route: TRUE
+    _permission: 'access category template'

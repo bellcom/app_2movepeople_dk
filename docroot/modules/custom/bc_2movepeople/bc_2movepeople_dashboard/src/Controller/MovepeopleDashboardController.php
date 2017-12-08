@@ -225,7 +225,7 @@ class MovepeopleDashboardController extends ControllerBase {
   /**
    * Render callback function for user overview page.
    */
-  private function getUserOverview($user) {
+  private function getUserOverview(AccountInterface $user) {
     $build = array(
       "#theme" => "bc_2movepeople_dashboard_user_overview",
       "#title" => $user->field_user_firstname->value . ' ' . $user->field_user_surname->value,
@@ -251,14 +251,16 @@ class MovepeopleDashboardController extends ControllerBase {
         ],
       ];
 
-      $controls['save_to_tpl'] = [
-        '#title' => $this->t('Save to template'),
-        '#url' => Url::fromRoute('bc_2movepeople_dashboard.save_to_tpl', ['user' => $user->id()]),
-        '#attributes' => [
-          'class' => ['btn-progress', 'use-ajax'],
-          'data-dialog-type' => 'modal',
-        ],
-      ];
+      if (\Drupal::currentUser()->hasPermission('access category template')) {
+        $controls['save_to_tpl'] = [
+          '#title' => $this->t('Save to template'),
+          '#url' => Url::fromRoute('bc_2movepeople_dashboard.save_to_tpl', ['user' => $user->id()]),
+          '#attributes' => [
+            'class' => ['btn-progress', 'use-ajax'],
+            'data-dialog-type' => 'modal',
+          ],
+        ];
+      }
 
       if (!empty($result_progression['data'])) {
         $build['#table_progression']['data'] = [
