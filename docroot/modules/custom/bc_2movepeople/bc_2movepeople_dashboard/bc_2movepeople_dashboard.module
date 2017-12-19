@@ -95,3 +95,24 @@ function bc_2movepeople_dashboard_user_login($account) {
 function bc_2movepeople_dashboard_cron() {
   TaskReminderUtils::bulkReminder();
 }
+
+/**
+ * Implements hook node_delete()
+ */
+function bc_2movepeople_dashboard_node_delete($node) {
+$node_type = $node->type->entity->label();
+
+if($node_type == 'Progression target'){
+  $goals = $node->field_goal_ids->referencedEntities();  
+    if (is_array($goals)) {
+      foreach ($goals as $goal) {
+        if (is_array($subgoals = $goal->field_subgoal->referencedEntities())) {
+          foreach ($subgoals as $subgoal) {
+            $subgoal->delete();
+          }
+        }
+        $goal->delete();
+      }
+    }
+  }
+}

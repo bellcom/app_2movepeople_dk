@@ -28,27 +28,27 @@ class ProgressionEditForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL) {
     $this->node = $node;
-    
+
     $form['#prefix'] = '<div class="dashboard-overview">';
     $form['#suffix'] = '</div>';
-    
+
     $form['title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Category'),
       '#default_value' => $this->node->get('title')->value,
       '#required' => TRUE,
     ];
-    
+
     $form = CommonFormUtils::tasksContainer($form, $this->node);
-    
+
     // Disable caching on this form.
     $form_state->setCached(FALSE);
-    
+
     $user = $this->node->get('field_progression_user')->getValue();
-    
-    $form['actions']['#type'] = 'actions'; 
-    
-    $form['actions']['add_task'] = [ 
+
+    $form['actions']['#type'] = 'actions';
+
+    $form['actions']['add_task'] = [
       '#type' => 'link',
       '#title' => $this->t('Add new Question'),
       '#name' => 'add_task_btn',
@@ -60,10 +60,10 @@ class ProgressionEditForm extends FormBase {
         'data-dialog-type' => 'modal',
       ]
     ];
-    
+
     $form['actions']['submit'] = [
       '#type' => 'submit',
-      '#name' => 'submit',  
+      '#name' => 'submit',
       '#value' => $this->t('Update'),
       '#button_type' => 'primary',
       '#ajax' => [
@@ -74,12 +74,12 @@ class ProgressionEditForm extends FormBase {
         ],
       ],
       '#attributes' => [
-          'class' => ['btn-default'],
-        ],
+        'class' => ['btn-default'],
+      ],
       '#prefix' => '<div class="col-md-6 col-sm-6 col-xs-12 right-btn-box">',
-      //'#suffix' => '</div>',
+        //'#suffix' => '</div>',
     ];
-    
+
     $form['actions']['back'] = [
       '#title' => $this->t('Back'),
       '#type' => 'link',
@@ -87,9 +87,19 @@ class ProgressionEditForm extends FormBase {
       '#attributes' => array(
         'class' => ['btn', 'btn-default', 'link-btn'],
       ),
-    //  '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2 text-right">',
+      //  '#prefix' => '<div class="col-md-2 col-sm-2 col-xs-2 text-right">',
       '#suffix' => '</div></div>',
-    ];  
+    ];
+
+    $form['actions']['delete_category'] = array(
+      '#type' => 'submit',
+      '#id' => 'delete_category',
+      '#name' => 'delete_category',
+      '#button_type' => 'delete',
+      '#value' => $this->t('Delete category'),
+      '#submit' => array('::deleteCategory'),
+      '#attributes' => array('onclick' => 'if(!confirm("' . t('Really delete category?') . '")){return false;}'),
+    );
 
     return $form;
   }
@@ -100,45 +110,46 @@ class ProgressionEditForm extends FormBase {
   public function getFormId() {
     return 'bc_2movepeople-dashboard-progression-edit-form';
   }
-  
+
   public function ajaxFakeDelete(array &$form, FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
     dpm('ajaxFakeDelete');
-    
+
     return $ajax_response;
   }
-  
+
   /**
    * {@inheritdoc}
    */
   public function ajaxGoalDelete(array &$form, FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
-    
-   // $this->node = Node::load($this->node->id());
-    
+
+    // $this->node = Node::load($this->node->id());
+
     $goal_id = $form_state->getTriggeringElement()['#attributes']['data_goal_id'];
     $parent_task_id = $form_state->getTriggeringElement()['#attributes']['data_parent_id'];
-    
+
     $goal_node = Node::load($goal_id);
     $node = $parent_task_id ? Node::load($parent_task_id) : $this->node;
     $field_name = $parent_task_id ? 'field_subgoal' : 'field_goal_ids';
     $old_goal_ids = $node->get($field_name)->getValue();
-    
+
     // Delete subgoals
     if (!$parent_task_id) {
-      $subgoal_ids = $goal_node->get('field_subgoal')->getValue();    
+      $subgoal_ids = $goal_node->get('field_subgoal')->getValue();
       foreach ($subgoal_ids as $tid) {
         Node::load($tid['target_id'])->delete();
-        $ajax_response->addCommand(new RemoveCommand('#goal_row_'.$tid['target_id']));
+        $ajax_response->addCommand(new RemoveCommand('#goal_row_' . $tid['target_id']));
       }
     }
-    
+
     $is_deleted = 0;
     $new_goal_ids = [];
-    foreach($old_goal_ids as $tid) {
-      if($tid['target_id'] != $goal_id) {
+    foreach ($old_goal_ids as $tid) {
+      if ($tid['target_id'] != $goal_id) {
         $new_goal_ids[] = $tid['target_id'];
-      } else {
+      }
+      else {
         $goal_node->delete();
         $is_deleted = 1;
       }
@@ -147,52 +158,54 @@ class ProgressionEditForm extends FormBase {
       $node->set($field_name, $new_goal_ids);
       $node->save();
       drupal_set_message($this->t($this->deleted_msg));
-    } else {
+    }
+    else {
       drupal_set_message($this->t($this->wrong_msg));
     }
-    $ajax_response->addCommand(new RemoveCommand('#goal_row_'.$goal_id));
-    
+    $ajax_response->addCommand(new RemoveCommand('#goal_row_' . $goal_id));
+
     $message = [
       '#theme' => 'status_messages',
       '#message_list' => drupal_get_messages()
     ];
     $messages = \Drupal::service('renderer')->render($message);
     $ajax_response->addCommand(new HtmlCommand('#custom-form-system-messages', $messages));
-    
+
     return $ajax_response;
   }
-  
+
   /**
    * {@inheritdoc}
    */
   public function ajaxSubmitForm(array &$form, FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
-    
+
     if (!$form_state->getErrors()) {
 
       $title = $form_state->getValue('title');
       $this->node->set("title", $title);
       $this->node->save();
-      
+
       $goals_arr = $form_state->getValue('goals');
 
-      foreach($goals_arr as $gid => $goal) {
+      foreach ($goals_arr as $gid => $goal) {
         $goal_node = \Drupal\node\Entity\Node::load($gid);
-        $goal_node->set("title", $goal['title']);       
+        $goal_node->set("title", $goal['title']);
         $goal_node->save();
       }
 
       if ($this->node->save() == SAVED_UPDATED) {
-        
+
         drupal_set_message($this->t($this->updated_msg));
-        
-      //  $user = $this->node->get('field_progression_user')->getValue();
-      //  $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user[0]['target_id']]));
+
+        //  $user = $this->node->get('field_progression_user')->getValue();
+        //  $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user[0]['target_id']]));
       }
-    } else {
+    }
+    else {
       drupal_set_message($this->t($this->wrong_msg));
     }
-    
+
     $message = [
       '#theme' => 'status_messages',
       '#message_list' => drupal_get_messages(),
@@ -204,13 +217,26 @@ class ProgressionEditForm extends FormBase {
     ];
     $messages = \Drupal::service('renderer')->render($message);
     $ajax_response->addCommand(new HtmlCommand('#custom-form-system-messages', $messages));
-    
+
     return $ajax_response;
   }
-  
+
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {}
-       
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function deleteCategory(array &$form, FormStateInterface $form_state) {
+    $user = $this->node->get('field_progression_user')->getValue();
+    $this->node->delete();
+    //redirecting to confirmation page
+    $form_state->setRedirect('bc_2movepeople_dashboard.user.progressions', [
+      'user' => $user[0]['target_id']
+    ]);
+  }
 }
