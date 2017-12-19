@@ -50,6 +50,12 @@ class ConfigForm extends ConfigFormBase {
       '#title' => $this->t('Enable milestones/tasks'),
       '#default_value' => $config->get('enable_milestones'),
     ];
+    
+    $form['functionality']['email_required'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('User email is required'),
+      '#default_value' => $config->get('email_required'),
+    ];
 
     return parent::buildForm($form, $form_state);
   }
@@ -60,6 +66,7 @@ class ConfigForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('bc_2movepeople.settings')
       ->set('enable_milestones', $form_state->getValue('enable_milestones'))
+      ->set('email_required', $form_state->getValue('email_required'))
       ->save();
 
     parent::submitForm($form, $form_state);

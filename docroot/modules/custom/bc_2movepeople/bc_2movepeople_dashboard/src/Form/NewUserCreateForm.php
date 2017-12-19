@@ -73,9 +73,14 @@ class NewUserCreateForm extends FormBase {
       '#type' => 'textfield',
       '#placeholder' => $this->t('Username'),
     ];
+    
+    $config = \Drupal::config('bc_2movepeople.settings');
+    $email_required = $config->get('email_required');
+    
     $form['email'] = [
       '#type' => 'email',
       '#placeholder' => $this->t('Email'),
+      '#required' => $email_required,
     ];
 
     if ($current_user->hasPermission('access category template') && !empty($templates)) {
@@ -246,7 +251,8 @@ class NewUserCreateForm extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-
+    $form_state->clearErrors();
+    
     // Check Firstname.
     $firstname = CommonFormUtils::cleanInput($form_state->getValue('firstname'));
     if (strlen($firstname) < 4) {
@@ -265,9 +271,11 @@ class NewUserCreateForm extends FormBase {
       $form_state->setErrorByName('username', $this->t('The Username %username is not valid.', array('%username' => $username)));
     }
 
-    // Check Email.
-    $email = trim($form_state->getValue('email'));
-    if (!\Drupal::service('email.validator')->isValid($email)) {
+    // check Email
+    $email = CommonFormUtils::cleanInput(trim($form_state->getValue('email')));
+    if ($form['email']['#required_but_empty']) {
+      $form_state->setErrorByName('email', $this->t('The Email address is required'));
+    }elseif(!\Drupal::service('email.validator')->isValid($email) and !empty($email)){
       $form_state->setErrorByName('email', $this->t('The Email address %mail is not valid.', array('%mail' => $email)));
     }
 
