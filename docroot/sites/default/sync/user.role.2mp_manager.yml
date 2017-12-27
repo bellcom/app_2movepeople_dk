@@ -13,4 +13,5 @@ weight: 7
 is_admin: null
 permissions:
   - 2mp_user
+  - 'access category template'
   - 'access user profiles'

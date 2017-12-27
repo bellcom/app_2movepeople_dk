@@ -14,4 +14,5 @@ is_admin: null
 permissions:
   - 2mp_manager
   - 2mp_user
+  - 'access category template'
   - 'administer bc_2movepeople settings'
