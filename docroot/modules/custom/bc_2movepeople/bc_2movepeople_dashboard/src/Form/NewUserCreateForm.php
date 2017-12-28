@@ -279,7 +279,6 @@ class NewUserCreateForm extends FormBase {
       $form_state->setErrorByName('email', $this->t('The Email address %mail is not valid.', array('%mail' => $email)));
     }
 
-    print_r($template_select);
     // Check template_select.
     $template_select = CommonFormUtils::cleanInput($form_state->getValue('template_select'));
     if (!is_numeric($template_select) && !empty($template_select)) {
