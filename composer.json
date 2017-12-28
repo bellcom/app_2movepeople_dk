@@ -28,7 +28,8 @@
         "drupal/bootstrap": "^3.5",
         "drupal/admin_toolbar": "^1.19",
         "drupal/field_permissions": "^1.0@beta",
-        "drupal/flag": "^4.0@alpha"
+        "drupal/flag": "^4.0@alpha",
+        "drupal/administerusersbyrole": "^2.0"
     },
     "repositories": [
         {
