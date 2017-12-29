@@ -12,6 +12,9 @@ label: '2MP Supervisor'
 weight: 8
 is_admin: null
 permissions:
-  - 2mp_manager
-  - 2mp_user
+  - 'access category template'
   - 'administer bc_2movepeople settings'
+  - 'cancel users with role 2mp_manager'
+  - 'cancel users with role 2mp_user'
+  - 'edit users with role 2mp_manager'
+  - 'edit users with role 2mp_user'

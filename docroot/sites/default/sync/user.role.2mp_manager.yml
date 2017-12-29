@@ -12,5 +12,7 @@ label: '2MP Manager'
 weight: 7
 is_admin: null
 permissions:
-  - 2mp_user
+  - 'access category template'
   - 'access user profiles'
+  - 'cancel users with role 2mp_user'
+  - 'edit users with role 2mp_user'

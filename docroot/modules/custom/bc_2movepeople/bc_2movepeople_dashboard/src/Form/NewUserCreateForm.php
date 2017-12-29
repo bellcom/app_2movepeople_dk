@@ -281,7 +281,7 @@ class NewUserCreateForm extends FormBase {
 
     // Check template_select.
     $template_select = CommonFormUtils::cleanInput($form_state->getValue('template_select'));
-    if (!is_numeric($template_select)) {
+    if (!is_numeric($template_select) && !empty($template_select)) {
       $form_state->setErrorByName('template_select', $this->t('The Template %template_select is not valid.', array('%template_select' => $template_select)));
     }
 

@@ -388,6 +388,7 @@ class MovepeopleDashboardController extends ControllerBase {
     $query->condition('progression_target_id', $target_id, '=');
     $query->addExpression("FROM_UNIXTIME(created,  '%d.%m')", 'dates');
     $query->addExpression("AVG(rate)", 'avg_rates');
+    $query->addExpression("MAX(created)", 'created');
     $query->GroupBy('dates');
     $query->orderBy('created', 'ASC');
     $result = $query->execute()->fetchAll();
@@ -410,6 +411,7 @@ class MovepeopleDashboardController extends ControllerBase {
     $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
     $query->condition('progression_target_id', $entity_ids, 'IN');
     $query->addExpression("FROM_UNIXTIME(created,  '%d.%m')", 'dates');
+    $query->addExpression("MAX(created)", 'created');
     $query->GroupBy('dates');
     $query->orderBy('created', 'ASC');
 
