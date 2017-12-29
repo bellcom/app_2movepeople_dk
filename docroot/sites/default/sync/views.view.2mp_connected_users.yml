@@ -509,20 +509,20 @@ display:
           view_mode: compact
           entity_type: user
           plugin_id: rendered_entity
-        nothing:
-          id: nothing
-          table: views
-          field: nothing
-          relationship: none
+        edit_user:
+          id: edit_user
+          table: users
+          field: edit_user
+          relationship: field_connected_users
           group_type: group
           admin_label: ''
           label: ''
           exclude: false
           alter:
-            alter_text: true
-            text: Edit
-            make_link: true
-            path: 'user_edit/{{ uid }}'
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
             absolute: false
             external: false
             replace_spaces: false
@@ -556,8 +556,10 @@ display:
           empty: ''
           hide_empty: false
           empty_zero: false
-          hide_alter_empty: false
-          plugin_id: custom
+          hide_alter_empty: true
+          text: Edit
+          entity_type: user
+          plugin_id: entity_link_edit
       defaults:
         fields: false
         style: false
