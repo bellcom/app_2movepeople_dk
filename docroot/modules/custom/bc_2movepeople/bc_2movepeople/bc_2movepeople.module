@@ -5,38 +5,22 @@
  * Contains bc_2movepeople.module.
  */
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
 
 /**
  * Implements hook_form_FORM_ID_alter().
  */
 function bc_2movepeople_form_user_form_alter(&$form, FormStateInterface $form_state) {
-  
-  $current_user_roles = \Drupal::currentUser()->getRoles();
-
-  //Hide some fields according user role
-  $supervisor_hidden_fields = array('field_organisation', 'field_diagnose', 'field_addiction', 'contact', 'timezone', 'language');
-  $manager_hidden_fields = array('field_organisation', 'field_diagnose', 'field_addiction', 'contact', 'timezone', 'language');
-  $user_hidden_fields = array('field_organisation', 'field_diagnose', 'field_addiction', 'contact', 'timezone', 'language', 'field_connected_users');
-
-  //Not hide for administrators
-  if (!in_array('administrator', $current_user_roles)) {
-
-    if (in_array('2mp_supervisor', $current_user_roles)) {
-      _bc_2movepeople_hide_field($form, $supervisor_hidden_fields);
-    }
-    elseif (in_array('2mp_manager', $current_user_roles)) {
-      _bc_2movepeople_hide_field($form, $manager_hidden_fields);
-    }
-    elseif (in_array('2mp_user', $current_user_roles)) {
-      _bc_2movepeople_hide_field($form, $user_hidden_fields);
-    }
-  }
-  
-  // Hide field_connected_users when we edit person of 2mp_user role
-    if(\Drupal::request()->get('user')->hasRole('2mp_user')){
-    _bc_2movepeople_hide_field($form, array('field_connected_users'));
+  $current_user = \Drupal::currentUser();
+  if ($current_user->id() == 1) {
+    return;
   }
 
+  foreach (Element::children($form) as $key) {
+    if (in_array($key, ['contact', 'timezone', 'language'])) {
+      _bc_2movepeople_hide_field($form, $key);
+    }
+  }
 }
 
 /**
@@ -65,6 +49,9 @@ function bc_2movepeople_module_implements_alter(&$implementations, $hook) {
  * @return void
  */
 function _bc_2movepeople_hide_field(&$form, $field_names) {
+  if (!is_array($field_names)) {
+    $field_names = [$field_names];
+  }
 
   foreach ($field_names as $field_name) {
     $form[$field_name]['#disabled'] = TRUE;
