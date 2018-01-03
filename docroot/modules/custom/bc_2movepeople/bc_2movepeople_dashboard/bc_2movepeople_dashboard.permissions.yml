@@ -2,3 +2,10 @@ access category template:
   title: 'Category templates'
   description: 'Access to use category templates functionality.'
 
+access user dashboard:
+  title: 'Use user dashboard overview'
+  description: 'Access to user dashboard overview page.'
+
+create connected users:
+  title: 'Create connected user'
+  description: 'Ability to create connected to users connected to current.'

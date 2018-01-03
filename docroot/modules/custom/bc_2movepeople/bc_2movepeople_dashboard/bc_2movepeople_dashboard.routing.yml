@@ -4,7 +4,7 @@ bc_2movepeople_dashboard.main:
     _title: 'Connected users'
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getConnectedUsers'
   requirements:
-    _permission: 'access content'
+    _permission: 'access user dashboard'
     _user_is_logged_in: 'TRUE'
 
 bc_2movepeople_dashboard.user.overview:
@@ -13,7 +13,7 @@ bc_2movepeople_dashboard.user.overview:
     _title: 'User overview'
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getUserOverviewImplementation'
   requirements:
-    _permission: 'access content'
+    _permission: 'access user dashboard'
     _user_is_logged_in: 'TRUE'
 
 bc_2movepeople_dashboard.user.progressions:
@@ -22,7 +22,7 @@ bc_2movepeople_dashboard.user.progressions:
     _title: 'User progressions'
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getJsAccordionImplementation'
   requirements:
-    _permission: 'access content'
+    _permission: 'access user dashboard'
     _user_is_logged_in: 'TRUE'
 
 bc_2movepeople_dashboard.user.milestones:
@@ -31,7 +31,7 @@ bc_2movepeople_dashboard.user.milestones:
     _title: 'Dashboard'
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getMilestoneJsAccordionImplementation'
   requirements:
-    _permission: 'access content'
+    _permission: 'access user dashboard'
     _user_is_logged_in: 'TRUE'
 
 bc_2movepeople_dashboard.user.progressions.add:
@@ -44,7 +44,7 @@ bc_2movepeople_dashboard.user.progressions.add:
     _title: 'Add new category'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionAddForm'
   requirements:
-    _permission: 'access content'
+    _permission: 'access user dashboard'
     
 bc_2movepeople_dashboard.progressions.edit:
   path: '/dashboard/progressions/{node}/edit'
@@ -56,7 +56,7 @@ bc_2movepeople_dashboard.progressions.edit:
     _title: 'Edit category'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionEditForm'
   requirements:
-    _permission: 'access content'
+    _permission: 'access user dashboard'
     
 bc_2movepeople_dashboard.progression.tasks.add:
   path: '/dashboard/progressions/{node}/tasks/add'
@@ -68,7 +68,7 @@ bc_2movepeople_dashboard.progression.tasks.add:
     _title: 'Add new category question'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionTaskEditForm'
   requirements:
-    _permission: 'access content'
+    _permission: 'access user dashboard'
 
 bc_2movepeople_dashboard.user.milestones.add:
   path: '/dashboard/users/{user}/milestones/add'
@@ -80,7 +80,7 @@ bc_2movepeople_dashboard.user.milestones.add:
     _title: 'Add new milestone'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneAddForm'
   requirements:
-    _permission: 'access content'
+    _permission: 'access user dashboard'
 
 bc_2movepeople_dashboard.milestone.tasks.add:
   path: '/dashboard/milestones/{node}/tasks/add'
@@ -92,7 +92,7 @@ bc_2movepeople_dashboard.milestone.tasks.add:
     _title: 'Add new milestone task'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskEditForm'
   requirements:
-    _permission: 'access content'
+    _permission: 'access user dashboard'
     
 bc_2movepeople_dashboard.milestone.tasks.clone:
   path: '/dashboard/milestones/users/{user}/tasks/{node}/clone'
@@ -106,7 +106,7 @@ bc_2movepeople_dashboard.milestone.tasks.clone:
     _title: 'Copy question to category'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskCloneForm'
   requirements:
-    _permission: 'access content'
+    _permission: 'access user dashboard'
 
 bc_2movepeople_dashboard.milestone.manager.tasks.add:
   path: '/dashboard/milestones/{node}/manager/tasks/add'
@@ -118,7 +118,7 @@ bc_2movepeople_dashboard.milestone.manager.tasks.add:
     _title: 'Add new manager task'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneManagerTaskEditForm'
   requirements:
-    _permission: 'access content'
+    _permission: 'access user dashboard'
 
 bc_2movepeople_dashboard.user.tasks:
   path: '/dashboard/users/{user}/tasks'
@@ -165,7 +165,7 @@ bc_2movepeople_dashboard.users.create:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\NewUserCreateForm'
     _title: 'Create account'
   requirements:
-    _permission: 'access content'
+    _permission: 'create connected users'
 
 bc_2movepeople_dashboard.save_to_tpl:
   path: '/dashboard/users/{user}/save-to-tpl'

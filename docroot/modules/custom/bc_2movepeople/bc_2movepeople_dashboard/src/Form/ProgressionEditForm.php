@@ -12,6 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\RemoveCommand;
+use Drupal\Core\Cache\Cache;
 use Drupal\node\NodeInterface;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Url;
@@ -37,6 +38,12 @@ class ProgressionEditForm extends FormBase {
       '#title' => $this->t('Category'),
       '#default_value' => $this->node->get('title')->value,
       '#required' => TRUE,
+    ];
+
+    $form['for_user_feedback'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('For user feedback'),
+      '#default_value' => $this->node->get('field_progression_type')->value == 'progression_feedback',
     ];
 
     $form = CommonFormUtils::tasksContainer($form, $this->node);
@@ -184,6 +191,11 @@ class ProgressionEditForm extends FormBase {
 
       $title = $form_state->getValue('title');
       $this->node->set("title", $title);
+      $progression_type = 'progression';
+      if ($form_state->getValue('for_user_feedback')) {
+        $progression_type = 'progression_feedback';
+      }
+      $this->node->set("field_progression_type", $progression_type);
       $this->node->save();
 
       $goals_arr = $form_state->getValue('goals');
@@ -197,9 +209,11 @@ class ProgressionEditForm extends FormBase {
       if ($this->node->save() == SAVED_UPDATED) {
 
         drupal_set_message($this->t($this->updated_msg));
-
-        //  $user = $this->node->get('field_progression_user')->getValue();
+        $user = $this->node->get('field_progression_user')->getValue();
         //  $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user[0]['target_id']]));
+
+        // Invalidate navigation block cachetag.
+        Cache::invalidateTags(array('feedback:' . $user[0]['target_id']));
       }
     }
     else {
@@ -238,5 +252,8 @@ class ProgressionEditForm extends FormBase {
     $form_state->setRedirect('bc_2movepeople_dashboard.user.progressions', [
       'user' => $user[0]['target_id']
     ]);
+
+    // Invalidate navigation block cachetag.
+    Cache::invalidateTags(array('feedback:' . $user[0]['target_id']));
   }
 }
