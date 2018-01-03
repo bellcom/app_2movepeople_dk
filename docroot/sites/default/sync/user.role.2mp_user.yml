@@ -6,4 +6,5 @@ id: 2mp_user
 label: '2MP User'
 weight: 5
 is_admin: null
-permissions: {  }
+permissions:
+  - 'access provide feedback'

@@ -1,0 +1,20 @@
+uuid: ae4440a4-1700-4b45-a8c0-2abd92a62b02
+langcode: da
+status: true
+dependencies:
+  module:
+    - bc_2movepeople
+  theme:
+    - site
+id: navigationblock
+theme: site
+region: sidebar_first
+weight: 0
+provider: null
+plugin: navigation_block
+settings:
+  id: navigation_block
+  label: 'Navigation block'
+  provider: bc_2movepeople
+  label_display: '0'
+visibility: {  }

@@ -13,8 +13,11 @@ weight: 7
 is_admin: null
 permissions:
   - 'access category template'
+  - 'access progression rates'
+  - 'access user dashboard'
   - 'access user profiles'
   - 'cancel users with role 2mp_user'
+  - 'create connected users'
   - 'edit field_addiction'
   - 'edit field_diagnose'
   - 'edit own field_connected_users'
