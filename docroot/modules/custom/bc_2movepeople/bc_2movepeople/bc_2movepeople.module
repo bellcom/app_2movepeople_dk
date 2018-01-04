@@ -11,6 +11,13 @@ use Drupal\Core\Render\Element;
  * Implements hook_form_FORM_ID_alter().
  */
 function bc_2movepeople_form_user_form_alter(&$form, FormStateInterface $form_state) {
+  
+  $form['#validate'][] = '_bc_2movepeople_user_form_validate';
+  $config = \Drupal::config('bc_2movepeople.settings');
+  if( !$config->get('email_required')){
+    $form['account']['mail']['#required'] = 0;
+  }
+  
   $current_user = \Drupal::currentUser();
   if ($current_user->id() == 1) {
     return;
@@ -19,6 +26,26 @@ function bc_2movepeople_form_user_form_alter(&$form, FormStateInterface $form_st
   foreach (Element::children($form) as $key) {
     if (in_array($key, ['contact', 'timezone', 'language'])) {
       _bc_2movepeople_hide_field($form, $key);
+    }
+  }
+}
+
+/**
+ * Validates submission values in the user_form form.
+ */
+function _bc_2movepeople_user_form_validate(array &$form, FormStateInterface $form_state) {
+  
+  //Unset mail Error when mail is empty and not requred
+  $config = \Drupal::config('bc_2movepeople.settings');
+
+  if(!($config->get('email_required')) &&  empty($form['account']['mail']['#value'])){
+    // Temporarily store all form errors.
+    $form_errors = $form_state->getErrors();
+    unset($form_errors['mail']);
+    $form_state->clearErrors();
+    // Loop through and re-apply the remaining form error messages.
+    foreach ($form_errors as $name => $error_message) {
+      $form_state->setErrorByName($name, $error_message);
     }
   }
 }
