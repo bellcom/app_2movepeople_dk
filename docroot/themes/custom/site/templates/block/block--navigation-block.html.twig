@@ -67,9 +67,4 @@
   {% block content %}
     {{ content }}
   {% endblock %}
-  {% if 'administrator' in user.getroles or '2mp_manager' in user.getroles %}
-  <div class="text-center">
-    <a class="btn btn-default use-ajax" href="{{ url('bc_2movepeople_dashboard.users.create') }}" data-dialog-type = "modal">{{ 'Add new user'|trans }}</a>
-  </div>
-  {% endif %}
 </section>

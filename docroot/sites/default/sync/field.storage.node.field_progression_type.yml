@@ -19,6 +19,9 @@ settings:
       value: progression
       label: Progression
     -
+      value: progression_feedback
+      label: 'Progression feedback'
+    -
       value: target_milestone
       label: 'Target milestone'
   allowed_values_function: ''

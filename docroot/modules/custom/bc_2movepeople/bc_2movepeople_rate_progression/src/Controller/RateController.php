@@ -75,4 +75,14 @@ class RateController extends ControllerBase {
 
     return new JsonResponse($data);
   }
+
+  /**
+   * Dialogue rating pagecallback.
+   */
+  public function dialogueRate() {
+    $user = \Drupal::currentUser();
+    $form = \Drupal::formBuilder()->getForm('Drupal\bc_2movepeople_rate_progression\Form\UserRatesAddForm', $user->getAccount(), 'feedback');
+    return $form;
+  }
+
 }

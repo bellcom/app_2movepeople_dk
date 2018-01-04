@@ -9054,16 +9054,20 @@ a.btn-progress {
     margin: 0; } }
 
 #block-secondarynavigation .nav > li > a, #block-settingsmenu .nav > li > a,
-#block-views-block-2mp-connected-users-block-links-simple .nav > li > a {
+#block-navigationblock .nav > li > a {
   font-weight: bold;
   font-size: 15px;
   padding: 15px 30px 15px 50px; }
 
 #block-secondarynavigation .nav > li > a:hover, #block-secondarynavigation .nav > li > a:focus, #block-settingsmenu .nav > li > a:hover, #block-settingsmenu .nav > li > a:focus,
-#block-views-block-2mp-connected-users-block-links-simple .nav > li > a:hover,
-#block-views-block-2mp-connected-users-block-links-simple .nav > li > a:focus {
+#block-navigationblock .nav > li > a:hover,
+#block-navigationblock .nav > li > a:focus {
   text-decoration: none;
   background-color: #f1f7fd; }
+
+#block-secondarynavigation .controll-buttons, #block-settingsmenu .controll-buttons,
+#block-navigationblock .controll-buttons {
+  padding-top: 10px; }
 
 .customicon {
   font-style: normal;
@@ -9114,27 +9118,27 @@ div.custom-nav-divider {
 
 @media (min-width: 768px) {
   #block-secondarynavigation .nav > li > a, #block-settingsmenu .nav > li > a,
-  #block-views-block-2mp-connected-users-block-links-simple .nav > li > a {
+  #block-navigationblock .nav > li > a {
     padding: 20px 15px 20px 50px; } }
 
 @media (min-width: 768px) and (max-width: 991px) {
   #block-secondarynavigation .nav > li > a, #block-settingsmenu .nav > li > a,
-  #block-views-block-2mp-connected-users-block-links-simple .nav > li > a {
+  #block-navigationblock .nav > li > a {
     padding: 20px 15px 20px 50px; } }
 
 @media (min-width: 992px) {
   #block-secondarynavigation .nav > li > a, #block-settingsmenu .nav > li > a,
-  #block-views-block-2mp-connected-users-block-links-simple .nav > li > a {
+  #block-navigationblock .nav > li > a {
     padding: 20px 15px 20px 50px; } }
 
 @media (min-width: 992px) and (max-width: 1199px) {
   #block-secondarynavigation .nav > li > a, #block-settingsmenu .nav > li > a,
-  #block-views-block-2mp-connected-users-block-links-simple .nav > li > a {
+  #block-navigationblock .nav > li > a {
     padding: 20px 15px 20px 50px; } }
 
 @media (min-width: 1200px) {
   #block-secondarynavigation .nav > li > a, #block-settingsmenu .nav > li > a,
-  #block-views-block-2mp-connected-users-block-links-simple .nav > li > a {
+  #block-navigationblock .nav > li > a {
     padding: 20px 15px 20px 50px; } }
 
 .modal-dialog .modal-header {
@@ -9473,6 +9477,11 @@ span.input-group-addon {
       content: "\e250"; }
     .dashboard-accordion .panel-heading a[aria-expanded="true"] span.glyphicon-triangle-custom:before {
       content: "\e252"; }
+    .dashboard-accordion .panel-heading .feedback {
+      font-size: 0.8em;
+      float: right;
+      text-transform: lowercase;
+      font-weight: normal; }
   .dashboard-accordion .panel-body {
     border-top: none !important; }
     .dashboard-accordion .panel-body div.div-goals {

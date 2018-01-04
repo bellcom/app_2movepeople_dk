@@ -8,7 +8,7 @@
 // --------------------------------------------------
 
 #block-secondarynavigation, #block-settingsmenu,
-#block-views-block-2mp-connected-users-block-links-simple {
+#block-navigationblock {
   .nav > li > a {
     font-weight: bold;
     font-size: 15px;
@@ -17,6 +17,10 @@
   .nav > li > a:hover, .nav > li > a:focus {
     text-decoration: none;
     background-color: $btn-nav-hover-color;
+  }
+
+  .controll-buttons {
+    padding-top: 10px;
   }
 }
 
@@ -97,7 +101,7 @@ div.custom-nav-divider {
 // Tablet - and up
 @include media-breakpoint-up(sm) {
   #block-secondarynavigation, #block-settingsmenu,
-  #block-views-block-2mp-connected-users-block-links-simple {
+  #block-navigationblock {
     .nav > li > a {
       padding: 20px 15px 20px 50px; 
     }
@@ -107,7 +111,7 @@ div.custom-nav-divider {
 // Tablet - only
 @include media-breakpoint-only(sm) {
   #block-secondarynavigation, #block-settingsmenu,
-  #block-views-block-2mp-connected-users-block-links-simple {
+  #block-navigationblock {
     .nav > li > a {
       padding: 20px 15px 20px 50px; 
     }
@@ -117,7 +121,7 @@ div.custom-nav-divider {
 // Desktop - and up
 @include media-breakpoint-up(md) {
   #block-secondarynavigation, #block-settingsmenu,
-  #block-views-block-2mp-connected-users-block-links-simple {
+  #block-navigationblock {
     .nav > li > a {
       padding: 20px 15px 20px 50px; 
     }
@@ -127,7 +131,7 @@ div.custom-nav-divider {
 // Desktop - only
 @include media-breakpoint-only(md) {
   #block-secondarynavigation, #block-settingsmenu,
-  #block-views-block-2mp-connected-users-block-links-simple {
+  #block-navigationblock {
     .nav > li > a {
       padding: 20px 15px 20px 50px; 
     }
@@ -137,7 +141,7 @@ div.custom-nav-divider {
 // Large desktop - and up
 @include media-breakpoint-up(lg) {
   #block-secondarynavigation, #block-settingsmenu,
-  #block-views-block-2mp-connected-users-block-links-simple {
+  #block-navigationblock {
     .nav > li > a {
       padding: 20px 15px 20px 50px; 
     }

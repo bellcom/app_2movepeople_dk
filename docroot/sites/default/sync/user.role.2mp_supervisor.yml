@@ -13,9 +13,12 @@ weight: 8
 is_admin: null
 permissions:
   - 'access category template'
+  - 'access progression rates'
+  - 'access user dashboard'
   - 'administer bc_2movepeople settings'
   - 'cancel users with role 2mp_manager'
   - 'cancel users with role 2mp_user'
+  - 'create connected users'
   - 'edit field_addiction'
   - 'edit field_connected_users'
   - 'edit field_diagnose'

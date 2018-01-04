@@ -6,7 +6,6 @@ dependencies:
     - system.menu.secondary-navigation
   module:
     - system
-    - user
   theme:
     - site
 id: secondarynavigation
@@ -22,12 +21,4 @@ settings:
   label_display: '0'
   level: 1
   depth: 0
-visibility:
-  user_role:
-    id: user_role
-    roles:
-      administrator: administrator
-      2mp_manager: 2mp_manager
-    negate: false
-    context_mapping:
-      user: '@user.current_user_context:current_user'
+visibility: {  }

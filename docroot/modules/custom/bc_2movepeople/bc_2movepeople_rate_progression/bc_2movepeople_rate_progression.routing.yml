@@ -9,8 +9,16 @@ bc_2movepeople_rate_progression.rates_add:
     _form: '\Drupal\bc_2movepeople_rate_progression\Form\RateAddForm'
     node: null
   requirements:
-    _permission: 'access content'
+    _permission: 'access progression rates'
     progression_target_id: \d+
+
+bc_2movepeople_rate_progression.feedback_add:
+  path: '/feedback/add'
+  defaults:
+    _title: 'Dialogue rating'
+    _controller: '\Drupal\bc_2movepeople_rate_progression\Controller\RateController::dialogueRate'
+  requirements:
+    _permission: 'access provide feedback'
 
 bc_2movepeople_rate_progression.user_rates_add:
   path: '/rates/user/{user}/add'
@@ -22,7 +30,7 @@ bc_2movepeople_rate_progression.user_rates_add:
     _title: User's rates add
     _form: '\Drupal\bc_2movepeople_rate_progression\Form\UserRatesAddForm'
   requirements:
-    _permission: 'access content'
+    _permission: 'access progression rates'
     user: \d+
     
 bc_2movepeople_rate_progression.rates.get:
@@ -31,5 +39,5 @@ bc_2movepeople_rate_progression.rates.get:
     _controller: '\Drupal\bc_2movepeople_rate_progression\Controller\RateController::rateGet'
     _title: ''
   requirements:
-    _permission: 'access content'
+    _permission: 'access progression rates'
     _method: 'GET'

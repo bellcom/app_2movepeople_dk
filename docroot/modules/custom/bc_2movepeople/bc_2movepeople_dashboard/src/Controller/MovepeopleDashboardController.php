@@ -152,6 +152,9 @@ class MovepeopleDashboardController extends ControllerBase {
     foreach ($nodes as $progrdata) {
       $mtid = $progrdata->get('field_goal_ids')->getValue();
       $progression_targets[$progrdata->id()]['title'] = $progrdata->get('title')->value;
+      if ($progrdata->get('field_progression_type')->value == 'progression_feedback') {
+        $progression_targets[$progrdata->id()]['feedback'] = TRUE;
+      }
       $progression_targets[$progrdata->id()]['id'] = $progrdata->id();
       $progression_targets[$progrdata->id()]['goals'] = array();
       foreach ($mtid as $tid) {
@@ -165,7 +168,7 @@ class MovepeopleDashboardController extends ControllerBase {
         "#title" => 'Dashboard',
         "#subtitle" => $title,
         "#user" => $user->id(),
-        '#progression_targets' => $progression_targets
+        '#progression_targets' => $progression_targets,
     );
     return $build;
   }
@@ -232,7 +235,7 @@ class MovepeopleDashboardController extends ControllerBase {
       "#user" => $user->id(),
     );
 
-    $entity_progression_ids = array_keys($this->getProgressionTargets($user->id(), 'progression'));
+    $entity_progression_ids = array_keys($this->getProgressionTargets($user->id(), 'progressions'));
     $entity_milestone_ids = array_keys($this->getProgressionTargets($user->id(), 'target_milestone'));
 
     $controls = [[
@@ -303,14 +306,14 @@ class MovepeopleDashboardController extends ControllerBase {
   /**
    * Render callback function for Connected users list.
    */
-  private function renderConnectedUsers(AccountInterface $user) {
+  public static function renderConnectedUsers(AccountInterface $user, $display = 'block_link_boxes') {
     $args = [$user->id()];
     $view = Views::getView('2mp_connected_users');
     if (!is_object($view)) {
       return '';
     }
     $view->setArguments($args);
-    $view->setDisplay('block_link_boxes');
+    $view->setDisplay($display);
     $view->preExecute();
     $view->execute();
     return $view->render();
@@ -360,16 +363,28 @@ class MovepeopleDashboardController extends ControllerBase {
    * @return array
    *
    */
-  public static function getProgressionTargets($user_id, $progression_type = 'progression') {
+  public static function getProgressionTargets($user_id, $progression_type = 'progressions') {
 //    $query = \Drupal::database()->select('node', 'n')
 //      ->extend('\Drupal\Core\Database\Query\PagerSelectExtender')
 //      ->extend('\Drupal\Core\Database\Query\TableSortExtender');
     // select all progression targets
+
+    $progression_types = [
+      'progressions' => [
+        'progression',
+        'progression_feedback'
+      ],
+      'progression' => ['progression'],
+      'feedback' => ['progression_feedback'],
+      'target_milestone' => ['target_milestone'],
+    ];
+
+
     $query = \Drupal::entityQuery('node');
     $query->condition('status', 1);
     $query->condition('type', 'progression_target');
     $query->condition('field_progression_user', $user_id);
-    $query->condition('field_progression_type', $progression_type);
+    $query->condition('field_progression_type', $progression_types[$progression_type], 'IN');
     $entity_ids = $query->execute();
     return $entity_ids;
   }
@@ -754,7 +769,7 @@ class MovepeopleDashboardController extends ControllerBase {
    *
    * @return array
    */
-  private function getControlButtons(array $links , array $attributes = []) {
+  public static function getControlButtons(array $links , array $attributes = []) {
     $build = [
       '#type' => 'container',
       '#attributes' => array_merge_recursive($attributes, ['class' => ['controll-buttons']])
