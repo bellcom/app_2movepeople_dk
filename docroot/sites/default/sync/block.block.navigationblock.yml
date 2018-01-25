@@ -3,13 +3,13 @@ langcode: da
 status: true
 dependencies:
   module:
-    - bc_2movepeople
+    - bc_2movepeople_dashboard
   theme:
     - site
 id: navigationblock
 theme: site
 region: sidebar_first
-weight: 0
+weight: -5
 provider: null
 plugin: navigation_block
 settings:

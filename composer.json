@@ -29,7 +29,8 @@
         "drupal/admin_toolbar": "^1.19",
         "drupal/field_permissions": "^1.0@beta",
         "drupal/flag": "^4.0@alpha",
-        "drupal/administerusersbyrole": "^2.0"
+        "drupal/administerusersbyrole": "^2.0",
+        "drupal/masquerade": "^2.0@beta"
     },
     "repositories": [
         {

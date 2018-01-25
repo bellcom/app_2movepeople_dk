@@ -53,6 +53,7 @@ module:
   lightning_search: 0
   lightning_workflow: 0
   link: 0
+  masquerade: 0
   media_entity: 0
   media_entity_document: 0
   media_entity_image: 0

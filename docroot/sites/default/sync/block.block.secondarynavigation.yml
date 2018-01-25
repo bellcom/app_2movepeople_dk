@@ -11,7 +11,7 @@ dependencies:
 id: secondarynavigation
 theme: site
 region: sidebar_first
-weight: -5
+weight: -6
 provider: null
 plugin: 'system_menu_block:secondary-navigation'
 settings:
