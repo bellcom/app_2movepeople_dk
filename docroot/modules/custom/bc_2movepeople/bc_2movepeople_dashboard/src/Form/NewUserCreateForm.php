@@ -170,6 +170,12 @@ class NewUserCreateForm extends FormBase {
       // Optional.
       $user->set('field_user_firstname', $form_state->getValue('firstname'));
       $user->set('field_user_surname', $form_state->getValue('surname'));
+      
+      //Set current user organisations to new user
+      $current_user_obj = User::load($current_user->id());
+      $organisations = $current_user_obj->get('field_organisation')->getValue();
+      $user->set('field_organisation', $organisations);
+
       $current_user_roles = $current_user->getRoles();
       if (in_array('2mp_supervisor', $current_user_roles)) {
         $user->addRole('2mp_manager');
