@@ -179,9 +179,11 @@ class NewUserCreateForm extends FormBase {
       $current_user_roles = $current_user->getRoles();
       if (in_array('administrator', $current_user_roles)) {
         $user->addRole('2mp_supervisor');
+        $user->addRole('2mp_user');
       }
       elseif (in_array('2mp_supervisor', $current_user_roles)) {
         $user->addRole('2mp_manager');
+        $user->addRole('2mp_user');
       }
       elseif (in_array('2mp_manager', $current_user_roles)) {
         $user->addRole('2mp_user');
