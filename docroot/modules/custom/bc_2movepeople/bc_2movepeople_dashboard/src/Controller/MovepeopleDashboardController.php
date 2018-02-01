@@ -255,23 +255,28 @@ class MovepeopleDashboardController extends ControllerBase {
 
       //Add 'Rate category' btn if there are any questions
       $categories = node_load_multiple($entity_progression_ids);
+      $questions_found = FALSE;
       foreach ($categories as $category) {
         if (!empty($category->field_goal_ids->entity)) {
-          $controls['rate_category'] = [
-            '#title' => $this->t('Rate category'),
-            '#url' => Url::fromRoute('bc_2movepeople_rate_progression.user_rates_add', ['user' => $user->id()]),
-            '#attributes' => [
-              'class' => ['btn-progress', 'use-ajax'],
-              'data-dialog-type' => 'modal',
-            ],
-          ];
+          $questions_found = TRUE;
           break;
         }
-        else {
-          //No questions - do not show 'Rate category' btn, but add a message
-          $build['#table_progression']['message'] = t('To rate users you have to add Categories and question inside categories');
-        }
       }
+      if ($questions_found) {
+        $controls['rate_category'] = [
+          '#title' => $this->t('Rate category'),
+          '#url' => Url::fromRoute('bc_2movepeople_rate_progression.user_rates_add', ['user' => $user->id()]),
+          '#attributes' => [
+            'class' => ['btn-progress', 'use-ajax'],
+            'data-dialog-type' => 'modal',
+          ],
+        ];
+      }
+      else {
+        //No questions - do not show 'Rate category' btn, but add a message
+        $build['#table_progression']['message'] = t('To rate users you have to add Categories and question inside categories');
+      }
+
       $result_progression = $this->getProgressionsTable($entity_progression_ids);
 
       if (\Drupal::currentUser()->hasPermission('access category template')) {
