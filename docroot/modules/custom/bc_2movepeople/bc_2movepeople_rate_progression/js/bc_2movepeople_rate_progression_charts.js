@@ -173,7 +173,7 @@
               width: "90%"
           },
           legend: {position: "bottom"},
-          pointSize: 10
+          pointSize: 5
       };
 
       var chart = (chart_type == 'line' ? 
