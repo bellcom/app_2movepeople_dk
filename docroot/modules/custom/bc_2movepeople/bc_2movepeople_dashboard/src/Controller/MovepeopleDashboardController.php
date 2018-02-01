@@ -34,7 +34,7 @@ class MovepeopleDashboardController extends ControllerBase {
 
   public static function create(ContainerInterface $container) {
     return new static(
-            $container->get('database')
+        $container->get('database')
     );
   }
 
@@ -50,24 +50,24 @@ class MovepeopleDashboardController extends ControllerBase {
    */
   public function info() {
     $build['content'] = [
-        'first_line' => [
-            '#prefix' => '<p>',
-            '#markup' => 'Drupal includes jQuery and jQuery UI.',
-            '#suffix' => '</p>',
+      'first_line' => [
+        '#prefix' => '<p>',
+        '#markup' => 'Drupal includes jQuery and jQuery UI.',
+        '#suffix' => '</p>',
+      ],
+      'second_line' => [
+        '#prefix' => '<p>',
+        '#markup' => 'We have two examples of using these:',
+        '#suffix' => '</p>',
+      ],
+      'examples_list' => [
+        '#theme' => 'item_list',
+        '#items' => [
+          'An accordion-style section reveal effect. This demonstrates calling a jQuery UI function using Drupal&#39;s rendering system.',
+          'Sorting according to numeric &#39;weight.&#39; This demonstrates attaching your own JavaScript code to individual page elements using Drupal&#39;s rendering system.',
         ],
-        'second_line' => [
-            '#prefix' => '<p>',
-            '#markup' => 'We have two examples of using these:',
-            '#suffix' => '</p>',
-        ],
-        'examples_list' => [
-            '#theme' => 'item_list',
-            '#items' => [
-                'An accordion-style section reveal effect. This demonstrates calling a jQuery UI function using Drupal&#39;s rendering system.',
-                'Sorting according to numeric &#39;weight.&#39; This demonstrates attaching your own JavaScript code to individual page elements using Drupal&#39;s rendering system.',
-            ],
-            '#type' => 'ol',
-        ],
+        '#type' => 'ol',
+      ],
     ];
 
     return $build;
@@ -80,7 +80,7 @@ class MovepeopleDashboardController extends ControllerBase {
     $content = array();
 
     $content['message'] = array(
-        '#markup' => $this->t('Generate a list of all entries in the database. There is no filter in the query.'),
+      '#markup' => $this->t('Generate a list of all entries in the database. There is no filter in the query.'),
     );
 
     $rows = array();
@@ -91,10 +91,10 @@ class MovepeopleDashboardController extends ControllerBase {
       $rows[] = array_map('Drupal\Component\Utility\SafeMarkup::checkPlain', (array) $entry);
     }
     $content['table'] = array(
-        '#type' => 'table',
-        '#header' => $headers,
-        '#rows' => $rows,
-        '#empty' => t('No entries available.'),
+      '#type' => 'table',
+      '#header' => $headers,
+      '#rows' => $rows,
+      '#empty' => t('No entries available.'),
     );
     // Don't cache this page.
     $content['#cache']['max-age'] = 0;
@@ -105,12 +105,12 @@ class MovepeopleDashboardController extends ControllerBase {
   public function getJsWeightImplementation() {
     // Create an array of items with random-ish weight values.
     $weights = array(
-        'red' => -4,
-        'blue' => -2,
-        'green' => -1,
-        'brown' => -2,
-        'black' => -1,
-        'purple' => -5,
+      'red' => -4,
+      'blue' => -2,
+      'green' => -1,
+      'brown' => -2,
+      'black' => -1,
+      'purple' => -5,
     );
 
     // Start building the content.
@@ -118,7 +118,7 @@ class MovepeopleDashboardController extends ControllerBase {
     // Main container DIV. We give it a unique ID so that the JavaScript can
     // find it using jQuery.
     $build['content'] = array(
-        '#markup' => '<div id="js-weights"></div>',
+      '#markup' => '<div id="js-weights"></div>',
     );
     // Attach library containing css and js files.
     $build['#attached']['library'][] = 'js_example/js_example.weights';
@@ -164,11 +164,11 @@ class MovepeopleDashboardController extends ControllerBase {
     }
 
     $build = array(
-        '#theme' => 'bc_2movepeople_dashboard',
-        "#title" => 'Dashboard',
-        "#subtitle" => $title,
-        "#user" => $user->id(),
-        '#progression_targets' => $progression_targets,
+      '#theme' => 'bc_2movepeople_dashboard',
+      "#title" => 'Dashboard',
+      "#subtitle" => $title,
+      "#user" => $user->id(),
+      '#progression_targets' => $progression_targets,
     );
     return $build;
   }
@@ -189,11 +189,11 @@ class MovepeopleDashboardController extends ControllerBase {
       //$progression_targets[$progrdata->id()]['form'] = \Drupal::formBuilder()->getForm(\Drupal\bc_2movepeople_dashboard\Form\MilestoneEditForm::class, $progrdata);
     }
     $build = array(
-        '#theme' => 'bc_2movepeople_milestone_dashboard',
-        "#title" => 'Dashboard Milestone',
-        "#user" => $user->id(),
-        "#subtitle" => $title,
-        '#milestone_targets' => $progression_targets
+      '#theme' => 'bc_2movepeople_milestone_dashboard',
+      "#title" => 'Dashboard Milestone',
+      "#user" => $user->id(),
+      "#subtitle" => $title,
+      '#milestone_targets' => $progression_targets
     );
     return $build;
   }
@@ -238,21 +238,41 @@ class MovepeopleDashboardController extends ControllerBase {
     $entity_progression_ids = array_keys($this->getProgressionTargets($user->id(), 'progressions'));
     $entity_milestone_ids = array_keys($this->getProgressionTargets($user->id(), 'target_milestone'));
 
-    $controls = [[
+    if (empty($entity_progression_ids)) {
+      $controls = [[
+      '#title' => $this->t('Create categories'),
+      '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
+      ]];
+    }
+    else {
+      $controls = [[
       '#title' => $this->t('Show category'),
       '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
-    ]];
+      ]];
+    }
 
     if (!empty($entity_progression_ids)) {
+
+      //Add 'Rate category' btn if there are any questions
+      $categories = node_load_multiple($entity_progression_ids);
+      foreach ($categories as $category) {
+        if (!empty($category->field_goal_ids->entity)) {
+          $controls['rate_category'] = [
+            '#title' => $this->t('Rate category'),
+            '#url' => Url::fromRoute('bc_2movepeople_rate_progression.user_rates_add', ['user' => $user->id()]),
+            '#attributes' => [
+              'class' => ['btn-progress', 'use-ajax'],
+              'data-dialog-type' => 'modal',
+            ],
+          ];
+          break;
+        }
+        else {
+          //No questions - do not show 'Rate category' btn, but add a message
+          $build['#table_progression']['message'] = t('To rate users you have to add Categories and question inside categories');
+        }
+      }
       $result_progression = $this->getProgressionsTable($entity_progression_ids);
-      $controls['rate_category'] = [
-        '#title' => $this->t('Rate category'),
-        '#url' => Url::fromRoute('bc_2movepeople_rate_progression.user_rates_add', ['user' => $user->id()]),
-        '#attributes' => [
-          'class' => ['btn-progress', 'use-ajax'],
-          'data-dialog-type' => 'modal',
-        ],
-      ];
 
       if (\Drupal::currentUser()->hasPermission('access category template')) {
         $controls['save_to_tpl'] = [
@@ -266,6 +286,7 @@ class MovepeopleDashboardController extends ControllerBase {
       }
 
       if (!empty($result_progression['data'])) {
+
         $build['#table_progression']['data'] = [
           "#theme" => "bc_2movepeople_dashboard_progression_total_table",
           "#type" => 'progression',
@@ -273,19 +294,14 @@ class MovepeopleDashboardController extends ControllerBase {
           "#table_data" => $result_progression['data']
         ];
       }
-      else {
-        $controls['save_to_tpl']['#attributes']['disabled'] = 'disabled';
-        // @TODO Button still disabled when user has categories.
-        $controls['rate_category']['#attributes']['disabled'] = 'disabled';
-      }
     }
     $build['#table_progression']['controls'] = $this->getControlButtons($controls, ['class' => 'dashboard-overview__control-buttons']);
 
     $config = \Drupal::config('bc_2movepeople.settings');
     if (!empty($config->get('enable_milestones'))) {
       $conrtol_links = [[
-        '#title' => $this->t('Show Target Milestones'),
-        '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.milestones', ['user' => $user->id()]),
+      '#title' => $this->t('Show Target Milestones'),
+      '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.milestones', ['user' => $user->id()]),
       ]];
       $build['#table_milestone']['controls'] = $this->getControlButtons($conrtol_links, ['class' => ['dashboard-overview__control-buttons']]);
 
@@ -336,16 +352,16 @@ class MovepeopleDashboardController extends ControllerBase {
       $subgoals[$goal_id] = self::getGoal($goal_id, $progression_target);
     }
     $result = array(
-        'id' => $nodeid,
-        'title' => $nodetitle,
-        'type' => $type,
-        'completed' => $is_completed,
-        'date' => $date,
-        'rates' => null,
-        'activity_title' => $activity_title,
-        'evaluation' => $evaluation,
-        'subgoals' => $subgoals,
-        'is_manager' => $is_manager
+      'id' => $nodeid,
+      'title' => $nodetitle,
+      'type' => $type,
+      'completed' => $is_completed,
+      'date' => $date,
+      'rates' => null,
+      'activity_title' => $activity_title,
+      'evaluation' => $evaluation,
+      'subgoals' => $subgoals,
+      'is_manager' => $is_manager
     );
     if (is_object($progression_target)) {
       $result['rates'] = bc_2movepeople_rate_progression_get_rates($progression_target->id(), $nodeid);
@@ -363,6 +379,7 @@ class MovepeopleDashboardController extends ControllerBase {
    * @return array
    *
    */
+
   public static function getProgressionTargets($user_id, $progression_type = 'progressions') {
 //    $query = \Drupal::database()->select('node', 'n')
 //      ->extend('\Drupal\Core\Database\Query\PagerSelectExtender')
@@ -419,6 +436,7 @@ class MovepeopleDashboardController extends ControllerBase {
    * @return array
    *
    */
+
   public static function getProgressionsTable($entity_ids) {
     $dates = array();
     $table = array();
@@ -483,7 +501,7 @@ class MovepeopleDashboardController extends ControllerBase {
       $table[$key] = array($title, $priority, $status);
     }
     return array('header' => $header,
-        'data' => $table);
+      'data' => $table);
   }
 
   /**
@@ -541,10 +559,10 @@ class MovepeopleDashboardController extends ControllerBase {
     }
 
     $build = array(
-        "#theme" => 'bc_2movepeople_dashboard_user_tasks_overview',
-        "#title" => $title,
-        "#tasks" => $tasks,
-        "#user" => $user->id(),
+      "#theme" => 'bc_2movepeople_dashboard_user_tasks_overview',
+      "#title" => $title,
+      "#tasks" => $tasks,
+      "#user" => $user->id(),
     );
 
     return $build;
@@ -691,7 +709,7 @@ class MovepeopleDashboardController extends ControllerBase {
     $account_roles = $account->getRoles();
 
     if (in_array("administrator", $account_roles) ||
-            in_array("2mp_manager", $account_roles)) {
+        in_array("2mp_manager", $account_roles)) {
       return AccessResult::allowed();
     }
     $route_name = \Drupal::routeMatch()->getRouteName();
@@ -749,10 +767,10 @@ class MovepeopleDashboardController extends ControllerBase {
   public static function sendMail($message) {
     $send_mail = new \Drupal\Core\Mail\Plugin\Mail\PhpMail();
     $message['headers'] = array(
-        'content-type' => 'text/html; charset=UTF-8; format=flowed; delsp=yes',
-        'MIME-Version' => '1.0',
-        'reply-to' => $message['from'],
-        'from' => $message['sender'] . ' <' . $message['from'] . '>'
+      'content-type' => 'text/html; charset=UTF-8; format=flowed; delsp=yes',
+      'MIME-Version' => '1.0',
+      'reply-to' => $message['from'],
+      'from' => $message['sender'] . ' <' . $message['from'] . '>'
     );
     return $send_mail->mail($message);
   }
@@ -769,7 +787,7 @@ class MovepeopleDashboardController extends ControllerBase {
    *
    * @return array
    */
-  public static function getControlButtons(array $links , array $attributes = []) {
+  public static function getControlButtons(array $links, array $attributes = []) {
     $build = [
       '#type' => 'container',
       '#attributes' => array_merge_recursive($attributes, ['class' => ['controll-buttons']])
