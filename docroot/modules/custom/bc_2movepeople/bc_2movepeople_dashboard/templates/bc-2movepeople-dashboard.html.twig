@@ -42,11 +42,14 @@
                         <a href="{{ path('bc_2movepeople_dashboard.progressions.edit', {'node': progression_target.id }) }}" 
                            class="btn btn-default btn-sm btn-progress">{{ 'Edit category'|trans }}</a>
                       </div>
-                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 right-btn-box">
-                        <a class="btn btn-default btn-sm btn-progress use-ajax"  data-dialog-type = "modal"
-                          href="/rates/{{ progression_target.id }}/add" {% if progression_target.goals is empty %} disabled {%
-                        endif %}>{{ 'Rate category'|trans }}</a>
-                      </div>
+                          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 right-btn-box">
+                            {% if progression_target.goals is empty %}
+                              {{ 'There is no question in categories to rate it' |trans }}
+                            {% else %}
+                              <a class="btn btn-default btn-sm btn-progress use-ajax"  data-dialog-type = "modal"
+                                href="/rates/{{ progression_target.id }}/add">{{ 'Rate category'|trans }}</a>
+                            {% endif %}
+                           </div>
                     </div>
                     {% if progression_target.goals %}
                       <div class="div-goals">
