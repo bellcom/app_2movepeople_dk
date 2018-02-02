@@ -8769,7 +8769,6 @@ html {
       width: 245px; }
 
 .main-container {
-  margin-bottom: 50px;
   /*  .main-container__content {
     padding-right: $main-container-content-padding - 45px;
   }*/ }
@@ -8782,19 +8781,18 @@ html {
   padding-left: 245px;
   -webkit-transition: all 0.4s ease 0s;
        -o-transition: all 0.4s ease 0s;
-          transition: all 0.4s ease 0s; }
+          transition: all 0.4s ease 0s;
+  width: 99%; }
   #page-wrapper.active {
     padding-left: 0; }
     #page-wrapper.active #sidebar-wrapper {
       left: 0; }
   #page-wrapper #sidebar-wrapper {
-    top: 0;
     margin-left: -245px;
     left: 0;
     height: 100%;
-    position: fixed;
-    overflow: hidden;
-    z-index: 1000;
+    float: left;
+    margin-top: -50px;
     -webkit-transition: all 0.4s ease 0s;
          -o-transition: all 0.4s ease 0s;
             transition: all 0.4s ease 0s;

@@ -115,7 +115,6 @@ html {
 
 .main-container {
   //margin-left: $left-container-width;
-  margin-bottom: 50px;
 
 /*  .main-container__content {
     padding-right: $main-container-content-padding - 45px;
@@ -132,7 +131,7 @@ html {
 #page-wrapper {
   padding-left: $left-container-width;
   transition: all 0.4s ease 0s;
-  
+  width:99%;
   &.active {
     padding-left: 0;
     
@@ -142,13 +141,11 @@ html {
   }
 
   #sidebar-wrapper {
-    top: 0;
     margin-left: -$left-container-width;
     left: 0;
     height: 100%;
-    position: fixed;
-    overflow: hidden;
-    z-index: 1000;
+    float: left;
+    margin-top: -50px;
     transition: all 0.4s ease 0s;
     background-color: $body-bg-secondary;
   }
