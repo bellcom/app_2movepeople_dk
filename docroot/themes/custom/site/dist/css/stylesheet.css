@@ -8783,10 +8783,13 @@ html {
        -o-transition: all 0.4s ease 0s;
           transition: all 0.4s ease 0s;
   width: 99%; }
+  #page-wrapper #sidebar-wrapper {
+    display: block; }
   #page-wrapper.active {
     padding-left: 0; }
     #page-wrapper.active #sidebar-wrapper {
-      left: 0; }
+      left: 0;
+      display: none; }
   #page-wrapper #sidebar-wrapper {
     margin-left: -245px;
     left: 0;

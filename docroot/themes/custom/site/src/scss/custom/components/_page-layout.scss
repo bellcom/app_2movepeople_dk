@@ -132,11 +132,14 @@ html {
   padding-left: $left-container-width;
   transition: all 0.4s ease 0s;
   width:99%;
+  #sidebar-wrapper{
+    display: block;
+  }
   &.active {
     padding-left: 0;
-    
     #sidebar-wrapper {
       left: 0;
+      display: none;
     }
   }
 
