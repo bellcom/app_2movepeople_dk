@@ -141,7 +141,14 @@ class MovepeopleDashboardController extends ControllerBase {
    * @return array
    *   A renderable array.
    */
-  public function getJsAccordionImplementation(AccountInterface $user) {
+  public function getJsAccordionImplementation(AccountInterface $user, $category_type = NULL) {
+    
+    //Redirect feedbacks route if option is disabled
+    $config = \Drupal::config('bc_2movepeople.settings');
+      if (empty($config->get('rates_separately')) && 'feedbacks' == $category_type) {
+        return $this->redirect('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]);
+      }
+    
     $title = t('Click on each section to expand or collapse the categories:');
     // Build using our theme. This gives us content, which is not a good
     // practice,.
@@ -150,6 +157,14 @@ class MovepeopleDashboardController extends ControllerBase {
     $entity_ids = self::getProgressionTargets($user->id());
     $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
     foreach ($nodes as $progrdata) {
+      if (!empty($config->get('rates_separately'))) {
+        if ($progrdata->get('field_progression_type')->value == 'progression_feedback' && NULL == $category_type) {
+          continue;
+        }
+        if ($progrdata->get('field_progression_type')->value <> 'progression_feedback' && 'feedbacks' == $category_type) {
+          continue;
+        }
+      }
       $mtid = $progrdata->get('field_goal_ids')->getValue();
       $progression_targets[$progrdata->id()]['title'] = $progrdata->get('title')->value;
       if ($progrdata->get('field_progression_type')->value == 'progression_feedback') {
@@ -253,7 +268,7 @@ class MovepeopleDashboardController extends ControllerBase {
       if (!empty($config->get('rates_separately'))) {
         $controls['user_rate_category'] = [
           '#title' => $this->t('Doing well'),
-          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
+          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.feedbacks', ['user' => $user->id()]),
         ];
       }
       $controls['category'] = [

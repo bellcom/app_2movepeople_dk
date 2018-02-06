@@ -25,6 +25,16 @@ bc_2movepeople_dashboard.user.progressions:
     _permission: 'access user dashboard'
     _user_is_logged_in: 'TRUE'
 
+bc_2movepeople_dashboard.user.feedbacks:
+  path: '/dashboard/users/{user}/feedbacks'
+  defaults:
+    _title: 'User progressions'
+    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getJsAccordionImplementation'
+    category_type: 'feedbacks'
+  requirements:
+    _permission: 'access user dashboard'
+    _user_is_logged_in: 'TRUE'
+
 bc_2movepeople_dashboard.user.milestones:
   path: '/dashboard/users/{user}/milestones'
   defaults:
