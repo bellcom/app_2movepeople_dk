@@ -238,22 +238,9 @@ class MovepeopleDashboardController extends ControllerBase {
     $entity_progression_ids = array_keys($this->getProgressionTargets($user->id(), 'progressions'));
     $entity_milestone_ids = array_keys($this->getProgressionTargets($user->id(), 'target_milestone'));
 
-    if (empty($entity_progression_ids)) {
-      $controls = [[
-      '#title' => $this->t('Create categories'),
-      '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
-      ]];
-    }
-    else {
-      $controls = [[
-      '#title' => $this->t('Show category'),
-      '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
-      ]];
-    }
-
     if (!empty($entity_progression_ids)) {
 
-      //Add 'Rate category' btn if there are any questions
+      //We need to know if there are any questions on categories to show 'Rate' buttons or not
       $categories = node_load_multiple($entity_progression_ids);
       $questions_found = FALSE;
       foreach ($categories as $category) {
@@ -262,6 +249,20 @@ class MovepeopleDashboardController extends ControllerBase {
           break;
         }
       }
+      $config = \Drupal::config('bc_2movepeople.settings');
+      if (!empty($config->get('rates_separately'))) {
+        $controls['user_rate_category'] = [
+          '#title' => $this->t('Doing well'),
+          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
+        ];
+      }
+      $controls['category'] = [
+        '#title' => $this->t('Show category'),
+        '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
+      ];
+
+
+      //Add 'Rate category' btn if there are any questions
       if ($questions_found) {
         $controls['rate_category'] = [
           '#title' => $this->t('Rate category'),
@@ -299,6 +300,12 @@ class MovepeopleDashboardController extends ControllerBase {
           "#table_data" => $result_progression['data']
         ];
       }
+    }
+    else {
+      $controls = [[
+      '#title' => $this->t('Create categories'),
+      '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
+      ]];
     }
     $build['#table_progression']['controls'] = $this->getControlButtons($controls, ['class' => 'dashboard-overview__control-buttons']);
 
