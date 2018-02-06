@@ -8819,8 +8819,8 @@ html {
     padding: 0 10px; }
     .view-_mp-connected-users .main-container__user-compact-wrapper .field-content.edit-user {
       position: absolute;
-      bottom: 20px;
-      right: 20px; }
+      bottom: 25px;
+      right: 15px; }
 
 body.toolbar-fixed #page-wrapper #sidebar-wrapper {
   padding-top: 39px; }
