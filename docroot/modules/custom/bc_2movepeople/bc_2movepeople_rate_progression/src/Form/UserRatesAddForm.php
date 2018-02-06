@@ -158,6 +158,7 @@ class UserRatesAddForm extends FormBase {
               'goal_id' => $goal_id,
               'rate' => $rate_value,
               'uid' => $this->user->id(),
+              'rate_autor' => \Drupal::currentUser()->id(),
               'created' => time(),
             ))
             ->execute();
