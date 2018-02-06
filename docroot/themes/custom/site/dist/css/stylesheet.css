@@ -9610,7 +9610,8 @@ span.task.completed {
       opacity: 0.2;
       filter: alpha(opacity=20); }
   .user.user--compact h2.content, .user.user--compact .content.heading-h2 {
-    width: 100%; }
+    width: 100%;
+    margin-bottom: 40px; }
     .user.user--compact h2.content .field, .user.user--compact .content.heading-h2 .field {
       white-space: nowrap;
       width: 100%;
