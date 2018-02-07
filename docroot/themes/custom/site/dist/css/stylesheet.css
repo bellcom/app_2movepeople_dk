@@ -8817,10 +8817,6 @@ html {
   padding: 0 5px; }
   .view-_mp-connected-users .main-container__user-compact-wrapper {
     padding: 0 10px; }
-    .view-_mp-connected-users .main-container__user-compact-wrapper .field-content.edit-user {
-      position: absolute;
-      bottom: 25px;
-      right: 15px; }
 
 body.toolbar-fixed #page-wrapper #sidebar-wrapper {
   padding-top: 39px; }
@@ -9611,13 +9607,28 @@ span.task.completed {
       filter: alpha(opacity=20); }
   .user.user--compact h2.content, .user.user--compact .content.heading-h2 {
     width: 100%;
-    margin-bottom: 40px; }
+    margin-bottom: 20px; }
     .user.user--compact h2.content .field, .user.user--compact .content.heading-h2 .field {
       white-space: nowrap;
       width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
       line-height: normal; }
+  .user.user--compact .user-controls {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+        -ms-flex-pack: end;
+            justify-content: flex-end; }
+    .user.user--compact .user-controls a.btn {
+      font-size: 14px !important;
+      padding: 1px 6px;
+      margin-left: 1px;
+      margin-right: 1px; }
 
 @media (min-width: 768px) {
   .user.user--compact {
