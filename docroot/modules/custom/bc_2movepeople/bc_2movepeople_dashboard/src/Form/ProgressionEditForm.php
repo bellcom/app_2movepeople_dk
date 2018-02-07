@@ -20,6 +20,7 @@ use Drupal\Core\Url;
 class ProgressionEditForm extends FormBase {
 
   private $node;
+  private $limit;
   private $updated_msg = 'Records successfully updated.';
   private $deleted_msg = 'Records successfully deleted.';
   private $wrong_msg = 'Something wrong.';
@@ -27,9 +28,10 @@ class ProgressionEditForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL, $limit = NULL) {
     $this->node = $node;
-
+    $this->limit = $limit;
+    
     $form['#prefix'] = '<div class="dashboard-overview">';
     $form['#suffix'] = '</div>';
 
@@ -59,7 +61,7 @@ class ProgressionEditForm extends FormBase {
       '#type' => 'link',
       '#title' => $this->t('Add new Question'),
       '#name' => 'add_task_btn',
-      '#url' => Url::fromRoute('bc_2movepeople_dashboard.progression.tasks.add', array('node' => $this->node->id())),
+      '#url' => Url::fromRoute('bc_2movepeople_dashboard.progression.tasks.add', array('node' => $this->node->id(), 'limit' => $this->limit)),
       '#prefix' => '<div class="row custom-form-fields edit-progression__control-buttons"><div class="col-md-6 col-sm-6 col-xs-12 left-btn-box">',
       '#suffix' => '</div>',
       '#attributes' => [
@@ -90,7 +92,7 @@ class ProgressionEditForm extends FormBase {
     $form['actions']['back'] = [
       '#title' => $this->t('Back'),
       '#type' => 'link',
-      '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user[0]['target_id']]),
+      '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user[0]['target_id'], 'limit' => $this->limit]),
       '#attributes' => array(
         'class' => ['btn', 'btn-default', 'link-btn'],
       ),

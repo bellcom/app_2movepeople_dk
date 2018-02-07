@@ -31,6 +31,8 @@ use Drupal\user\Entity\User;
 class MovepeopleDashboardController extends ControllerBase {
 
   protected $database;
+  protected $f_str;
+  protected $p_str;
 
   public static function create(ContainerInterface $container) {
     return new static(
@@ -40,6 +42,8 @@ class MovepeopleDashboardController extends ControllerBase {
 
   public function __construct(Connection $database) {
     $this->database = $database;
+    $this->f_str = 'feedback';
+    $this->p_str = 'progress';
   }
 
   /**
@@ -141,14 +145,14 @@ class MovepeopleDashboardController extends ControllerBase {
    * @return array
    *   A renderable array.
    */
-  public function getJsAccordionImplementation(AccountInterface $user, $category_type = NULL) {
-    
-    //Redirect feedbacks route if option is disabled
+  public function getJsAccordionImplementation(AccountInterface $user, $limit = NULL) {
+
+    //Remove limit from progressions route if option is disabled
     $config = \Drupal::config('bc_2movepeople.settings');
-      if (empty($config->get('rates_separately')) && 'feedbacks' == $category_type) {
-        return $this->redirect('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]);
-      }
-    
+    if (empty($config->get('rates_separately')) && !empty($limit)) {
+      return $this->redirect('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]);
+    }
+
     $title = t('Click on each section to expand or collapse the categories:');
     // Build using our theme. This gives us content, which is not a good
     // practice,.
@@ -158,10 +162,10 @@ class MovepeopleDashboardController extends ControllerBase {
     $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
     foreach ($nodes as $progrdata) {
       if (!empty($config->get('rates_separately'))) {
-        if ($progrdata->get('field_progression_type')->value == 'progression_feedback' && NULL == $category_type) {
+        if ($progrdata->get('field_progression_type')->value == 'progression_feedback' && $this->p_str == $limit) {
           continue;
         }
-        if ($progrdata->get('field_progression_type')->value <> 'progression_feedback' && 'feedbacks' == $category_type) {
+        if ($progrdata->get('field_progression_type')->value <> 'progression_feedback' && $this->f_str == $limit) {
           continue;
         }
       }
@@ -184,6 +188,7 @@ class MovepeopleDashboardController extends ControllerBase {
       "#subtitle" => $title,
       "#user" => $user->id(),
       '#progression_targets' => $progression_targets,
+      "#limit" => $limit,
     );
     return $build;
   }
@@ -268,14 +273,19 @@ class MovepeopleDashboardController extends ControllerBase {
       if (!empty($config->get('rates_separately'))) {
         $controls['user_rate_category'] = [
           '#title' => $this->t('Doing well'),
-          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.feedbacks', ['user' => $user->id()]),
+          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id(), 'limit' => $this->f_str]),
+        ];
+        $controls['category'] = [
+          '#title' => $this->t('Show category'),
+          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id(), 'limit' => $this->p_str]),
         ];
       }
-      $controls['category'] = [
-        '#title' => $this->t('Show category'),
-        '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
-      ];
-
+      else {
+        $controls['category'] = [
+          '#title' => $this->t('Show category'),
+          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
+        ];
+      }
 
       //Add 'Rate category' btn if there are any questions
       if ($questions_found) {

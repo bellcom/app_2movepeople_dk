@@ -30,6 +30,7 @@ function bc_2movepeople_dashboard_theme() {
       'variables' => array('title' => NULL,
         'user' => NULL,
         'subtitle' => NULL,
+        'limit' => NULL,
         'progression_targets' => array()),
     ),
     'bc_2movepeople_milestone_dashboard' => array(

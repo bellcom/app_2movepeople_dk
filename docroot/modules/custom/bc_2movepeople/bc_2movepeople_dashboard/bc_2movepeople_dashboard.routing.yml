@@ -16,25 +16,6 @@ bc_2movepeople_dashboard.user.overview:
     _permission: 'access user dashboard'
     _user_is_logged_in: 'TRUE'
 
-bc_2movepeople_dashboard.user.progressions:
-  path: '/dashboard/users/{user}/progressions'
-  defaults:
-    _title: 'User progressions'
-    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getJsAccordionImplementation'
-  requirements:
-    _permission: 'access user dashboard'
-    _user_is_logged_in: 'TRUE'
-
-bc_2movepeople_dashboard.user.feedbacks:
-  path: '/dashboard/users/{user}/feedbacks'
-  defaults:
-    _title: 'User progressions'
-    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getJsAccordionImplementation'
-    category_type: 'feedbacks'
-  requirements:
-    _permission: 'access user dashboard'
-    _user_is_logged_in: 'TRUE'
-
 bc_2movepeople_dashboard.user.milestones:
   path: '/dashboard/users/{user}/milestones'
   defaults:
@@ -43,9 +24,9 @@ bc_2movepeople_dashboard.user.milestones:
   requirements:
     _permission: 'access user dashboard'
     _user_is_logged_in: 'TRUE'
-
+    
 bc_2movepeople_dashboard.user.progressions.add:
-  path: '/dashboard/users/{user}/progressions/add'
+  path: '/dashboard/users/{user}/progressions/add/{limit}'
   options:
     parameters:
       user:
@@ -53,11 +34,22 @@ bc_2movepeople_dashboard.user.progressions.add:
   defaults:
     _title: 'Add new category'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionAddForm'
+    limit: NULL
   requirements:
     _permission: 'access user dashboard'
     
+bc_2movepeople_dashboard.user.progressions:
+  path: '/dashboard/users/{user}/progressions/{limit}'
+  defaults:
+    _title: 'User progressions'
+    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getJsAccordionImplementation'
+    limit: NULL
+  requirements:
+    _permission: 'access user dashboard'
+    _user_is_logged_in: 'TRUE'
+    
 bc_2movepeople_dashboard.progressions.edit:
-  path: '/dashboard/progressions/{node}/edit'
+  path: '/dashboard/progressions/{node}/edit/{limit}'
   options:
     parameters:
       node:
@@ -65,11 +57,12 @@ bc_2movepeople_dashboard.progressions.edit:
   defaults:
     _title: 'Edit category'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionEditForm'
+    limit: NULL
   requirements:
     _permission: 'access user dashboard'
     
 bc_2movepeople_dashboard.progression.tasks.add:
-  path: '/dashboard/progressions/{node}/tasks/add'
+  path: '/dashboard/progressions/{node}/tasks/add/{limit}'
   options:
     parameters:
       node:
@@ -77,6 +70,7 @@ bc_2movepeople_dashboard.progression.tasks.add:
   defaults:
     _title: 'Add new category question'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionTaskEditForm'
+    limit: NULL
   requirements:
     _permission: 'access user dashboard'
 
