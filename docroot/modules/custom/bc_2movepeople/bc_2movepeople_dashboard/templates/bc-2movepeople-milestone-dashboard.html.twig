@@ -20,7 +20,8 @@
                        aria-expanded="{% if loop.first %}true{% else %}false{% endif %}"
                        aria-controls="accordion-milestones-collapse-{{ milestone_target.id }}">
                         <span class="glyphicon glyphicon-triangle-custom" aria-hidden="true"></span>
-                        {{ milestone_target.title }}
+                        {{ milestone_target.title }} 
+                        <a href="{{ path('<current>')}}" id="btn-evaluering" class="btn btn-default">{{ 'Evaluering'|trans }}</a>
                     </a>
                 </div>
                 <div id="accordion-milestones-collapse-{{ milestone_target.id }}"

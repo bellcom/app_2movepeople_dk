@@ -59,11 +59,11 @@
   .btn {
     margin-bottom: $form-control-margin-bottom;
   }
-  
+
   .left-btn-box, .right-btn-box {
     text-align: center;
   }
-  
+
   .div-chart {
     div {
       overflow-x: auto;
@@ -72,6 +72,19 @@
   }
   .dashboard-accordion__action-btn {
     text-align: center;
+  }
+  &#accordion-milestones{
+    & .panel-heading{
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      & a.btn#btn-evaluering{
+        color: white;
+        padding: 5px 20px;
+        color: white;
+        margin: 5px;
+      }
+    }
   }
 }
 
@@ -106,12 +119,17 @@
     .btn {
       margin-bottom: $form-control-margin-bottom;
     }
+    &#accordion-milestones{
+      & .panel-heading{
+        justify-content: space-between;
+      }
+    }
   }
 }
 
 // Tablet - only
 @include media-breakpoint-only(sm) {
-  
+
   .dashboard-accordion {
     .left-btn-box, .right-btn-box {
       text-align: right;
@@ -127,7 +145,7 @@
 
 // Desktop - and up
 @include media-breakpoint-up(md) {
-  
+
   .dashboard-accordion {
     .left-btn-box {
       text-align: left;
@@ -147,7 +165,7 @@
 
 // Desktop - only
 @include media-breakpoint-only(md) {
-  
+
   .dashboard-accordion {
     .left-btn-box {
       text-align: left;
@@ -162,12 +180,12 @@
       margin-bottom: $form-control-margin-bottom - 8px;
     }
   }
- 
+
 }
 
 // Large desktop - and up
 @include media-breakpoint-up(lg) {
-  
+
   .dashboard-accordion {
     .left-btn-box {
       text-align: left;
@@ -182,7 +200,7 @@
       margin-bottom: $form-control-margin-bottom - 8px;
     }
   }
-  
+
 }
 
 // Print

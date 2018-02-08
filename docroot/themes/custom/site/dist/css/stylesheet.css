@@ -9495,6 +9495,23 @@ span.input-group-addon {
     overflow-y: hidden; }
   .dashboard-accordion .dashboard-accordion__action-btn {
     text-align: center; }
+  .dashboard-accordion#accordion-milestones .panel-heading {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap; }
+    .dashboard-accordion#accordion-milestones .panel-heading a.btn#btn-evaluering {
+      color: white;
+      padding: 5px 20px;
+      color: white;
+      margin: 5px; }
 
 @media (min-width: 768px) {
   .dashboard-accordion .left-btn-box, .dashboard-accordion .right-btn-box {
@@ -9502,7 +9519,12 @@ span.input-group-addon {
   .dashboard-accordion .dashboard-accordion__action-btn {
     text-align: center; }
   .dashboard-accordion .btn {
-    margin-bottom: 10px; } }
+    margin-bottom: 10px; }
+  .dashboard-accordion#accordion-milestones .panel-heading {
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between; } }
 
 @media (min-width: 768px) and (max-width: 991px) {
   .dashboard-accordion .left-btn-box, .dashboard-accordion .right-btn-box {
