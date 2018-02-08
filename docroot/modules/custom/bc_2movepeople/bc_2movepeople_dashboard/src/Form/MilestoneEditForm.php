@@ -86,20 +86,7 @@ class MilestoneEditForm extends FormBase {
       ]
     ];
     
-    $form = CommonFormUtils::goalsContainer($form, $this->node, TRUE);
     
-    $form['add_manager_mt'] = [ 
-      '#type' => 'link',
-      '#title' => 'Add new manager task',
-      '#name' => 'add_manager_task_btn',
-      '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.manager.tasks.add', array('node' => $this->node->id())),
-      '#prefix' => '<div class="row custom-form-fields dashboard-milestone__control-buttons"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left-btn-box">',
-      '#suffix' => '</div></div>',
-      '#attributes' => [
-        'class' => ['use-ajax', 'btn', 'btn-default', 'link-btn'],
-        'data-dialog-type' => 'modal',
-      ]
-    ];
     
     // Disable caching on this form.
     $form_state->setCached(FALSE);

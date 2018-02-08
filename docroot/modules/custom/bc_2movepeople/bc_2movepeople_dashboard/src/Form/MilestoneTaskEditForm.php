@@ -40,6 +40,10 @@ class MilestoneTaskEditForm extends FormBase {
       '#placeholder' => $this->t('Task'),
       '#required' => TRUE,
     ];
+    $form['is_manager'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Is manager task'),
+    ];
     $form['activity_title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Activity'),
@@ -134,6 +138,7 @@ class MilestoneTaskEditForm extends FormBase {
     $activity_title = $form_state->getValue('activity_title');
     $evaluation = $form_state->getValue('evaluation');
     $due_date = $form_state->getValue('due_date');
+    $is_manager = $form_state->getValue('is_manager');
    
     $node = Node::create(array(
       'type' => 'goal',
@@ -142,7 +147,7 @@ class MilestoneTaskEditForm extends FormBase {
       'field_activity_title' => $activity_title,
       'field_due_date' => $due_date,
       'field_evaluation' => $evaluation,
-      'field_is_manager_task' => $this->is_manager
+      'field_is_manager_task' => $is_manager,
     ));
 
     if ($node->save() == SAVED_NEW) {

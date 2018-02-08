@@ -112,18 +112,6 @@ bc_2movepeople_dashboard.milestone.tasks.clone:
   requirements:
     _permission: 'access user dashboard'
 
-bc_2movepeople_dashboard.milestone.manager.tasks.add:
-  path: '/dashboard/milestones/{node}/manager/tasks/add'
-  options:
-    parameters:
-      node:
-        type: entity:node
-  defaults:
-    _title: 'Add new manager task'
-    _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneManagerTaskEditForm'
-  requirements:
-    _permission: 'access user dashboard'
-
 bc_2movepeople_dashboard.user.tasks:
   path: '/dashboard/users/{user}/tasks'
   options:
