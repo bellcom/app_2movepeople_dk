@@ -30,7 +30,7 @@
       {{- content|without('user_picture') -}} 
     </h2>
     <div class="user-controls">
-      <a href="{{ path('entity.user.edit_form', {'user': user.id, 'destination': '/dashboard'}) }}" class="btn btn-default">Edit</a>
+      <a href="{{ path('entity.user.edit_form', {'user': user.id, 'destination': '/dashboard'}) }}" class="btn btn-default">{{ 'Edit'|trans }}</a>
       <a href="/user/{{user.id }}/cancel?destination=/dashboard" class="btn btn-default">Remove</a>
     </div>
   {% endif %}
