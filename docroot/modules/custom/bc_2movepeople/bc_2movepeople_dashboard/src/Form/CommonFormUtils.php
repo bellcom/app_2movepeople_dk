@@ -152,6 +152,7 @@ class CommonFormUtils {
 
       $form['goals'][$goal_id]['clone_btn'] = [
         '#type' => 'link',
+        '#title' => '',
         '#name' => 'clone_btn' . $goal_id,
         '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.tasks.clone', array('user' => $user_id, 'node' => $goal_id)),
         '#attributes' => [
