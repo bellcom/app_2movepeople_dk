@@ -63,7 +63,7 @@ bc_2movepeople_dashboard.progressions.edit:
     _permission: 'access user dashboard'
     
 bc_2movepeople_dashboard.milestone.edit:
-  path: '/dashboard/milestone/{node}/edit/{limit}'
+  path: '/dashboard/milestone/{node}/edit'
   options:
     parameters:
       node:
@@ -71,7 +71,6 @@ bc_2movepeople_dashboard.milestone.edit:
   defaults:
     _title: 'Edit milestone'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionTargetMilestoneEditForm'
-    limit: NULL
   requirements:
     _permission: 'access user dashboard'
     
