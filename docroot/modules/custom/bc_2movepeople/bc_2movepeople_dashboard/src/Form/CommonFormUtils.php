@@ -60,7 +60,6 @@ class CommonFormUtils {
         . '<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 custom-form-label">' . t('Task') . '</div>'
         . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 custom-form-label">' . t('Activity') . '</div>'
         . '<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 custom-form-label">' . t('Deadline') . '</div>'
-        . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 custom-form-label">' . t('Evaluation') . '</div>'
         . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 custom-form-label">' . t('Actions') . '</div>'
         . '</div>'
       ];
@@ -96,14 +95,6 @@ class CommonFormUtils {
         '#default_value' => $goal['date'],
         '#prefix' => '<div class="visible-xs visible-sm col-sm-12 col-xs-12 custom-form-label">' . t('Deadline') . '</div>'
         . '<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">',
-        '#suffix' => '</div>'
-      ];
-
-      $form['goals'][$goal_id]['evaluation'] = [
-        '#type' => 'textfield',
-        '#default_value' => $goal['evaluation'],
-        '#prefix' => '<div class="visible-xs visible-sm col-sm-12 col-xs-12 custom-form-label">' . t('Evaluation') . '</div>'
-        . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">',
         '#suffix' => '</div>'
       ];
 
