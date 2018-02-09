@@ -74,6 +74,18 @@ bc_2movepeople_dashboard.milestone.edit:
   requirements:
     _permission: 'access user dashboard'
     
+bc_2movepeople_dashboard.milestone.evaluate:
+  path: '/dashboard/milestone/{node}/evaluate'
+  options:
+    parameters:
+      node:
+        type: entity:node
+  defaults:
+    _title: 'Evaluate milestone'
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionTargetMilestoneEvaluateForm'
+  requirements:
+    _permission: 'access user dashboard'
+    
 bc_2movepeople_dashboard.progression.tasks.add:
   path: '/dashboard/progressions/{node}/tasks/add/{limit}'
   options:

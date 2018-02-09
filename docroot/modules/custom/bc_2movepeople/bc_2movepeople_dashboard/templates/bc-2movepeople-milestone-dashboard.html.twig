@@ -21,7 +21,7 @@
              aria-controls="accordion-milestones-collapse-{{ milestone_target.id }}">
             <span class="glyphicon glyphicon-triangle-custom" aria-hidden="true"></span>
             {{ milestone_target.title }} 
-            <a href="{{ path('<current>')}}" id="btn-evaluering" class="btn btn-default">{{ 'Evaluering'|trans }}</a>
+            <a href="{{ path('bc_2movepeople_dashboard.milestone.evaluate', {'node': milestone_target.id})}}" id="btn-evaluering" class="use-ajax btn btn-default" data-dialog-type="modal" >{{ 'Evaluering'|trans }}</a>
           </a>
         </div>
         <div id="accordion-milestones-collapse-{{ milestone_target.id }}"
