@@ -21,6 +21,7 @@ bc_2movepeople_dashboard.user.milestones:
   defaults:
     _title: 'Dashboard'
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getMilestoneJsAccordionImplementation'
+    limit: 'milestone'
   requirements:
     _permission: 'access user dashboard'
     _user_is_logged_in: 'TRUE'
@@ -56,7 +57,20 @@ bc_2movepeople_dashboard.progressions.edit:
         type: entity:node
   defaults:
     _title: 'Edit category'
-    _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionEditForm'
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionTargetProgressionEditForm'
+    limit: NULL
+  requirements:
+    _permission: 'access user dashboard'
+    
+bc_2movepeople_dashboard.milestone.edit:
+  path: '/dashboard/milestone/{node}/edit/{limit}'
+  options:
+    parameters:
+      node:
+        type: entity:node
+  defaults:
+    _title: 'Edit milestone'
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionTargetMilestoneEditForm'
     limit: NULL
   requirements:
     _permission: 'access user dashboard'

@@ -213,7 +213,7 @@ class MovepeopleDashboardController extends ControllerBase {
       "#title" => 'Dashboard Milestone',
       "#user" => $user->id(),
       "#subtitle" => $title,
-      '#milestone_targets' => $progression_targets
+      '#milestone_targets' => $progression_targets,
     );
     return $build;
   }

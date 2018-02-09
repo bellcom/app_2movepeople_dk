@@ -29,8 +29,10 @@ class MilestoneTaskEditForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL) {
+
+    $this->return_url = \Drupal::request()->query->get('return_url');
     $this->parent_node = $node;
-    
+
     $form['#prefix'] = '<div id="bc_2movepeople-dashboard-milestone-task-edit-form">';
     $form['#suffix'] = '</div>';
 
@@ -62,10 +64,10 @@ class MilestoneTaskEditForm extends FormBase {
       '#placeholder' => $this->t('Deadline'),
       '#required' => TRUE,
     ];
-    
+
     // Disable caching on this form.
     $form_state->setCached(FALSE);
-    
+
     // Group submit handlers in an actions element with a key of "actions" so
     // that it gets styled correctly, and so that other modules may add actions to the form.
     $form['actions'] = [
@@ -83,12 +85,12 @@ class MilestoneTaskEditForm extends FormBase {
 //        'event' => 'click',
 //      ],
 //    ];
-    
+
     $form['actions']['submit'] = [
       '#type' => 'submit',
-      '#name' => 'submit',  
+      '#name' => 'submit',
       '#value' => $this->t('Save'),
-    ];    
+    ];
 
     return $form;
   }
@@ -98,16 +100,16 @@ class MilestoneTaskEditForm extends FormBase {
    */
   public function getFormId() {
     //return 'bc_2movepeople-dashboard-milestone-priority-edit-form'. '_' . $this->parent_node->id();
-    
+
     return 'bc_2movepeople-dashboard-milestone-task-edit-form';
   }
-  
+
   /**
    * {@inheritdoc}
    */
   public function ajaxSubmitForm(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
-    
+
     if ($form_state->getErrors()) {
       unset($form['#prefix']);
       unset($form['#suffix']);
@@ -116,7 +118,7 @@ class MilestoneTaskEditForm extends FormBase {
         '#weight' => -10,
       ];
       $response->addCommand(new HtmlCommand('#bc_2movepeople-dashboard-milestone-task-edit-form', $form));
-    } 
+    }
     else {
       if ($this->isSaved == SAVED_UPDATED) {
 //        $goals = CommonFormUtils::goalsContainer(array(), $this->parent_node);
@@ -128,43 +130,47 @@ class MilestoneTaskEditForm extends FormBase {
     return $response;
   }
 
-
   /**
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    
+
     $title = $form_state->getValue('title');
     $activity_title = $form_state->getValue('activity_title');
     $evaluation = $form_state->getValue('evaluation');
     $due_date = $form_state->getValue('due_date');
     $is_manager = $form_state->getValue('is_manager');
-   
+
     $node = Node::create(array(
-      'type' => 'goal',
-      'status' => 1,
-      'title' => $title,
-      'field_activity_title' => $activity_title,
-      'field_due_date' => $due_date,
-      'field_evaluation' => $evaluation,
-      'field_is_manager_task' => $is_manager,
+          'type' => 'goal',
+          'status' => 1,
+          'title' => $title,
+          'field_activity_title' => $activity_title,
+          'field_due_date' => $due_date,
+          'field_evaluation' => $evaluation,
+          'field_is_manager_task' => $is_manager,
     ));
 
     if ($node->save() == SAVED_NEW) {
-      
+
       $old_goal_ids = $this->parent_node->get('field_goal_ids')->getValue();
       $new_goal_ids = [];
-      foreach($old_goal_ids as $tid) {
+      foreach ($old_goal_ids as $tid) {
         $new_goal_ids[] = $tid['target_id'];
       }
       $new_goal_ids[] = $node->id();
       $this->parent_node->set('field_goal_ids', $new_goal_ids);
       $this->isSaved = $this->parent_node->save();
-      
-      $user = $this->parent_node->get('field_progression_user')->getValue();   
-      $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.user.milestones', 
-        ['user' => $user[0]['target_id']], ['fragment' => $this->parent_node->id()]));
+
+      $user = $this->parent_node->get('field_progression_user')->getValue();
+
+      if (isset($this->return_url)) {
+        $form_state->setRedirectUrl( Url::fromUri('internal:' . $this->return_url) );
+      }
+      else {
+        $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.user.milestones', ['user' => $user[0]['target_id']], ['fragment' => $this->parent_node->id()]));
+      }
     }
   }
-       
+
 }

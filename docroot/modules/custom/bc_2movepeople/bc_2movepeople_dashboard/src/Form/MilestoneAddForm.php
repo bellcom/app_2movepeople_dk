@@ -90,7 +90,7 @@ class MilestoneAddForm extends FormBase {
       'field_priority' => $form_state->getValue('priority'),
       'field_progression_status' => $form_state->getValue('status'),
       'field_progression_user' => $this->user->id(),
-      'field_progression_type' => 'target_milestone'
+      'field_progression_type' => 'target_milestone',
     ));
     
     if ($node->save() == SAVED_NEW) {

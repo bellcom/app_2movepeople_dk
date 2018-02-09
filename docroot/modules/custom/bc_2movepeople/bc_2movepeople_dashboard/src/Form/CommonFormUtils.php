@@ -175,7 +175,7 @@ class CommonFormUtils {
     return $form;
   }
 
-  public static function tasksContainer($form, $node) {
+  public static function tasksContainer($form, $node, $title = 'Question') {
 
     $goal_ids = $node->get('field_goal_ids')->getValue();
 
@@ -191,7 +191,7 @@ class CommonFormUtils {
       $form['goals']['header'] = [
         '#markup' => ''
         . '<div class="row custom-form-fields custom-form-label">'
-        . '<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 custom-form-label">' . t('Question') . '</div>'
+        . '<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 custom-form-label">' . t($title) . '</div>'
         . '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 custom-form-label">' . t('Actions') . '</div>'
         . '</div>'
       ];
