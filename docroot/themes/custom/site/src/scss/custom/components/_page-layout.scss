@@ -133,13 +133,13 @@ html {
   transition: all 0.4s ease 0s;
   width:99%;
   #sidebar-wrapper{
-    display: block;
+    display: none;
   }
   &.active {
     padding-left: 0;
     #sidebar-wrapper {
       left: 0;
-      display: none;
+      display: block;
     }
   }
 
@@ -274,6 +274,10 @@ body.toolbar-fixed {
 @include media-breakpoint-up(sm) {
   #page-wrapper #sidebar-wrapper {
     left: $left-container-width;
+    display: block;
+  }
+  #page-wrapper.active #sidebar-wrapper {
+    display: none;
   }
 
   body.toolbar-fixed {

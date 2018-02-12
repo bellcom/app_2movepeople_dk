@@ -8784,12 +8784,12 @@ html {
           transition: all 0.4s ease 0s;
   width: 99%; }
   #page-wrapper #sidebar-wrapper {
-    display: block; }
+    display: none; }
   #page-wrapper.active {
     padding-left: 0; }
     #page-wrapper.active #sidebar-wrapper {
       left: 0;
-      display: none; }
+      display: block; }
   #page-wrapper #sidebar-wrapper {
     margin-left: -245px;
     left: 0;
@@ -8881,7 +8881,10 @@ body.toolbar-fixed.toolbar-tray-open.toolbar-vertical #page-wrapper #sidebar-wra
 
 @media (min-width: 768px) {
   #page-wrapper #sidebar-wrapper {
-    left: 245px; }
+    left: 245px;
+    display: block; }
+  #page-wrapper.active #sidebar-wrapper {
+    display: none; }
   body.toolbar-fixed.toolbar-tray-open.toolbar-vertical #page-wrapper #sidebar-wrapper {
     left: 485px; }
   body.toolbar-fixed.toolbar-tray-open.toolbar-vertical #page-wrapper.active #sidebar-wrapper {
