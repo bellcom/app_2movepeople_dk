@@ -515,7 +515,7 @@ display:
         type: default
         options:
           grouping: {  }
-          row_class: 'col-md-3 col-sm-4 col-xs-6 main-container__user-compact-wrapper'
+          row_class: 'col-md-3 col-sm-6 col-xs-12 main-container__user-compact-wrapper'
           default_row_class: true
       row:
         type: fields
