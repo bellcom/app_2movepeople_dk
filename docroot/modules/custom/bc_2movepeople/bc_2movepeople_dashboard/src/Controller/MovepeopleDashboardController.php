@@ -272,7 +272,7 @@ class MovepeopleDashboardController extends ControllerBase {
       $config = \Drupal::config('bc_2movepeople.settings');
       if (!empty($config->get('rates_separately'))) {
         $controls['user_rate_category'] = [
-          '#title' => $this->t('Doing well'),
+          '#title' => $this->t('FIT'),
           '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id(), 'limit' => $this->f_str]),
         ];
         $controls['category'] = [
