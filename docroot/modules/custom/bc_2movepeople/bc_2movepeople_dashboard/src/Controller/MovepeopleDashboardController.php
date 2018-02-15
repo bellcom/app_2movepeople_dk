@@ -335,14 +335,14 @@ class MovepeopleDashboardController extends ControllerBase {
     $build['#table_progression']['controls'] = $this->getControlButtons($controls, ['class' => 'dashboard-overview__control-buttons']);
 
     $config = \Drupal::config('bc_2movepeople.settings');
+    $conrtol_links['rate_milestones'] = [
+      '#title' => $this->t('Samlet evaluering'),
+      '#url' => Url::fromRoute('<current>'), //TODO: Later this button will get all the "ratings from each "target milestone". But it does nothing for now.
+      ];
     if (!empty($config->get('enable_milestones'))) {
       $conrtol_links['show_milestones'] = [
       '#title' => $this->t('Show Target Milestones'),
       '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.milestones', ['user' => $user->id()]),
-      ];
-      $conrtol_links['rate_milestones'] = [
-      '#title' => $this->t('Samlet evaluering'),
-      '#url' => Url::fromRoute('<current>'), //TODO: Later this button will get all the "ratings from each "target milestone". But it does nothing for now.
       ];
       $build['#table_milestone']['controls'] = $this->getControlButtons($conrtol_links, ['class' => ['dashboard-overview__control-buttons']]);
 
