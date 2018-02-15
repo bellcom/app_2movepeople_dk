@@ -337,12 +337,19 @@ class MovepeopleDashboardController extends ControllerBase {
     $config = \Drupal::config('bc_2movepeople.settings');
     $conrtol_links['rate_milestones'] = [
       '#title' => $this->t('Samlet evaluering'),
-      '#url' => Url::fromRoute('<current>'), //TODO: Later this button will get all the "ratings from each "target milestone". But it does nothing for now.
-      ];
+      '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.evaluations', ['user' => $user->id()]),
+      '#attributes' => [
+        'class' => ['btn-progress', 'use-ajax', 'ui-dialog-buttonpane'],
+        'data-dialog-type' => 'modal',
+      ],
+    ];
+
+
+
     if (!empty($config->get('enable_milestones'))) {
       $conrtol_links['show_milestones'] = [
-      '#title' => $this->t('Show Target Milestones'),
-      '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.milestones', ['user' => $user->id()]),
+        '#title' => $this->t('Show Target Milestones'),
+        '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.milestones', ['user' => $user->id()]),
       ];
       $build['#table_milestone']['controls'] = $this->getControlButtons($conrtol_links, ['class' => ['dashboard-overview__control-buttons']]);
 
@@ -846,4 +853,47 @@ class MovepeopleDashboardController extends ControllerBase {
     return $build;
   }
 
+  /**
+   * Milestone Evaluations page.
+   *
+   * Show user Milestone targets and its
+   * evaluations
+   *
+   * @return array
+   *   A renderable array.
+   */
+  public function getMilestoneEvaluations(AccountInterface $user) {
+
+    $milestones = array();
+    $milestones_ids = self::getProgressionTargets($user->id(), 'target_milestone');
+    $milestones_data = array();
+    $milestone_nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($milestones_ids);
+
+    foreach ($milestone_nodes as $milestone_node) {
+      $milestones_data[$milestone_node->id()]['milestone'] = array(
+        'name' => $milestone_node->getTitle(),
+        'purpose' => $milestone_node->get('field_purpose')->getValue()[0]['value'],
+      );
+      $target_nodes = $milestone_node->get('field_goal_ids')->referencedEntities();
+      if (!empty($target_nodes)) {
+        foreach ($target_nodes as $target_node) {
+          $milestones_data[$milestone_node->id()]['targets'][$target_node->id()] = array(
+            'name' => $target_node->getTitle(),
+            'evaluation' => $target_node->get('field_evaluation')->getValue()[0]['value'],
+          );
+        }
+      }
+      else {
+        unset($milestones_data[$milestone_node->id()]);
+      }
+    }
+    $build = array(
+      '#theme' => 'bc_2movepeople_milestone_evaluations',
+      "#title" => t('Milestone evaluations'),
+      "#user" => $user->id(),
+      '#milestones_data' => $milestones_data,
+    );
+
+    return $build;
+  }
 }

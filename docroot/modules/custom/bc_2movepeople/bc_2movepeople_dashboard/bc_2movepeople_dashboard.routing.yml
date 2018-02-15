@@ -49,6 +49,16 @@ bc_2movepeople_dashboard.user.progressions:
     _permission: 'access user dashboard'
     _user_is_logged_in: 'TRUE'
     
+bc_2movepeople_dashboard.milestone.evaluations:
+  path: '/dashboard/users/{user}/milestone/evaluations'
+  defaults:
+    _title: 'User progressions'
+    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getMilestoneEvaluations'
+    limit: NULL
+  requirements:
+    _permission: 'access user dashboard'
+    _user_is_logged_in: 'TRUE'
+    
 bc_2movepeople_dashboard.progressions.edit:
   path: '/dashboard/progressions/{node}/edit/{limit}'
   options:
