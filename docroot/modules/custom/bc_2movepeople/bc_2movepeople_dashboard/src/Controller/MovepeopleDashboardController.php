@@ -392,7 +392,7 @@ class MovepeopleDashboardController extends ControllerBase {
     $activity_title = $nodedata->get('field_activity_title')->value;
     $evaluation = $nodedata->get('field_evaluation')->value;
     $type = (isset($date)) ? 'task' : 'goal';
-    $is_manager = $nodedata->get('field_is_manager_task')->value;
+    $responsible_manager = $nodedata->get('field_responsible_manager')->value;
 
     $subgoals = array();
     foreach ($subnodes as $tid) {
@@ -409,7 +409,7 @@ class MovepeopleDashboardController extends ControllerBase {
       'activity_title' => $activity_title,
       'evaluation' => $evaluation,
       'subgoals' => $subgoals,
-      'is_manager' => $is_manager
+      'responsible_manager' => $responsible_manager
     );
     if (is_object($progression_target)) {
       $result['rates'] = bc_2movepeople_rate_progression_get_rates($progression_target->id(), $nodeid);
@@ -583,7 +583,7 @@ class MovepeopleDashboardController extends ControllerBase {
       foreach ($goal_ids as $tid) {
         $goal_id = $tid['target_id'];
         $goal = self::getGoal($goal_id);
-        if ($goal['completed'] || $goal['is_manager']) {
+        if ($goal['completed'] || !empty($goal['responsible_manager'])) {
           continue;
         }
 
@@ -734,7 +734,7 @@ class MovepeopleDashboardController extends ControllerBase {
 
         $goal = self::getGoal($tid['target_id'], $progrdata);
         $is_remind = self::isRemindSession($goal['date']);
-        if (!$goal['is_manager'] && !$goal['completed'] && $is_remind) {
+        if (empty($goal['responsible_manager']) && !$goal['completed'] && $is_remind) {
           drupal_set_message($goal['title'] . ' - ' . ($is_remind == 2 ? t('due date expired') : t('due to expire')) . ': ' . $goal['date']);
         }
       }

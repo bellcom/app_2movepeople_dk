@@ -16,6 +16,7 @@ use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Url;
 //use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\node\Entity\Node;
+use \Drupal\user\Entity\User;
 
 class MilestoneTaskEditForm extends FormBase {
 
@@ -23,7 +24,6 @@ class MilestoneTaskEditForm extends FormBase {
   protected $isSaved;
   private $updated_msg = 'Records successfully updated.';
   private $wrong_msg = 'Something wrong.';
-  protected $is_manager = FALSE;
 
   /**
    * {@inheritdoc}
@@ -42,10 +42,31 @@ class MilestoneTaskEditForm extends FormBase {
       '#placeholder' => $this->t('Task'),
       '#required' => TRUE,
     ];
-    $form['is_manager'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Is manager task'),
+
+    // Get all managers of target user
+    $user = $this->parent_node->get('field_progression_user')->getValue();
+    $user_managers_ids = \Drupal::entityQuery('user')
+        ->condition('status', 1)
+        ->condition('roles', '2mp_manager')
+        ->condition('field_connected_users', $user[0]['target_id'], 'CONTAINS')
+        ->execute();
+    $user_managers = User::loadMultiple($user_managers_ids);
+
+    $options = array();
+    if (!empty($user_managers)) {
+      foreach ($user_managers as $user_manager) {
+        $options[$user_manager->id()] = $user_manager->getDisplayName();
+      }
+    }
+
+    $form['responsible_manager'] = [
+      '#type' => 'select',
+      '#title' => t('Responsible manager'),
+      '#required' => FALSE,
+      '#empty_option' => 'None',
+      '#options' => $options,
     ];
+
     $form['activity_title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Activity'),
@@ -139,7 +160,7 @@ class MilestoneTaskEditForm extends FormBase {
     $activity_title = $form_state->getValue('activity_title');
     $evaluation = $form_state->getValue('evaluation');
     $due_date = $form_state->getValue('due_date');
-    $is_manager = $form_state->getValue('is_manager');
+    $responsible_manager = $form_state->getValue('responsible_manager');
 
     $node = Node::create(array(
           'type' => 'goal',
@@ -148,7 +169,7 @@ class MilestoneTaskEditForm extends FormBase {
           'field_activity_title' => $activity_title,
           'field_due_date' => $due_date,
           'field_evaluation' => $evaluation,
-          'field_is_manager_task' => $is_manager,
+          'field_responsible_manager' => $responsible_manager,
     ));
 
     if ($node->save() == SAVED_NEW) {
@@ -165,7 +186,7 @@ class MilestoneTaskEditForm extends FormBase {
       $user = $this->parent_node->get('field_progression_user')->getValue();
 
       if (isset($this->return_url)) {
-        $form_state->setRedirectUrl( Url::fromUri('internal:' . $this->return_url) );
+        $form_state->setRedirectUrl(Url::fromUri('internal:' . $this->return_url));
       }
       else {
         $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.user.milestones', ['user' => $user[0]['target_id']], ['fragment' => $this->parent_node->id()]));

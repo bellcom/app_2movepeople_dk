@@ -97,7 +97,7 @@ class TaskReminderUtils  {
     
     $goals_query->condition('status', 1)
       ->condition('type', 'goal')
-      ->condition('field_is_manager_task', FALSE)
+      ->condition('field_responsible_manager', FALSE)
       ->condition('field_task_complete', FALSE)
       ->condition($time_group);
     $goals_ids = $goals_query->execute();
