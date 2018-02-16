@@ -30,7 +30,8 @@
         "drupal/field_permissions": "^1.0@beta",
         "drupal/flag": "^4.0@alpha",
         "drupal/administerusersbyrole": "^2.0",
-        "drupal/masquerade": "^2.0@beta"
+        "drupal/masquerade": "^2.0@beta",
+        "mpdf/mpdf": "^7.0"
     },
     "repositories": [
         {

@@ -854,15 +854,12 @@ class MovepeopleDashboardController extends ControllerBase {
   }
 
   /**
-   * Milestone Evaluations page.
-   *
-   * Show user Milestone targets and its
-   * evaluations
+   * Prepare a data array with milestones target evaluations
    *
    * @return array
-   *   A renderable array.
+   *
    */
-  public function getMilestoneEvaluations(AccountInterface $user) {
+  private function getMilestoneEvaluationsData(AccountInterface $user) {
 
     $milestones = array();
     $milestones_ids = self::getProgressionTargets($user->id(), 'target_milestone');
@@ -887,13 +884,51 @@ class MovepeopleDashboardController extends ControllerBase {
         unset($milestones_data[$milestone_node->id()]);
       }
     }
+
+    return $milestones_data;
+    
+  }
+
+  /**
+   * Milestone Evaluations page.
+   *
+   * Show user Milestone targets and its
+   * evaluations
+   *
+   * @return array
+   *   A renderable array.
+   */
+  public function getMilestoneEvaluations(AccountInterface $user) {
+
     $build = array(
       '#theme' => 'bc_2movepeople_milestone_evaluations',
       "#title" => t('Milestone evaluations'),
       "#user" => $user->id(),
-      '#milestones_data' => $milestones_data,
+      '#milestones_data' => $this->getMilestoneEvaluationsData($user),
     );
-
+    
     return $build;
+  }
+
+  /**
+   * Milestone Evaluations PDF page.
+   *
+   * Output a PDF of user evaluations
+   *
+   * @return void
+   */
+  public function getMilestoneEvaluationsPdf(AccountInterface $user) {
+    
+    $build = array(
+      '#theme' => 'bc_2movepeople_milestone_evaluations_pdf',
+      "#user" => $user->id(),
+      '#milestones_data' => $this->getMilestoneEvaluationsData($user),
+    );
+    
+    $html = \Drupal::service('renderer')->renderRoot($build);
+    $mpdf = new \Mpdf\Mpdf(['tempDir' => 'sites/default/files/tmp']);
+    $mpdf->WriteHTML($html);
+    $mpdf->Output('user_' . $user->id() . '_evaluations.pdf', 'D');
+    Exit;
   }
 }

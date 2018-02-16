@@ -69,6 +69,13 @@ function bc_2movepeople_dashboard_theme() {
         'milestones_data' => array(),
         ),
     ),
+    'bc_2movepeople_milestone_evaluations_pdf' => array(
+      'template' => 'bc-2movepeople-milestone-evaluations-pdf',
+      'variables' => array(
+        'user'  => NULL,
+        'milestones_data' => array(),
+        ),
+    ),
   );
 }
 

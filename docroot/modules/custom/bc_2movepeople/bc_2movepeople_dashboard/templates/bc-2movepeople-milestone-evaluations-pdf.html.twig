@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Template file for getMilestoneEvaluations.
+ * Template file for getMilestoneEvaluationsPdf.
  */
 #}
 
@@ -17,7 +17,4 @@
           {% endfor %}
     </ul>
   {% endfor %}
-
-  <a href="{{ path('bc_2movepeople_dashboard.milestone.evaluations.pdf', {'user': user})}}" id="btn-evaluering" class="btn btn-default">{{ 'Print as PDF'|trans }}</a>
-
 </div>
