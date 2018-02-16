@@ -10,6 +10,7 @@ namespace Drupal\bc_2movepeople_dashboard\Form;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 //use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
+use Drupal\user\Entity\User;
 
 class CommonFormUtils {
 
@@ -59,6 +60,7 @@ class CommonFormUtils {
         '#markup' => '<div class="row custom-form-fields custom-form-label hidden-xs hidden-sm">'
         . '<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 custom-form-label">' . t('Task') . '</div>'
         . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 custom-form-label">' . t('Activity') . '</div>'
+        . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 custom-form-label">' . t('Responsible manager') . '</div>'
         . '<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 custom-form-label">' . t('Deadline') . '</div>'
         . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 custom-form-label">' . t('Actions') . '</div>'
         . '</div>'
@@ -87,6 +89,32 @@ class CommonFormUtils {
         '#default_value' => $goal['activity_title'],
         '#prefix' => '<div class="visible-xs visible-sm col-sm-12 col-xs-12 custom-form-label">' . t('Activity') . '</div>'
         . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">',
+        '#suffix' => '</div>'
+      ];
+
+      // Get all managers of target user
+      $user_managers_ids = \Drupal::entityQuery('user')
+          ->condition('status', 1)
+          ->condition('roles', '2mp_manager')
+          ->condition('field_connected_users', $user_id, 'CONTAINS')
+          ->execute();
+      $user_managers = User::loadMultiple($user_managers_ids);
+
+      $options = array();
+      if (!empty($user_managers)) {
+        foreach ($user_managers as $user_manager) {
+          $options[$user_manager->id()] = $user_manager->getDisplayName();
+        }
+      }
+
+      $form['goals'][$goal_id]['responsible_manager'] = [
+        '#type' => 'select',
+        '#required' => FALSE,
+        '#default_value' => $goal['responsible_manager'],
+        '#empty_option' => 'None',
+        '#options' => $options,
+        '#prefix' => '<div class="visible-xs visible-sm col-sm-12 col-xs-12 custom-form-label">' . t('Responsible manager') . '</div>'
+        . '<div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">',
         '#suffix' => '</div>'
       ];
 
