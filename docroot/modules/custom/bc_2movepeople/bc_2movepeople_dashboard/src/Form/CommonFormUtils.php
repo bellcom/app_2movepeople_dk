@@ -60,8 +60,8 @@ class CommonFormUtils {
         '#markup' => '<div class="row custom-form-fields custom-form-label hidden-xs hidden-sm">'
         . '<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 custom-form-label">' . t('Task') . '</div>'
         . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 custom-form-label">' . t('Activity') . '</div>'
-        . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 custom-form-label">' . t('Responsible manager') . '</div>'
-        . '<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 custom-form-label">' . t('Deadline') . '</div>'
+        . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 custom-form-label">' . t('Deadline') . '</div>'
+        . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 custom-form-label">' . t('Responsible') . '</div>'
         . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 custom-form-label">' . t('Actions') . '</div>'
         . '</div>'
       ];
@@ -107,22 +107,22 @@ class CommonFormUtils {
         }
       }
 
+      $form['goals'][$goal_id]['due_date'] = [
+        '#type' => 'date',
+        '#default_value' => $goal['date'],
+        '#prefix' => '<div class="visible-xs visible-sm col-sm-12 col-xs-12 custom-form-label">' . t('Deadline') . '</div>'
+        . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">',
+        '#suffix' => '</div>'
+      ];
+      
       $form['goals'][$goal_id]['responsible_manager'] = [
         '#type' => 'select',
         '#required' => FALSE,
         '#default_value' => $goal['responsible_manager'],
         '#empty_option' => 'None',
         '#options' => $options,
-        '#prefix' => '<div class="visible-xs visible-sm col-sm-12 col-xs-12 custom-form-label">' . t('Responsible manager') . '</div>'
+        '#prefix' => '<div class="visible-xs visible-sm col-sm-12 col-xs-12 custom-form-label">' . t('Responsible') . '</div>'
         . '<div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">',
-        '#suffix' => '</div>'
-      ];
-
-      $form['goals'][$goal_id]['due_date'] = [
-        '#type' => 'date',
-        '#default_value' => $goal['date'],
-        '#prefix' => '<div class="visible-xs visible-sm col-sm-12 col-xs-12 custom-form-label">' . t('Deadline') . '</div>'
-        . '<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">',
         '#suffix' => '</div>'
       ];
 
