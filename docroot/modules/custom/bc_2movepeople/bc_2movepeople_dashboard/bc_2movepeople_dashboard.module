@@ -8,6 +8,8 @@
 use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\bc_2movepeople_dashboard\Misc\TaskReminderUtils;
+use Drupal\node\Entity\Node;
+use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 
 /**
  * @defgroup bc_2movepeople_dashboard.module: JavaScript
@@ -146,5 +148,48 @@ function bc_2movepeople_dashboard_node_delete($node) {
       drupal_set_message(t('Category @category_name is deleted. It had @goals goals and @rates rates values', 
       array('@category_name' => $node->getTitle(), '@goals' => $deleted_goals_count, '@rates' => $rates_values)), 'status');
     } 
+  }
+}
+
+/**
+ * Implements hook entity_presave()
+ */
+function bc_2movepeople_dashboard_entity_presave(\Drupal\Core\Entity\EntityInterface $entity) {
+  switch ($entity->bundle()) {
+    // Here we send notifications only if 'goal' content type has assigned to responsible manager
+    case 'goal':
+      $manager_id = $entity->get('field_responsible_manager')->getValue()[0]['target_id'];
+      $original_manager_id = $entity->original->get('field_responsible_manager')->getValue()[0]['target_id'];
+
+      if ((empty($original_manager_id) || ($original_manager_id <> $manager_id)) && !empty($manager_id)) {
+        // Get milestone of the goal
+        $bundle = 'progression_target';
+        $query = \Drupal::entityQuery('node');
+        $query->condition('status', 1);
+        $query->condition('type', $bundle);
+        $query->condition('field_goal_ids', $entity->id(), 'CONTAINS');
+        $query->range(0, 1);
+        $milestone_id = $query->execute();
+        $milestone = Node::load(array_pop($milestone_id));
+        // Get milestone user
+        $milestone_user = $milestone->get('field_progression_user')->referencedEntities()[0];
+        
+        $manager = $entity->get('field_responsible_manager')->referencedEntities()[0];
+        $config = \Drupal::config('bc_2movepeople_dashboard.AdminSettings');
+        $subject = $config->get('responsible_manager_email_subject');
+        $body = $config->get('responsible_manager_email_body');
+        $body = str_replace("@manager", $manager->getDisplayName(), $body);
+        $body = str_replace("@user", $milestone_user->getDisplayName(), $body);
+        $body = str_replace("@task_title", $entity->get('title')->value, $body);
+
+        MovepeopleDashboardController::sendMail([
+          'to' => $manager->get('mail')->value,
+          'from' => \Drupal::config('system.site')->get('mail'),
+          'subject' => $subject,
+          'body' => $body,
+          'sender' => t('System notify')
+        ]);
+        break;
+      }
   }
 }

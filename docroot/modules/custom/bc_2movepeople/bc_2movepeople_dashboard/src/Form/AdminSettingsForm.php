@@ -34,6 +34,7 @@ class AdminSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('bc_2movepeople_dashboard.AdminSettings');
     
+    //Complete email options
     $form['complete_email_options'] = array(
       '#type' => 'details',
       '#title' => $this->t('Complete email options'),
@@ -59,6 +60,33 @@ class AdminSettingsForm extends ConfigFormBase {
         @task_title  = '.$this->t('The title of the task that is being complete')
     ];
     
+    //Email options of responsible manager notification
+    $form['responsible_manager_email_options'] = array(
+      '#type' => 'details',
+      '#title' => $this->t('Email options of responsible manager notification'),
+    //  '#description' => '',
+      '#open' => TRUE,
+    );
+    
+    $form['responsible_manager_email_options']['responsible_manager_email_subject'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Responsible manager\'s email subject'),
+      '#maxlength' => 64,
+      '#size' => 64,
+      '#default_value' => $config->get('responsible_manager_email_subject'),
+    ];
+    
+    $form['responsible_manager_email_options']['responsible_manager_email_body'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Responsible manager\'s email body'),
+      '#default_value' => $config->get('responsible_manager_email_body'),
+      '#description' => '
+        @manager = '.$this->t('The name of the manager who will get this email').'<br />
+        @user = '.$this->t('The name of the user').'<br />
+        @task_title  = '.$this->t('The name of the task assigned to manager')
+    ];
+    
+    //Reminder options
     $form['reminder_options'] = array(
       '#type' => 'details',
       '#title' => $this->t('Reminder options'),
@@ -122,6 +150,9 @@ class AdminSettingsForm extends ConfigFormBase {
       ->set('task_reminder_due_date', $form_state->getValue('task_reminder_due_date'))
       ->set('task_reminder_email_subject', $form_state->getValue('task_reminder_email_subject'))
       ->set('task_reminder_email_body', $form_state->getValue('task_reminder_email_body'))
+      ->set('responsible_manager_email_subject', $form_state->getValue('responsible_manager_email_subject'))
+      ->set('responsible_manager_email_body', $form_state->getValue('responsible_manager_email_body'))
+        
       ->save();
   }
 
