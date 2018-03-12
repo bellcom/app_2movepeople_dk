@@ -158,8 +158,8 @@ function bc_2movepeople_dashboard_entity_presave(\Drupal\Core\Entity\EntityInter
   switch ($entity->bundle()) {
     // Here we send notifications only if 'goal' content type has assigned to responsible manager
     case 'goal':
-      $manager_id = $entity->get('field_responsible_manager')->getValue()[0]['target_id'];
-      $original_manager_id = $entity->original->get('field_responsible_manager')->getValue()[0]['target_id'];
+      $manager_id = $entity->field_responsible_manager->target_id;
+      $original_manager_id = $entity->original->field_responsible_manager->target_id;
 
       if ((empty($original_manager_id) || ($original_manager_id <> $manager_id)) && !empty($manager_id)) {
         // Get milestone of the goal
