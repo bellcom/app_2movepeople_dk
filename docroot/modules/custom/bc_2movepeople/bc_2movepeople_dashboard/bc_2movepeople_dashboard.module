@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\bc_2movepeople_dashboard\Misc\TaskReminderUtils;
 use Drupal\node\Entity\Node;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
+use Drupal\Core\Breadcrumb\Breadcrumb;
 
 /**
  * @defgroup bc_2movepeople_dashboard.module: JavaScript
@@ -191,5 +192,94 @@ function bc_2movepeople_dashboard_entity_presave(\Drupal\Core\Entity\EntityInter
         ]);
         break;
       }
+  }
+}
+
+/**
+ * Implements hook_system_breadcrumb_alter().
+ *
+ * @param $breadcrumb
+ * @param $route_match
+ * @param array $context
+ */
+function bc_2movepeople_dashboard_system_breadcrumb_alter(&$breadcrumb, $route_match, array $context) {
+  // Renaming link named 'Home' to 'Dashboard'.
+  foreach ($breadcrumb->getLinks() as $exisiting_link) {
+    if ($exisiting_link->getUrl()->getRouteName() == '<front>') {
+      $exisiting_link->setText(t('Dashboard'));
+    }
+  }
+
+  // User progressions - removing breadcrumb duplicate.
+  if ($route_match->getRouteName() == 'bc_2movepeople_dashboard.user.progressions') {
+    if ($route_match->getParameter('limit') != NULL) {
+      _bc_2movepeople_dashboard_remove_breadcrubm_duplicate($breadcrumb, $route_match->getRouteName());
+    }
+  }
+
+  // User progressions, User milestones
+  if ($route_match->getRouteName() == 'bc_2movepeople_dashboard.user.progressions'
+    || $route_match->getRouteName() == 'bc_2movepeople_dashboard.user.milestones'
+  ) {
+
+    if ($route_match->getParameter('limit') != NULL) {
+      _bc_2movepeople_dashboard_remove_breadcrubm_duplicate($breadcrumb, $route_match->getRouteName());
+    }
+
+    $user = $route_match->getParameter('user');
+    $breadcrumb->addLink(\Drupal\Core\Link::createFromRoute(t('User overview'), 'bc_2movepeople_dashboard.user.overview', ['user' => $user->id()]));
+  }
+
+  // Progression edit.
+  if ($route_match->getRouteName() == 'bc_2movepeople_dashboard.progressions.edit') {
+    if ($route_match->getParameter('limit') != NULL) {
+      _bc_2movepeople_dashboard_remove_breadcrubm_duplicate($breadcrumb, $route_match->getRouteName());
+    }
+
+    $progression = $route_match->getParameter('node');
+    $user_id = $progression->field_progression_user->target_id;
+
+    $limit = $route_match->getParameter('limit');
+
+    $breadcrumb->addLink(\Drupal\Core\Link::createFromRoute(t('User overview'), 'bc_2movepeople_dashboard.user.overview', ['user' => $user_id]));
+    $breadcrumb->addLink(\Drupal\Core\Link::createFromRoute(t('User progressions'), 'bc_2movepeople_dashboard.user.progressions', [
+      'user' => $user_id,
+      'limit' => $limit
+    ]));
+  }
+
+  // Milestone edit.
+  if ($route_match->getRouteName() == 'bc_2movepeople_dashboard.milestone.edit') {
+    $progression = $route_match->getParameter('node');
+    $user_id = $progression->field_progression_user->target_id;
+
+    $limit = $route_match->getParameter('limit');
+
+    $breadcrumb->addLink(\Drupal\Core\Link::createFromRoute(t('User overview'), 'bc_2movepeople_dashboard.user.overview', ['user' => $user_id]));
+    $breadcrumb->addLink(\Drupal\Core\Link::createFromRoute(t('User milestones'), 'bc_2movepeople_dashboard.user.milestones', [
+      'user' => $user_id,
+      'limit' => $limit
+    ]));
+  }
+}
+
+/**
+ * Removed the duplicate from the breadcrumbs, if one is found.
+ *
+ * The duplicate comes automatically when the route contains default parameters as NULL.
+ *
+ * @param $breadcrumb
+ * @param $route_name
+ */
+function _bc_2movepeople_dashboard_remove_breadcrubm_duplicate(&$breadcrumb, $route_name) {
+  $active_links = $breadcrumb->getLinks();
+  foreach ($breadcrumb->getLinks() as $key => $link) {
+    if ($link->getUrl()->getRouteName() == $route_name) {
+      unset($active_links[$key]);
+    }
+  }
+  if (count($active_links) != count($breadcrumb->getLinks())) {
+    $breadcrumb = new Breadcrumb();
+    $breadcrumb->setLinks($active_links);
   }
 }

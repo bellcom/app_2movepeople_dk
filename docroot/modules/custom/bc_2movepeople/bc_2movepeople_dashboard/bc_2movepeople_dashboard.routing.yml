@@ -19,7 +19,7 @@ bc_2movepeople_dashboard.user.overview:
 bc_2movepeople_dashboard.user.milestones:
   path: '/dashboard/users/{user}/milestones'
   defaults:
-    _title: 'Dashboard'
+    _title: 'User milestones'
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getMilestoneJsAccordionImplementation'
     limit: 'milestone'
   requirements:
