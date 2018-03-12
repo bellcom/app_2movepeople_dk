@@ -255,7 +255,7 @@ class MovepeopleDashboardController extends ControllerBase {
       "#user" => $user->id(),
     );
 
-    $entity_progression_ids = array_keys($this->getProgressionTargets($user->id(), 'progressions'));
+    $entity_progression_ids = array_keys($this->getProgressionTargets($user->id(), 'progression'));
     $entity_milestone_ids = array_keys($this->getProgressionTargets($user->id(), 'target_milestone'));
 
     if (!empty($entity_progression_ids)) {
