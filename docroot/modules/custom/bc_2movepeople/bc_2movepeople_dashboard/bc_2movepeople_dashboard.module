@@ -153,9 +153,9 @@ function bc_2movepeople_dashboard_node_delete($node) {
 }
 
 /**
- * Implements hook entity_presave()
+ * Implements hook entity_update().
  */
-function bc_2movepeople_dashboard_entity_presave(\Drupal\Core\Entity\EntityInterface $entity) {
+function bc_2movepeople_dashboard_entity_update(\Drupal\Core\Entity\EntityInterface $entity) {
   switch ($entity->bundle()) {
     // Here we send notifications only if 'goal' content type has assigned to responsible manager
     case 'goal':
@@ -172,9 +172,10 @@ function bc_2movepeople_dashboard_entity_presave(\Drupal\Core\Entity\EntityInter
         $query->range(0, 1);
         $milestone_id = $query->execute();
         $milestone = Node::load(array_pop($milestone_id));
+
         // Get milestone user
         $milestone_user = $milestone->get('field_progression_user')->referencedEntities()[0];
-        
+
         $manager = $entity->get('field_responsible_manager')->referencedEntities()[0];
         $config = \Drupal::config('bc_2movepeople_dashboard.AdminSettings');
         $subject = $config->get('responsible_manager_email_subject');
@@ -190,8 +191,8 @@ function bc_2movepeople_dashboard_entity_presave(\Drupal\Core\Entity\EntityInter
           'body' => $body,
           'sender' => t('System notify')
         ]);
-        break;
       }
+      break;
   }
 }
 
