@@ -194,7 +194,7 @@ class MovepeopleDashboardController extends ControllerBase {
   }
 
   public function getMilestoneJsAccordionImplementation(AccountInterface $user) {
-    $title = t('Click on each section to expand or collapse the progressions:');
+    $title = t('Click on each section to expand or collapse the milestone:');
 
     $progression_targets = array();
     $entity_ids = self::getProgressionTargets($user->id(), 'target_milestone');
