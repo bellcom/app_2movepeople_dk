@@ -21,6 +21,7 @@
     "core": [
       "src/vendor/bootstrap/dist/js/bootstrap.js",
       "src/vendor/jquery-sticky/jquery.sticky.js",
+      "node_modules/jquery-bar-rating/dist/jquery.barrating.min.js",
       "src/js/page-layout.js",
       "src/js/init.js"
     ]

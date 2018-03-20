@@ -49,6 +49,20 @@ var pageLayout = (function ($) {
                 footerAttached();
             });
         }
+
+        /**
+         * Bar rating.
+         */
+        Drupal.behaviors.barRating = {
+            attach: function (context) {
+                console.log('barRating');
+                $('.modal-form .form-control', context).once('barrating').barrating('show', {
+                    theme: 'bars-square',
+                    showValues: true,
+                    showSelectedRating: false
+                });
+            }
+        }
     }
 
     /**

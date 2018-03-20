@@ -1,0 +1,55 @@
+// --------------------------------------------------
+// Variables
+// --------------------------------------------------
+$color-bkg-selected: $body-bg;
+
+.br-theme-bars-square {
+
+  .br-widget {
+    height: 15px;
+    white-space: nowrap;
+
+    a {
+      display: block;
+      width: 30px;
+      height: 30px;
+      float: left;
+      border: 1px solid $table-border-color;
+      background-color: white;
+      margin: 2px;
+      text-decoration: none;
+      font-size: 14px;
+      line-height: 2;
+      text-align: center;
+
+      &.br-active,
+      &.br-selected {
+        border: 1px solid $color-bkg-selected;
+        background: $color-bkg-selected;
+      }
+    }
+
+    .br-current-rating {
+      clear: both;
+      width: 330px;
+      text-align: center;
+      display: block;
+      padding: .5em 0;
+    }
+  }
+
+  .br-readonly {
+    a {
+      cursor: default;
+
+      &.br-active, &.br-selected {
+        border: 1px solid $color-bkg-selected;
+        background: $color-bkg-selected;
+      }
+    }
+  }
+}
+
+.modal-form .select-wrapper:after {
+  display: none;
+}
