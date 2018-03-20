@@ -9142,7 +9142,7 @@ div.custom-nav-divider {
     padding: 20px 15px 20px 50px; } }
 
 .modal-dialog .modal-header {
-  background-color: #50afe9 !important;
+  background-color: #50afe8 !important;
   padding: 15px 35px;
   position: relative; }
   .modal-dialog .modal-header .close {
@@ -9303,6 +9303,40 @@ table.table-bordered-сustom td span.column-data-box {
       border-bottom: 0; }
     table.table-bordered-сustom td:last-child {
       border-bottom: 1px solid #ddd; } }
+
+.br-theme-bars-square .br-widget {
+  height: 15px;
+  white-space: nowrap; }
+  .br-theme-bars-square .br-widget a {
+    display: block;
+    width: 30px;
+    height: 30px;
+    float: left;
+    border: 1px solid #ddd;
+    background-color: white;
+    margin: 2px;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 2;
+    text-align: center; }
+    .br-theme-bars-square .br-widget a.br-active, .br-theme-bars-square .br-widget a.br-selected {
+      border: 1px solid #F2F5F7;
+      background: #F2F5F7; }
+  .br-theme-bars-square .br-widget .br-current-rating {
+    clear: both;
+    width: 330px;
+    text-align: center;
+    display: block;
+    padding: .5em 0; }
+
+.br-theme-bars-square .br-readonly a {
+  cursor: default; }
+  .br-theme-bars-square .br-readonly a.br-active, .br-theme-bars-square .br-readonly a.br-selected {
+    border: 1px solid #F2F5F7;
+    background: #F2F5F7; }
+
+.modal-form .select-wrapper:after {
+  display: none; }
 
 .dashboard-overview {
   padding: 22px;
