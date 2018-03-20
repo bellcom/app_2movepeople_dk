@@ -40,7 +40,7 @@ class UserRatesAddForm extends FormBase {
     if (!empty($progression_targets_ids)) {
       $form['tabs_start'] = [
         '#markup' => ''
-          . '<div class="modal-body__progression-tabs">'
+          . '<div class="modal-body__progression-tabs modal-form">'
           . '<div class="col-sm-4 col-xs-2">'
           . '<ul class="nav nav-tabs tabs-left vertical-text" role="tablist">'
       ];
