@@ -152,7 +152,6 @@ class MilestoneTaskAddForm extends FormBase {
 
     $title = $form_state->getValue('title');
     $activity_title = $form_state->getValue('activity_title');
-    $evaluation = $form_state->getValue('evaluation');
     $due_date = $form_state->getValue('due_date');
     $responsible_manager = $form_state->getValue('responsible_manager');
 
@@ -162,7 +161,6 @@ class MilestoneTaskAddForm extends FormBase {
           'title' => $title,
           'field_activity_title' => $activity_title,
           'field_due_date' => $due_date,
-          'field_evaluation' => $evaluation,
           'field_responsible_manager' => $responsible_manager,
     ));
 
