@@ -139,7 +139,7 @@ bc_2movepeople_dashboard.milestone.tasks.add:
         type: entity:node
   defaults:
     _title: 'Add new milestone task'
-    _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskEditForm'
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskAddForm'
   requirements:
     _permission: 'access user dashboard'
     

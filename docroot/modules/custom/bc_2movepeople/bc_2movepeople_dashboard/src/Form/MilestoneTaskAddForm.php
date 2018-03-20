@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskEditForm.
+ * Contains \Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskAddForm.
  */
 
 namespace Drupal\bc_2movepeople_dashboard\Form;
@@ -18,7 +18,7 @@ use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 use \Drupal\user\Entity\User;
 
-class MilestoneTaskEditForm extends FormBase {
+class MilestoneTaskAddForm extends FormBase {
 
   protected $parent_node;
   protected $isSaved;
@@ -33,7 +33,7 @@ class MilestoneTaskEditForm extends FormBase {
     $this->return_url = \Drupal::request()->query->get('return_url');
     $this->parent_node = $node;
 
-    $form['#prefix'] = '<div id="bc_2movepeople-dashboard-milestone-task-edit-form">';
+    $form['#prefix'] = '<div id="bc_2movepeople-dashboard-milestone-task-add-form">';
     $form['#suffix'] = '</div>';
 
     $form['title'] = [
@@ -71,12 +71,6 @@ class MilestoneTaskEditForm extends FormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Activity'),
       '#placeholder' => $this->t('Activity'),
-      '#required' => TRUE,
-    ];
-    $form['evaluation'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Evaluation'),
-      '#placeholder' => $this->t('Evaluation'),
       '#required' => TRUE,
     ];
     $form['due_date'] = [
@@ -120,9 +114,9 @@ class MilestoneTaskEditForm extends FormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    //return 'bc_2movepeople-dashboard-milestone-priority-edit-form'. '_' . $this->parent_node->id();
+    //return 'bc_2movepeople-dashboard-milestone-priority-add-form'. '_' . $this->parent_node->id();
 
-    return 'bc_2movepeople-dashboard-milestone-task-edit-form';
+    return 'bc_2movepeople-dashboard-milestone-task-add-form';
   }
 
   /**
@@ -138,7 +132,7 @@ class MilestoneTaskEditForm extends FormBase {
         '#type' => 'status_messages',
         '#weight' => -10,
       ];
-      $response->addCommand(new HtmlCommand('#bc_2movepeople-dashboard-milestone-task-edit-form', $form));
+      $response->addCommand(new HtmlCommand('#bc_2movepeople-dashboard-milestone-task-add-form', $form));
     }
     else {
       if ($this->isSaved == SAVED_UPDATED) {
