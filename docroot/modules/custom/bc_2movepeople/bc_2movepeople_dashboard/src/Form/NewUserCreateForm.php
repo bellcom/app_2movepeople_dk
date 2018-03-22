@@ -36,8 +36,8 @@ class NewUserCreateForm extends FormBase {
     $current_user = \Drupal::currentUser();
 
     // Loading user templates.
-    $confObject = \Drupal::configFactory()->getEditable(SaveToTemplateForm::$configName);
-    $templates = $confObject->get('template');
+    $conf_object = \Drupal::configFactory()->getEditable(SaveToTemplateForm::$configName);
+    $templates = $conf_object->get('template');
     $list[0] = t('none');
     if (empty($templates)) {
       $templates = array();

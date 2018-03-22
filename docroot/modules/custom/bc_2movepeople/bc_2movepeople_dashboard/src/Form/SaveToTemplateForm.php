@@ -25,13 +25,52 @@ class SaveToTemplateForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
 
     $form['title'] = [
-      '#markup' => '<h1 class="page-header">' . $this->t('Create template') . '</h1>'
+      '#markup' => '<h1 class="page-header">' . $this->t('Chose the action') .
+        '</h1>'
+    ];
+    $form['system_messages'] = [
+      '#markup' => '<div id="form-system-messages"></div>',
+    ];
+
+    // Loading user templates.
+    $conf_object = \Drupal::configFactory()->getEditable(SaveToTemplateForm::$configName);
+    $templates = $conf_object->get('template');
+    $options[0] = t('none');
+    if (empty($templates)) {
+      $templates = array();
+    }
+    foreach ($templates as $user => $template) {
+      $options[$user] = $template['template_name'];
+    }
+
+    $form['template_mode'] = [
+      '#type' => 'radios',
+      '#options' => [
+        'new' => t('Create new template'),
+        'update' => t('Update extisting template'),
+      ],
+      '#default_value' => 'new',
+    ];
+    $form['template_id'] = [
+      '#type' => 'select',
+      '#placeholder' => $this->t('Chose existing template'),
+      '#options' => $options,
+      '#states' => [
+        'visible' => [
+          'input[name="template_mode"]' => array('value' => 'update'),
+        ],
+      ],
     ];
 
     $form['template_name'] = [
       '#type' => 'textfield',
       '#placeholder' => $this->t('Template name'),
-      '#required' => TRUE,
+      '#size' => 40,
+      '#states' => [
+        'visible' => [
+          'input[name="template_mode"]' => array('value' => 'new'),
+        ],
+      ],
     ];
 
     // Disable caching on this form.
@@ -44,7 +83,7 @@ class SaveToTemplateForm extends FormBase {
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#name' => 'submit',
-      '#value' => $this->t('Create template'),
+      '#value' => $this->t('Save'),
       '#attributes' => [
         'class' => ['btn-submit-default'],
       ],
@@ -101,9 +140,8 @@ class SaveToTemplateForm extends FormBase {
       $categories_nodes = Node::loadMultiple($categories_nids);
 
       if (!empty($categories_nodes)) {
-        $result_array[$user]['template_name'] = $template_name;
         foreach ($categories_nodes as $categories_node) {
-          $result_array[$user]['categories'][] = [
+          $result_array[] = [
             'title' => $categories_node->get('title')->getValue()[0]['value'],
             'goals' => $this->_getGoalsTitlesByCategory($categories_node),
           ];
@@ -115,9 +153,17 @@ class SaveToTemplateForm extends FormBase {
       if (empty($template)) {
         $template = array();
       }
-      foreach ($result_array as $user => $categories) {
-        $template[$user] = $categories;
+
+      if ($form_state->getValue('template_id')) {
+        $template[$form_state->getValue('template_id')]['categories'] = $result_array;
       }
+      else {
+        $template[] = [
+          'template_name' => $template_name,
+          'categories' => $result_array,
+        ];
+      }
+
       $conf_object->set('template', $template);
       $conf_object->save();
 
@@ -154,6 +200,11 @@ class SaveToTemplateForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state) {}
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    if ($form_state->getValue('template_mode') == 'update'
+      && empty($form_state->getValue('template_id'))) {
+      $form_state->setErrorByName('template_id', $this->t('You have to choose the template.'));
+    }
+  }
 
 }
