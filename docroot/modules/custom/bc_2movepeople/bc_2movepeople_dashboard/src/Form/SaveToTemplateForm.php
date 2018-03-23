@@ -35,7 +35,7 @@ class SaveToTemplateForm extends FormBase {
     // Loading user templates.
     $conf_object = \Drupal::configFactory()->getEditable(SaveToTemplateForm::$configName);
     $templates = $conf_object->get('template');
-    $options[0] = t('none');
+    $options[''] = t('Select template');
     if (empty($templates)) {
       $templates = array();
     }
@@ -202,7 +202,12 @@ class SaveToTemplateForm extends FormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     if ($form_state->getValue('template_mode') == 'update'
-      && empty($form_state->getValue('template_id'))) {
+      && $form_state->getValue('template_id') == '') {
+      $form_state->setErrorByName('template_id', $this->t('You have to choose the template.'));
+    }
+
+    if ($form_state->getValue('template_mode') == 'new'
+      && empty($form_state->getValue('template_name'))) {
       $form_state->setErrorByName('template_id', $this->t('You have to choose the template.'));
     }
   }
