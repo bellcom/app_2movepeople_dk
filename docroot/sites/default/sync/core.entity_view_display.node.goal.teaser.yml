@@ -8,7 +8,7 @@ dependencies:
     - field.field.node.goal.field_activity_title
     - field.field.node.goal.field_due_date
     - field.field.node.goal.field_evaluation
-    - field.field.node.goal.field_is_manager_task
+    - field.field.node.goal.field_responsible_manager
     - field.field.node.goal.field_subgoal
     - field.field.node.goal.field_task_complete
     - node.type.goal
@@ -37,7 +37,7 @@ hidden:
   field_activity_title: true
   field_due_date: true
   field_evaluation: true
-  field_is_manager_task: true
+  field_responsible_manager: true
   field_subgoal: true
   field_task_complete: true
   langcode: true

@@ -8769,7 +8769,6 @@ html {
       width: 245px; }
 
 .main-container {
-  margin-bottom: 50px;
   /*  .main-container__content {
     padding-right: $main-container-content-padding - 45px;
   }*/ }
@@ -8782,19 +8781,21 @@ html {
   padding-left: 245px;
   -webkit-transition: all 0.4s ease 0s;
        -o-transition: all 0.4s ease 0s;
-          transition: all 0.4s ease 0s; }
+          transition: all 0.4s ease 0s;
+  width: 99%; }
+  #page-wrapper #sidebar-wrapper {
+    display: none; }
   #page-wrapper.active {
     padding-left: 0; }
     #page-wrapper.active #sidebar-wrapper {
-      left: 0; }
+      left: 0;
+      display: block; }
   #page-wrapper #sidebar-wrapper {
-    top: 0;
     margin-left: -245px;
     left: 0;
     height: 100%;
-    position: fixed;
-    overflow: hidden;
-    z-index: 1000;
+    float: left;
+    margin-top: -50px;
     -webkit-transition: all 0.4s ease 0s;
          -o-transition: all 0.4s ease 0s;
             transition: all 0.4s ease 0s;
@@ -8816,10 +8817,6 @@ html {
   padding: 0 5px; }
   .view-_mp-connected-users .main-container__user-compact-wrapper {
     padding: 0 10px; }
-    .view-_mp-connected-users .main-container__user-compact-wrapper .field-content.edit-user {
-      position: absolute;
-      bottom: 20px;
-      right: 20px; }
 
 body.toolbar-fixed #page-wrapper #sidebar-wrapper {
   padding-top: 39px; }
@@ -8884,7 +8881,10 @@ body.toolbar-fixed.toolbar-tray-open.toolbar-vertical #page-wrapper #sidebar-wra
 
 @media (min-width: 768px) {
   #page-wrapper #sidebar-wrapper {
-    left: 245px; }
+    left: 245px;
+    display: block; }
+  #page-wrapper.active #sidebar-wrapper {
+    display: none; }
   body.toolbar-fixed.toolbar-tray-open.toolbar-vertical #page-wrapper #sidebar-wrapper {
     left: 485px; }
   body.toolbar-fixed.toolbar-tray-open.toolbar-vertical #page-wrapper.active #sidebar-wrapper {
@@ -9532,6 +9532,23 @@ span.input-group-addon {
     overflow-y: hidden; }
   .dashboard-accordion .dashboard-accordion__action-btn {
     text-align: center; }
+  .dashboard-accordion#accordion-milestones .panel-heading {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap; }
+    .dashboard-accordion#accordion-milestones .panel-heading a.btn#btn-evaluering {
+      color: white;
+      padding: 5px 20px;
+      color: white;
+      margin: 5px; }
 
 @media (min-width: 768px) {
   .dashboard-accordion .left-btn-box, .dashboard-accordion .right-btn-box {
@@ -9539,7 +9556,12 @@ span.input-group-addon {
   .dashboard-accordion .dashboard-accordion__action-btn {
     text-align: center; }
   .dashboard-accordion .btn {
-    margin-bottom: 10px; } }
+    margin-bottom: 10px; }
+  .dashboard-accordion#accordion-milestones .panel-heading {
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between; } }
 
 @media (min-width: 768px) and (max-width: 991px) {
   .dashboard-accordion .left-btn-box, .dashboard-accordion .right-btn-box {
@@ -9643,13 +9665,29 @@ span.task.completed {
       opacity: 0.2;
       filter: alpha(opacity=20); }
   .user.user--compact h2.content, .user.user--compact .content.heading-h2 {
-    width: 100%; }
+    width: 100%;
+    margin-bottom: 20px; }
     .user.user--compact h2.content .field, .user.user--compact .content.heading-h2 .field {
       white-space: nowrap;
       width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
       line-height: normal; }
+  .user.user--compact .user-controls {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+        -ms-flex-pack: end;
+            justify-content: flex-end; }
+    .user.user--compact .user-controls a.btn {
+      font-size: 14px !important;
+      padding: 1px 6px;
+      margin-left: 1px;
+      margin-right: 1px; }
 
 @media (min-width: 768px) {
   .user.user--compact {

@@ -17,15 +17,17 @@ use Drupal\Core\Url;
 class ProgressionAddForm extends FormBase {
 
   private $user;
+  private $limit;
   private $updated_msg = 'Records successfully updated.';
   private $wrong_msg = 'Something wrong.';
 
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, UserInterface $user = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, UserInterface $user = NULL, $limit = NULL) {
     $this->user = $user;
-
+    $this->limit = $limit;
+    
     $form['title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Category'),
@@ -73,7 +75,7 @@ class ProgressionAddForm extends FormBase {
     ));
 
     if ($node->save() == SAVED_NEW) {
-      $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $this->user->id()]));
+      $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $this->user->id(), 'limit' => $this->limit]));
     }
 
     // Invalidate navigation block cachetag.

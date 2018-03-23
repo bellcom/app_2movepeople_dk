@@ -505,57 +505,6 @@ display:
           view_mode: compact
           entity_type: user
           plugin_id: rendered_entity
-        edit_user:
-          id: edit_user
-          table: users
-          field: edit_user
-          relationship: field_connected_users
-          group_type: group
-          admin_label: ''
-          label: ''
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: div
-          element_class: edit-user
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          text: Edit
-          entity_type: user
-          plugin_id: entity_link_edit
       defaults:
         fields: false
         style: false
@@ -566,7 +515,7 @@ display:
         type: default
         options:
           grouping: {  }
-          row_class: 'col-md-3 col-sm-4 col-xs-6 main-container__user-compact-wrapper'
+          row_class: 'col-lg-3 col-md-4 col-sm-6 col-xs-12 main-container__user-compact-wrapper'
           default_row_class: true
       row:
         type: fields

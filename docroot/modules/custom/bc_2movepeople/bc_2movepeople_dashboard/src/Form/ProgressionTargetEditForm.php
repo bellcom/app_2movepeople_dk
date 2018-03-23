@@ -17,19 +17,23 @@ use Drupal\node\NodeInterface;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Url;
 
-class ProgressionEditForm extends FormBase {
+abstract class ProgressionTargetEditForm extends FormBase {
 
   private $node;
+  private $limit;
   private $updated_msg = 'Records successfully updated.';
   private $deleted_msg = 'Records successfully deleted.';
   private $wrong_msg = 'Something wrong.';
 
+  abstract public function getFormId();
+    
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL, $limit = NULL) {
     $this->node = $node;
-
+    $this->limit = $limit;
+    
     $form['#prefix'] = '<div class="dashboard-overview">';
     $form['#suffix'] = '</div>';
 
@@ -40,6 +44,7 @@ class ProgressionEditForm extends FormBase {
       '#required' => TRUE,
     ];
 
+    
     $form['for_user_feedback'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('For user feedback'),
@@ -59,7 +64,7 @@ class ProgressionEditForm extends FormBase {
       '#type' => 'link',
       '#title' => $this->t('Add new Question'),
       '#name' => 'add_task_btn',
-      '#url' => Url::fromRoute('bc_2movepeople_dashboard.progression.tasks.add', array('node' => $this->node->id())),
+      '#url' => Url::fromRoute('bc_2movepeople_dashboard.progression.tasks.add', array('node' => $this->node->id(), 'limit' => $this->limit)),
       '#prefix' => '<div class="row custom-form-fields edit-progression__control-buttons"><div class="col-md-6 col-sm-6 col-xs-12 left-btn-box">',
       '#suffix' => '</div>',
       '#attributes' => [
@@ -90,7 +95,7 @@ class ProgressionEditForm extends FormBase {
     $form['actions']['back'] = [
       '#title' => $this->t('Back'),
       '#type' => 'link',
-      '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user[0]['target_id']]),
+      '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user[0]['target_id'], 'limit' => $this->limit]),
       '#attributes' => array(
         'class' => ['btn', 'btn-default', 'link-btn'],
       ),
@@ -109,13 +114,6 @@ class ProgressionEditForm extends FormBase {
     );
 
     return $form;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getFormId() {
-    return 'bc_2movepeople-dashboard-progression-edit-form';
   }
 
   public function ajaxFakeDelete(array &$form, FormStateInterface $form_state) {
@@ -191,11 +189,9 @@ class ProgressionEditForm extends FormBase {
 
       $title = $form_state->getValue('title');
       $this->node->set("title", $title);
-      $progression_type = 'progression';
       if ($form_state->getValue('for_user_feedback')) {
         $progression_type = 'progression_feedback';
       }
-      $this->node->set("field_progression_type", $progression_type);
       $this->node->save();
 
       $goals_arr = $form_state->getValue('goals');

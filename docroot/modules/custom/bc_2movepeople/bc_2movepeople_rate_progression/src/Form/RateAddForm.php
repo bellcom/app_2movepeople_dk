@@ -105,7 +105,8 @@ class RateAddForm extends FormBase {
             'progression_target_id' => $this->node->id(),
             'goal_id' => $rate_id,
             'rate' => $rate_value,
-            'uid' => \Drupal::currentUser()->id(),
+            'rate_autor' => \Drupal::currentUser()->id(),
+            'uid' => $this->node->get('field_progression_user')->getValue()[0]['target_id'],
             'created' => time(),
           ))
           ->execute();

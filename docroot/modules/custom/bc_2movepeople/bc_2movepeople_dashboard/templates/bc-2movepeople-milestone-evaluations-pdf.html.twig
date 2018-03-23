@@ -1,0 +1,20 @@
+{#
+
+/**
+ * @file
+ * Template file for getMilestoneEvaluationsPdf.
+ */
+#}
+
+<div class="milestone-evaluation">
+  {% for item in milestones_data %}
+    <p>{{ item.milestone.name }}</p>
+    <h3>{{ 'Evaluering' |trans}}</h3>
+    <p>{{ item.milestone.purpose }}</p>
+    <ul>
+      {% for target in item.targets %}
+        <li><p>{{ target.name }}</p>{{ target.evaluation }}</li>
+          {% endfor %}
+    </ul>
+  {% endfor %}
+</div>

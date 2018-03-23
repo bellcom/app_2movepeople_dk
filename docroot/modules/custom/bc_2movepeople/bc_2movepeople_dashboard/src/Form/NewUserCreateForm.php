@@ -36,8 +36,8 @@ class NewUserCreateForm extends FormBase {
     $current_user = \Drupal::currentUser();
 
     // Loading user templates.
-    $confObject = \Drupal::configFactory()->getEditable(SaveToTemplateForm::$configName);
-    $templates = $confObject->get('template');
+    $conf_object = \Drupal::configFactory()->getEditable(SaveToTemplateForm::$configName);
+    $templates = $conf_object->get('template');
     $list[0] = t('none');
     if (empty($templates)) {
       $templates = array();
@@ -266,19 +266,19 @@ class NewUserCreateForm extends FormBase {
     
     // Check Firstname.
     $firstname = CommonFormUtils::cleanInput($form_state->getValue('firstname'));
-    if (strlen($firstname) < 4) {
+    if (strlen($firstname) < 2) {
       $form_state->setErrorByName('firstname', $this->t('The First Name %firstname is not valid.', array('%firstname' => $firstname)));
     }
 
     // Check Lastname.
     $surname = CommonFormUtils::cleanInput($form_state->getValue('surname'));
-    if (strlen($surname) < 4) {
+    if (strlen($surname) < 2) {
       $form_state->setErrorByName('surname', $this->t('The Surname %surname is not valid.', array('%surname' => $surname)));
     }
 
     // Check Username.
     $username = CommonFormUtils::cleanInput($form_state->getValue('username'));
-    if (strlen($username) < 4) {
+    if (strlen($username) < 2) {
       $form_state->setErrorByName('username', $this->t('The Username %username is not valid.', array('%username' => $username)));
     }
 
@@ -299,7 +299,7 @@ class NewUserCreateForm extends FormBase {
     // Check Password.
     $password = CommonFormUtils::cleanInput($form_state->getValue('password'));
     $password_confirm = CommonFormUtils::cleanInput($form_state->getValue('password_confirm'));
-    if (strlen($password) < 4 || $password != $password_confirm) {
+    if (strlen($password) < 2 || $password != $password_confirm) {
       $form_state->setErrorByName('password', $this->t('The passwords do not match.'));
     }
   }

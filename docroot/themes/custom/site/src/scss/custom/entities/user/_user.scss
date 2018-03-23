@@ -42,8 +42,20 @@
 
     h2.content{
       width:100%;
+      margin-bottom: 20px;
       .field{
         @include text-trimmed();
+      }
+    }
+    & .user-controls{
+      display: flex;
+      width: 100%;
+      justify-content: flex-end;
+      & a.btn{
+        font-size: 14px !important;
+        padding: 1px 6px;
+        margin-left: 1px;
+        margin-right: 1px;
       }
     }
   }

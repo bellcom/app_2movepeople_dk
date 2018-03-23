@@ -18,14 +18,16 @@ class ProgressionTaskEditForm extends FormBase {
 
   protected $parent_node;
   protected $isSaved;
+  protected $limit;
   private $updated_msg = 'Records successfully updated.';
   private $wrong_msg = 'Something wrong.';
 
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL, $limit = NULL) {
     $this->parent_node = $node;
+    $this->limit = $limit;
     
     $goals_options = MovepeopleDashboardController::getProgressionGoalsList($this->parent_node);  
     
@@ -99,7 +101,7 @@ class ProgressionTaskEditForm extends FormBase {
       $node->set($field_name, $new_goal_ids);
       
       if ($node->save() == SAVED_UPDATED) {
-        $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.progressions.edit', ['node' => $this->parent_node->id()]));
+        $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.progressions.edit', ['node' => $this->parent_node->id(), 'limit' => $this->limit]));
       } else {
         drupal_set_message($this->t($this->wrong_msg));
       }

@@ -21,3 +21,4 @@ fluid_container: 1
 table_responsive: '-1'
 table: ''
 button_iconize: 0
+breadcrumb_home: 1
