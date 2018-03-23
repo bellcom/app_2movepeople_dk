@@ -1,0 +1,144 @@
+template:
+  -
+    template_name: 'Progression target'
+    categories:
+      progression:
+        -
+          title: 'Tro på egne evner'
+          goals:
+            -
+              title: 'Tror du, at du kan klare et fuldtids - eller deltidsjob?'
+              subgoals: {  }
+            -
+              title: 'Tror du, at dine kompetencer kan bruges på en arbejdsplads? '
+              subgoals: {  }
+            -
+              title: 'Hvordan er dine muligheder for Job/uddannelse?'
+              subgoals: {  }
+            -
+              title: 'Er du klar til uddannelse?'
+              subgoals: {  }
+        -
+          title: Helbredsmestring
+          goals:
+            -
+              title: 'Hvordan vil du alt i alt vurdere dit fysiske og psykiske helbred i forhold til, at kunne varetage et fuldtids - eller deltidsjob'
+              subgoals: {  }
+            -
+              title: 'Har du overskud i hverdagen til, at fokusere på at arbejde/følge et aktiverings- eller uddannelsesforløb eller nå et fleksjob?'
+              subgoals: {  }
+            -
+              title: 'Hvorledes vil du vurdere din nuværende helbredstilstand i almindelighed?'
+              subgoals: {  }
+            -
+              title: 'Hvordan synes du dit helbred er alt i alt?'
+              subgoals: {  }
+            -
+              title: 'Sover du om natten?'
+              subgoals: {  }
+            -
+              title: 'Spiser du mad flere gange om dagen?'
+              subgoals: {  }
+        -
+          title: Arbejdsmarkedsidentitet
+          goals:
+            -
+              title: 'Har du en ide om hvilket arbejde du gerne vil have?'
+              subgoals: {  }
+            -
+              title: 'Ved du, hvad du skal gøre for at forbedre dine muligheder for, at få et job?'
+              subgoals: {  }
+            -
+              title: 'Hvor ofte oplever du, at du er på vej i den rigtige retning?'
+              subgoals: {  }
+            -
+              title: 'synes du, der er et klart slutmål, med det forløb du er i?'
+              subgoals: {  }
+        -
+          title: 'Samarbejde på arbejdspladsen eller uddannelsen'
+          goals:
+            -
+              title: 'Hvor god er du til, at samarbejde med andre?'
+              subgoals: {  }
+            -
+              title: 'Hvordan har du det med, at tage kontakt til nogen, du ikke kender?'
+              subgoals: {  }
+        -
+          title: Netværk
+          goals:
+            -
+              title: 'Har du støtte fra familie og venner, når du har brug for hjælp?'
+              subgoals: {  }
+            -
+              title: 'Har du adgang til en person, som lytter til dig og hjælper dig, når du har behov for det?'
+              subgoals:
+                - k
+                - k
+        -
+          title: Planlægning
+          goals:
+            -
+              title: 'Planlægger du din dag, så du når det du gerne vil?'
+              subgoals: {  }
+            -
+              title: 'Har du overskud til det du skal nå i løbet af en dag?'
+              subgoals: {  }
+        -
+          title: 'Fokus på sund kost i min dagpleje'
+          goals:
+            -
+              title: 'Altid at tilbyde 4 forskellige slags grønt til frokost'
+              subgoals: {  }
+        -
+          title: 'Økonomi og boligforhold'
+          goals:
+            -
+              title: 'Er du tilfreds med din økonomiske situation?'
+              subgoals: {  }
+            -
+              title: 'Får du betalt dine regninger til tiden?'
+              subgoals: {  }
+            -
+              title: 'Slår pengene til hele måneden?'
+              subgoals: {  }
+            -
+              title: 'Bruger du dit nem-id'
+              subgoals: {  }
+            -
+              title: 'rydder du op og gør rent ugentligt'
+              subgoals: {  }
+            -
+              title: 'Får du besvaret din post?'
+              subgoals: {  }
+            -
+              title: 'Er du tilfreds med den måde du bor på?'
+              subgoals: {  }
+        -
+          title: Motivation
+          goals:
+            -
+              title: 'Er du god til at overholde aftaler?'
+              subgoals: {  }
+            -
+              title: 'Møder du til tiden?'
+              subgoals: {  }
+            -
+              title: 'Har du lyst til at stå op til en ny dag?'
+              subgoals: {  }
+            -
+              title: 'Har du lyst til at gå i gang med noget nyt?'
+              subgoals: {  }
+      progression_feedback:
+        -
+          title: SAS
+          goals:
+            -
+              title: 'Are you ok'
+              subgoals: {  }
+            -
+              title: 'Everything is fine'
+              subgoals: {  }
+        -
+          title: Feedback
+          goals: {  }
+
