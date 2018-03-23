@@ -208,7 +208,7 @@ class SaveToTemplateForm extends FormBase {
 
     if ($form_state->getValue('template_mode') == 'new'
       && empty($form_state->getValue('template_name'))) {
-      $form_state->setErrorByName('template_id', $this->t('You have to choose the template.'));
+      $form_state->setErrorByName('template_id', $this->t('Template name should be filled.'));
     }
   }
 
