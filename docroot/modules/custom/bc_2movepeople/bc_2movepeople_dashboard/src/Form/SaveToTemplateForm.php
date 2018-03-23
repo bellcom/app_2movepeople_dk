@@ -17,7 +17,7 @@ use Drupal\node\Entity\Node;
 class SaveToTemplateForm extends FormBase {
 
   protected $isSaved;
-  public static $configName = 'user_template.settings';
+  public static $configName = 'bc_2movepeople_dashboard.user_template_settings';
 
   /**
    * {@inheritdoc}
@@ -141,10 +141,21 @@ class SaveToTemplateForm extends FormBase {
 
       if (!empty($categories_nodes)) {
         foreach ($categories_nodes as $categories_node) {
-          $result_array[] = [
-            'title' => $categories_node->get('title')->getValue()[0]['value'],
-            'goals' => $this->_getGoalsTitlesByCategory($categories_node),
-          ];
+          $field_progression_type = $categories_node->get('field_progression_type')->getValue();
+          if (empty($field_progression_type[0]['value'])) {
+            continue;
+          }
+
+          switch ($field_progression_type[0]['value']) {
+            case 'progression':
+            case 'progression_feedback':
+              $categories[$field_progression_type[0]['value']][] = [
+                'title' => $categories_node->get('title')->getValue()[0]['value'],
+                'goals' => $this->_getGoalsTitlesByCategory($categories_node),
+              ];
+              break;
+          }
+
         }
       }
       $conf_object = \Drupal::configFactory()->getEditable(self::$configName);
@@ -154,13 +165,13 @@ class SaveToTemplateForm extends FormBase {
         $template = array();
       }
 
-      if ($form_state->getValue('template_id')) {
-        $template[$form_state->getValue('template_id')]['categories'] = $result_array;
+      if ($form_state->getValue('template_id') != '') {
+        $template[$form_state->getValue('template_id')]['categories'] = $categories;
       }
       else {
         $template[] = [
           'template_name' => $template_name,
-          'categories' => $result_array,
+          'categories' => $categories,
         ];
       }
 

@@ -202,16 +202,18 @@ class NewUserCreateForm extends FormBase {
       $this->isSaved = $user->save();
 
       // Attach category to the user.
-      foreach ($template['categories'] as $category) {
-        $category_name = $category['title'];
-        $category_node = Node::create([
-              'type' => 'progression_target',
-              'title' => $category_name,
-              'field_progression_user' => $user->id(),
-              'field_progression_type' => 'progression',
-              'field_goal_ids' => $this->_createGoals($category['goals']),
-        ]);
-        $category_node->save();
+      foreach ($template['categories'] as $progression_type => $categories) {
+        foreach ($categories as $category) {
+          $category_name = $category['title'];
+          $category_node = Node::create([
+            'type' => 'progression_target',
+            'title' => $category_name,
+            'field_progression_user' => $user->id(),
+            'field_progression_type' => $progression_type,
+            'field_goal_ids' => $this->_createGoals($category['goals']),
+          ]);
+          $category_node->save();
+        }
       }
 
       if ($this->isSaved != SAVED_NEW) {
