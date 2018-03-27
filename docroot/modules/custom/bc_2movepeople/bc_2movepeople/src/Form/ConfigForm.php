@@ -9,6 +9,7 @@ namespace Drupal\bc_2movepeople\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\bc_2movepeople_dashboard\Form\SaveToTemplateForm;
 
 /**
  * Class ConfigForm.
@@ -63,6 +64,23 @@ class ConfigForm extends ConfigFormBase {
       '#default_value' => $config->get('rates_separately'),
     ];
 
+    // Loading user templates.
+    $conf_object = \Drupal::configFactory()->getEditable(SaveToTemplateForm::$configName);
+    $templates = $conf_object->get('template');
+    $list[''] = t('none');
+    if (empty($templates)) {
+      $templates = array();
+    }
+    foreach ($templates as $user => $template) {
+      $list[$user] = $template['template_name'];
+    }
+    $form['functionality']['default_progression_template'] = [
+      '#type' => 'select',
+      '#title' => $this->t('New users default progression template'),
+      '#options' => $list,
+      '#default_value' => $config->get('default_progression_template'),
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -74,6 +92,7 @@ class ConfigForm extends ConfigFormBase {
       ->set('enable_milestones', $form_state->getValue('enable_milestones'))
       ->set('email_required', $form_state->getValue('email_required'))
       ->set('rates_separately', $form_state->getValue('rates_separately'))
+      ->set('default_progression_template', $form_state->getValue('default_progression_template'))
       ->save();
 
     parent::submitForm($form, $form_state);

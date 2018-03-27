@@ -83,11 +83,15 @@ class NewUserCreateForm extends FormBase {
       '#required' => $email_required,
     ];
 
+    //Get default progression template id 
+    $config = \Drupal::config('bc_2movepeople.settings');
+    $default_progression_template_id = $config->get('default_progression_template');    
     if ($current_user->hasPermission('access category template') && !empty($templates)) {
       $form['template_select'] = [
         '#type' => 'select',
         '#title' => $this->t('User template'),
         '#options' => $list,
+        '#default_value' => $default_progression_template_id,
       ];
     }
 
