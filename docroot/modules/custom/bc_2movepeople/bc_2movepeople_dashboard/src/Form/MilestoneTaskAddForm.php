@@ -55,7 +55,7 @@ class MilestoneTaskAddForm extends FormBase {
     $options = array();
     if (!empty($user_managers)) {
       foreach ($user_managers as $user_manager) {
-        $options[$user_manager->id()] = $user_manager->getDisplayName();
+        $options[$user_manager->id()] = $user_manager->field_user_firstname->value . ' ' . $user_manager->field_user_surname->value;
       }
     }
 
