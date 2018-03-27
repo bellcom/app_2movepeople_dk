@@ -870,6 +870,7 @@ class MovepeopleDashboardController extends ControllerBase {
       $milestones_data[$milestone_node->id()]['milestone'] = array(
         'name' => $milestone_node->getTitle(),
         'purpose' => $milestone_node->get('field_purpose')->getValue()[0]['value'],
+        'id' => $milestone_node->id(),
       );
       $target_nodes = $milestone_node->get('field_goal_ids')->referencedEntities();
       if (!empty($target_nodes)) {
