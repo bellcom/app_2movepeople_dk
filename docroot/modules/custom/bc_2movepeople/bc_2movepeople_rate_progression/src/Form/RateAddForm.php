@@ -76,7 +76,7 @@ class RateAddForm extends FormBase {
     // Add a submit button that handles the submission of the form.
     $form['actions']['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Save'),
+      '#value' => $this->t('Submit'),
       '#ajax' => [
         'callback' => '::ajaxSubmitForm',
         'event' => 'click',
