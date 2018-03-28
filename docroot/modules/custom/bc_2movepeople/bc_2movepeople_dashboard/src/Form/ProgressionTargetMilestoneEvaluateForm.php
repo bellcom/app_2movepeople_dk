@@ -17,6 +17,7 @@ use Drupal\Core\Cache\Cache;
 use Drupal\node\NodeInterface;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Url;
+use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 
 class ProgressionTargetMilestoneEvaluateForm extends FormBase {
 
@@ -32,18 +33,37 @@ class ProgressionTargetMilestoneEvaluateForm extends FormBase {
   public function getFormId() {
     return 'bc_2movepeople-dashboard-progression-edit-form';
   }
-    
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL, $limit = NULL) {
     $this->node = $node;
     $this->limit = $limit;
-    
-    $form['#prefix'] = '<div class="dashboard-overview">';
-    $form['#suffix'] = '</div>';
+    $goal_ids = $node->get('field_goal_ids')->getValue();
 
-    $form = CommonFormUtils::tasksEvaluateContainer($form, $this->node);
+    $form = [
+      'goals' => [
+        '#type' => 'container',
+        '#attributes' => ['id' => 'goals-box-' . $node->id()],
+      ],
+    ];
+
+    foreach ($goal_ids as $tid) {
+      $form['goals']['#tree'] = TRUE;
+      $goal_id = $tid['target_id'];
+      $goal = MovepeopleDashboardController::getGoal($goal_id, $node);
+
+      $form['goals'][$goal['id']] = [
+        '#type' => 'container'
+      ];
+
+      $form['goals'][$goal['id']]['field_evaluation'] = [
+        '#type' => 'textarea',
+        '#title' => $goal['title'],
+        '#default_value' => $goal['evaluation'],
+        '#suffix' => '<br/>',
+      ];
+    }
 
     // Disable caching on this form.
     $form_state->setCached(FALSE);
@@ -67,24 +87,16 @@ class ProgressionTargetMilestoneEvaluateForm extends FormBase {
       '#attributes' => [
         'class' => ['btn-default'],
       ],
-      '#prefix' => '<div class="col-md-6 col-sm-6 col-xs-12 right-btn-box">',
-        //'#suffix' => '</div>',
     ];
-
 
     return $form;
   }
 
-  
-
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
-    
-  }
-  
-  
+  public function submitForm(array &$form, FormStateInterface $form_state) {}
+
   /**
    * {@inheritdoc}
    */

@@ -223,35 +223,6 @@ class CommonFormUtils {
 
     return $form;
   }
-  
-  public static function tasksEvaluateContainer($form, $node, $title = 'Tasks') {
-
-    $goal_ids = $node->get('field_goal_ids')->getValue();
-
-    $form['goals'] = [
-      '#type' => 'container',
-      '#attributes' => ['id' => 'goals-box-' . $node->id()],
-    ];
-
-    foreach ($goal_ids as $tid) {
-
-      $form['goals']['#tree'] = TRUE;
-
-      $form['goals']['header'] = [
-        '#markup' => ''
-        . '<div class="row custom-form-fields custom-form-label">'
-        . '<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 custom-form-label">' . t($title) . '</div>'
-        . '</div>'
-      ];
-
-      $goal_id = $tid['target_id'];
-      $goal = MovepeopleDashboardController::getGoal($goal_id, $node);
-
-      $form = self::_getTasksEvaluateRow($form, $goal);
-    }
-
-    return $form;
-  }
 
   private static function _getTasksRow($form, $goal, $parent_subgoal_id = 0) {
 
@@ -297,32 +268,6 @@ class CommonFormUtils {
     return $form;
   }
 
-    private static function _getTasksEvaluateRow($form, $goal, $parent_subgoal_id = 0) {
-
-    $form['goals'][$goal['id']] = [
-      '#type' => 'container'
-    ];
-
-    $form['goals'][$goal['id']]['field_evaluation'] = [
-      '#type' => 'textarea',
-      '#title' => $goal['title'],
-      '#default_value' => $goal['evaluation'],
-      '#prefix' => '<div class="row custom-form-fields" id="goal_row_' . $goal['id'] . '">'
-      . ($parent_subgoal_id ? ''
-      . '<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>'
-      . '<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">' : '<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">'),
-      '#suffix' => '</div>'
-    ];
-
-    if (sizeof($goal['subgoals']) > 0) {
-      foreach ($goal['subgoals'] AS $subgoal) {
-        $form = self::_getTasksEvaluateRow($form, $subgoal, $goal['id']);
-      }
-    }
-
-    return $form;
-  }
-  
   public static function cleanInput($data) {
     //real_escape_string ?
     $data = trim($data);
