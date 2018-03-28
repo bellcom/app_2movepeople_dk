@@ -72,3 +72,7 @@ button.custom-checkbox-trash:before {
 .col-right {
   text-align: right;
 }
+.milestone-evaluation .milestone-evaluation-footer{
+    margin-bottom: 35px;
+    margin-top: 35px;
+}
