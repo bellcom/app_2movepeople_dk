@@ -121,6 +121,15 @@ class UserRatesAddForm extends FormBase {
           'event' => 'click',
         ],
       ];
+      $form['actions']['draft'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Save draft'),
+        '#ajax' => [
+          'callback' => '::ajaxSubmitForm',
+          'event' => 'click',
+        ],
+        '#submit' => ['::draftSubmitForm', '::submitForm'],
+      ];
     }
     else {
       $form['empty_message'] = [
@@ -145,7 +154,13 @@ class UserRatesAddForm extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $rates = $form_state->getValues(['rates']);
-
+    $time = time();
+    $status = 1;
+    $storage = $form_state->getStorage();
+    if (!empty($storage['draft'])) {
+      $time = NULL;
+      $status = 0;
+    }
     foreach ($rates as $rate_id => $rate_value) {
       $progression_target_id = array_shift(explode('_', $rate_id));
       $goal_id = array_pop(explode('_', $rate_id));
@@ -160,11 +175,27 @@ class UserRatesAddForm extends FormBase {
               'rate' => $rate_value,
               'uid' => $this->user->id(),
               'rate_autor' => \Drupal::currentUser()->id(),
-              'created' => time(),
+              'created' => $time,
+              'status' => $status,
             ))
             ->execute();
       }
     }
+  }
+
+  /**
+   * Implements the sumbit handler for draft.
+   *
+   * @param array $form
+   *   Render array representing from.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Current form state.
+   */
+  public function draftSubmitForm(array &$form, FormStateInterface $form_state) {
+    $storage = $form_state->getStorage();
+    // Mark submission as draft.
+    $storge['draft'] = TRUE;
+    $form_state->setStorage($storge);
   }
 
   /**

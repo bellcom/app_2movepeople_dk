@@ -64,10 +64,10 @@ class RateAddForm extends FormBase {
     }
     $form['#prefix'] = '<div id="bc_2movepeople-rate-progression-add-form">';
     $form['#suffix'] = '</div>';
-    
+    $form['#tree'] = TRUE;
     $progression_target = new Target($this->node->id());
     $goals =  $progression_target->getAllGoals();
-    
+
     foreach ($goals as $id){
       $goaldata = \Drupal::entityTypeManager()->getStorage('node')->load($id);
       if (empty($goaldata->get('field_due_date')->value)) {
@@ -80,6 +80,8 @@ class RateAddForm extends FormBase {
           '#empty_option' => 'None',
           '#options' => $options,
         ];
+
+        $result['rates'] = bc_2movepeople_rate_progression_get_rates($this->node->id(), $id);
       }
     }
 
@@ -99,6 +101,15 @@ class RateAddForm extends FormBase {
         'event' => 'click',
       ],
     ];
+    $form['actions']['draft'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Save draft'),
+      '#ajax' => [
+        'callback' => '::ajaxSubmitForm',
+        'event' => 'click',
+      ],
+      '#submit' => ['::draftSubmitForm', '::submitForm'],
+    ];
     return $form;
   }
 
@@ -114,20 +125,42 @@ class RateAddForm extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $rates = $form_state->getValues('rate');
+    $time = time();
+    $status = TRUE;
+    $storage = $form_state->getStorage();
+    if (!empty($storage['draft'])) {
+      $time = NULL;
+      $status = FALSE;
+    }
     foreach ($rates as $rate_id => $rate_value) {
       $node = \Drupal::entityQuery('node')->condition('nid', $rate_id)->execute();
-      if (!empty($rate_value) && !(empty($node)))
-        \Drupal::database()->insert('bc_2movepeople_rate_progression')
-          ->fields(array(
-            'progression_target_id' => $this->node->id(),
-            'goal_id' => $rate_id,
-            'rate' => $rate_value,
-            'rate_autor' => \Drupal::currentUser()->id(),
-            'uid' => $this->node->get('field_progression_user')->getValue()[0]['target_id'],
-            'created' => time(),
-          ))
-          ->execute();
+      if (!empty($rate_value) && !(empty($node))) {
+        \Drupal::entityTypeManager()->getStorage('rate')->create([
+          'progression_target_id' => $this->node->id(),
+          'goal_id' => $rate_id,
+          'rate' => $rate_value,
+          'rate_autor' => \Drupal::currentUser()->id(),
+          'uid' => $this->node->get('field_progression_user')->getValue()[0]['target_id'],
+          'created' => $time,
+          'status' => $status,
+        ])->save();
+      }
     }
+  }
+
+  /**
+   * Implements the sumbit handler for save the draft.
+   *
+   * @param array $form
+   *   Render array representing from.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Current form state.
+   */
+  public function draftSubmitForm(array &$form, FormStateInterface $form_state) {
+    $storage = $form_state->getStorage();
+    // Mark submission as draft.
+    $storge['draft'] = TRUE;
+    $form_state->setStorage($storge);
   }
 
   /**

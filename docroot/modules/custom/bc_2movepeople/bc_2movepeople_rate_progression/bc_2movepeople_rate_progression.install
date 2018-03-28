@@ -40,6 +40,10 @@ function bc_2movepeople_rate_progression_schema() {
         'type' => 'int',
         'unsigned' => TRUE,
       ),
+      'status' => array(
+        'description' => 'Status of the rate',
+        'type' => 'int',
+      ),
     ),
     'primary key' => array('id'),
     'indexes' => array(
@@ -54,11 +58,24 @@ function bc_2movepeople_rate_progression_schema() {
  * Add a rate autor id to table.
  */
 function bc_2movepeople_rate_progression_update_8002(&$sandbox) {
-  
+
   $spec = array(
     'description' => 'The user id who put the rate',
     'type' => 'int',
-    'not null' => TRUE); 
- $schema = Database::getConnection()->schema();
- $schema->addField('bc_2movepeople_rate_progression', 'rate_autor', $spec);
-  }
+    'not null' => TRUE);
+  $schema = Database::getConnection()->schema();
+  $schema->addField('bc_2movepeople_rate_progression', 'rate_autor', $spec);
+}
+
+/**
+ * Add status column to rate table.
+ */
+function bc_2movepeople_rate_progression_update_8003(&$sandbox) {
+  $spec = array(
+    'description' => 'Status of the rate',
+    'type' => 'int',
+    'default' => 1,
+  );
+  $schema = Database::getConnection()->schema();
+  $schema->addField('bc_2movepeople_rate_progression', 'status', $spec);
+}
