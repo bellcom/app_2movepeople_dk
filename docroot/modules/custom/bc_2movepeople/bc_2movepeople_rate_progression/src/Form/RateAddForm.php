@@ -53,6 +53,7 @@ class RateAddForm extends FormBase {
           '#type' => 'select',
           '#title' => $goaltitle,
           '#required' => FALSE,
+          '#attributes' => ['class' => ['rating']],
           '#empty_option' => 'None',
           '#options' => [
             1 => '1',
@@ -60,12 +61,11 @@ class RateAddForm extends FormBase {
             3 => '3',
             4 => '4',
             5 => '5'
-          ]
-        ];     
-       
-        }
-      }     
-    
+          ],
+        ];
+      }
+    }
+
     // Group submit handlers in an actions element with a key of "actions" so
     // that it gets styled correctly, and so that other modules may add actions
     // to the form.

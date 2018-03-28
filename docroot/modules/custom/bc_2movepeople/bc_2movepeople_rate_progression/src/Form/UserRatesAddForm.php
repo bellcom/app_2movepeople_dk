@@ -76,6 +76,7 @@ class UserRatesAddForm extends FormBase {
               '#title' => $goaltitle,
               '#required' => FALSE,
               '#empty_option' => $this->t('None'),
+              '#attributes' => ['class' => ['rating']],
               '#suffix' => '',
               '#options' => [
                 1 => '1',
