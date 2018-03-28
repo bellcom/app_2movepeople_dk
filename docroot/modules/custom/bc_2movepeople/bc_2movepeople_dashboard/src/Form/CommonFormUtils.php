@@ -103,7 +103,7 @@ class CommonFormUtils {
       $options = array();
       if (!empty($user_managers)) {
         foreach ($user_managers as $user_manager) {
-          $options[$user_manager->id()] = $user_manager->field_user_firstname->value . ' ' . $user_manager->field_user_surname->value;
+          $options[$user_manager->id()] = self::getUserName($user_manager);
         }
       }
 
@@ -274,6 +274,34 @@ class CommonFormUtils {
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     return $data;
+  }
+
+  /*
+   * Get friendly username
+   * 
+   * @params
+   * entity $user
+   * 
+   * @return string
+   * 
+   */
+
+  public static function getUserName($user) {
+
+    $user_name = NULL;
+
+    if (empty($user->field_user_firstname->value) and empty($user->field_user_surname->value)) {
+      $user_name = $user->getDisplayName();
+    } elseif (!empty($user->field_user_firstname->value) and ! empty($user->field_user_surname->value)) {
+      $user_name = $user->field_user_firstname->value . ' ' . $user->field_user_surname->value;
+    } else {
+      if (!empty($user->field_user_firstname->value)) {
+        $user_name = $user->field_user_firstname->value;
+      } else {
+        $user_name = $user->field_user_surname->value;
+      }
+    }
+    return $user_name;
   }
 
 }
