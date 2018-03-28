@@ -73,6 +73,11 @@ class MilestoneTaskAddForm extends FormBase {
       '#placeholder' => $this->t('Activity'),
       '#required' => TRUE,
     ];
+    $form['evaluation'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Evaluation'),
+      '#placeholder' => $this->t('Evaluation'),
+    ];
     $form['due_date'] = [
       '#type' => 'date',
       '#title' => $this->t('Deadline'),
@@ -152,16 +157,18 @@ class MilestoneTaskAddForm extends FormBase {
 
     $title = $form_state->getValue('title');
     $activity_title = $form_state->getValue('activity_title');
+    $evaluation = $form_state->getValue('evaluation');
     $due_date = $form_state->getValue('due_date');
     $responsible_manager = $form_state->getValue('responsible_manager');
 
     $node = Node::create(array(
-          'type' => 'goal',
-          'status' => 1,
-          'title' => $title,
-          'field_activity_title' => $activity_title,
-          'field_due_date' => $due_date,
-          'field_responsible_manager' => $responsible_manager,
+      'type' => 'goal',
+      'status' => 1,
+      'title' => $title,
+      'field_activity_title' => $activity_title,
+      'field_due_date' => $due_date,
+      'field_evaluation' => $evaluation,
+      'field_responsible_manager' => $responsible_manager,
     ));
 
     if ($node->save() == SAVED_NEW) {
