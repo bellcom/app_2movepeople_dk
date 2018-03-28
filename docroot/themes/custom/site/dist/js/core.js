@@ -57,7 +57,7 @@ var pageLayout = (function ($) {
         Drupal.behaviors.barRating = {
             attach: function (context) {
                 console.log('barRating');
-                $('.modal-form .form-control', context).once('barrating').barrating('show', {
+                $('.form-select.rating', context).once('barrating').barrating('show', {
                     theme: 'bars-square',
                     showValues: true,
                     showSelectedRating: false

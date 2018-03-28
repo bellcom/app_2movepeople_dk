@@ -9335,7 +9335,7 @@ table.table-bordered-сustom td span.column-data-box {
     border: 1px solid #F2F5F7;
     background: #F2F5F7; }
 
-.modal-form .select-wrapper:after {
+.select-wrapper.rating-wrapper:after {
   display: none; }
 
 .dashboard-overview {
