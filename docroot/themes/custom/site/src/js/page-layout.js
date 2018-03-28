@@ -38,18 +38,6 @@ var pageLayout = (function ($) {
      * Register event handlers
      */
     function registerEventHandlers() {
-
-        if ( ! Modernizr.touchevents) {
-
-            $(window).on('load', function () {
-                footerAttached();
-            });
-
-            $(window).on('resize', function () {
-                footerAttached();
-            });
-        }
-
         /**
          * Bar rating.
          */
