@@ -8782,7 +8782,7 @@ html {
   -webkit-transition: all 0.4s ease 0s;
        -o-transition: all 0.4s ease 0s;
           transition: all 0.4s ease 0s;
-  width: 99%; }
+  width: 100%; }
   #page-wrapper #sidebar-wrapper {
     display: none; }
   #page-wrapper.active {
