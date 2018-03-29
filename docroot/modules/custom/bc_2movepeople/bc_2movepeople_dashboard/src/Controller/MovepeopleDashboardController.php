@@ -392,7 +392,11 @@ class MovepeopleDashboardController extends ControllerBase {
     $activity_title = $nodedata->get('field_activity_title')->value;
     $evaluation = $nodedata->get('field_evaluation')->value;
     $type = (isset($date)) ? 'task' : 'goal';
-    $responsible_manager = $nodedata->get('field_responsible_manager')->getValue()[0]['target_id'];
+    if(!empty($nodedata->field_responsible_manager->entity)){
+      $responsible_manager = $nodedata->field_responsible_manager->entity->id();
+    } else {
+      $responsible_manager = NULL;
+    }
 
     $subgoals = array();
     foreach ($subnodes as $tid) {
