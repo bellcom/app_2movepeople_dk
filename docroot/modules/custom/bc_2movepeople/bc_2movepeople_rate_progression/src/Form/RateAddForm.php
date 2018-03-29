@@ -39,6 +39,29 @@ class RateAddForm extends FormBase {
     $this->node = $progression_target_id;
     $mtid = $this->node->get('field_goal_ids')->getValue();
 
+    if ($this->node->field_progression_type->value == 'progression_feedback') {
+      $options = [
+        1 => '1',
+        2 => '2',
+        3 => '3',
+        4 => '4',
+        5 => '5',
+        6 => '6',
+        7 => '7',
+        8 => '8',
+        9 => '9',
+        10 => '10',
+      ];
+    }
+    else {
+      $options = [
+        1 => '1',
+        2 => '2',
+        3 => '3',
+        4 => '4',
+        5 => '5'
+      ];
+    }
     $form['#prefix'] = '<div id="bc_2movepeople-rate-progression-add-form">';
     $form['#suffix'] = '</div>';
     
@@ -55,13 +78,7 @@ class RateAddForm extends FormBase {
           '#required' => FALSE,
           '#attributes' => ['class' => ['rating']],
           '#empty_option' => 'None',
-          '#options' => [
-            1 => '1',
-            2 => '2',
-            3 => '3',
-            4 => '4',
-            5 => '5'
-          ],
+          '#options' => $options,
         ];
       }
     }

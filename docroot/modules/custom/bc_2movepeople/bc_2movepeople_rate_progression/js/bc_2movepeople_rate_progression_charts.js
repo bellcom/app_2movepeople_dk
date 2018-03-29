@@ -160,7 +160,26 @@
   function drawChart(element, data, title = "", chart_type = 'line') {
       var cdata = google.visualization.arrayToDataTable(data);
 
-      var options = {
+      progression_type = $('#' + element).attr('progression');
+    
+      if(progression_type == 'feedback'){
+        var options = {
+          title: title,
+          bars: 'vertical',
+          vAxis: {minValue: 0,
+              ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+          },
+          chartArea: {
+              //height: "450px",
+              top: '5%',
+              bottom: '20%',
+              width: "90%"
+          },
+          legend: {position: "bottom"},
+          pointSize: 5
+      };
+      } else{
+        var options = {
           title: title,
           bars: 'vertical',
           vAxis: {minValue: 0,
@@ -175,6 +194,7 @@
           legend: {position: "bottom"},
           pointSize: 5
       };
+}
 
       var chart = (chart_type == 'line' ? 
               new google.visualization.LineChart(document.getElementById(element)) : 
