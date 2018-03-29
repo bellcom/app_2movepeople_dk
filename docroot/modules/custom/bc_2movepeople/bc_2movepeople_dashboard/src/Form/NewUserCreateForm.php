@@ -287,6 +287,9 @@ class NewUserCreateForm extends FormBase {
     if (strlen($username) < 2) {
       $form_state->setErrorByName('username', $this->t('The Username %username is not valid.', array('%username' => $username)));
     }
+    if (!empty(user_load_by_name($username))) {
+      $form_state->setErrorByName('username', $this->t('The Username %username already exists.', array('%username' => $username)));
+    }
 
     // check Email
     $email = CommonFormUtils::cleanInput(trim($form_state->getValue('email')));
@@ -294,6 +297,9 @@ class NewUserCreateForm extends FormBase {
       $form_state->setErrorByName('email', $this->t('The Email address is required'));
     }elseif(!\Drupal::service('email.validator')->isValid($email) and !empty($email)){
       $form_state->setErrorByName('email', $this->t('The Email address %mail is not valid.', array('%mail' => $email)));
+    }
+    if (!empty(user_load_by_mail($email))) {
+      $form_state->setErrorByName('email', $this->t('The Email address %mail already exists.', array('%mail' => $email)));
     }
 
     // Check template_select.
