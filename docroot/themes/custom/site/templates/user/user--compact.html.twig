@@ -24,7 +24,9 @@
     {% if content.user_picture|render %}
       {{- content.user_picture -}}
     {% else %}
-      <img class="default" src="/{{ base_path ~ directory }}/dist/img/icon-user.svg">
+      <div class="field">
+        <img class="default img-responsive" src="/{{ base_path ~ directory }}/dist/img/icon-user.svg">
+      </div>
     {% endif %}
     <h2 class="content">
       {{- content|without('user_picture') -}} 
