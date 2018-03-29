@@ -339,7 +339,7 @@ class MovepeopleDashboardController extends ControllerBase {
       '#title' => $this->t('Samlet evaluering'),
       '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.evaluations', ['user' => $user->id()]),
       '#attributes' => [
-        'class' => ['btn-progress', 'use-ajax', 'ui-dialog-buttonpane'],
+        'class' => ['btn', 'use-ajax', 'ui-dialog-buttonpane'],
         'data-dialog-type' => 'modal',
       ],
     ];
