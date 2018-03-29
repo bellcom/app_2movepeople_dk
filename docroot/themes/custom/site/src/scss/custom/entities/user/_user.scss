@@ -43,7 +43,8 @@
     h2.content{
       width:100%;
       margin-bottom: 20px;
-      .field{
+      .field, & a:nth-last-child(1){
+        display: block;
         @include text-trimmed();
       }
     }

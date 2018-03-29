@@ -9667,7 +9667,8 @@ span.task.completed {
   .user.user--compact h2.content, .user.user--compact .content.heading-h2 {
     width: 100%;
     margin-bottom: 20px; }
-    .user.user--compact h2.content .field, .user.user--compact .content.heading-h2 .field {
+    .user.user--compact h2.content .field, .user.user--compact .content.heading-h2 .field, .user.user--compact h2.content a:nth-last-child(1), .user.user--compact .content.heading-h2 a:nth-last-child(1) {
+      display: block;
       white-space: nowrap;
       width: 100%;
       overflow: hidden;
