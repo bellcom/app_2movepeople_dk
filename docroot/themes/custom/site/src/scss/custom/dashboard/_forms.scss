@@ -65,6 +65,45 @@ span.input-group-addon {
     margin-bottom: $form-control-margin-bottom;
   }
 }
+.dashboard-overview form[class^="bc-2movepeople-dashboard-milestone-edit-form-"] {
+  & .purpose {
+    height: 155px;
+  }
+  & .custom-form-fields.div-form {
+    padding: 2px 15px 2px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: normal;
+  }
+  & .custom-form-fields.div-form > *, 
+  & .custom-form-fields.custom-form-label > * {
+    flex: 1;
+    flex-grow: 1;
+  }
+  & .custom-form-fields.custom-form-label {
+    padding: 2px 15px 2px 15px;
+    display: flex;
+  }
+  & .custom-form-fields.custom-form-label > * {
+    margin-right: 15px;
+  }    
+  & .custom-form-fields.custom-form-label .custom-form-label-complete-btn {
+    margin-right: 0px;
+  }
+  & .custom-form-fields.div-form, & .custom-form-fields.custom-form-label {
+    & .custom-form-field-due-date, & .custom-form-label-due-date {
+      flex-grow: 0.6;
+    }
+  }
+  & .form-inline.form-item.form-type-date, & .custom-form-label-due-date > div {
+    width: 170px;
+    & input{
+      width: 100%;
+    }
+  }
+}
+
 
 // --------------------------------------------------
 // Variants
@@ -113,7 +152,7 @@ span.input-group-addon {
 // Desktop - and up
 @include media-breakpoint-up(md) {
   .div-form {
-      input, select, textarea {
+    input, select, textarea {
       margin-bottom: $form-control-margin-bottom - 8px;
     }
   }
@@ -131,8 +170,29 @@ span.input-group-addon {
 // Large desktop - and up
 @include media-breakpoint-up(lg) {
   .div-form {
-      input, select, textarea {
+    input, select, textarea {
       margin-bottom: $form-control-margin-bottom - 8px;
+    }
+  }
+  .dashboard-overview form[class^="bc-2movepeople-dashboard-milestone-edit-form-"] {
+    & .custom-form-fields.div-form {
+      flex-direction: row;
+      align-items: center;
+      & .form-item {
+        margin-right: 15px;
+        margin-bottom: 0px;
+      }
+    }
+    & .custom-form-fields.div-form ,& .custom-form-fields.custom-form-label {
+      & .dashboard-accordion__action-btn, 
+      & .custom-form-field-due-date, 
+      & .custom-form-label-complete-btn, 
+      & .custom-form-label-due-date {
+        flex: none;
+      }
+    }
+    & .custom-form-label-complete-btn {
+      width: 152px;
     }
   }
 }

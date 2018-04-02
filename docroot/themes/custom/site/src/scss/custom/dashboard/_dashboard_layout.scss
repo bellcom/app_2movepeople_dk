@@ -46,6 +46,9 @@ $dashboard-padding: 22px;
       margin-bottom: $form-control-margin-bottom;
     }
   }
+  .dashboard-milestone__control-buttons {
+    height: 55px; 
+  }
 }
 
 .bc-2movepeople-dashboard-progression-edit-form {

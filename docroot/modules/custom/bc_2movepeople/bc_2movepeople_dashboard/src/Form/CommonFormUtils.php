@@ -57,12 +57,12 @@ class CommonFormUtils {
       $form['goals']['#tree'] = TRUE;
 
       $form['goals']['header'] = [
-        '#markup' => '<div class="row custom-form-fields custom-form-label hidden-xs hidden-sm">'
-        . '<div class="col-lg-2 col-md-3 col-sm-12 col-xs-12 custom-form-label">' . t('Task') . '</div>'
-        . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 custom-form-label">' . t('Activity') . '</div>'
-        . '<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 custom-form-label">' . t('Deadline') . '</div>'
-        . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 custom-form-label">' . t('Responsible') . '</div>'
-        . '<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 custom-form-label">' . t('Actions') . '</div>'
+        '#markup' => '<div class="custom-form-fields custom-form-label hidden-xs hidden-sm hidden-md">'
+        . '<div class="custom-form-label-title">' . t('Task') . '</div>'
+        . '<div class="custom-form-label-activity-title">' . t('Activity') . '</div>'
+        . '<div class="custom-form-label-due-date"><div>' . t('Deadline') . '</div></div>'
+        . '<div class="custom-form-label-responsible-manager">' . t('Responsible') . '</div>'
+        . '<div class="custom-form-label-complete-btn">' . t('Actions') . '</div>'
         . '</div>'
       ];
 
@@ -78,17 +78,15 @@ class CommonFormUtils {
       $form['goals'][$goal_id]['title'] = [
         '#type' => 'textfield',
         '#default_value' => $goal['title'],
-        '#prefix' => '<div class="row custom-form-fields div-form' . $remind_class . '" id="goal_row_' . $goal_id . '">'
-        . '<div class="visible-xs visible-sm col-sm-12 col-xs-12 custom-form-label">' . t('Task') . '</div>'
-        . '<div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">',
+        '#prefix' => '<div class="custom-form-fields div-form' . $remind_class . '" id="goal_row_' . $goal_id . '">'
+        . '<div class="custom-form-field-title"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Task') . '</div>',
         '#suffix' => '</div>'
       ];
 
       $form['goals'][$goal_id]['activity_title'] = [
         '#type' => 'textfield',
         '#default_value' => $goal['activity_title'],
-        '#prefix' => '<div class="visible-xs visible-sm col-sm-12 col-xs-12 custom-form-label">' . t('Activity') . '</div>'
-        . '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">',
+        '#prefix' => '<div class="custom-form-field-activity-title"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Activity') . '</div>',
         '#suffix' => '</div>'
       ];
 
@@ -110,8 +108,7 @@ class CommonFormUtils {
       $form['goals'][$goal_id]['due_date'] = [
         '#type' => 'date',
         '#default_value' => $goal['date'],
-        '#prefix' => '<div class="visible-xs visible-sm col-sm-12 col-xs-12 custom-form-label">' . t('Deadline') . '</div>'
-        . '<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">',
+        '#prefix' => '<div class="custom-form-field-due-date"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Deadline') . '</div>',
         '#suffix' => '</div>'
       ];
       
@@ -121,8 +118,7 @@ class CommonFormUtils {
         '#default_value' => $goal['responsible_manager'],
         '#empty_option' => 'None',
         '#options' => $options,
-        '#prefix' => '<div class="visible-xs visible-sm col-sm-12 col-xs-12 custom-form-label">' . t('Responsible') . '</div>'
-        . '<div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">',
+        '#prefix' => '<div class="custom-form-field-responsible-manager"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Responsible') . '</div>',
         '#suffix' => '</div>'
       ];
 
@@ -142,7 +138,7 @@ class CommonFormUtils {
           'callback' => '::ajaxGoalComplete',
           'progress' => ['type' => 'none']
         ],
-        '#prefix' => '<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 dashboard-accordion__action-btn">'
+        '#prefix' => '<div class="dashboard-accordion__action-btn">'
         . '<span id="complete_btn_box' . $goal_id . '">',
         '#suffix' => '</span>'
       ];
@@ -209,9 +205,9 @@ class CommonFormUtils {
 
       $form['goals']['header'] = [
         '#markup' => ''
-        . '<div class="row custom-form-fields custom-form-label">'
-        . '<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 custom-form-label">' . t($title) . '</div>'
-        . '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 custom-form-label">' . t('Actions') . '</div>'
+        . '<div class="custom-form-fields custom-form-label">'
+        . '<div class="custom-form-label">' . t($title) . '</div>'
+        . '<div class="custom-form-label">' . t('Actions') . '</div>'
         . '</div>'
       ];
 
@@ -233,7 +229,7 @@ class CommonFormUtils {
     $form['goals'][$goal['id']]['title'] = [
       '#type' => 'textfield',
       '#default_value' => $goal['title'],
-      '#prefix' => '<div class="row custom-form-fields" id="goal_row_' . $goal['id'] . '">'
+      '#prefix' => '<div class="custom-form-fields" id="goal_row_' . $goal['id'] . '">'
       . ($parent_subgoal_id ? ''
       . '<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>'
       . '<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">' : '<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">'),

@@ -51,7 +51,7 @@ class MilestoneEditForm extends FormBase {
       '#resizable' => 'none',
       '#rows' => 2,
       '#default_value' => $purpose,
-      '#prefix' => '<div class="row"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">',
+      '#prefix' => '<div class="row purpose"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">',
       '#suffix' => '</div></div>'
 //          . '<div class="row custom-form-fields custom-form-label">'
 //          . '<div class="col-md-3 col-sm-2 col-xs-2">'.$this->t('Milestone').'</div>'
