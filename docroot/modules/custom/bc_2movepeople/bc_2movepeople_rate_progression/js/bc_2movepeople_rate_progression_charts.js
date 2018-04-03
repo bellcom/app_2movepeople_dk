@@ -166,6 +166,7 @@
         var options = {
           title: title,
           bars: 'vertical',
+          curveType: 'function',
           vAxis: {minValue: 0,
               ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
           },
@@ -176,12 +177,15 @@
               width: "90%"
           },
           legend: {position: "bottom"},
-          pointSize: 5
-      };
+          pointSize: 5,
+          colors: ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913']
+
+        };
       } else{
         var options = {
           title: title,
           bars: 'vertical',
+          curveType: 'function',
           vAxis: {minValue: 0,
               ticks: [0, 1, 2, 3, 4, 5]
           },
@@ -192,7 +196,8 @@
               width: "90%"
           },
           legend: {position: "bottom"},
-          pointSize: 5
+          pointSize: 5,
+          colors: ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913']
       };
 }
 
@@ -244,10 +249,14 @@
           for (var i = 1; i <= columns; i++) {
               arr[i - 1] = [$("#progression_total_table table th[data-target=col_" + i + "]").text()];
               $("#progression_total_table table td[data-target=col_" + i + "]").each(function () {
-                  if (!isNaN(parseFloat($(this).text())))
-                      arr[i - 1].push(parseFloat($(this).text()));
+                  var cellContent = $(this).text().trim();
+                  if (!isNaN(parseFloat(cellContent)))
+                      arr[i - 1].push(parseFloat(cellContent));
+                  else if (cellContent == '') {
+                      arr[i - 1].push(null);
+                  }
                   else {
-                    arr[i - 1].push($(this).text().trim());
+                      arr[i - 1].push(cellContent);
                   }
               });
 

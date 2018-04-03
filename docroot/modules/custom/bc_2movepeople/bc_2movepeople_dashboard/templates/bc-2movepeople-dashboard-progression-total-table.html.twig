@@ -35,7 +35,7 @@
       {% for column_data in row %}
         <td data-target="col_{{ loop.index }}">
           <span class="column-header-box" data-label="{{ table_header[loop.index-1] }}"></span>
-          <span class="column-data-box">{{ column_data }}</span>
+          <span class="column-data-box">{% if column_data != '0' %}{{column_data }}{% endif %}</span>
         </td>
       {% endfor %}
       </tr>
