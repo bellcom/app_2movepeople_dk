@@ -35,7 +35,7 @@ class RateAddForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $progression_target_id = null) {
+  public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $progression_target_id = NULL) {
     $this->node = $progression_target_id;
     $mtid = $this->node->get('field_goal_ids')->getValue();
 
@@ -66,11 +66,36 @@ class RateAddForm extends FormBase {
     $form['#suffix'] = '</div>';
     $form['#tree'] = TRUE;
     $progression_target = new Target($this->node->id());
-    $goals =  $progression_target->getAllGoals();
+    $goals = $progression_target->getAllGoals();
 
-    foreach ($goals as $id){
+    foreach ($goals as $id) {
       $goaldata = \Drupal::entityTypeManager()->getStorage('node')->load($id);
       if (empty($goaldata->get('field_due_date')->value)) {
+
+        // Set drafts values for goal.
+        $rates_draft = \Drupal::entityTypeManager()->getStorage('rate')
+          ->loadByProperties([
+            'progression_target_id' => $this->node->id(),
+            'goal_id' => $id,
+            'status' => FALSE,
+            'rate_autor' => \Drupal::currentUser()->id(),
+          ]);
+
+        $default_value = '';
+        if (!empty($rates_draft)) {
+          $draft = array_shift($rates_draft);
+          $form['rates_draft'][$id] = [
+            '#type' => 'hidden',
+            '#default_value' => $draft->id(),
+          ];
+          $default_value = $draft->rate->value;
+
+          // Cleanup drafts if there more then one.
+          foreach ($rates_draft as $rate) {
+            $rate->delete();
+          }
+        }
+
         $goaltitle = $goaldata->get('title')->value;
         $form['rate'][$id] = [
           '#type' => 'select',
@@ -81,6 +106,11 @@ class RateAddForm extends FormBase {
           '#options' => $options,
         ];
 
+        // Set draft value if not empty.
+        if (!empty($default_value)) {
+          $form['rate'][$id]['#default_value'] = $default_value;
+          $form['rate'][$id]['#wrapper_attributes']['class'][] = 'draft';
+        }
         $result['rates'] = bc_2movepeople_rate_progression_get_rates($this->node->id(), $id);
       }
     }
@@ -124,7 +154,8 @@ class RateAddForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $rates = $form_state->getValues('rate');
+    $values = $form_state->getValues();
+    $rates = $values['rate'];
     $time = time();
     $status = TRUE;
     $storage = $form_state->getStorage();
@@ -132,18 +163,29 @@ class RateAddForm extends FormBase {
       $time = NULL;
       $status = FALSE;
     }
-    foreach ($rates as $rate_id => $rate_value) {
-      $node = \Drupal::entityQuery('node')->condition('nid', $rate_id)->execute();
+    foreach ($rates as $goal_id => $rate_value) {
+      $node = \Drupal::entityQuery('node')->condition('nid', $goal_id)->execute();
       if (!empty($rate_value) && !(empty($node))) {
-        \Drupal::entityTypeManager()->getStorage('rate')->create([
-          'progression_target_id' => $this->node->id(),
-          'goal_id' => $rate_id,
-          'rate' => $rate_value,
-          'rate_autor' => \Drupal::currentUser()->id(),
-          'uid' => $this->node->get('field_progression_user')->getValue()[0]['target_id'],
-          'created' => $time,
-          'status' => $status,
-        ])->save();
+        if (isset($values['rates_draft'][$goal_id])) {
+          $rate_draft = \Drupal::entityTypeManager()
+            ->getStorage('rate')
+            ->load($values['rates_draft'][$goal_id]);
+          $rate_draft->rate = $rate_value;
+          $rate_draft->status = $status;
+          $rate_draft->created = $time;
+          $rate_draft->save();
+        }
+        else {
+          \Drupal::entityTypeManager()->getStorage('rate')->create([
+            'progression_target_id' => $this->node->id(),
+            'goal_id' => $goal_id,
+            'rate' => $rate_value,
+            'rate_autor' => \Drupal::currentUser()->id(),
+            'uid' => $this->node->get('field_progression_user')->getValue()[0]['target_id'],
+            'created' => $time,
+            'status' => $status,
+          ])->save();
+        }
       }
     }
   }

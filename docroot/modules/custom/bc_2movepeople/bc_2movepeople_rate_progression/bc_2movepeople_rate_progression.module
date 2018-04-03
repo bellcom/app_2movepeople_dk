@@ -11,13 +11,8 @@ function bc_2movepeople_rate_progression_get_rates($progression_target_id, $goal
     ->condition('uid', \Drupal::currentUser()->id(), '=')
     ->condition('goal_id', $goal_id, '=')
     ->condition('progression_target_id', $progression_target_id, '=')
-    ->condition('status', $status);
-
-  if ($status) {
-    $query->isNotNull('create');
-  }
-
-  $query->orderBy('created', 'DESC')
+    ->condition('status', $status)
+    ->orderBy('created', 'DESC')
     ->range(0, 5);
   $result = $query->execute()->fetchAll();
   $rate_arr =  array();
