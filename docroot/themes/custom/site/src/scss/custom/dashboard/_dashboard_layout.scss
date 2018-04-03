@@ -53,6 +53,9 @@ $dashboard-padding: 22px;
     display: flex;
     align-items: flex-end;
     margin-top: 25px;
+    & .control-label{
+      display: block;
+    }
   }
 }
 

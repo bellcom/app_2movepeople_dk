@@ -9381,6 +9381,8 @@ table.table-bordered-сustom td span.column-data-box {
         -ms-flex-align: end;
             align-items: flex-end;
     margin-top: 25px; }
+    .dashboard-overview .div-form.form-item.row.form-inline .control-label {
+      display: block; }
 
 .bc-2movepeople-dashboard-progression-edit-form .left-btn-box, .bc-2movepeople-dashboard-progression-edit-form .right-btn-box {
   text-align: center; }
