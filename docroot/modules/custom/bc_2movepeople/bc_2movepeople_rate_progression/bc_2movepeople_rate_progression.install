@@ -62,7 +62,8 @@ function bc_2movepeople_rate_progression_update_8002(&$sandbox) {
   $spec = array(
     'description' => 'The user id who put the rate',
     'type' => 'int',
-    'not null' => TRUE);
+    'not null' => FALSE,
+  );
   $schema = Database::getConnection()->schema();
   $schema->addField('bc_2movepeople_rate_progression', 'rate_autor', $spec);
 }
