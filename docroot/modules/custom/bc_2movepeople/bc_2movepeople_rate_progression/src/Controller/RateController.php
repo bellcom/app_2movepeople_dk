@@ -46,7 +46,8 @@ class RateController extends ControllerBase {
       $query->fields('rates', array('rate'))
        // ->condition('uid', \Drupal::currentUser()->id(), '=')
         ->condition('goal_id', $goal_id, '=')
-        ->condition('progression_target_id', $progression_target_id, '=');
+        ->condition('progression_target_id', $progression_target_id, '=')
+        ->condition('status', TRUE);
      if (isset($date_to))
        $query->condition('created', $date_to, '<=');
      if (isset($date_from))
