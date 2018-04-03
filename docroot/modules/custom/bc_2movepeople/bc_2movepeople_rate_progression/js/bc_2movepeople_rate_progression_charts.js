@@ -107,9 +107,14 @@
                   $(panel).find('.div-form').show();
                   google.charts.setOnLoadCallback(function () {
                       var element = $(panel).find('.div-chart').attr('id');
-                      var arr = [
-                          [''].concat(data.series)
-                      ];
+                      var arr = [['']];
+                      for (var key in data.series) {
+                          var label = '';
+                          if (data.series.hasOwnProperty(key)) {
+                              label = data.series[key];
+                          }
+                          arr[0].push(label);
+                      }
                       data.values.forEach(function (item) {
                           arr.push(item);
                       });
@@ -158,51 +163,61 @@
   }
 
   function drawChart(element, data, title = "", chart_type = 'line') {
-      var cdata = google.visualization.arrayToDataTable(data);
-
+      var header = data[0];
+      for (i = 0; i < header.length; i++) {
+          if (typeof header[i] !== 'string') {
+              break;
+          }
+          var type = (i == 0) ? 'string' : 'number';
+          data[0][i] = {
+              'label' : header[i],
+              'type' : type
+          };
+      }
+      var cdata = new google.visualization.arrayToDataTable(data);
       progression_type = $('#' + element).attr('progression');
-    
+
       if(progression_type == 'feedback'){
-        var options = {
-          title: title,
-          bars: 'vertical',
-          curveType: 'function',
-          vAxis: {minValue: 0,
-              ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-          },
-          chartArea: {
-              //height: "450px",
-              top: '5%',
-              bottom: '20%',
-              width: "90%"
-          },
-          legend: {position: "bottom"},
-          pointSize: 5,
-          colors: ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913']
+          var options = {
+              title: title,
+              bars: 'vertical',
+              curveType: 'function',
+              vAxis: {minValue: 0,
+                  ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+              },
+              chartArea: {
+                  //height: "450px",
+                  top: '5%',
+                  bottom: '20%',
+                  width: "90%"
+              },
+              legend: {position: "bottom"},
+              pointSize: 5,
+              colors: ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913'],
+          };
+      }
+      else {
+          var options = {
+              title: title,
+              bars: 'vertical',
+              curveType: 'function',
+              vAxis: {minValue: 0,
+                  ticks: [0, 1, 2, 3, 4, 5]
+              },
+              chartArea: {
+                  //height: "450px",
+                  top: '5%',
+                  bottom: '20%',
+                  width: "90%"
+              },
+              legend: {position: "bottom"},
+              pointSize: 5,
+              colors: ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913'],
+          };
+      }
 
-        };
-      } else{
-        var options = {
-          title: title,
-          bars: 'vertical',
-          curveType: 'function',
-          vAxis: {minValue: 0,
-              ticks: [0, 1, 2, 3, 4, 5]
-          },
-          chartArea: {
-              //height: "450px",
-              top: '5%',
-              bottom: '20%',
-              width: "90%"
-          },
-          legend: {position: "bottom"},
-          pointSize: 5,
-          colors: ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913']
-      };
-}
-
-      var chart = (chart_type == 'line' ? 
-              new google.visualization.LineChart(document.getElementById(element)) : 
+      var chart = (chart_type == 'line' ?
+              new google.visualization.LineChart(document.getElementById(element)) :
               new google.visualization.ColumnChart(document.getElementById(element)));
 
       chart.draw(cdata, options);
@@ -262,6 +277,7 @@
 
           }
           google.charts.setOnLoadCallback(function () {
+              console.log(arr);
               drawChart("progression_total_chart", arr, '', chart_type);
           });
           
