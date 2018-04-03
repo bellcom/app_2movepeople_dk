@@ -249,7 +249,7 @@ class UserRatesAddForm extends FormBase {
    */
   public function ajaxSubmitForm(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
-    $progression_targets_ids = \Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getProgressionTargets($this->user->id());
+    $progression_targets_ids = \Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getProgressionTargets($this->user->id(), 'progression');
     $result = \Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getProgressionsTable($progression_targets_ids);
 
     $build = array(
