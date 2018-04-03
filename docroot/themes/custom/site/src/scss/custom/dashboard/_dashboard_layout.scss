@@ -49,6 +49,11 @@ $dashboard-padding: 22px;
   .dashboard-milestone__control-buttons {
     height: 55px; 
   }
+  & .div-form.form-item.row.form-inline{
+    display: flex;
+    align-items: flex-end;
+    margin-top: 25px;
+  }
 }
 
 .bc-2movepeople-dashboard-progression-edit-form {

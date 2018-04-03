@@ -9371,6 +9371,16 @@ table.table-bordered-сustom td span.column-data-box {
       margin-bottom: 10px; }
   .dashboard-overview .dashboard-milestone__control-buttons {
     height: 55px; }
+  .dashboard-overview .div-form.form-item.row.form-inline {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: end;
+    -webkit-align-items: flex-end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+    margin-top: 25px; }
 
 .bc-2movepeople-dashboard-progression-edit-form .left-btn-box, .bc-2movepeople-dashboard-progression-edit-form .right-btn-box {
   text-align: center; }
