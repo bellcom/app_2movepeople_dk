@@ -9203,6 +9203,9 @@ div.custom-nav-divider {
   max-height: 600px;
   overflow-y: auto; }
 
+.milestone-evaluation .milestone-evaluation-footer {
+  margin: 10px 0 20px 0; }
+
 @media (min-width: 768px) {
   .modal-body__progression-tabs {
     width: 700px;
