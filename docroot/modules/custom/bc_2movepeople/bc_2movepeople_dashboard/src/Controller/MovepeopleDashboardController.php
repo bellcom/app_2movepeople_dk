@@ -148,7 +148,7 @@ class MovepeopleDashboardController extends ControllerBase {
   public function getJsAccordionImplementation(AccountInterface $user, $limit = NULL) {
 
     //Remove limit from progressions route if option is disabled
-    $config = \Drupal::config('bc_2movepeople.settings');
+    $config = $this->config('bc_2movepeople.settings');
     if (empty($config->get('rates_separately')) && !empty($limit)) {
       return $this->redirect('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]);
     }
@@ -269,7 +269,7 @@ class MovepeopleDashboardController extends ControllerBase {
           break;
         }
       }
-      $config = \Drupal::config('bc_2movepeople.settings');
+      $config = $this->config('bc_2movepeople.settings');
       if (!empty($config->get('rates_separately'))) {
         $controls['user_rate_category'] = [
           '#title' => $this->t('FIT'),
@@ -334,7 +334,7 @@ class MovepeopleDashboardController extends ControllerBase {
     }
     $build['#table_progression']['controls'] = $this->getControlButtons($controls, ['class' => 'dashboard-overview__control-buttons']);
 
-    $config = \Drupal::config('bc_2movepeople.settings');
+    $config = $this->config('bc_2movepeople.settings');
     $conrtol_links['rate_milestones'] = [
       '#title' => $this->t('Samlet evaluering'),
       '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.evaluations', ['user' => $user->id()]),
@@ -643,13 +643,13 @@ class MovepeopleDashboardController extends ControllerBase {
   }
 
   /**
-   * compare current date and task due date
+   * Compare current date and task due date.
    *
    * @params
    * $date - task due date
    *
-   * @return integer flag (0 - false, 1 - is remind true, 2 - is expired true)
-   *
+   * @return int
+   *   Flag (0 - false, 1 - is remind true, 2 - is expired true).
    */
   public static function isRemindSession($date) {
 
@@ -904,11 +904,20 @@ class MovepeopleDashboardController extends ControllerBase {
    *   A renderable array.
    */
   public function getMilestoneEvaluations(AccountInterface $user) {
+    $config = $this->config('bc_2movepeople_dashboard.AdminSettings');
+
+    // Load Milestone evaluation header.
+    $header_node = NULL;
+    if (!empty($config->get('milestone_evaluation_header_nid'))) {
+      $header_node = \Drupal::entityTypeManager()->getStorage('node')
+        ->load($config->get('milestone_evaluation_header_nid'));
+    }
 
     $build = array(
       '#theme' => 'bc_2movepeople_milestone_evaluations',
-      "#title" => t('Milestone evaluations'),
-      "#user" => $user->id(),
+      '#header' => empty($header_node) ? NULL : $header_node->body->view(['label' => 'hidden']),
+      '#title' => t('Milestone evaluations'),
+      '#user' => $user->id(),
       '#milestones_data' => $this->getMilestoneEvaluationsData($user),
     );
     

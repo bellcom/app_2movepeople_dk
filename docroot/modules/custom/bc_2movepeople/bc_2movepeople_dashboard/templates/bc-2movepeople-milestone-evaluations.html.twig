@@ -7,6 +7,7 @@
 #}
 
 <div class="milestone-evaluation">
+  <div class="ev-header">{{ header }}</div>
   {% for item in milestones_data %}
     <h2>{{ item.milestone.name }}</h2>
     <a href="{{ path('bc_2movepeople_dashboard.milestone.evaluate', {'node': item.milestone.id})}}" id="btn-evaluering" data-dialog-type="modal" class="pull-right use-ajax">{{ 'Edit'|trans }}</a>

@@ -121,7 +121,28 @@ class AdminSettingsForm extends ConfigFormBase {
         @task_title  = The titles of the tasks ...........'.'<br />
         @due_date  = Task due date.'
     ];
-    
+
+    // Milestone evaluation options.
+    $form['milestone_evaluation'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Milestone evaluation options'),
+      '#open' => TRUE,
+    ];
+
+    $header_node_reference = NULL;
+    if (!empty($config->get('milestone_evaluation_header_nid'))) {
+      $header_node_reference = \Drupal::entityTypeManager()->getStorage('node')
+        ->load($config->get('milestone_evaluation_header_nid'));
+    }
+    $form['milestone_evaluation']['milestone_evaluation_header_nid'] = [
+      '#type' => 'entity_autocomplete',
+      '#target_type' => 'node',
+      '#selection_settings' => [
+        'target_bundles' => ['page'],
+      ],
+      '#default_value' => $header_node_reference,
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -152,7 +173,7 @@ class AdminSettingsForm extends ConfigFormBase {
       ->set('task_reminder_email_body', $form_state->getValue('task_reminder_email_body'))
       ->set('responsible_manager_email_subject', $form_state->getValue('responsible_manager_email_subject'))
       ->set('responsible_manager_email_body', $form_state->getValue('responsible_manager_email_body'))
-        
+      ->set('milestone_evaluation_header_nid', $form_state->getValue('milestone_evaluation_header_nid'))
       ->save();
   }
 

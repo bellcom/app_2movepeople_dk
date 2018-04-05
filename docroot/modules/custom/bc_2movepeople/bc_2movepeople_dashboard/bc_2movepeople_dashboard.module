@@ -67,6 +67,7 @@ function bc_2movepeople_dashboard_theme() {
     'bc_2movepeople_milestone_evaluations' => array(
       'template' => 'bc-2movepeople-milestone-evaluations',
       'variables' => array(
+        'header' => NULL,
         'title' => NULL,
         'user'  => NULL,
         'milestones_data' => array(),
