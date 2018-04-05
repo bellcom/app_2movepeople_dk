@@ -136,6 +136,7 @@ class AdminSettingsForm extends ConfigFormBase {
     }
     $form['milestone_evaluation']['milestone_evaluation_header_nid'] = [
       '#type' => 'entity_autocomplete',
+      '#title' => $this->t('Node reference to PDF Milestone evaluation header'),
       '#target_type' => 'node',
       '#selection_settings' => [
         'target_bundles' => ['page'],

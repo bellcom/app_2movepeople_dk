@@ -904,18 +904,8 @@ class MovepeopleDashboardController extends ControllerBase {
    *   A renderable array.
    */
   public function getMilestoneEvaluations(AccountInterface $user) {
-    $config = $this->config('bc_2movepeople_dashboard.AdminSettings');
-
-    // Load Milestone evaluation header.
-    $header_node = NULL;
-    if (!empty($config->get('milestone_evaluation_header_nid'))) {
-      $header_node = \Drupal::entityTypeManager()->getStorage('node')
-        ->load($config->get('milestone_evaluation_header_nid'));
-    }
-
     $build = array(
       '#theme' => 'bc_2movepeople_milestone_evaluations',
-      '#header' => empty($header_node) ? NULL : $header_node->body->view(['label' => 'hidden']),
       '#title' => t('Milestone evaluations'),
       '#user' => $user->id(),
       '#milestones_data' => $this->getMilestoneEvaluationsData($user),
@@ -932,9 +922,18 @@ class MovepeopleDashboardController extends ControllerBase {
    * @return void
    */
   public function getMilestoneEvaluationsPdf(AccountInterface $user) {
-    
+    $config = $this->config('bc_2movepeople_dashboard.AdminSettings');
+
+    // Load Milestone evaluation header.
+    $header_node = NULL;
+    if (!empty($config->get('milestone_evaluation_header_nid'))) {
+      $header_node = \Drupal::entityTypeManager()->getStorage('node')
+        ->load($config->get('milestone_evaluation_header_nid'));
+    }
+
     $build = array(
       '#theme' => 'bc_2movepeople_milestone_evaluations_pdf',
+      '#header' => empty($header_node) ? NULL : $header_node->body->view(['label' => 'hidden']),
       "#user" => $user->id(),
       '#milestones_data' => $this->getMilestoneEvaluationsData($user),
     );
