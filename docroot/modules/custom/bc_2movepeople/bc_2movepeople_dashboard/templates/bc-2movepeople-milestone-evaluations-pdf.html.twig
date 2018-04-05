@@ -8,13 +8,16 @@
 
 <div class="milestone-evaluation">
   {% for item in milestones_data %}
-    <p>{{ item.milestone.name }}</p>
-    <h3>{{ 'Evaluering' |trans}}</h3>
+    <h2>{{ item.milestone.name }}</h2>
     <p>{{ item.milestone.purpose }}</p>
-    <ul>
+    <div class="ev-list">
+      <h3>{{ 'Evaluering' |trans}}</h3>
       {% for target in item.targets %}
-        <li><p>{{ target.name }}</p>{{ target.evaluation }}</li>
-          {% endfor %}
-    </ul>
+        <div class="ev-item">
+          <h4>{{ target.name }}</h4>
+          <p>{{ target.evaluation }}</p>
+        </div>
+      {% endfor %}
+    </div>
   {% endfor %}
 </div>
