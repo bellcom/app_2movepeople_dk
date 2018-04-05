@@ -9640,11 +9640,6 @@ span.input-group-addon {
       content: "\e250"; }
     .dashboard-accordion .panel-heading a[aria-expanded="true"] span.glyphicon-triangle-custom:before {
       content: "\e252"; }
-    .dashboard-accordion .panel-heading .feedback {
-      font-size: 0.8em;
-      float: right;
-      text-transform: lowercase;
-      font-weight: normal; }
   .dashboard-accordion .panel-body {
     border-top: none !important; }
     .dashboard-accordion .panel-body div.div-goals {
