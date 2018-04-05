@@ -27,9 +27,6 @@
                aria-controls="accordion-progressions-collapse-{{ progression_target.id }}">
                 <span class="glyphicon glyphicon-triangle-custom" aria-hidden="true"></span>
                 {{ progression_target.title }}
-                {% if progression_target.feedback %}
-                  <span class="feedback">Feedback</span>
-                {% endif %}
             </a>
           </div>
           <div id="accordion-progressions-collapse-{{ progression_target.id }}"
