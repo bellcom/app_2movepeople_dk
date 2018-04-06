@@ -12,7 +12,7 @@ PHPCS_BIN=$(git rev-parse --show-toplevel)/bin/phpcs
 PHPCS_CODING_STANDARD=Drupal,DrupalPractice
 
 # comma-separated list of file patterns being ignored
-PHPCS_IGNORE=node_modules,bower_components,vendor,core,contrib,sites/default
+PHPCS_IGNORE=node_modules,bower_components,vendor,core,contrib,sites/default,dist,
 
 # comma-seperated list of sniffs from the standard that should be used
 # use `phpcs --standard=PSR1 -e` to list sniffs for your standard
