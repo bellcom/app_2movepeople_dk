@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskEditForm.
- */
-
 namespace Drupal\bc_2movepeople_dashboard\Form;
 
 use Drupal\Core\Form\FormBase;
@@ -12,20 +7,43 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
-use Drupal\Core\Ajax\RemoveCommand;
+use Drupal\Core\Ajax\OpenModalDialogCommand;
 use Drupal\Core\Cache\Cache;
-use Drupal\node\NodeInterface;
 use Drupal\node\Entity\Node;
-use Drupal\Core\Url;
+use Drupal\Core\Render\RendererInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\node\NodeInterface;
+use Drupal\user\Entity\User;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 
+/**
+ * Contains definition of ProgressionTargetMilestoneEvaluateForm.
+ */
 class ProgressionTargetMilestoneEvaluateForm extends FormBase {
 
   private $node;
   private $limit;
-  private $updated_msg = 'Records successfully updated.';
-  private $deleted_msg = 'Records successfully deleted.';
-  private $wrong_msg = 'Something wrong.';
+  private $updatedMsg = 'Records successfully updated.';
+  private $wrongMsg = 'Something wrong.';
+  protected $renreder;
+
+  /**
+   * Class constructor.
+   */
+  public function __construct(RendererInterface $renreder) {
+    $this->renreder = $renreder;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    // Instantiates this form class.
+    return new static(
+    // Load the service required to construct this class.
+      $container->get('renderer')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -33,6 +51,7 @@ class ProgressionTargetMilestoneEvaluateForm extends FormBase {
   public function getFormId() {
     return 'bc_2movepeople-dashboard-progression-edit-form';
   }
+
   /**
    * {@inheritdoc}
    */
@@ -89,6 +108,11 @@ class ProgressionTargetMilestoneEvaluateForm extends FormBase {
       ],
     ];
 
+    $request = $this->getRequest();
+    if ($request->get('modal')) {
+      $form_state->setStorage(['modal' => TRUE]);
+    }
+
     return $form;
   }
 
@@ -102,42 +126,46 @@ class ProgressionTargetMilestoneEvaluateForm extends FormBase {
    */
   public function ajaxSubmitForm(array &$form, FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
-
+    $storage = $form_state->getStorage();
+    $user_id = $this->node->get('field_progression_user')->getValue();
+    $user_id = empty($user_id[0]['target_id']) ? NULL : $user_id[0]['target_id'];
     if (!$form_state->getErrors()) {
 
       $goals_arr = $form_state->getValue('goals');
 
       foreach ($goals_arr as $gid => $goal) {
-        $goal_node = \Drupal\node\Entity\Node::load($gid);
+        $goal_node = Node::load($gid);
         $goal_node->set("field_evaluation", $goal['field_evaluation']);
         $goal_node->save();
       }
 
       if ($this->node->save() == SAVED_UPDATED) {
 
-        drupal_set_message($this->t($this->updated_msg));
-        $user = $this->node->get('field_progression_user')->getValue();
-        //  $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user[0]['target_id']]));
+        drupal_set_message($this->t($this->updatedMsg));
 
         // Invalidate navigation block cachetag.
-        Cache::invalidateTags(array('feedback:' . $user[0]['target_id']));
+        Cache::invalidateTags(array('feedback:' . $user_id));
       }
-      $ajax_response->addCommand(new CloseModalDialogCommand());
     }
     else {
-      drupal_set_message($this->t($this->wrong_msg));
+      drupal_set_message($this->t($this->wrongMsg));
     }
 
-    $message = [
+    $messages = [
       '#theme' => 'status_messages',
       '#message_list' => drupal_get_messages(),
-//      '#status_headings' => [
-//        'status' => $this->t('Status message'),
-//        'error'  => $this->t('Error message'),
-//        'warning'=> $this->t('Warning message'),
-//      ],
     ];
-    $messages = \Drupal::service('renderer')->render($message);
+    $messages = $this->renreder->render($messages);
+
+    if (isset($storage['modal'])) {
+      $evaluation = MovepeopleDashboardController::getMilestoneEvaluations(User::load($user_id));
+      $evaluation['#message'] = $messages;
+      $ajax_response->addCommand(new OpenModalDialogCommand('Milestone evaluations', $this->renreder->render($evaluation)));
+    }
+    else {
+      $ajax_response->addCommand(new CloseModalDialogCommand());
+    }
+
     $ajax_response->addCommand(new HtmlCommand('#custom-form-system-messages', $messages));
 
     return $ajax_response;

@@ -277,7 +277,6 @@
 
           }
           google.charts.setOnLoadCallback(function () {
-              console.log(arr);
               drawChart("progression_total_chart", arr, '', chart_type);
           });
           

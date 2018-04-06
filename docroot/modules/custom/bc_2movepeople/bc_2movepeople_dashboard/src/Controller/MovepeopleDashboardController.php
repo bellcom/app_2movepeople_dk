@@ -2,12 +2,10 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Controller;
 
+use Mpdf\Mpdf;
+use Drupal\Core\Mail\Plugin\Mail\PhpMail;
 use Drupal\Core\Url;
-use Drupal\node\Entity\Node;
-use Drupal\file\Entity\File;
-use \Drupal\taxonomy\Entity\Term;
 use Drupal\Core\Database\Connection;
-use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Session\AccountInterface;
@@ -15,35 +13,35 @@ use Drupal\bc_2movepeople_dashboard\bc_2movepeople_dashboardStorage;
 use Drupal\bc_2movepeople_dashboard\Form\MilestonePriorityEditForm;
 use Drupal\bc_2movepeople_dashboard\Form\MilestoneEditForm;
 use Drupal\bc_2movepeople_dashboard\Form\MilestoneStatusEditForm;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Datetime\DrupalDateTime;
-use Drupal\node\NodeInterface;
-use \Drupal\views\Views;
+use Drupal\views\Views;
 use Drupal\user\UserInterface;
-use Drupal\user\Entity\User;
 
 /**
- * Controller for js_example pages.
- *
- * @ingroup js_example
+ * Contains MovepeopleDashboardController.
  */
 class MovepeopleDashboardController extends ControllerBase {
 
   protected $database;
-  protected $f_str;
-  protected $p_str;
+  protected $fStr;
+  protected $pStr;
 
+  /**
+   * {@inheritdoc}
+   */
   public static function create(ContainerInterface $container) {
     return new static(
         $container->get('database')
     );
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function __construct(Connection $database) {
     $this->database = $database;
-    $this->f_str = 'feedback';
-    $this->p_str = 'progress';
+    $this->fStr = 'feedback';
+    $this->pStr = 'progress';
   }
 
   /**
@@ -81,58 +79,29 @@ class MovepeopleDashboardController extends ControllerBase {
    * Render a list of entries in the database.
    */
   public function entryList() {
-    $content = array();
+    $content = [];
 
-    $content['message'] = array(
+    $content['message'] = [
       '#markup' => $this->t('Generate a list of all entries in the database. There is no filter in the query.'),
-    );
+    ];
 
-    $rows = array();
-    $headers = array(t('Id'), t('uid'), t('Name'), t('Surname'), t('Age'));
+    $rows = [];
+    $headers = [t('Id'), t('uid'), t('Name'), t('Surname'), t('Age')];
 
     foreach ($entries = bc_2movepeople_dashboardStorage::load() as $entry) {
       // Sanitize each entry.
       $rows[] = array_map('Drupal\Component\Utility\SafeMarkup::checkPlain', (array) $entry);
     }
-    $content['table'] = array(
+    $content['table'] = [
       '#type' => 'table',
       '#header' => $headers,
       '#rows' => $rows,
       '#empty' => t('No entries available.'),
-    );
+    ];
     // Don't cache this page.
     $content['#cache']['max-age'] = 0;
 
     return $content;
-  }
-
-  public function getJsWeightImplementation() {
-    // Create an array of items with random-ish weight values.
-    $weights = array(
-      'red' => -4,
-      'blue' => -2,
-      'green' => -1,
-      'brown' => -2,
-      'black' => -1,
-      'purple' => -5,
-    );
-
-    // Start building the content.
-    $build = array();
-    // Main container DIV. We give it a unique ID so that the JavaScript can
-    // find it using jQuery.
-    $build['content'] = array(
-      '#markup' => '<div id="js-weights"></div>',
-    );
-    // Attach library containing css and js files.
-    $build['#attached']['library'][] = 'js_example/js_example.weights';
-    // Attach the weights array to our JavaScript settings. This allows the
-    // color scripts we just attached to discover their weight values, by
-    // accessing drupalSettings.js_example.js_weights.*color*. The color scripts
-    // only use this information for display to the user.
-    $build['#attached']['drupalSettings']['js_example']['js_weights'] = $weights;
-
-    return $build;
   }
 
   /**
@@ -147,7 +116,7 @@ class MovepeopleDashboardController extends ControllerBase {
    */
   public function getJsAccordionImplementation(AccountInterface $user, $limit = NULL) {
 
-    //Remove limit from progressions route if option is disabled
+    // Remove limit from progressions route if option is disabled.
     $config = $this->config('bc_2movepeople.settings');
     if (empty($config->get('rates_separately')) && !empty($limit)) {
       return $this->redirect('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]);
@@ -156,16 +125,15 @@ class MovepeopleDashboardController extends ControllerBase {
     $title = t('Click on each section to expand or collapse the categories:');
     // Build using our theme. This gives us content, which is not a good
     // practice,.
-
-    $progression_targets = array();
+    $progression_targets = [];
     $entity_ids = self::getProgressionTargets($user->id());
     $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
     foreach ($nodes as $progrdata) {
       if (!empty($config->get('rates_separately'))) {
-        if ($progrdata->get('field_progression_type')->value == 'progression_feedback' && $this->p_str == $limit) {
+        if ($progrdata->get('field_progression_type')->value == 'progression_feedback' && $this->pStr == $limit) {
           continue;
         }
-        if ($progrdata->get('field_progression_type')->value <> 'progression_feedback' && $this->f_str == $limit) {
+        if ($progrdata->get('field_progression_type')->value <> 'progression_feedback' && $this->fStr == $limit) {
           continue;
         }
       }
@@ -175,28 +143,31 @@ class MovepeopleDashboardController extends ControllerBase {
         $progression_targets[$progrdata->id()]['feedback'] = TRUE;
       }
       $progression_targets[$progrdata->id()]['id'] = $progrdata->id();
-      $progression_targets[$progrdata->id()]['goals'] = array();
+      $progression_targets[$progrdata->id()]['goals'] = [];
       foreach ($mtid as $tid) {
         $gettid = $tid['target_id'];
         $progression_targets[$progrdata->id()]['goals'][$gettid] = self::getGoal($gettid, $progrdata);
       }
     }
 
-    $build = array(
+    $build = [
       '#theme' => 'bc_2movepeople_dashboard',
       "#title" => 'Dashboard',
       "#subtitle" => $title,
       "#user" => $user->id(),
       '#progression_targets' => $progression_targets,
       "#limit" => $limit,
-    );
+    ];
     return $build;
   }
 
+  /**
+   * User milestones accordion callback.
+   */
   public function getMilestoneJsAccordionImplementation(AccountInterface $user) {
     $title = t('Click on each section to expand or collapse the milestone:');
 
-    $progression_targets = array();
+    $progression_targets = [];
     $entity_ids = self::getProgressionTargets($user->id(), 'target_milestone');
     $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
     foreach ($nodes as $progrdata) {
@@ -206,15 +177,14 @@ class MovepeopleDashboardController extends ControllerBase {
       $milestone_edit_form = new MilestoneEditForm($progrdata, $user);
       $progression_targets[$progrdata->id()]['form'] = \Drupal::formBuilder()->getForm($milestone_edit_form);
 
-      //$progression_targets[$progrdata->id()]['form'] = \Drupal::formBuilder()->getForm(\Drupal\bc_2movepeople_dashboard\Form\MilestoneEditForm::class, $progrdata);
     }
-    $build = array(
+    $build = [
       '#theme' => 'bc_2movepeople_milestone_dashboard',
       "#title" => 'Dashboard Milestone',
       "#user" => $user->id(),
       "#subtitle" => $title,
       '#milestone_targets' => $progression_targets,
-    );
+    ];
     return $build;
   }
 
@@ -230,6 +200,9 @@ class MovepeopleDashboardController extends ControllerBase {
     return $build;
   }
 
+  /**
+   * User overview page callback implementation.
+   */
   public function getUserOverviewImplementation(AccountInterface $user) {
     $build = [];
     $roles = $user->getRoles();
@@ -249,18 +222,19 @@ class MovepeopleDashboardController extends ControllerBase {
    * Render callback function for user overview page.
    */
   private function getUserOverview(AccountInterface $user) {
-    $build = array(
+    $build = [
       "#theme" => "bc_2movepeople_dashboard_user_overview",
       "#title" => $user->field_user_firstname->value . ' ' . $user->field_user_surname->value,
       "#user" => $user->id(),
-    );
+    ];
 
     $entity_progression_ids = array_keys($this->getProgressionTargets($user->id(), 'progression'));
     $entity_milestone_ids = array_keys($this->getProgressionTargets($user->id(), 'target_milestone'));
 
     if (!empty($entity_progression_ids)) {
 
-      //We need to know if there are any questions on categories to show 'Rate' buttons or not
+      // We need to know if there are any questions on categories to show
+      // 'Rate' buttons or not.
       $categories = node_load_multiple($entity_progression_ids);
       $questions_found = FALSE;
       foreach ($categories as $category) {
@@ -273,11 +247,11 @@ class MovepeopleDashboardController extends ControllerBase {
       if (!empty($config->get('rates_separately'))) {
         $controls['user_rate_category'] = [
           '#title' => $this->t('FIT'),
-          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id(), 'limit' => $this->f_str]),
+          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id(), 'limit' => $this->fStr]),
         ];
         $controls['category'] = [
           '#title' => $this->t('Show category'),
-          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id(), 'limit' => $this->p_str]),
+          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id(), 'limit' => $this->pStr]),
         ];
       }
       else {
@@ -287,7 +261,7 @@ class MovepeopleDashboardController extends ControllerBase {
         ];
       }
 
-      //Add 'Rate category' btn if there are any questions
+      // Add 'Rate category' btn if there are any questions.
       if ($questions_found) {
         $controls['rate_category'] = [
           '#title' => $this->t('Rate category'),
@@ -299,7 +273,7 @@ class MovepeopleDashboardController extends ControllerBase {
         ];
       }
       else {
-        //No questions - do not show 'Rate category' btn, but add a message
+        // No questions - do not show 'Rate category' btn, but add a message.
         $build['#table_progression']['message'] = t('To rate users you have to add Categories and question inside categories');
       }
 
@@ -322,15 +296,17 @@ class MovepeopleDashboardController extends ControllerBase {
           "#theme" => "bc_2movepeople_dashboard_progression_total_table",
           "#type" => 'progression',
           "#table_header" => $result_progression['header'],
-          "#table_data" => $result_progression['data']
+          "#table_data" => $result_progression['data'],
         ];
       }
     }
     else {
-      $controls = [[
-      '#title' => $this->t('Create categories'),
-      '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
-      ]];
+      $controls = [
+        [
+          '#title' => $this->t('Create categories'),
+          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
+        ],
+      ];
     }
     $build['#table_progression']['controls'] = $this->getControlButtons($controls, ['class' => 'dashboard-overview__control-buttons']);
 
@@ -344,8 +320,6 @@ class MovepeopleDashboardController extends ControllerBase {
       ],
     ];
 
-
-
     if (!empty($config->get('enable_milestones'))) {
       $conrtol_links['show_milestones'] = [
         '#title' => $this->t('Show Target Milestones'),
@@ -355,12 +329,12 @@ class MovepeopleDashboardController extends ControllerBase {
 
       if (!empty($entity_milestone_ids)) {
         $result_milestone = $this->getMilestoneTable($entity_milestone_ids);
-        $build['#table_milestone']['data'] = array(
+        $build['#table_milestone']['data'] = [
           "#theme" => "bc_2movepeople_dashboard_progression_total_table",
           "#type" => 'milestone',
           "#table_header" => $result_milestone['header'],
           "#table_data" => $result_milestone['data'],
-        );
+        ];
       }
     }
 
@@ -383,7 +357,10 @@ class MovepeopleDashboardController extends ControllerBase {
     return $view->render();
   }
 
-  static function getGoal($nodeid, $progression_target = NULL) {
+  /**
+   * Get function for goal CT.
+   */
+  public static function getGoal($nodeid, $progression_target = NULL) {
     $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($nodeid);
     $nodetitle = $nodedata->get('title')->value;
     $subnodes = $nodedata->get('field_subgoal')->getValue();
@@ -392,29 +369,30 @@ class MovepeopleDashboardController extends ControllerBase {
     $activity_title = $nodedata->get('field_activity_title')->value;
     $evaluation = $nodedata->get('field_evaluation')->value;
     $type = (isset($date)) ? 'task' : 'goal';
-    if(!empty($nodedata->field_responsible_manager->entity)){
+    if (!empty($nodedata->field_responsible_manager->entity)) {
       $responsible_manager = $nodedata->field_responsible_manager->entity->id();
-    } else {
+    }
+    else {
       $responsible_manager = NULL;
     }
 
-    $subgoals = array();
+    $subgoals = [];
     foreach ($subnodes as $tid) {
       $goal_id = $tid['target_id'];
       $subgoals[$goal_id] = self::getGoal($goal_id, $progression_target);
     }
-    $result = array(
+    $result = [
       'id' => $nodeid,
       'title' => $nodetitle,
       'type' => $type,
       'completed' => $is_completed,
       'date' => $date,
-      'rates' => null,
+      'rates' => NULL,
       'activity_title' => $activity_title,
       'evaluation' => $evaluation,
       'subgoals' => $subgoals,
-      'responsible_manager' => $responsible_manager
-    );
+      'responsible_manager' => $responsible_manager,
+    ];
     if (is_object($progression_target)) {
       $result['rates'] = bc_2movepeople_rate_progression_get_rates($progression_target->id(), $nodeid);
     }
@@ -422,32 +400,25 @@ class MovepeopleDashboardController extends ControllerBase {
     return $result;
   }
 
-  /*
-   * return progression targets for user
+  /**
+   * Return progression targets for user.
    *
    * @params
    * $user_id - user uuid
    *
    * @return array
-   *
+   *   Array with progressions.
    */
-
   public static function getProgressionTargets($user_id, $progression_type = 'progressions') {
-//    $query = \Drupal::database()->select('node', 'n')
-//      ->extend('\Drupal\Core\Database\Query\PagerSelectExtender')
-//      ->extend('\Drupal\Core\Database\Query\TableSortExtender');
-    // select all progression targets
-
     $progression_types = [
       'progressions' => [
         'progression',
-        'progression_feedback'
+        'progression_feedback',
       ],
       'progression' => ['progression'],
       'feedback' => ['progression_feedback'],
       'target_milestone' => ['target_milestone'],
     ];
-
 
     $query = \Drupal::entityQuery('node');
     $query->condition('status', 1);
@@ -459,13 +430,13 @@ class MovepeopleDashboardController extends ControllerBase {
   }
 
   /**
-   * get average target rate
+   * Get average target rate.
    *
    * @params
    * $target_id - progression target id
    *
    * @return float
-   *
+   *   Average value of rate.
    */
   public static function getTargetAveragePoints($target_id) {
     $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
@@ -479,19 +450,18 @@ class MovepeopleDashboardController extends ControllerBase {
     return $result;
   }
 
-  /*
-   * prepare progression data by entity id
+  /**
+   * Prepare progression data by entity id.
    *
    * @params
    * $entity_ids - progresson ids
    *
    * @return array
-   *
+   *   Progressions table data.
    */
-
   public static function getProgressionsTable($entity_ids) {
-    $dates = array();
-    $table = array();
+    $dates = [];
+    $table = [];
 
     $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
     $query->condition('progression_target_id', $entity_ids, 'IN');
@@ -504,7 +474,7 @@ class MovepeopleDashboardController extends ControllerBase {
     foreach ($result as $row) {
       $dates[] = $row->dates;
     }
-    $header = array_merge(array(t('Categories')), $dates);
+    $header = array_merge([t('Categories')], $dates);
 
     if ($dates) {
       foreach ($entity_ids as $key => $target_id) {
@@ -515,31 +485,29 @@ class MovepeopleDashboardController extends ControllerBase {
         foreach ($avg_rates as $row) {
           $table[$key][array_search($row->dates, $header)] = round((float) $row->avg_rates, 2);
         }
-        $table[$key] = array_merge(array($title), $table[$key]);
+        $table[$key] = array_merge([$title], $table[$key]);
       }
     }
 
-    return array('header' => $header, 'data' => $table);
+    return ['header' => $header, 'data' => $table];
   }
 
   /**
-   * return progression targets for user
+   * Return progression targets for user.
    *
    * @params
    * $target_id - progression target nid
    *
    * @return array
-   *
+   *   Milestones table data.
    */
   public static function getMilestoneTable($entity_ids) {
-    $table = array();
-    $header = array_merge(array(t('Target Milestones'), t('Priority'), t('Status')));
+    $table = [];
+    $header = array_merge([t('Target Milestones'), t('Priority'), t('Status')]);
 
     foreach ($entity_ids as $key => $target_id) {
       $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($target_id);
       $title = $nodedata->get('title')->value;
-
-      // $priority = $nodedata->get('field_priority')->value;
 
       $priority_edit_form = new MilestonePriorityEditForm($nodedata);
       $priority = \Drupal::formBuilder()->getForm($priority_edit_form);
@@ -547,23 +515,22 @@ class MovepeopleDashboardController extends ControllerBase {
       $status_edit_form = new MilestoneStatusEditForm($nodedata);
       $status = \Drupal::formBuilder()->getForm($status_edit_form);
 
-//      $status_obj = $nodedata->get('field_progression_status');
-//      $status = $status_obj->getSettings()['allowed_values'][$status_obj->value];
-
-      $table[$key] = array($title, $priority, $status);
+      $table[$key] = [$title, $priority, $status];
     }
-    return array('header' => $header,
-      'data' => $table);
+    return [
+      'header' => $header,
+      'data' => $table,
+    ];
   }
 
   /**
-   * return progression targets for user
+   * Return progression targets for user.
    *
    * @params
    * $target_id - progression target nid
    *
    * @return array
-   *
+   *   User tasks render array.
    */
   public function getUserTasks(AccountInterface $user) {
     $user_name = $user->getDisplayName();
@@ -604,32 +571,32 @@ class MovepeopleDashboardController extends ControllerBase {
     ksort($tasks, SORT_NUMERIC);
 
     if (empty($tasks)) {
-      $title = t('Hi %name you have no scheduled tasks.', array('%name' => $user_name));
+      $title = t('Hi %name you have no scheduled tasks.', ['%name' => $user_name]);
     }
     else {
-      $title = t('Hi %name here are your tasks', array('%name' => $user_name));
+      $title = t('Hi %name here are your tasks', ['%name' => $user_name]);
     }
 
-    $build = array(
+    $build = [
       "#theme" => 'bc_2movepeople_dashboard_user_tasks_overview',
       "#title" => $title,
       "#tasks" => $tasks,
       "#user" => $user->id(),
-    );
+    ];
 
     return $build;
   }
 
   /**
-   * get progression goals list (key - goal id, value - goal title)
+   * Get progression goals list (key - goal id, value - goal title).
    *
    * @params
    * $progression_node - progression node object
    *
    * @return array
-   *
+   *   The list of goals.
    */
-  static function getProgressionGoalsList($progression_node) {
+  public static function getProgressionGoalsList($progression_node) {
 
     $goal_ids = $progression_node->get('field_goal_ids')->getValue();
 
@@ -652,8 +619,6 @@ class MovepeopleDashboardController extends ControllerBase {
    *   Flag (0 - false, 1 - is remind true, 2 - is expired true).
    */
   public static function isRemindSession($date) {
-
-    $is_remind = 0;
     $timezone = drupal_get_user_timezone();
 
     $config = \Drupal::config('bc_2movepeople_dashboard.AdminSettings');
@@ -665,41 +630,32 @@ class MovepeopleDashboardController extends ControllerBase {
     $due_date = new \DateTime($date, new \DateTimezone($timezone));
     $due_date_unixtimestamp = $due_date->getTimestamp();
 
-    //$reminder_date_unixtimestamp = $reminder_days * 24 * 60 * 60;
-    //$current_date->setTimestamp($current_unixtimestamp - $reminder_date_unixtimestamp);
-
     if ($due_date_unixtimestamp > $current_unixtimestamp) {
       $diff_date = $current_date->diff($due_date);
       $is_remind = $diff_date->d < $reminder_days ? 1 : 0;
     }
-    else { // due date expire
-      $is_remind = 2; // date expired
+    // Due date expire.
+    else {
+      // Date expired.
+      $is_remind = 2;
     }
 
     return $is_remind;
   }
 
   /**
-   * check reminder time for current user
-   *
-   * @params
-   *
-   * @return boolean
-   *
+   * Check reminder time for current user.
    */
   public static function checkUserSessionReminder() {
-    //  $session = new \Symfony\Component\HttpFoundation\Session\Session();
-    //  $session->start();
-
     $is_remind = FALSE;
     $current_date = new \DateTime('now', new \DateTimezone(drupal_get_user_timezone()));
     $current_unixtimestamp = $current_date->getTimestamp();
 
-
     $tempstore = \Drupal::service('user.private_tempstore')->get('bc_2movepeople_dashboard');
 
-    $offset = 86400; // 86400 = 24h
-    $offset = 30; // for test
+    // The redimder original value is 86400 = 24h.
+    // For test.
+    $offset = 30;
     if ($tempstore->get('is_reminded') && $tempstore->get('is_reminded')['expire'] < $current_unixtimestamp) {
 
       $tempstore->delete('is_reminded');
@@ -718,13 +674,7 @@ class MovepeopleDashboardController extends ControllerBase {
   }
 
   /**
-   * set reminder message (drupal alert) for user tasks
-   *
-   * @params
-   * $user_id - user id
-   *
-   * @return nothing
-   *
+   * Set reminder message (drupal alert) for user tasks.
    */
   public static function setUserTasksReminder($user_id) {
 
@@ -746,15 +696,16 @@ class MovepeopleDashboardController extends ControllerBase {
   }
 
   /**
-   * check access permission for current user
-   * function implements in routing.yml
+   * Check access permission for current user.
+   *
+   * Function implements in routing.yml.
    *
    * @params
    * $account - current logged user object
    * $user - user object from routing
    *
-   * @return access object - forbidden/allowed
-   *
+   * @return object
+   *   forbidden/allowed
    */
   public function access(AccountInterface $account, UserInterface $user = NULL) {
 
@@ -790,13 +741,13 @@ class MovepeopleDashboardController extends ControllerBase {
   }
 
   /**
-   * return connected users for admin/manager
+   * Return connected users for admin/manager.
    *
    * @params
    * $user_id - admin/manager user id
    *
    * @return array
-   *
+   *   The array with ids.
    */
   public static function getManagerIds($user_id) {
     $query = \Drupal::entityQuery('user');
@@ -806,43 +757,32 @@ class MovepeopleDashboardController extends ControllerBase {
   }
 
   /**
-   * Simply send mail function
+   * Simply send mail function.
    *
-   * @param array $message with keys
-   * - to
-   * - from
-   * - body
-   * - sender
-   * - subject
-   * @return BOOLEAN
+   * @param array $message
+   *   Email message array.
+   *
+   * @return bool
+   *   TRUE if the mail was successfully accepted for delivery, FALSE otherwise.
    */
-  public static function sendMail($message) {
-    $send_mail = new \Drupal\Core\Mail\Plugin\Mail\PhpMail();
-    $message['headers'] = array(
+  public static function sendMail(array $message) {
+    $send_mail = new PhpMail();
+    $message['headers'] = [
       'content-type' => 'text/html; charset=UTF-8; format=flowed; delsp=yes',
       'MIME-Version' => '1.0',
       'reply-to' => $message['from'],
-      'from' => $message['sender'] . ' <' . $message['from'] . '>'
-    );
+      'from' => $message['sender'] . ' <' . $message['from'] . '>',
+    ];
     return $send_mail->mail($message);
   }
 
   /**
    * Control buttons block definition.
-   *
-   * @param array $links with keys
-   * - url
-   * - title
-   * - ajax
-   * - sender
-   * - subject
-   *
-   * @return array
    */
   public static function getControlButtons(array $links, array $attributes = []) {
     $build = [
       '#type' => 'container',
-      '#attributes' => array_merge_recursive($attributes, ['class' => ['controll-buttons']])
+      '#attributes' => array_merge_recursive($attributes, ['class' => ['controll-buttons']]),
     ];
 
     foreach ($links as $key => $link) {
@@ -858,31 +798,31 @@ class MovepeopleDashboardController extends ControllerBase {
   }
 
   /**
-   * Prepare a data array with milestones target evaluations
+   * Prepare a data array with milestones target evaluations.
    *
    * @return array
-   *
+   *   Data with Milestone evaluations.
    */
-  private function getMilestoneEvaluationsData(AccountInterface $user) {
+  private static function getMilestoneEvaluationsData(AccountInterface $user) {
 
-    $milestones = array();
+    $milestones = [];
     $milestones_ids = self::getProgressionTargets($user->id(), 'target_milestone');
-    $milestones_data = array();
+    $milestones_data = [];
     $milestone_nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($milestones_ids);
 
     foreach ($milestone_nodes as $milestone_node) {
-      $milestones_data[$milestone_node->id()]['milestone'] = array(
+      $milestones_data[$milestone_node->id()]['milestone'] = [
         'name' => $milestone_node->getTitle(),
         'purpose' => $milestone_node->get('field_purpose')->getValue()[0]['value'],
         'id' => $milestone_node->id(),
-      );
+      ];
       $target_nodes = $milestone_node->get('field_goal_ids')->referencedEntities();
       if (!empty($target_nodes)) {
         foreach ($target_nodes as $target_node) {
-          $milestones_data[$milestone_node->id()]['targets'][$target_node->id()] = array(
+          $milestones_data[$milestone_node->id()]['targets'][$target_node->id()] = [
             'name' => $target_node->getTitle(),
             'evaluation' => $target_node->get('field_evaluation')->getValue()[0]['value'],
-          );
+          ];
         }
       }
       else {
@@ -891,35 +831,33 @@ class MovepeopleDashboardController extends ControllerBase {
     }
 
     return $milestones_data;
-    
+
   }
 
   /**
    * Milestone Evaluations page.
    *
    * Show user Milestone targets and its
-   * evaluations
+   * evaluations.
    *
    * @return array
    *   A renderable array.
    */
-  public function getMilestoneEvaluations(AccountInterface $user) {
-    $build = array(
+  public static function getMilestoneEvaluations(AccountInterface $user) {
+    $build = [
       '#theme' => 'bc_2movepeople_milestone_evaluations',
       '#title' => t('Milestone evaluations'),
       '#user' => $user->id(),
-      '#milestones_data' => $this->getMilestoneEvaluationsData($user),
-    );
-    
+      '#milestones_data' => self::getMilestoneEvaluationsData($user),
+    ];
+
     return $build;
   }
 
   /**
    * Milestone Evaluations PDF page.
    *
-   * Output a PDF of user evaluations
-   *
-   * @return void
+   * Output a PDF of user evaluations.
    */
   public function getMilestoneEvaluationsPdf(AccountInterface $user) {
     $config = $this->config('bc_2movepeople_dashboard.AdminSettings');
@@ -931,17 +869,18 @@ class MovepeopleDashboardController extends ControllerBase {
         ->load($config->get('milestone_evaluation_header_nid'));
     }
 
-    $build = array(
+    $build = [
       '#theme' => 'bc_2movepeople_milestone_evaluations_pdf',
       '#header' => empty($header_node) ? NULL : $header_node->body->view(['label' => 'hidden']),
       "#user" => $user->id(),
       '#milestones_data' => $this->getMilestoneEvaluationsData($user),
-    );
-    
+    ];
+
     $html = \Drupal::service('renderer')->renderRoot($build);
-    $mpdf = new \Mpdf\Mpdf(['tempDir' => 'sites/default/files/tmp']);
+    $mpdf = new Mpdf(['tempDir' => 'sites/default/files/tmp']);
     $mpdf->WriteHTML($html);
     $mpdf->Output('user_' . $user->id() . '_evaluations.pdf', 'D');
-    Exit;
+    exit;
   }
+
 }

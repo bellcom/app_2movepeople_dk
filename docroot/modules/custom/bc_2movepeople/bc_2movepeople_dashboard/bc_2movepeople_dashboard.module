@@ -5,108 +5,112 @@
  * Examples showing how to use some of the new JavaScript features in Drupal 8.
  */
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\bc_2movepeople_dashboard\Misc\TaskReminderUtils;
 use Drupal\node\Entity\Node;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 use Drupal\Core\Breadcrumb\Breadcrumb;
-
-/**
- * @defgroup bc_2movepeople_dashboard.module: JavaScript
- * @ingroup 2movepeople
- * @{
- *
- */
+use Drupal\Core\Link;
 
 /**
  * Implements hook_theme().
  */
 function bc_2movepeople_dashboard_theme() {
-  return array(
-    'bc_2movepeople_dashboard_accordion' => array(
+  return [
+    'bc_2movepeople_dashboard_accordion' => [
       'template' => 'accordion',
-      'variables' => array('title' => NULL),
-    ),
-    'bc_2movepeople_dashboard' => array(
+      'variables' => ['title' => NULL],
+    ],
+    'bc_2movepeople_dashboard' => [
       'template' => 'bc-2movepeople-dashboard',
-      'variables' => array('title' => NULL,
+      'variables' => [
+        'title' => NULL,
         'user' => NULL,
         'subtitle' => NULL,
         'limit' => NULL,
-        'progression_targets' => array()),
-    ),
-    'bc_2movepeople_milestone_dashboard' => array(
+        'progression_targets' => [],
+      ],
+    ],
+    'bc_2movepeople_milestone_dashboard' => [
       'template' => 'bc-2movepeople-milestone-dashboard',
-      'variables' => array('title' => NULL,
+      'variables' => [
+        'title' => NULL,
         'user' => NULL,
         'subtitle' => NULL,
-        'milestone_targets' => array()),
-    ),
-    'bc_2movepeople_dashboard_user_overview' => array(
+        'milestone_targets' => [],
+      ],
+    ],
+    'bc_2movepeople_dashboard_user_overview' => [
       'template' => 'bc-2movepeople-dashboard-user-overview',
-      'variables' => array('title' => NULL,
-      'user' => NULL,
-      'table_progression' => NULL, 'table_milestone' => NULL),
-    ),
-    'bc_2movepeople_dashboard_progression_total_table' => array(
+      'variables' => [
+        'title' => NULL,
+        'user' => NULL,
+        'table_progression' => NULL,
+        'table_milestone' => NULL,
+      ],
+    ],
+    'bc_2movepeople_dashboard_progression_total_table' => [
       'template' => 'bc-2movepeople-dashboard-progression-total-table',
-      'variables' => array(
-      'type' => 'progression',
-      'table_header' => array(),
-      'table_data' => array()),
-    ),
-    'bc_2movepeople_dashboard_user_tasks_overview' => array(
+      'variables' => [
+        'type' => 'progression',
+        'table_header' => [],
+        'table_data' => [],
+      ],
+    ],
+    'bc_2movepeople_dashboard_user_tasks_overview' => [
       'template' => 'bc-2movepeople-user-tasks',
-      'variables' => array(
-          'title' => NULL,
-          'tasks' => NULL,
-          'user'  => NULL
-      ),
-    ),
-    'bc_2movepeople_milestone_evaluations' => array(
+      'variables' => [
+        'title' => NULL,
+        'tasks' => NULL,
+        'user'  => NULL,
+      ],
+    ],
+    'bc_2movepeople_milestone_evaluations' => [
       'template' => 'bc-2movepeople-milestone-evaluations',
-      'variables' => array(
+      'variables' => [
+        'message' => NULL,
         'title' => NULL,
         'user'  => NULL,
-        'milestones_data' => array(),
-        ),
-    ),
-    'bc_2movepeople_milestone_evaluations_pdf' => array(
+        'milestones_data' => [],
+      ],
+    ],
+    'bc_2movepeople_milestone_evaluations_pdf' => [
       'template' => 'bc-2movepeople-milestone-evaluations-pdf',
-      'variables' => array(
+      'variables' => [
         'header' => NULL,
         'user'  => NULL,
-        'milestones_data' => array(),
-        ),
-    ),
-  );
+        'milestones_data' => [],
+      ],
+    ],
+  ];
 }
 
 /**
- * Implements hook_theme_suggestions_alter
+ * Implements hook_theme_suggestions_alter.
  */
 function bc_2movepeople_dashboard_theme_suggestions_alter(array &$suggestions, array $variables) {
 
-    if (isset($variables['element']) && isset($variables['element']['#type']) && $variables['element']['#type'] == 'form') {
-        $original_theme_hook = $variables['theme_hook_original'];
+  if (isset($variables['element']) && isset($variables['element']['#type']) && $variables['element']['#type'] == 'form') {
+    $original_theme_hook = $variables['theme_hook_original'];
 
-        $suggestions[] = $original_theme_hook . '__' . str_replace('-', '_', $variables['element']['#id']);
-    }
-    return $suggestions;
+    $suggestions[] = $original_theme_hook . '__' . str_replace('-', '_', $variables['element']['#id']);
+  }
+  return $suggestions;
 }
 
 /**
  * Implements hook_user_login().
  */
 function bc_2movepeople_dashboard_user_login($account) {
-    $path = '/';
-    $user_roles = $account->getRoles();
-    if (in_array("2mp_user", $user_roles)) {
-      $path = Url::fromRoute('bc_2movepeople_dashboard.user.tasks', ['user' => $account->id()])->toString();
-    }  
-    $response = new RedirectResponse($path);
-    $response->send(); 
+  $path = '/';
+  $user_roles = $account->getRoles();
+  if (in_array("2mp_user", $user_roles)) {
+    $path = Url::fromRoute('bc_2movepeople_dashboard.user.tasks', ['user' => $account->id()])->toString();
+  }
+  $response = new RedirectResponse($path);
+  $response->send();
 }
 
 /**
@@ -117,54 +121,62 @@ function bc_2movepeople_dashboard_cron() {
 }
 
 /**
- * Implements hook node_delete()
+ * Implements hook node_delete().
  */
 function bc_2movepeople_dashboard_node_delete($node) {
   $node_type = $node->type->entity->label();
 
-  if($node_type == 'Progression target'){
-    //Delete goals and subgoals
+  if ($node_type == 'Progression target') {
+    // Delete goals and subgoals.
     $deleted_goals_count = 0;
-    $goals = $node->field_goal_ids->referencedEntities();  
-      if (is_array($goals)) {
-        foreach ($goals as $goal) {
-          if (is_array($subgoals = $goal->field_subgoal->referencedEntities())) {
-            foreach ($subgoals as $subgoal) {
-              $subgoal->delete();
-              $deleted_goals_count++;
-            }
+    $goals = $node->field_goal_ids->referencedEntities();
+    if (is_array($goals)) {
+      foreach ($goals as $goal) {
+        $subgoals = $goal->field_subgoal->referencedEntities();
+        if (is_array($subgoals)) {
+          foreach ($subgoals as $subgoal) {
+            $subgoal->delete();
+            $deleted_goals_count++;
           }
-          $goal->delete();
-          $deleted_goals_count++;
         }
+        $goal->delete();
+        $deleted_goals_count++;
       }
-    //Delete rates values
+    }
+    // Delete rates values.
     $rates_values = \Drupal::database()->delete('bc_2movepeople_rate_progression')
-    ->condition('progression_target_id', $node->id())
-    ->execute();
-  
-    if('target_milestone' == $node->get('field_progression_type')->getValue()[0]['value']){
-      drupal_set_message(t('Milestone @category_name is deleted. It had @tasks tasks', 
-      array('@category_name' => $node->getTitle(), '@tasks' => $deleted_goals_count)), 'status');
-    }else{
-      drupal_set_message(t('Category @category_name is deleted. It had @goals goals and @rates rates values', 
-      array('@category_name' => $node->getTitle(), '@goals' => $deleted_goals_count, '@rates' => $rates_values)), 'status');
-    } 
+      ->condition('progression_target_id', $node->id())
+      ->execute();
+
+    if ('target_milestone' == $node->get('field_progression_type')->getValue()[0]['value']) {
+      drupal_set_message(t('Milestone @category_name is deleted. It had @tasks tasks', [
+        '@category_name' => $node->getTitle(),
+        '@tasks' => $deleted_goals_count,
+      ]), 'status');
+    }
+    else {
+      drupal_set_message(t('Category @category_name is deleted. It had @goals goals and @rates rates values', [
+        '@category_name' => $node->getTitle(),
+        '@goals' => $deleted_goals_count,
+        '@rates' => $rates_values,
+      ]), 'status');
+    }
   }
 }
 
 /**
  * Implements hook entity_update().
  */
-function bc_2movepeople_dashboard_entity_update(\Drupal\Core\Entity\EntityInterface $entity) {
+function bc_2movepeople_dashboard_entity_update(EntityInterface $entity) {
   switch ($entity->bundle()) {
-    // Here we send notifications only if 'goal' content type has assigned to responsible manager
+    // Here we send notifications only if 'goal' content type has
+    // assigned to responsible manager.
     case 'goal':
       $manager_id = $entity->field_responsible_manager->target_id;
       $original_manager_id = $entity->original->field_responsible_manager->target_id;
 
       if ((empty($original_manager_id) || ($original_manager_id <> $manager_id)) && !empty($manager_id)) {
-        // Get milestone of the goal
+        // Get milestone of the goal.
         $bundle = 'progression_target';
         $query = \Drupal::entityQuery('node');
         $query->condition('status', 1);
@@ -174,7 +186,7 @@ function bc_2movepeople_dashboard_entity_update(\Drupal\Core\Entity\EntityInterf
         $milestone_id = $query->execute();
         $milestone = Node::load(array_pop($milestone_id));
 
-        // Get milestone user
+        // Get milestone user.
         $milestone_user = $milestone->get('field_progression_user')->referencedEntities()[0];
 
         $manager = $entity->get('field_responsible_manager')->referencedEntities()[0];
@@ -190,7 +202,7 @@ function bc_2movepeople_dashboard_entity_update(\Drupal\Core\Entity\EntityInterf
           'from' => \Drupal::config('system.site')->get('mail'),
           'subject' => $subject,
           'body' => $body,
-          'sender' => t('System notify')
+          'sender' => t('System notify'),
         ]);
       }
       break;
@@ -199,10 +211,6 @@ function bc_2movepeople_dashboard_entity_update(\Drupal\Core\Entity\EntityInterf
 
 /**
  * Implements hook_system_breadcrumb_alter().
- *
- * @param $breadcrumb
- * @param $route_match
- * @param array $context
  */
 function bc_2movepeople_dashboard_system_breadcrumb_alter(&$breadcrumb, $route_match, array $context) {
   // Renaming link named 'Home' to 'Dashboard'.
@@ -219,7 +227,7 @@ function bc_2movepeople_dashboard_system_breadcrumb_alter(&$breadcrumb, $route_m
     }
   }
 
-  // User progressions, User milestones
+  // User progressions, User milestones.
   if ($route_match->getRouteName() == 'bc_2movepeople_dashboard.user.progressions'
     || $route_match->getRouteName() == 'bc_2movepeople_dashboard.user.milestones'
   ) {
@@ -229,7 +237,7 @@ function bc_2movepeople_dashboard_system_breadcrumb_alter(&$breadcrumb, $route_m
     }
 
     $user = $route_match->getParameter('user');
-    $breadcrumb->addLink(\Drupal\Core\Link::createFromRoute(t('User overview'), 'bc_2movepeople_dashboard.user.overview', ['user' => $user->id()]));
+    $breadcrumb->addLink(Link::createFromRoute(t('User overview'), 'bc_2movepeople_dashboard.user.overview', ['user' => $user->id()]));
   }
 
   // Progression edit.
@@ -243,10 +251,10 @@ function bc_2movepeople_dashboard_system_breadcrumb_alter(&$breadcrumb, $route_m
 
     $limit = $route_match->getParameter('limit');
 
-    $breadcrumb->addLink(\Drupal\Core\Link::createFromRoute(t('User overview'), 'bc_2movepeople_dashboard.user.overview', ['user' => $user_id]));
-    $breadcrumb->addLink(\Drupal\Core\Link::createFromRoute(t('User progressions'), 'bc_2movepeople_dashboard.user.progressions', [
+    $breadcrumb->addLink(Link::createFromRoute(t('User overview'), 'bc_2movepeople_dashboard.user.overview', ['user' => $user_id]));
+    $breadcrumb->addLink(Link::createFromRoute(t('User progressions'), 'bc_2movepeople_dashboard.user.progressions', [
       'user' => $user_id,
-      'limit' => $limit
+      'limit' => $limit,
     ]));
   }
 
@@ -257,10 +265,10 @@ function bc_2movepeople_dashboard_system_breadcrumb_alter(&$breadcrumb, $route_m
 
     $limit = $route_match->getParameter('limit');
 
-    $breadcrumb->addLink(\Drupal\Core\Link::createFromRoute(t('User overview'), 'bc_2movepeople_dashboard.user.overview', ['user' => $user_id]));
-    $breadcrumb->addLink(\Drupal\Core\Link::createFromRoute(t('User milestones'), 'bc_2movepeople_dashboard.user.milestones', [
+    $breadcrumb->addLink(Link::createFromRoute(t('User overview'), 'bc_2movepeople_dashboard.user.overview', ['user' => $user_id]));
+    $breadcrumb->addLink(Link::createFromRoute(t('User milestones'), 'bc_2movepeople_dashboard.user.milestones', [
       'user' => $user_id,
-      'limit' => $limit
+      'limit' => $limit,
     ]));
   }
 }
@@ -270,8 +278,10 @@ function bc_2movepeople_dashboard_system_breadcrumb_alter(&$breadcrumb, $route_m
  *
  * The duplicate comes automatically when the route contains default parameters as NULL.
  *
- * @param $breadcrumb
- * @param $route_name
+ * @param object $breadcrumb
+ *   Breadcrumbs object.
+ * @param string $route_name
+ *   Route.
  */
 function _bc_2movepeople_dashboard_remove_breadcrubm_duplicate(&$breadcrumb, $route_name) {
   $active_links = $breadcrumb->getLinks();
