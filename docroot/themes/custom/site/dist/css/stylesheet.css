@@ -8828,7 +8828,6 @@ body.toolbar-fixed.toolbar-tray-open.toolbar-vertical #page-wrapper #sidebar-wra
   padding-top: 39px; }
 
 .modal-dialog {
-  height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -9034,6 +9033,12 @@ a.btn-progress {
 .custom-checkbox-ok.btn-default.active {
   background-color: #50afe8 !important;
   border-color: #50afe8 !important; }
+
+.btn-sm, .btn-group-sm > .btn {
+  font-size: 14px !important;
+  padding: 1px 6px;
+  margin-left: 1px;
+  margin-right: 1px; }
 
 @media (min-width: 992px) {
   .btn {
@@ -9809,11 +9814,6 @@ span.task.completed {
     -webkit-justify-content: flex-end;
         -ms-flex-pack: end;
             justify-content: flex-end; }
-    .user.user--compact .user-controls a.btn {
-      font-size: 14px !important;
-      padding: 1px 6px;
-      margin-left: 1px;
-      margin-right: 1px; }
 
 @media (min-width: 768px) {
   .user.user--compact {
