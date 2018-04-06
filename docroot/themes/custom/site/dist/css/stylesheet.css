@@ -8828,6 +8828,7 @@ body.toolbar-fixed.toolbar-tray-open.toolbar-vertical #page-wrapper #sidebar-wra
   padding-top: 39px; }
 
 .modal-dialog {
+  min-height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
