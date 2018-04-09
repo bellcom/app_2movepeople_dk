@@ -44,7 +44,6 @@ var pageLayout = (function ($) {
          */
         Drupal.behaviors.barRating = {
             attach: function (context) {
-                console.log('barRating');
                 $('.form-select.rating', context).once('barrating').barrating('show', {
                     theme: 'bars-square',
                     showValues: true,
