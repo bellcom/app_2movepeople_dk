@@ -14,6 +14,7 @@ use Drupal\bc_2movepeople_dashboard\Form\MilestonePriorityEditForm;
 use Drupal\bc_2movepeople_dashboard\Form\MilestoneEditForm;
 use Drupal\bc_2movepeople_dashboard\Form\MilestoneStatusEditForm;
 use Drupal\Core\Access\AccessResult;
+use Drupal\Component\Utility\Html;
 use Drupal\views\Views;
 use Drupal\user\UserInterface;
 
@@ -804,8 +805,6 @@ class MovepeopleDashboardController extends ControllerBase {
    *   Data with Milestone evaluations.
    */
   private static function getMilestoneEvaluationsData(AccountInterface $user) {
-
-    $milestones = [];
     $milestones_ids = self::getProgressionTargets($user->id(), 'target_milestone');
     $milestones_data = [];
     $milestone_nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($milestones_ids);
@@ -819,9 +818,10 @@ class MovepeopleDashboardController extends ControllerBase {
       $target_nodes = $milestone_node->get('field_goal_ids')->referencedEntities();
       if (!empty($target_nodes)) {
         foreach ($target_nodes as $target_node) {
+          $evaluation = $target_node->get('field_evaluation')->getValue();
           $milestones_data[$milestone_node->id()]['targets'][$target_node->id()] = [
             'name' => $target_node->getTitle(),
-            'evaluation' => $target_node->get('field_evaluation')->getValue()[0]['value'],
+            'evaluation' => empty($evaluation[0]['value']) ? NULL : $evaluation[0]['value'],
           ];
         }
       }
@@ -877,6 +877,7 @@ class MovepeopleDashboardController extends ControllerBase {
     ];
 
     $html = \Drupal::service('renderer')->renderRoot($build);
+    $html = Html::transformRootRelativeUrlsToAbsolute($html, \Drupal::request()->getSchemeAndHttpHost());
     $mpdf = new Mpdf(['tempDir' => 'sites/default/files/tmp']);
     $mpdf->WriteHTML($html);
     $mpdf->Output('user_' . $user->id() . '_evaluations.pdf', 'D');
