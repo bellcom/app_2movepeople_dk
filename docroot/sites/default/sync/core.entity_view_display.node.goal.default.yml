@@ -107,4 +107,5 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
+  field_is_manager_task: true
   langcode: true
