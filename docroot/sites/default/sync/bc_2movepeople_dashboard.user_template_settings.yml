@@ -1,6 +1,6 @@
 template:
   -
-    template_name: 'Progression target'
+    template_name: BIB
     categories:
       progression:
         -
@@ -128,17 +128,24 @@ template:
             -
               title: 'Har du lyst til at gå i gang med noget nyt?'
               subgoals: {  }
+        -
+          title: 'Gå hejm til tiden'
+          goals:
+            -
+              title: 'Gå hjem'
+              subgoals: {  }
+            -
+              title: 'smid Jørn hjem'
+              subgoals: {  }
       progression_feedback:
         -
           title: SAS
           goals:
             -
               title: 'Are you ok'
-              subgoals: {  }
-            -
-              title: 'Everything is fine'
-              subgoals: {  }
+              subgoals:
+                - 'Gå hjem'
         -
-          title: Feedback
+          title: evaluering
           goals: {  }
 
