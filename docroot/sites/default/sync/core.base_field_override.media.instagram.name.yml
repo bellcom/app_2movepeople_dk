@@ -1,0 +1,20 @@
+uuid: 50e243e2-9bd0-4863-91a5-327b7ac1587d
+langcode: en
+status: true
+dependencies:
+  config:
+    - media_entity.bundle.instagram
+id: media.instagram.name
+field_name: name
+entity_type: media
+bundle: instagram
+label: 'Media name'
+description: 'The name of this media.'
+required: true
+translatable: false
+default_value:
+  -
+    value: ''
+default_value_callback: ''
+settings: {  }
+field_type: string

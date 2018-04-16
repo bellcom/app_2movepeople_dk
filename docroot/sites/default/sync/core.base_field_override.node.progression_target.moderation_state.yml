@@ -1,0 +1,20 @@
+uuid: 96ced268-8a0e-4cc6-89eb-7f0ac976ad52
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.progression_target
+id: node.progression_target.moderation_state
+field_name: moderation_state
+entity_type: node
+bundle: progression_target
+label: 'Moderation state'
+description: 'The moderation state of this piece of content.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

@@ -1028,7 +1028,7 @@ display:
           exception:
             value: all
             title_enable: false
-            title: All
+            title: Alle
           title_enable: true
           title: 'File usage information for {{ arguments.fid }}'
           default_argument_type: fixed

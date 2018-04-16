@@ -4,8 +4,13 @@ status: true
 dependencies:
   config:
     - node.type.progression_target
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
 id: node.progression_target
 target_entity_type_id: node
 target_bundle: progression_target
 default_langcode: site_default
-language_alterable: false
+language_alterable: true

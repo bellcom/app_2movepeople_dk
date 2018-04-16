@@ -1,0 +1,22 @@
+uuid: 8974b7ca-bc74-41ac-813f-5155cea66a55
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.progression_target
+id: node.progression_target.status
+field_name: status
+entity_type: node
+bundle: progression_target
+label: 'Publishing status'
+description: 'A boolean indicating the published state.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean
