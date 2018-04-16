@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskAddForm.
- */
-
 namespace Drupal\bc_2movepeople_dashboard\Form;
 
 use Drupal\Core\Form\FormBase;
@@ -14,24 +9,36 @@ use Drupal\node\NodeInterface;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Url;
-//use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\node\Entity\Node;
-use \Drupal\user\Entity\User;
+use Drupal\user\Entity\User;
 
+/**
+ * Form to add milestone tasks.
+ *
+ * Contains \Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskAddForm.
+ */
 class MilestoneTaskAddForm extends FormBase {
 
-  protected $parent_node;
+  protected $parentNode;
   protected $isSaved;
-  private $updated_msg = 'Records successfully updated.';
-  private $wrong_msg = 'Something wrong.';
 
   /**
-   * {@inheritdoc}
+   * Build MilestoneTaskAddForm render representing array.
+   *
+   * @param array $form
+   *   Render array representing from.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Current form state.
+   * @param \Drupal\node\NodeInterface $node
+   *   Parent node.
+   *
+   * @return array
+   *   Array of ajax commands to execute on submit of the modal form.
    */
   public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL) {
 
     $this->return_url = \Drupal::request()->query->get('return_url');
-    $this->parent_node = $node;
+    $this->parentNode = $node;
 
     $form['#prefix'] = '<div id="bc_2movepeople-dashboard-milestone-task-add-form">';
     $form['#suffix'] = '</div>';
@@ -43,16 +50,16 @@ class MilestoneTaskAddForm extends FormBase {
       '#required' => TRUE,
     ];
 
-    // Get all managers of target user
-    $user = $this->parent_node->get('field_progression_user')->getValue();
+    // Get all managers of target user.
+    $user = $this->parentNode->get('field_progression_user')->getValue();
     $user_managers_ids = \Drupal::entityQuery('user')
-        ->condition('status', 1)
-        ->condition('roles', '2mp_manager')
-        ->condition('field_connected_users', $user[0]['target_id'], 'CONTAINS')
-        ->execute();
+      ->condition('status', 1)
+      ->condition('roles', '2mp_manager')
+      ->condition('field_connected_users', $user[0]['target_id'], 'CONTAINS')
+      ->execute();
     $user_managers = User::loadMultiple($user_managers_ids);
 
-    $options = array();
+    $options = [];
     if (!empty($user_managers)) {
       foreach ($user_managers as $user_manager) {
         $options[$user_manager->id()] = CommonFormUtils::getUserName($user_manager);
@@ -63,7 +70,7 @@ class MilestoneTaskAddForm extends FormBase {
       '#type' => 'select',
       '#title' => t('Responsible manager'),
       '#required' => FALSE,
-      '#empty_option' => 'None',
+      '#empty_option' => t('None'),
       '#options' => $options,
     ];
 
@@ -89,22 +96,11 @@ class MilestoneTaskAddForm extends FormBase {
     $form_state->setCached(FALSE);
 
     // Group submit handlers in an actions element with a key of "actions" so
-    // that it gets styled correctly, and so that other modules may add actions to the form.
+    // that it gets styled correctly, and so that other modules
+    // may add actions to the form.
     $form['actions'] = [
       '#type' => 'actions',
     ];
-    // Add a submit button that handles the submission of the form.
-//    $form['actions']['submit'] = [
-//      '#type' => 'submit',
-//      '#value' => $this->t('Save'),
-//      '#attributes' => [
-//        'class' => ['btn', 'btn-info'],
-//      ],
-//      '#ajax' => [
-//        'callback' => '::ajaxSubmitForm',
-//        'event' => 'click',
-//      ],
-//    ];
 
     $form['actions']['submit'] = [
       '#type' => 'submit',
@@ -116,16 +112,26 @@ class MilestoneTaskAddForm extends FormBase {
   }
 
   /**
-   * {@inheritdoc}
+   * Returns form id.
+   *
+   * @return string
+   *   Form id
    */
   public function getFormId() {
-    //return 'bc_2movepeople-dashboard-milestone-priority-add-form'. '_' . $this->parent_node->id();
 
     return 'bc_2movepeople-dashboard-milestone-task-add-form';
   }
 
   /**
-   * {@inheritdoc}
+   * Implements the submit handler for the ajax call.
+   *
+   * @param array $form
+   *   Render array representing from.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Current form state.
+   *
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   *   Array of ajax commands to execute on submit of the modal form.
    */
   public function ajaxSubmitForm(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
@@ -141,9 +147,6 @@ class MilestoneTaskAddForm extends FormBase {
     }
     else {
       if ($this->isSaved == SAVED_UPDATED) {
-//        $goals = CommonFormUtils::goalsContainer(array(), $this->parent_node);
-//        $renderer = \Drupal::service('renderer');
-//        $response->addCommand(new ReplaceCommand("#goals-box-".$this->parent_node->id(), $renderer->render($goals)));
         $response->addCommand(new CloseModalDialogCommand());
       }
     }
@@ -151,7 +154,12 @@ class MilestoneTaskAddForm extends FormBase {
   }
 
   /**
-   * {@inheritdoc}
+   * Implements the submit handler.
+   *
+   * @param array $form
+   *   Render array representing from.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Current form state.
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
 
@@ -161,7 +169,7 @@ class MilestoneTaskAddForm extends FormBase {
     $due_date = $form_state->getValue('due_date');
     $responsible_manager = $form_state->getValue('responsible_manager');
 
-    $node = Node::create(array(
+    $node = Node::create([
       'type' => 'goal',
       'status' => 1,
       'title' => $title,
@@ -169,26 +177,26 @@ class MilestoneTaskAddForm extends FormBase {
       'field_due_date' => $due_date,
       'field_evaluation' => $evaluation,
       'field_responsible_manager' => $responsible_manager,
-    ));
+    ]);
 
     if ($node->save() == SAVED_NEW) {
 
-      $old_goal_ids = $this->parent_node->get('field_goal_ids')->getValue();
+      $old_goal_ids = $this->parentNode->get('field_goal_ids')->getValue();
       $new_goal_ids = [];
       foreach ($old_goal_ids as $tid) {
         $new_goal_ids[] = $tid['target_id'];
       }
       $new_goal_ids[] = $node->id();
-      $this->parent_node->set('field_goal_ids', $new_goal_ids);
-      $this->isSaved = $this->parent_node->save();
+      $this->parentNode->set('field_goal_ids', $new_goal_ids);
+      $this->isSaved = $this->parentNode->save();
 
-      $user = $this->parent_node->get('field_progression_user')->getValue();
+      $user = $this->parentNode->get('field_progression_user')->getValue();
 
       if (isset($this->return_url)) {
         $form_state->setRedirectUrl(Url::fromUri('internal:' . $this->return_url));
       }
       else {
-        $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.user.milestones', ['user' => $user[0]['target_id']], ['fragment' => $this->parent_node->id()]));
+        $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.user.milestones', ['user' => $user[0]['target_id']], ['fragment' => $this->parentNode->id()]));
       }
     }
   }

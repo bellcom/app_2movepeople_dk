@@ -1,41 +1,33 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\bc_2movepeople_dashboard\Form\CommonFormUtils.
- */
-
 namespace Drupal\bc_2movepeople_dashboard\Form;
 
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
-//use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\user\Entity\User;
 
+/**
+ * Common help methods for other forms.
+ *
+ * Contains \Drupal\bc_2movepeople_dashboard\Form\CommonFormUtils.
+ */
 class CommonFormUtils {
 
-  public static function goalsContainer($form, $node) {
-
+  /**
+   * Returns form element of node goals.
+   *
+   * @param array $form
+   *   Form.
+   * @param object $node
+   *   Node.
+   *
+   * @return array
+   *   Form element
+   */
+  public static function goalsContainer(array $form, $node) {
 
     $goal_ids = $node->get('field_goal_ids')->getValue();
     $user_id = $node->get('field_progression_user')->getValue()[0]['target_id'];
-
-//    $form['goals_header'] = [
-//      '#markup' => ''
-//          . '<div class="row custom-form-fields custom-form-label">'
-//          . '<div class="col-md-3 col-sm-2 col-xs-2">Milestone</div>'
-//          . '<div class="col-md-2 col-sm-2 col-xs-2">Activity</div>'
-//          . '<div class="col-md-3 col-sm-4 col-xs-4">Deadline</div>'
-//          . '<div class="col-md-2 col-sm-2 col-xs-2">Evaluation</div>'
-//          . '<div class="col-md-2 col-sm-2 col-xs-2">Actions</div>'
-//          . '</div>'
-//    ];
-    //  use Drupal\Core\Cache\CacheableMetadata;
-//   $cacheable_metadata = new \Drupal\Core\Cache\CacheableMetadata();
-//   $cacheable_metadata->setCacheMaxAge(86400); // 24h = 86400sec
-//   $cacheable_metadata->setCacheTags(['dfsdf', ['24234']]);
-//
-//   dpm($cacheable_metadata->getCacheTags());
 
     $form['goals'] = [
       '#type' => 'container',
@@ -44,7 +36,7 @@ class CommonFormUtils {
 
     $remind_types = [
       1 => 'is-remind-warning',
-      2 => 'is-remind-expired'
+      2 => 'is-remind-expired',
     ];
 
     foreach ($goal_ids as $tid) {
@@ -63,11 +55,11 @@ class CommonFormUtils {
         . '<div class="custom-form-label-due-date"><div>' . t('Deadline') . '</div></div>'
         . '<div class="custom-form-label-responsible-manager">' . t('Responsible') . '</div>'
         . '<div class="custom-form-label-complete-btn">' . t('Actions') . '</div>'
-        . '</div>'
+        . '</div>',
       ];
 
       $form['goals'][$goal_id] = [
-        '#type' => 'container'
+        '#type' => 'container',
       ];
 
       $remind_class = '';
@@ -80,25 +72,25 @@ class CommonFormUtils {
         '#default_value' => $goal['title'],
         '#prefix' => '<div class="custom-form-fields div-form' . $remind_class . '" id="goal_row_' . $goal_id . '">'
         . '<div class="custom-form-field-title"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Task') . '</div>',
-        '#suffix' => '</div>'
+        '#suffix' => '</div>',
       ];
 
       $form['goals'][$goal_id]['activity_title'] = [
         '#type' => 'textfield',
         '#default_value' => $goal['activity_title'],
         '#prefix' => '<div class="custom-form-field-activity-title"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Activity') . '</div>',
-        '#suffix' => '</div>'
+        '#suffix' => '</div>',
       ];
 
-      // Get all managers of target user
+      // Get all managers of target user.
       $user_managers_ids = \Drupal::entityQuery('user')
-          ->condition('status', 1)
-          ->condition('roles', '2mp_manager')
-          ->condition('field_connected_users', $user_id, 'CONTAINS')
-          ->execute();
+        ->condition('status', 1)
+        ->condition('roles', '2mp_manager')
+        ->condition('field_connected_users', $user_id, 'CONTAINS')
+        ->execute();
       $user_managers = User::loadMultiple($user_managers_ids);
 
-      $options = array();
+      $options = [];
       if (!empty($user_managers)) {
         foreach ($user_managers as $user_manager) {
           $options[$user_manager->id()] = self::getUserName($user_manager);
@@ -109,17 +101,17 @@ class CommonFormUtils {
         '#type' => 'date',
         '#default_value' => $goal['date'],
         '#prefix' => '<div class="custom-form-field-due-date"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Deadline') . '</div>',
-        '#suffix' => '</div>'
+        '#suffix' => '</div>',
       ];
-      
+
       $form['goals'][$goal_id]['responsible_manager'] = [
         '#type' => 'select',
         '#required' => FALSE,
         '#default_value' => $goal['responsible_manager'],
-        '#empty_option' => 'None',
+        '#empty_option' => t('None'),
         '#options' => $options,
         '#prefix' => '<div class="custom-form-field-responsible-manager"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Responsible') . '</div>',
-        '#suffix' => '</div>'
+        '#suffix' => '</div>',
       ];
 
       $form['goals'][$goal_id]['complete_btn'] = [
@@ -131,16 +123,16 @@ class CommonFormUtils {
           'class' => ['btn', 'btn-default', 'custom-checkbox-ok'],
           'data-toggle' => ['button'],
           'aria-pressed' => ['false'],
-          'autocomplete' => ['off']
+          'autocomplete' => ['off'],
         ],
         '#ajax' => [
           'event' => 'click',
           'callback' => '::ajaxGoalComplete',
-          'progress' => ['type' => 'none']
+          'progress' => ['type' => 'none'],
         ],
         '#prefix' => '<div class="dashboard-accordion__action-btn">'
         . '<span id="complete_btn_box' . $goal_id . '">',
-        '#suffix' => '</span>'
+        '#suffix' => '</span>',
       ];
 
       if ($goal['completed']) {
@@ -156,12 +148,12 @@ class CommonFormUtils {
           'class' => ['btn', 'btn-default', 'custom-checkbox-trash'],
           'data-toggle' => ['button'],
           'aria-pressed' => ['false'],
-          'autocomplete' => ['off']
+          'autocomplete' => ['off'],
         ],
         '#ajax' => [
           'event' => 'click',
           'callback' => '::ajaxGoalDelete',
-          'progress' => ['type' => 'none']
+          'progress' => ['type' => 'none'],
         ],
       ];
 
@@ -169,29 +161,46 @@ class CommonFormUtils {
         '#type' => 'link',
         '#title' => '',
         '#name' => 'clone_btn' . $goal_id,
-        '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.tasks.clone', array('user' => $user_id, 'node' => $goal_id)),
+        '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.tasks.clone', ['user' => $user_id, 'node' => $goal_id]),
         '#attributes' => [
           'data_goal_id' => $goal_id,
           'data_prefix' => '',
           'data-dialog-type' => 'modal',
-          'class' => ['use-ajax', 'btn', 'btn-default', 'link-btn', 'custom-checkbox-clone'],
+          'class' => ['use-ajax',
+            'btn',
+            'btn-default',
+            'link-btn',
+            'custom-checkbox-clone',
+          ],
           'data-toggle' => ['button'],
           'aria-pressed' => ['false'],
           'autocomplete' => ['off'],
         ],
-        '#suffix' => '</div></div>'
-//        '#ajax' => [
-//          'event' => 'click',
-//          'progress' => ['type' => 'none']
-//        ],
+        '#suffix' => '</div></div>',
       ];
     }
 
     return $form;
   }
 
-  public static function tasksContainer($form, $node, $title = 'Question') {
+  /**
+   * Returns form element of node tasks.
+   *
+   * @param array $form
+   *   Form.
+   * @param object $node
+   *   Node.
+   * @param string $title
+   *   Title.
+   *
+   * @return array
+   *   Form element
+   */
+  public static function tasksContainer(array $form, $node, $title = NULL) {
 
+    if (NULL == $title) {
+      $title = t('Question');
+    }
     $goal_ids = $node->get('field_goal_ids')->getValue();
 
     $form['goals'] = [
@@ -204,26 +213,37 @@ class CommonFormUtils {
       $form['goals']['#tree'] = TRUE;
 
       $form['goals']['header'] = [
-        '#markup' => ''
-        . '<div class="custom-form-fields custom-form-label">'
-        . '<div class="custom-form-label">' . t($title) . '</div>'
-        . '<div class="custom-form-label">' . t('Actions') . '</div>'
-        . '</div>'
+        '#markup' => '<div class="custom-form-fields custom-form-label">'
+        . '<div class="custom-form-label">' . $title . '</div>'
+        . '<div class="custom-form-label">' . t('Actions') . '</div></div>',
       ];
 
       $goal_id = $tid['target_id'];
       $goal = MovepeopleDashboardController::getGoal($goal_id, $node);
 
-      $form = self::_getTasksRow($form, $goal);
+      $form = self::getTasksRow($form, $goal);
     }
 
     return $form;
   }
 
-  private static function _getTasksRow($form, $goal, $parent_subgoal_id = 0) {
+  /**
+   * Returns form element of goal task.
+   *
+   * @param array $form
+   *   Form.
+   * @param array $goal
+   *   Goal.
+   * @param int $parent_subgoal_id
+   *   Parent subgoal id.
+   *
+   * @return array
+   *   Form element
+   */
+  private static function getTasksRow(array $form, array $goal, $parent_subgoal_id = 0) {
 
     $form['goals'][$goal['id']] = [
-      '#type' => 'container'
+      '#type' => 'container',
     ];
 
     $form['goals'][$goal['id']]['title'] = [
@@ -233,7 +253,7 @@ class CommonFormUtils {
       . ($parent_subgoal_id ? ''
       . '<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>'
       . '<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">' : '<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">'),
-      '#suffix' => '</div>'
+      '#suffix' => '</div>',
     ];
 
     $form['goals'][$goal['id']]['delete_btn'] = [
@@ -245,55 +265,66 @@ class CommonFormUtils {
         'class' => ['btn', 'btn-default', 'custom-checkbox-trash'],
         'data-toggle' => ['button'],
         'aria-pressed' => ['false'],
-        'autocomplete' => ['off']
+        'autocomplete' => ['off'],
       ],
       '#ajax' => [
         'event' => 'click',
         'callback' => '::ajaxGoalDelete',
-        'progress' => ['type' => 'none']
+        'progress' => ['type' => 'none'],
       ],
       '#prefix' => '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">',
-      '#suffix' => '</div></div>'
+      '#suffix' => '</div></div>',
     ];
-    if (sizeof($goal['subgoals']) > 0) {
-      foreach ($goal['subgoals'] AS $subgoal) {
-        $form = self::_getTasksRow($form, $subgoal, $goal['id']);
+    if (count($goal['subgoals']) > 0) {
+      foreach ($goal['subgoals'] as $subgoal) {
+        $form = self::getTasksRow($form, $subgoal, $goal['id']);
       }
     }
 
     return $form;
   }
 
+  /**
+   * Sanitize user input data.
+   *
+   * @param string $data
+   *   User input string.
+   *
+   * @return string
+   *   Safe string.
+   */
   public static function cleanInput($data) {
-    //real_escape_string ?
+    // Rreal_escape_string ?
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     return $data;
   }
 
-  /*
-   * Get friendly username
-   * 
-   * @params
-   * entity $user
-   * 
+  /**
+   * Returns friendly user name.
+   *
+   * @param object $user
+   *   User.
+   *
    * @return string
-   * 
+   *   User name or drupal name
    */
-
   public static function getUserName($user) {
 
     $user_name = NULL;
 
     if (empty($user->field_user_firstname->value) and empty($user->field_user_surname->value)) {
       $user_name = $user->getDisplayName();
-    } elseif (!empty($user->field_user_firstname->value) and ! empty($user->field_user_surname->value)) {
+    }
+    elseif (!empty($user->field_user_firstname->value) and !empty($user->field_user_surname->value)) {
       $user_name = $user->field_user_firstname->value . ' ' . $user->field_user_surname->value;
-    } else {
+    }
+    else {
       if (!empty($user->field_user_firstname->value)) {
         $user_name = $user->field_user_firstname->value;
-      } else {
+      }
+      else {
         $user_name = $user->field_user_surname->value;
       }
     }
