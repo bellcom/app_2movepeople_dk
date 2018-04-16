@@ -1,7 +1,25 @@
-# Folders to ignore
-logs
-sessions
-tmp
+# Ignore binaries.
+/bin
+
+# Ignore non-custom parts of Drupal.
+docroot/core
+docroot/modules/contrib
+docroot/profiles/contrib
+docroot/themes/contrib
+docroot/sites/default/files
+docroot/sites/default/settings.php
+
+# Ignore Composer-managed dependencies.
+vendor/
+
+# --------------------------------------------------
+# - Custom ignore
+# --------------------------------------------------
+
+# Ignore docs files
+_gh_pages
+_site
+.ruby-version
 
 # Numerous always-ignore extensions
 *.diff
@@ -14,8 +32,47 @@ tmp
 *.vi
 *.zip
 *.sql
-/nbproject/private/
-vendor
-docroot/modules/contrib
-docroot/sites/default/files
-docroot/sites/default/settings.php
+*~
+
+# OS or Editor folders
+._*
+.cache
+.DS_Store
+.idea
+.phpintel
+.project
+.settings
+.tmproj
+*.esproj
+*.sublime-project
+*.sublime-workspace
+nbproject
+Thumbs.db
+
+# Komodo
+.komodotools
+*.komodoproject
+
+# grunt-html-validation
+validation-report.json
+validation-status.json
+
+# Folders to ignore
+bower_components
+node_modules
+logs
+sessions
+tmp
+share
+others
+private
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
+
+#Because of site reinstall issue VI-206 we don't change this files
+/config/sync/field.storage.node.body.yml
+/config/sync/field.storage.node.panelizer.yml
+
+
