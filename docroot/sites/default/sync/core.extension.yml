@@ -99,6 +99,7 @@ module:
   workbench_moderation: 0
   workflows: 0
   menu_link_content: 1
+  content_translation: 10
   views: 10
   lightning: 1000
 theme:
