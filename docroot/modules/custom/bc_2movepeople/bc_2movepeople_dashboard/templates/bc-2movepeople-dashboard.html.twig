@@ -73,10 +73,10 @@
                       <div class="text-center">
                         <div class="btn-group graph-type-btn" data-toggle="buttons">
                           <label class="btn btn-default active">
-                            <input type="radio" name="chart_type-{{ progression_target.id }}" class="line-graph-btn" autocomplete="off" data-progression-id="{{ progression_target.id }}" value="line" checked> Line
+                            <input type="radio" name="chart_type-{{ progression_target.id }}" class="line-graph-btn" autocomplete="off" data-progression-id="{{ progression_target.id }}" value="{{ 'Line' | trans }}" checked> Line
                           </label>
                           <label class="btn btn-default">
-                            <input type="radio" name="chart_type-{{ progression_target.id }}" class="bar-graph-btn" autocomplete="off" data-progression-id="{{ progression_target.id }}" value="bar"> Bar
+                            <input type="radio" name="chart_type-{{ progression_target.id }}" class="bar-graph-btn" autocomplete="off" data-progression-id="{{ progression_target.id }}" value="{{ 'Bar' | trans }}"> Bar
                           </label>
                         </div>
                       </div>
