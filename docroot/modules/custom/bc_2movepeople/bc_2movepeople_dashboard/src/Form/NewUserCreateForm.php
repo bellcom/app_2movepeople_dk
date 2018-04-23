@@ -1,32 +1,25 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\bc_2movepeople_dashboard\Form\ProgressionTaskEditForm.
- */
-
 namespace Drupal\bc_2movepeople_dashboard\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
-//use Drupal\node\NodeInterface;
+// Use Drupal\node\NodeInterface;.
 use Drupal\Core\Url;
-//use Drupal\node\Entity\Node;
-//use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
-//use Drupal\Core\Ajax\CloseModalDialogCommand;
+// Use Drupal\node\Entity\Node;
+// use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
+// use Drupal\Core\Ajax\CloseModalDialogCommand;.
 use Drupal\Core\Ajax\RedirectCommand;
-//use Drupal\Core\Ajax\ReplaceCommand;
+// Use Drupal\Core\Ajax\ReplaceCommand;.
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\user\Entity\User;
-use \Drupal\node\Entity\Node;
-use \Drupal\bc_2movepeople_dashboard\Form\SaveToTemplateForm;
+use Drupal\node\Entity\Node;
 
+/**
+ * Form to add new user.
+ */
 class NewUserCreateForm extends FormBase {
-
-  protected $isSaved;
-  private $updated_msg = 'Records successfully updated.';
-  private $wrong_msg = 'Something wrong.';
 
   /**
    * {@inheritdoc}
@@ -40,7 +33,7 @@ class NewUserCreateForm extends FormBase {
     $templates = $conf_object->get('template');
     $list[''] = t('none');
     if (empty($templates)) {
-      $templates = array();
+      $templates = [];
     }
     foreach ($templates as $user => $template) {
       $list[$user] = $template['template_name'];
@@ -55,7 +48,7 @@ class NewUserCreateForm extends FormBase {
     ];
 
     $form['title'] = [
-      '#markup' => '<h1 class="page-header">' . $this->t('Create Account') . '</h1>'
+      '#markup' => '<h1 class="page-header">' . $this->t('Create Account') . '</h1>',
     ];
 
     $form['firstname'] = [
@@ -73,19 +66,19 @@ class NewUserCreateForm extends FormBase {
       '#type' => 'textfield',
       '#placeholder' => $this->t('Username'),
     ];
-    
+
     $config = \Drupal::config('bc_2movepeople.settings');
     $email_required = $config->get('email_required');
-    
+
     $form['email'] = [
       '#type' => 'email',
       '#placeholder' => $this->t('Email'),
       '#required' => $email_required,
     ];
 
-    //Get default progression template id 
+    // Get default progression template id.
     $config = \Drupal::config('bc_2movepeople.settings');
-    $default_progression_template_id = $config->get('default_progression_template');    
+    $default_progression_template_id = $config->get('default_progression_template');
     if ($current_user->hasPermission('access category template') && !empty($templates)) {
       $form['template_select'] = [
         '#type' => 'select',
@@ -95,16 +88,16 @@ class NewUserCreateForm extends FormBase {
       ];
     }
 
-    $form['password'] = array(
+    $form['password'] = [
       '#type' => 'password',
       '#placeholder' => $this->t('Password'),
       '#size' => 10,
-    );
-    $form['password_confirm'] = array(
+    ];
+    $form['password_confirm'] = [
       '#type' => 'password',
       '#placeholder' => $this->t('Confirm Password'),
       '#size' => 10,
-    );
+    ];
 
     // Disable caching on this form.
     $form_state->setCached(FALSE);
@@ -174,8 +167,8 @@ class NewUserCreateForm extends FormBase {
       // Optional.
       $user->set('field_user_firstname', $form_state->getValue('firstname'));
       $user->set('field_user_surname', $form_state->getValue('surname'));
-      
-      //Set current user organisations to new user
+
+      // Set current user organisations to new user.
       $current_user_obj = User::load($current_user->id());
       $organisations = $current_user_obj->get('field_organisation')->getValue();
       $user->set('field_organisation', $organisations);
@@ -183,11 +176,9 @@ class NewUserCreateForm extends FormBase {
       $current_user_roles = $current_user->getRoles();
       if (in_array('administrator', $current_user_roles)) {
         $user->addRole('2mp_supervisor');
-        $user->addRole('2mp_user');
       }
       elseif (in_array('2mp_supervisor', $current_user_roles)) {
         $user->addRole('2mp_manager');
-        $user->addRole('2mp_user');
       }
       elseif (in_array('2mp_manager', $current_user_roles)) {
         $user->addRole('2mp_user');
@@ -198,7 +189,7 @@ class NewUserCreateForm extends FormBase {
       $conf_object = \Drupal::configFactory()->getEditable(SaveToTemplateForm::$configName);
       $template = $conf_object->get('template');
       if (empty($template)) {
-        $template = array();
+        $template = [];
       }
       $template = $template[$form_state->getValue('template_select')];
 
@@ -214,7 +205,7 @@ class NewUserCreateForm extends FormBase {
             'title' => $category_name,
             'field_progression_user' => $user->id(),
             'field_progression_type' => $progression_type,
-            'field_goal_ids' => $this->_createGoals($category['goals']),
+            'field_goal_ids' => $this->createGoals($category['goals']),
           ]);
           $category_node->save();
         }
@@ -225,7 +216,7 @@ class NewUserCreateForm extends FormBase {
       }
       else {
         // If user saved, update current user.
-        $current_user = \Drupal\user\Entity\User::load($current_user->id());
+        $current_user = User::load($current_user->id());
         $current_user->field_connected_users[] = $user;
         $current_user->save();
       }
@@ -238,25 +229,25 @@ class NewUserCreateForm extends FormBase {
    * @return array
    *   Array of goal node ids.
    */
-  private function _createGoals($goals) {
-    $result = array();
+  private function createGoals($goals) {
+    $result = [];
 
     foreach ($goals as $goal) {
       if (!empty($goal['subgoals'])) {
-        $sub_goal_array = array();
+        $sub_goal_array = [];
         foreach ($goal['subgoals'] as $subgoal) {
           $sub_goal_node = Node::create([
-                'type' => 'goal',
-                'title' => $subgoal['title'],
+            'type' => 'goal',
+            'title' => $subgoal['title'],
           ]);
           $sub_goal_node->save();
           $sub_goal_array[] = $sub_goal_node->id();
         }
       }
       $goal_node = Node::create([
-            'type' => 'goal',
-            'title' => $goal['title'],
-            'field_subgoal' => $sub_goal_array,
+        'type' => 'goal',
+        'title' => $goal['title'],
+        'field_subgoal' => $sub_goal_array,
       ]);
       $goal_node->save();
       $result[] = $goal_node->id();
@@ -269,43 +260,44 @@ class NewUserCreateForm extends FormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $form_state->clearErrors();
-    
+
     // Check Firstname.
     $firstname = CommonFormUtils::cleanInput($form_state->getValue('firstname'));
     if (strlen($firstname) < 2) {
-      $form_state->setErrorByName('firstname', $this->t('The First Name %firstname is not valid.', array('%firstname' => $firstname)));
+      $form_state->setErrorByName('firstname', $this->t('The First Name %firstname is not valid.', ['%firstname' => $firstname]));
     }
 
     // Check Lastname.
     $surname = CommonFormUtils::cleanInput($form_state->getValue('surname'));
     if (strlen($surname) < 2) {
-      $form_state->setErrorByName('surname', $this->t('The Surname %surname is not valid.', array('%surname' => $surname)));
+      $form_state->setErrorByName('surname', $this->t('The Surname %surname is not valid.', ['%surname' => $surname]));
     }
 
     // Check Username.
     $username = CommonFormUtils::cleanInput($form_state->getValue('username'));
     if (strlen($username) < 2) {
-      $form_state->setErrorByName('username', $this->t('The Username %username is not valid.', array('%username' => $username)));
+      $form_state->setErrorByName('username', $this->t('The Username %username is not valid.', ['%username' => $username]));
     }
     if (!empty(user_load_by_name($username))) {
-      $form_state->setErrorByName('username', $this->t('The Username %username already exists.', array('%username' => $username)));
+      $form_state->setErrorByName('username', $this->t('The Username %username already exists.', ['%username' => $username]));
     }
 
-    // check Email
+    // Check Email.
     $email = CommonFormUtils::cleanInput(trim($form_state->getValue('email')));
     if ($form['email']['#required_but_empty']) {
       $form_state->setErrorByName('email', $this->t('The Email address is required'));
-    }elseif(!\Drupal::service('email.validator')->isValid($email) and !empty($email)){
-      $form_state->setErrorByName('email', $this->t('The Email address %mail is not valid.', array('%mail' => $email)));
+    }
+    elseif (!\Drupal::service('email.validator')->isValid($email) and !empty($email)) {
+      $form_state->setErrorByName('email', $this->t('The Email address %mail is not valid.', ['%mail' => $email]));
     }
     if (!empty(user_load_by_mail($email))) {
-      $form_state->setErrorByName('email', $this->t('The Email address %mail already exists.', array('%mail' => $email)));
+      $form_state->setErrorByName('email', $this->t('The Email address %mail already exists.', ['%mail' => $email]));
     }
 
     // Check template_select.
     $template_select = CommonFormUtils::cleanInput($form_state->getValue('template_select'));
     if (!is_numeric($template_select) && !empty($template_select)) {
-      $form_state->setErrorByName('template_select', $this->t('The Template %template_select is not valid.', array('%template_select' => $template_select)));
+      $form_state->setErrorByName('template_select', $this->t('The Template %template_select is not valid.', ['%template_select' => $template_select]));
     }
 
     // Check Password.
