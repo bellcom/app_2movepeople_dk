@@ -4,7 +4,7 @@ bc_2movepeople_dashboard.main:
     _title: 'Connected users'
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getConnectedUsers'
   requirements:
-    _permission: 'access user dashboard'
+    _permission: 'access content'
     _user_is_logged_in: 'TRUE'
 
 bc_2movepeople_dashboard.user.overview:
