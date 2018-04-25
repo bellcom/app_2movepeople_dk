@@ -177,7 +177,6 @@ class MovepeopleDashboardController extends ControllerBase {
 
       $milestone_edit_form = new MilestoneEditForm($progrdata, $user);
       $progression_targets[$progrdata->id()]['form'] = \Drupal::formBuilder()->getForm($milestone_edit_form);
-
     }
     $build = [
       '#theme' => 'bc_2movepeople_milestone_dashboard',
@@ -194,6 +193,10 @@ class MovepeopleDashboardController extends ControllerBase {
    */
   public function getConnectedUsers() {
     $user = \Drupal::currentUser();
+    // Users has no connected users. We redirect them to own tasks.
+    if (!$user->hasPermission('access user dashboard')) {
+      return $this->redirect('bc_2movepeople_dashboard.user.tasks', ['user' => $user->id()]);
+    }
     $build['content'] = $this->renderConnectedUsers($user->getAccount());
     if (in_array('2mp_supervisor', $user->getRoles())) {
       $build['#title'] = $this->t('Managers');
@@ -831,7 +834,6 @@ class MovepeopleDashboardController extends ControllerBase {
     }
 
     return $milestones_data;
-
   }
 
   /**
