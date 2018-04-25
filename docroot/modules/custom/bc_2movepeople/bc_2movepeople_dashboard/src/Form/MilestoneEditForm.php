@@ -32,9 +32,9 @@ class MilestoneEditForm extends FormBase {
   public function __construct($nodedata, $user) {
     $this->node = $nodedata;
     $this->user = $user;
-    $this->$updatedMsg = $this->t('Records successfully updated.');
-    $this->$deletedMsg = $this->t('Records successfully deleted.');
-    $this->$wrongMsg = $this->t('Something wrong.');
+    $this->updatedMsg = $this->t('Records successfully updated.');
+    $this->deletedMsg = $this->t('Records successfully deleted.');
+    $this->wrongMsg = $this->t('Something wrong.');
   }
 
   /**
