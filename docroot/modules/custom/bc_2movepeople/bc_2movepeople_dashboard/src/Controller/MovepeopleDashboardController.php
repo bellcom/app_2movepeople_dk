@@ -511,15 +511,17 @@ class MovepeopleDashboardController extends ControllerBase {
 
     foreach ($entity_ids as $key => $target_id) {
       $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($target_id);
+      if (!is_object($nodedata)) continue;
       $title = $nodedata->get('title')->value;
+      if ($nodedata->getType() === 'progression_target') {
+         $priority_edit_form = new MilestonePriorityEditForm($nodedata);
+         $priority = \Drupal::formBuilder()->getForm($priority_edit_form);
 
-      $priority_edit_form = new MilestonePriorityEditForm($nodedata);
-      $priority = \Drupal::formBuilder()->getForm($priority_edit_form);
+         $status_edit_form = new MilestoneStatusEditForm($nodedata);
+         $status = \Drupal::formBuilder()->getForm($status_edit_form);
+         $table[$key] = [$title, $priority, $status];
+      }
 
-      $status_edit_form = new MilestoneStatusEditForm($nodedata);
-      $status = \Drupal::formBuilder()->getForm($status_edit_form);
-
-      $table[$key] = [$title, $priority, $status];
     }
     return [
       'header' => $header,
