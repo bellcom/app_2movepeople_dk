@@ -59,18 +59,21 @@ class MilestoneTaskAddForm extends FormBase {
       ->execute();
     $user_managers = User::loadMultiple($user_managers_ids);
 
-    $options = [];
+    $managers = [];
     if (!empty($user_managers)) {
       foreach ($user_managers as $user_manager) {
-        $options[$user_manager->id()] = CommonFormUtils::getUserName($user_manager);
+        $managers[$user_manager->id()] = CommonFormUtils::getUserName($user_manager);
       }
     }
+    $options = ['Managers' => $managers];
 
+    // By default tasks assigned to current user (empty value).
+    // User managers can be responsible for tasks also.
     $form['responsible_manager'] = [
       '#type' => 'select',
-      '#title' => t('Responsible manager'),
+      '#title' => t('Responsible'),
       '#required' => FALSE,
-      '#empty_option' => t('None'),
+      '#empty_option' => CommonFormUtils::getUserName(User::load($user[0]['target_id'])),
       '#options' => $options,
     ];
 

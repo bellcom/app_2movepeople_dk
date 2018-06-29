@@ -5,6 +5,7 @@ namespace Drupal\bc_2movepeople_dashboard\Form;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 use Drupal\Core\Url;
 use Drupal\user\Entity\User;
+use Drupal\Core\Session\AccountInterface;
 
 /**
  * Common help methods for other forms.
@@ -20,11 +21,13 @@ class CommonFormUtils {
    *   Form.
    * @param object $node
    *   Node.
+   * @param \Drupal\Core\Session\AccountInterface $user
+   *   Context user.
    *
    * @return array
    *   Form element
    */
-  public static function goalsContainer(array $form, $node) {
+  public static function goalsContainer(array $form, $node, AccountInterface $user) {
 
     $goal_ids = $node->get('field_goal_ids')->getValue();
     $user_id = $node->get('field_progression_user')->getValue()[0]['target_id'];
@@ -90,12 +93,13 @@ class CommonFormUtils {
         ->execute();
       $user_managers = User::loadMultiple($user_managers_ids);
 
-      $options = [];
+      $managers = [];
       if (!empty($user_managers)) {
         foreach ($user_managers as $user_manager) {
-          $options[$user_manager->id()] = self::getUserName($user_manager);
+          $managers[$user_manager->id()] = self::getUserName($user_manager);
         }
       }
+      $options = ['Managers' => $managers];
 
       $form['goals'][$goal_id]['due_date'] = [
         '#type' => 'date',
@@ -104,11 +108,13 @@ class CommonFormUtils {
         '#suffix' => '</div>',
       ];
 
+      // By default tasks assigned to current user (empty value).
+      // User managers can be responsible for tasks also.
       $form['goals'][$goal_id]['responsible_manager'] = [
         '#type' => 'select',
         '#required' => FALSE,
         '#default_value' => $goal['responsible_manager'],
-        '#empty_option' => t('None'),
+        '#empty_option' => self::getUserName(User::load($user->id())),
         '#options' => $options,
         '#prefix' => '<div class="custom-form-field-responsible-manager"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Responsible') . '</div>',
         '#suffix' => '</div>',

@@ -61,7 +61,7 @@ class MilestoneEditForm extends FormBase {
       '#prefix' => '<div class="row purpose"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">',
       '#suffix' => '</div></div>',
     ];
-    $form = CommonFormUtils::goalsContainer($form, $this->node);
+    $form = CommonFormUtils::goalsContainer($form, $this->node, $this->user);
     $form['add_mt'] = [
       '#type' => 'link',
       '#title' => $this->t('Add new task'),
