@@ -19,6 +19,7 @@ module:
   datetime: 0
   dblog: 0
   diff: 0
+  drush_language: 0
   editor: 0
   embed: 0
   entity: 0
