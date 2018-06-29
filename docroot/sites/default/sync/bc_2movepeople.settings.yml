@@ -1,3 +1,4 @@
 enable_milestones: 1
 email_required: 0
 rates_separately: 1
+default_progression_template: '1'

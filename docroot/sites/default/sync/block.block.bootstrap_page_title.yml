@@ -1,6 +1,6 @@
 uuid: 44538ba8-2077-4118-ae83-f6a8ba8ba761
 langcode: da
-status: true
+status: false
 dependencies:
   theme:
     - bootstrap
@@ -8,7 +8,7 @@ _core:
   default_config_hash: 1TQP4b3ZnlzvIH9bj6cpCz_SyUHdJjLQkZnHpikjjhw
 id: bootstrap_page_title
 theme: bootstrap
-region: header
+region: navigation
 weight: 0
 provider: null
 plugin: page_title_block
