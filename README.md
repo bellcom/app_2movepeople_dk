@@ -1,10 +1,26 @@
-This is a Composer-based installer for the [Lightning](https://www.drupal.org/project/lightning) Drupal distribution. Welcome to the future!
+This Drupal 8 installation based in  [Lightning](https://www.drupal.org/project/lightning).
+
+See more information in original repo: https://github.com/acquia/lightning-project
 
 ## Get Started
 ```
-$ composer create-project acquia/lightning-project MY_PROJECT
+$ composer install
+# configure your settings.php
+# get db dump from preprod/test environment
+$ zcat < db-dump.sql.gz | drush sqlc
 ```
-Composer will create a new directory called MY_PROJECT containing a ```docroot``` directory with a full Lightning code base therein. You can then install it like you would any other Drupal site.
+
+## Deployment steps
+```
+# Update codebase.
+$ git pull
+$ composer install
+# Update db and translation.
+$ cd docroot
+$ drush cim
+$ drush updb
+$ drush language-import da sites/default/po/da.po
+```
 
 ## Maintenance
 ```drush make```, ```drush pm-download```, ```drush pm-update``` and their ilk are the old-school way of maintaining your code base. Forget them. You're in Composer land now!
