@@ -5384,7 +5384,7 @@ msgid "Activity"
 msgstr "Handling"
 
 msgid "Evaluation"
-msgstr "Udfyld progressionen"
+msgstr "Evaluering"
 
 msgid "Deadline"
 msgstr ""
