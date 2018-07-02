@@ -16,6 +16,19 @@ bc_2movepeople_dashboard.user.overview:
     _permission: 'access user dashboard'
     _user_is_logged_in: 'TRUE'
 
+bc_2movepeople_dashboard.user.edit_managers:
+  path: '/dashboard/users/{user}/edit-managers'
+  options:
+    parameters:
+      user:
+        type: entity:user
+  defaults:
+    _title: 'Edit user managers'
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\UserManagersEditForm'
+    limit: NULL
+  requirements:
+    _permission: 'access user dashboard'
+
 bc_2movepeople_dashboard.user.milestones:
   path: '/dashboard/users/{user}/milestones'
   defaults:

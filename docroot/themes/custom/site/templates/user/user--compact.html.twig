@@ -32,6 +32,7 @@
       {{- content|without('user_picture') -}} 
     </h2>
     <div class="user-controls">
+      <a href="{{ path('bc_2movepeople_dashboard.user.edit_managers', {'user': user.id, 'destination': '/dashboard'}) }}" class="btn btn-default btn-sm use-ajax" data-dialog-type="modal" data-dialog-options='{"width":500}' >{{'Managers' | trans }}</a>
       <a href="{{ path('entity.user.edit_form', {'user': user.id, 'destination': '/dashboard'}) }}" class="btn btn-default btn-sm">{{'Edit' | trans }}</a>
       <a href="/user/{{user.id }}/cancel?destination=/dashboard" class="btn btn-default btn-sm">{{ 'Remove' | trans }}</a>
     </div>
