@@ -8812,6 +8812,8 @@ html {
     float: left;
     color: #FFFFFF;
     padding-right: 15px; }
+    #page-wrapper #menu-toggle .ajax-throbber {
+      display: none; }
 
 .view-_mp-connected-users {
   padding: 0 5px; }
@@ -9216,7 +9218,7 @@ div.custom-nav-divider {
   margin: 10px 0 20px 0; }
 
 .bc-2movepeople-dashboard-user-managers-edit-form fieldset .fieldset-wrapper {
-  max-height: 400px;
+  max-height: 300px;
   overflow-y: auto; }
 
 @media (min-width: 768px) {
