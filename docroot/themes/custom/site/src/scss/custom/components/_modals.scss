@@ -3,6 +3,9 @@
 // --------------------------------------------------
 
 .modal-dialog {
+  .modal-content {
+    min-width: 500px;
+  }
   .modal-header {
     background-color: $color-blue !important;
     padding: 15px 35px;
@@ -79,6 +82,12 @@
   margin: 10px 0 20px 0;
 }
 
+.bc-2movepeople-dashboard-user-managers-edit-form {
+  fieldset .fieldset-wrapper {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+}
 // --------------------------------------------------
 // Variants
 // --------------------------------------------------
