@@ -3,11 +3,14 @@
 namespace Drupal\bc_2movepeople_dashboard\Controller;
 
 use Mpdf\Mpdf;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Mail\Plugin\Mail\PhpMail;
 use Drupal\Core\Url;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\bc_2movepeople_dashboard\bc_2movepeople_dashboardStorage;
 use Drupal\bc_2movepeople_dashboard\Form\MilestonePriorityEditForm;
@@ -885,6 +888,22 @@ class MovepeopleDashboardController extends ControllerBase {
     $mpdf->WriteHTML($html);
     $mpdf->Output('user_' . $user->id() . '_evaluations.pdf', 'D');
     exit;
+  }
+
+  /**
+   * Menu toggle ajax callback.
+   */
+  public static function menuToggle($state = '1') {
+    $session = new Session();
+    $state = $state ? '0' : '1';
+    $session->set('menu_toggle', $state);
+    $build = [
+      '#theme' => 'bc_2movepeople_menu_toggle',
+      '#state' => $state,
+    ];
+    $response = new AjaxResponse();
+    $response->addCommand(new HtmlCommand('.navbar-brand', $build));
+    return $response;
   }
 
 }

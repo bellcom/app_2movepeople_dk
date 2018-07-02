@@ -167,6 +167,10 @@ html {
     float: left;
     color: $navbar-default-link-color;
     padding-right: 15px;
+
+    .ajax-throbber {
+      display: none;
+    }
   }
 }
 

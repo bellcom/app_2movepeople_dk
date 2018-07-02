@@ -84,6 +84,12 @@ function bc_2movepeople_dashboard_theme() {
         'milestones_data' => [],
       ],
     ],
+    'bc_2movepeople_menu_toggle' => [
+      'template' => 'bc-2movepeople-menu-toggle',
+      'variables' => [
+        'state' => NULL,
+      ],
+    ],
   ];
 }
 

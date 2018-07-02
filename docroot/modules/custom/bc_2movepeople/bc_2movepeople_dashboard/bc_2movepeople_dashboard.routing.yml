@@ -224,3 +224,14 @@ bc_2movepeople_dashboard.save_to_tpl:
     _title: 'Save category and questions to template'
   requirements:
     _permission: 'access category template'
+
+bc_2movepeople_dashboard.menu_toogle:
+  path: '/bc_2movepeople/menu-toggle/{state}'
+  defaults:
+    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::menuToggle'
+  options:
+    parameters:
+      state:
+        type: string
+  requirements:
+    _permission: 'access content'
