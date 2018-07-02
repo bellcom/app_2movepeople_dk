@@ -9150,6 +9150,9 @@ div.custom-nav-divider {
   #block-navigationblock .nav > li > a {
     padding: 20px 15px 20px 50px; } }
 
+.modal-dialog .modal-content {
+  min-width: 500px; }
+
 .modal-dialog .modal-header {
   background-color: #50afe8 !important;
   padding: 15px 35px;
@@ -9211,6 +9214,10 @@ div.custom-nav-divider {
 
 .milestone-evaluation .milestone-evaluation-footer {
   margin: 10px 0 20px 0; }
+
+.bc-2movepeople-dashboard-user-managers-edit-form fieldset .fieldset-wrapper {
+  max-height: 400px;
+  overflow-y: auto; }
 
 @media (min-width: 768px) {
   .modal-body__progression-tabs {
