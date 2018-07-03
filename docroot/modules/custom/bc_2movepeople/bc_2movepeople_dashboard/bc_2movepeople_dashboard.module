@@ -5,6 +5,19 @@
  * Examples showing how to use some of the new JavaScript features in Drupal 8.
  */
 
+define('BC_2MOVEPEOPLE_DASHBOARD_BUTTONS', serialize([
+  'Progression' => [
+    'feedback' => t('FIT'),
+    'show_category' => t('Show category'),
+    'rate_category' => t('Rate category'),
+    'save_to_template' => t('Save to template'),
+  ],
+  'Milestone' => [
+    'overall_evaluation' => t('Overall evaluation'),
+    'show_target_milestones' => t('Show Target Milestones'),
+  ],
+]));
+
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -300,4 +313,31 @@ function _bc_2movepeople_dashboard_remove_breadcrubm_duplicate(&$breadcrumb, $ro
     $breadcrumb = new Breadcrumb();
     $breadcrumb->setLinks($active_links);
   }
+}
+
+/**
+ * Get buttons function.
+ */
+function _bc_2movepeople_dashboard_buttons() {
+  return unserialize(BC_2MOVEPEOPLE_DASHBOARD_BUTTONS);
+}
+
+/**
+ * Get button data by key.
+ */
+function _bc_2movepeople_dashboard_button($key) {
+  $button = [
+    'name' => NULL,
+    'title' => NULL,
+  ];
+  $keys = explode('.', $key);
+  $buttons = unserialize(BC_2MOVEPEOPLE_DASHBOARD_BUTTONS);
+  $config = \Drupal::config('bc_2movepeople_dashboard.admin_buttons_title');
+
+  if (!empty($keys[1]) && !empty($buttons[$keys[0]][$keys[1]])) {
+    $button['name'] = $buttons[$keys[0]][$keys[1]];
+    $button['title'] = $config->get($keys[0] . '.' . $keys[1]);
+  }
+
+  return $button;
 }

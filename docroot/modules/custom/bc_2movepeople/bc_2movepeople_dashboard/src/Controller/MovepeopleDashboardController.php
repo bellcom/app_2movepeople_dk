@@ -7,6 +7,7 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Mail\Plugin\Mail\PhpMail;
 use Drupal\Core\Url;
+use Drupal\node\Entity\Node;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -252,26 +253,22 @@ class MovepeopleDashboardController extends ControllerBase {
       }
       $config = $this->config('bc_2movepeople.settings');
       if (!empty($config->get('rates_separately'))) {
-        $controls['user_rate_category'] = [
-          '#title' => $this->t('FIT'),
+        $controls['Progression.feedback'] = [
           '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id(), 'limit' => $this->fStr]),
         ];
-        $controls['category'] = [
-          '#title' => $this->t('Show category'),
+        $controls['Progression.show_category'] = [
           '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id(), 'limit' => $this->pStr]),
         ];
       }
       else {
-        $controls['category'] = [
-          '#title' => $this->t('Show category'),
+        $controls['Progression.show_category'] = [
           '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
         ];
       }
 
       // Add 'Rate category' btn if there are any questions.
       if ($questions_found) {
-        $controls['rate_category'] = [
-          '#title' => $this->t('Rate category'),
+        $controls['Progression.rate_category'] = [
           '#url' => Url::fromRoute('bc_2movepeople_rate_progression.user_rates_add', ['user' => $user->id()]),
           '#attributes' => [
             'class' => ['btn-progress', 'use-ajax'],
@@ -287,8 +284,7 @@ class MovepeopleDashboardController extends ControllerBase {
       $result_progression = $this->getProgressionsTable($entity_progression_ids);
 
       if (\Drupal::currentUser()->hasPermission('access category template')) {
-        $controls['save_to_tpl'] = [
-          '#title' => $this->t('Save to template'),
+        $controls['Progression.save_to_template'] = [
           '#url' => Url::fromRoute('bc_2movepeople_dashboard.save_to_tpl', ['user' => $user->id()]),
           '#attributes' => [
             'class' => ['btn-progress', 'use-ajax'],
@@ -318,8 +314,8 @@ class MovepeopleDashboardController extends ControllerBase {
     $build['#table_progression']['controls'] = $this->getControlButtons($controls, ['class' => 'dashboard-overview__control-buttons']);
 
     $config = $this->config('bc_2movepeople.settings');
-    $conrtol_links['rate_milestones'] = [
-      '#title' => $this->t('Samlet evaluering'),
+    $button = _bc_2movepeople_dashboard_button('Milestone.overall_evaluation');
+    $control_links['Milestone.overall_evaluation'] = [
       '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.evaluations', ['user' => $user->id()]),
       '#attributes' => [
         'class' => ['btn', 'use-ajax', 'ui-dialog-buttonpane'],
@@ -328,11 +324,10 @@ class MovepeopleDashboardController extends ControllerBase {
     ];
 
     if (!empty($config->get('enable_milestones'))) {
-      $conrtol_links['show_milestones'] = [
-        '#title' => $this->t('Show Target Milestones'),
+      $control_links['Milestone.show_target_milestones'] = [
         '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.milestones', ['user' => $user->id()]),
       ];
-      $build['#table_milestone']['controls'] = $this->getControlButtons($conrtol_links, ['class' => ['dashboard-overview__control-buttons']]);
+      $build['#table_milestone']['controls'] = $this->getControlButtons($control_links, ['class' => ['dashboard-overview__control-buttons']]);
 
       if (!empty($entity_milestone_ids)) {
         $result_milestone = $this->getMilestoneTable($entity_milestone_ids);
@@ -794,6 +789,11 @@ class MovepeopleDashboardController extends ControllerBase {
     ];
 
     foreach ($links as $key => $link) {
+      $button = _bc_2movepeople_dashboard_button($key);
+      $link['#title'] = $button['name'];
+      if (!empty($button['title'])) {
+        $link['#attributes']['title'] = $button['title'];
+      }
       $build[$key] = array_merge_recursive($link, [
         '#type' => 'link',
         '#attributes' => [

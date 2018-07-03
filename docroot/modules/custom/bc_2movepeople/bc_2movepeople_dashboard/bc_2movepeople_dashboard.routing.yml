@@ -209,6 +209,16 @@ bc_2movepeople_dashboard.admin.settings_form:
   options:
     _admin_route: TRUE
 
+bc_2movepeople_dashboard.admin.buttons_title:
+  path: '/admin/bc_2movepeople/dashboard/settings'
+  defaults:
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\AdminButtonsTitle'
+    _title: '2Move People buttons settings '
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE
+
 bc_2movepeople_dashboard.users.create:
   path: '/dashboard/users/create'
   defaults:
