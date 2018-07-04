@@ -52,6 +52,12 @@
       display: flex;
       width: 100%;
       justify-content: flex-end;
+
+      .btn {
+        &::before {
+          font-family: 'Glyphicons Halflings';
+        }
+      }
     }
   }
 }

@@ -126,6 +126,11 @@
 
 // Desktop - and up
 @include media-breakpoint-up(md) {
+  #drupal-modal {
+    .modal-dialog {
+      width: auto;
+    }
+  }
 }
 
 // Desktop - only
