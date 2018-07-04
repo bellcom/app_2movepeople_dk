@@ -7,7 +7,6 @@ use Drupal\Core\Cache\Cache;
 use Drupal\Core\Url;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 
-
 /**
  * Provides a "Navigation block".
  *
@@ -50,9 +49,8 @@ class NavigationBlock extends BlockBase {
     }
 
     if ($user->hasPermission('create connected users')) {
-      $buttons['new_user'] = [
+      $buttons['Navigation.create_user'] = [
         '#url' => Url::fromRoute('bc_2movepeople_dashboard.users.create'),
-        '#title' => t('Add new user'),
         '#attributes' => [
           'class' => ['use-ajax'],
           'data-dialog-type' => 'modal'
@@ -74,4 +72,5 @@ class NavigationBlock extends BlockBase {
     $user = \Drupal::currentUser();
     return Cache::mergeTags(parent::getCacheTags(), array('feedback:' . $user->id()));
   }
+
 }

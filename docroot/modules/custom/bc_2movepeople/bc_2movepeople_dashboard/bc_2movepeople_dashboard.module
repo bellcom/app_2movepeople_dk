@@ -16,6 +16,9 @@ define('BC_2MOVEPEOPLE_DASHBOARD_BUTTONS', serialize([
     'overall_evaluation' => t('Overall evaluation'),
     'show_target_milestones' => t('Show Target Milestones'),
   ],
+  'Navigation' => [
+    'create_user' => t('Add new user'),
+  ],
 ]));
 
 use Drupal\Core\Entity\EntityInterface;
@@ -107,7 +110,7 @@ function bc_2movepeople_dashboard_theme() {
 }
 
 /**
- * Implements hook_theme_suggestions_alter.
+ * Implements hook_theme_suggestions_alter().
  */
 function bc_2movepeople_dashboard_theme_suggestions_alter(array &$suggestions, array $variables) {
 

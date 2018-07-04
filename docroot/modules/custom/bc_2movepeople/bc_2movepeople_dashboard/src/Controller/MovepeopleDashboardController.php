@@ -314,7 +314,6 @@ class MovepeopleDashboardController extends ControllerBase {
     $build['#table_progression']['controls'] = $this->getControlButtons($controls, ['class' => 'dashboard-overview__control-buttons']);
 
     $config = $this->config('bc_2movepeople.settings');
-    $button = _bc_2movepeople_dashboard_button('Milestone.overall_evaluation');
     $control_links['Milestone.overall_evaluation'] = [
       '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.evaluations', ['user' => $user->id()]),
       '#attributes' => [
