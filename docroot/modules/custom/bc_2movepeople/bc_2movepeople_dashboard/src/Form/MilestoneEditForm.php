@@ -227,8 +227,10 @@ class MilestoneEditForm extends FormBase {
     $ajax_response = new AjaxResponse();
 
     $goal_id = $form_state->getTriggeringElement()['#attributes']['data_goal_id'];
-    // $this->node = Node::load($this->node->id());
-    $old_goal_ids = $this->node->get('field_goal_ids')->getValue();
+    $parent_goal_id = $form_state->getTriggeringElement()['#attributes']['data_parent_goal'];
+    $node = $parent_goal_id ? Node::load($parent_goal_id) : $this->node;
+    $field_name = $parent_goal_id ? 'field_subgoal' : 'field_goal_ids';
+    $old_goal_ids = $node->get($field_name)->getValue();
 
     $is_deleted = 0;
     $new_goal_ids = [];
@@ -243,8 +245,8 @@ class MilestoneEditForm extends FormBase {
       }
     }
     if ($is_deleted) {
-      $this->node->set('field_goal_ids', $new_goal_ids);
-      $this->node->save();
+      $node->set($field_name, $new_goal_ids);
+      $node->save();
       drupal_set_message($this->deletedMsg);
     }
     else {

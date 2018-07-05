@@ -37,153 +37,183 @@ class CommonFormUtils {
       '#attributes' => ['id' => 'goals-box-' . $node->id()],
     ];
 
+    foreach ($goal_ids as $tid) {
+      $goal_id = $tid['target_id'];
+      $goal = MovepeopleDashboardController::getGoal($goal_id, $node);
+      $form = self::getGoalRow($form, $goal, $user_id);
+    }
+    return $form;
+  }
+
+  /**
+   * Returns form element of goals.
+   *
+   * @param array $form
+   *   Form.
+   * @param array $goal
+   *   Goal.
+   * @param int $user_id
+   *   User id.
+   * @param int $parent_subgoal_id
+   *   Parent subgoal id.
+   *
+   * @return array
+   *   Form element
+   */
+  private static function getGoalRow(array $form, array $goal, $user_id, $parent_subgoal_id = 0) {
     $remind_types = [
       1 => 'is-remind-warning',
       2 => 'is-remind-expired',
     ];
 
-    foreach ($goal_ids as $tid) {
+    $is_remind = MovepeopleDashboardController::isRemindSession($goal['date']);
 
-      $goal_id = $tid['target_id'];
-      $goal = MovepeopleDashboardController::getGoal($goal_id, $node);
+    $form['goals']['#tree'] = TRUE;
 
-      $is_remind = MovepeopleDashboardController::isRemindSession($goal['date']);
+    $form['goals']['header'] = [
+      '#markup' => '<div class="custom-form-fields custom-form-label hidden-xs hidden-sm hidden-md">'
+      . '<div class="custom-form-label-title">' . t('Task') . '</div>'
+      . '<div class="custom-form-label-activity-title">' . t('Activity') . '</div>'
+      . '<div class="custom-form-label-due-date"><div>' . t('Deadline') . '</div></div>'
+      . '<div class="custom-form-label-responsible-manager">' . t('Responsible') . '</div>'
+      . '<div class="custom-form-label-complete-btn">' . t('Actions') . '</div>'
+      . '</div>',
+    ];
 
-      $form['goals']['#tree'] = TRUE;
+    $goal_id = $goal['id'];
+    $form['goals'][$goal_id] = [
+      '#type' => 'container',
+    ];
 
-      $form['goals']['header'] = [
-        '#markup' => '<div class="custom-form-fields custom-form-label hidden-xs hidden-sm hidden-md">'
-        . '<div class="custom-form-label-title">' . t('Task') . '</div>'
-        . '<div class="custom-form-label-activity-title">' . t('Activity') . '</div>'
-        . '<div class="custom-form-label-due-date"><div>' . t('Deadline') . '</div></div>'
-        . '<div class="custom-form-label-responsible-manager">' . t('Responsible') . '</div>'
-        . '<div class="custom-form-label-complete-btn">' . t('Actions') . '</div>'
-        . '</div>',
-      ];
+    if ($parent_subgoal_id) {
+      $form['goals'][$goal_id]['#attributes']['class'][] = 'subtask';
+    }
 
-      $form['goals'][$goal_id] = [
-        '#type' => 'container',
-      ];
+    $remind_class = '';
+    if ($is_remind) {
+      $remind_class = ' ' . $remind_types[$is_remind];
+    }
 
-      $remind_class = '';
-      if ($is_remind) {
-        $remind_class = ' ' . $remind_types[$is_remind];
+    $form['goals'][$goal_id]['title'] = [
+      '#type' => 'textfield',
+      '#default_value' => $goal['title'],
+      '#prefix' => '<div class="custom-form-fields div-form' . $remind_class . '" id="goal_row_' . $goal_id . '">'
+      . '<div class="custom-form-field-title"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Task') . '</div>',
+      '#suffix' => '</div>',
+    ];
+
+    $form['goals'][$goal_id]['activity_title'] = [
+      '#type' => 'textfield',
+      '#default_value' => $goal['activity_title'],
+      '#prefix' => '<div class="custom-form-field-activity-title"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Activity') . '</div>',
+      '#suffix' => '</div>',
+    ];
+
+    // Get all managers of target user.
+    $user_managers_ids = \Drupal::entityQuery('user')
+      ->condition('status', 1)
+      ->condition('roles', '2mp_manager')
+      ->condition('field_connected_users', $user_id, 'CONTAINS')
+      ->execute();
+    $user_managers = User::loadMultiple($user_managers_ids);
+
+    $managers = [];
+    if (!empty($user_managers)) {
+      foreach ($user_managers as $user_manager) {
+        $managers[$user_manager->id()] = self::getUserName($user_manager);
       }
+    }
+    $options = ['Managers' => $managers];
 
-      $form['goals'][$goal_id]['title'] = [
-        '#type' => 'textfield',
-        '#default_value' => $goal['title'],
-        '#prefix' => '<div class="custom-form-fields div-form' . $remind_class . '" id="goal_row_' . $goal_id . '">'
-        . '<div class="custom-form-field-title"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Task') . '</div>',
-        '#suffix' => '</div>',
-      ];
+    $form['goals'][$goal_id]['due_date'] = [
+      '#type' => 'date',
+      '#default_value' => $goal['date'],
+      '#prefix' => '<div class="custom-form-field-due-date"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Deadline') . '</div>',
+      '#suffix' => '</div>',
+    ];
 
-      $form['goals'][$goal_id]['activity_title'] = [
-        '#type' => 'textfield',
-        '#default_value' => $goal['activity_title'],
-        '#prefix' => '<div class="custom-form-field-activity-title"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Activity') . '</div>',
-        '#suffix' => '</div>',
-      ];
+    // By default tasks assigned to current user (empty value).
+    // User managers can be responsible for tasks also.
+    $form['goals'][$goal_id]['responsible_manager'] = [
+      '#type' => 'select',
+      '#required' => FALSE,
+      '#default_value' => $goal['responsible_manager'],
+      '#empty_option' => self::getUserName(User::load($user_id)),
+      '#options' => $options,
+      '#prefix' => '<div class="custom-form-field-responsible-manager"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Responsible') . '</div>',
+      '#suffix' => '</div>',
+    ];
 
-      // Get all managers of target user.
-      $user_managers_ids = \Drupal::entityQuery('user')
-        ->condition('status', 1)
-        ->condition('roles', '2mp_manager')
-        ->condition('field_connected_users', $user_id, 'CONTAINS')
-        ->execute();
-      $user_managers = User::loadMultiple($user_managers_ids);
+    $form['goals'][$goal_id]['complete_btn'] = [
+      '#type' => 'button',
+      '#name' => 'complete_btn' . $goal_id,
+      '#attributes' => [
+        'data_goal_id' => $goal_id,
+        'data_prefix' => '',
+        'class' => ['btn', 'btn-default', 'custom-checkbox-ok'],
+        'data-toggle' => ['button'],
+        'aria-pressed' => ['false'],
+        'autocomplete' => ['off'],
+      ],
+      '#ajax' => [
+        'event' => 'click',
+        'callback' => '::ajaxGoalComplete',
+        'progress' => ['type' => 'none'],
+      ],
+      '#prefix' => '<div class="dashboard-accordion__action-btn">'
+      . '<span id="complete_btn_box' . $goal_id . '">',
+      '#suffix' => '</span>',
+    ];
 
-      $managers = [];
-      if (!empty($user_managers)) {
-        foreach ($user_managers as $user_manager) {
-          $managers[$user_manager->id()] = self::getUserName($user_manager);
-        }
+    if ($goal['completed']) {
+      $form['goals'][$goal_id]['complete_btn']['#attributes']['class'][] = 'active';
+      $form['goals'][$goal_id]['complete_btn']['#attributes']['aria-pressed'] = ['true'];
+    }
+
+    $form['goals'][$goal_id]['delete_btn'] = [
+      '#type' => 'submit',
+      '#name' => 'delete_btn' . $goal_id,
+      '#attributes' => [
+        'data_parent_goal' => $parent_subgoal_id ?: FALSE,
+        'data_goal_id' => $goal_id,
+        'class' => ['btn', 'btn-default', 'custom-checkbox-trash'],
+        'data-toggle' => ['button'],
+        'aria-pressed' => ['false'],
+        'autocomplete' => ['off'],
+      ],
+      '#ajax' => [
+        'event' => 'click',
+        'callback' => '::ajaxGoalDelete',
+        'progress' => ['type' => 'none'],
+      ],
+    ];
+
+    $form['goals'][$goal_id]['clone_btn'] = [
+      '#type' => 'link',
+      '#title' => '',
+      '#name' => 'clone_btn' . $goal_id,
+      '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.tasks.clone', ['user' => $user_id, 'node' => $goal_id]),
+      '#attributes' => [
+        'data_goal_id' => $goal_id,
+        'data_prefix' => '',
+        'data-dialog-type' => 'modal',
+        'class' => ['use-ajax',
+          'btn',
+          'btn-default',
+          'link-btn',
+          'custom-checkbox-clone',
+        ],
+        'data-toggle' => ['button'],
+        'aria-pressed' => ['false'],
+        'autocomplete' => ['off'],
+      ],
+      '#suffix' => '</div></div>',
+    ];
+
+    if (count($goal['subgoals']) > 0) {
+      foreach ($goal['subgoals'] as $subgoal) {
+        $form = self::getGoalRow($form, $subgoal, $user_id, $goal['id']);
       }
-      $options = ['Managers' => $managers];
-
-      $form['goals'][$goal_id]['due_date'] = [
-        '#type' => 'date',
-        '#default_value' => $goal['date'],
-        '#prefix' => '<div class="custom-form-field-due-date"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Deadline') . '</div>',
-        '#suffix' => '</div>',
-      ];
-
-      // By default tasks assigned to current user (empty value).
-      // User managers can be responsible for tasks also.
-      $form['goals'][$goal_id]['responsible_manager'] = [
-        '#type' => 'select',
-        '#required' => FALSE,
-        '#default_value' => $goal['responsible_manager'],
-        '#empty_option' => self::getUserName(User::load($user->id())),
-        '#options' => $options,
-        '#prefix' => '<div class="custom-form-field-responsible-manager"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Responsible') . '</div>',
-        '#suffix' => '</div>',
-      ];
-
-      $form['goals'][$goal_id]['complete_btn'] = [
-        '#type' => 'button',
-        '#name' => 'complete_btn' . $goal_id,
-        '#attributes' => [
-          'data_goal_id' => $goal_id,
-          'data_prefix' => '',
-          'class' => ['btn', 'btn-default', 'custom-checkbox-ok'],
-          'data-toggle' => ['button'],
-          'aria-pressed' => ['false'],
-          'autocomplete' => ['off'],
-        ],
-        '#ajax' => [
-          'event' => 'click',
-          'callback' => '::ajaxGoalComplete',
-          'progress' => ['type' => 'none'],
-        ],
-        '#prefix' => '<div class="dashboard-accordion__action-btn">'
-        . '<span id="complete_btn_box' . $goal_id . '">',
-        '#suffix' => '</span>',
-      ];
-
-      if ($goal['completed']) {
-        $form['goals'][$goal_id]['complete_btn']['#attributes']['class'][] = 'active';
-        $form['goals'][$goal_id]['complete_btn']['#attributes']['aria-pressed'] = ['true'];
-      }
-
-      $form['goals'][$goal_id]['delete_btn'] = [
-        '#type' => 'submit',
-        '#name' => 'delete_btn' . $goal_id,
-        '#attributes' => [
-          'data_goal_id' => $goal_id,
-          'class' => ['btn', 'btn-default', 'custom-checkbox-trash'],
-          'data-toggle' => ['button'],
-          'aria-pressed' => ['false'],
-          'autocomplete' => ['off'],
-        ],
-        '#ajax' => [
-          'event' => 'click',
-          'callback' => '::ajaxGoalDelete',
-          'progress' => ['type' => 'none'],
-        ],
-      ];
-
-      $form['goals'][$goal_id]['clone_btn'] = [
-        '#type' => 'link',
-        '#title' => '',
-        '#name' => 'clone_btn' . $goal_id,
-        '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.tasks.clone', ['user' => $user_id, 'node' => $goal_id]),
-        '#attributes' => [
-          'data_goal_id' => $goal_id,
-          'data_prefix' => '',
-          'data-dialog-type' => 'modal',
-          'class' => ['use-ajax',
-            'btn',
-            'btn-default',
-            'link-btn',
-            'custom-checkbox-clone',
-          ],
-          'data-toggle' => ['button'],
-          'aria-pressed' => ['false'],
-          'autocomplete' => ['off'],
-        ],
-        '#suffix' => '</div></div>',
-      ];
     }
 
     return $form;

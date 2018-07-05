@@ -11,6 +11,7 @@ use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
+use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 
 /**
  * Form to add milestone tasks.
@@ -42,6 +43,15 @@ class MilestoneTaskAddForm extends FormBase {
 
     $form['#prefix'] = '<div id="bc_2movepeople-dashboard-milestone-task-add-form">';
     $form['#suffix'] = '</div>';
+
+    $goals_options = MovepeopleDashboardController::getProgressionGoalsList($this->parentNode);
+    $form['parent_task_id'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Parent task'),
+      '#options' => $goals_options,
+      '#empty_option' => $this->t('-Select parent task-'),
+      '#required' => FALSE
+    ];
 
     $form['title'] = [
       '#type' => 'textfield',
@@ -171,8 +181,9 @@ class MilestoneTaskAddForm extends FormBase {
     $evaluation = $form_state->getValue('evaluation');
     $due_date = $form_state->getValue('due_date');
     $responsible_manager = $form_state->getValue('responsible_manager');
+    $parent_task_id = $form_state->getValue('parent_task_id');
 
-    $node = Node::create([
+    $new_node = Node::create([
       'type' => 'goal',
       'status' => 1,
       'title' => $title,
@@ -182,16 +193,19 @@ class MilestoneTaskAddForm extends FormBase {
       'field_responsible_manager' => $responsible_manager,
     ]);
 
-    if ($node->save() == SAVED_NEW) {
-
-      $old_goal_ids = $this->parentNode->get('field_goal_ids')->getValue();
+    if ($new_node->save() == SAVED_NEW) {
+      $node = $parent_task_id ? Node::load($parent_task_id) : $this->parentNode;
+      $field_name = $parent_task_id ? 'field_subgoal' : 'field_goal_ids';
+      $old_goal_ids = $node->get($field_name)->getValue();
       $new_goal_ids = [];
       foreach ($old_goal_ids as $tid) {
         $new_goal_ids[] = $tid['target_id'];
       }
-      $new_goal_ids[] = $node->id();
-      $this->parentNode->set('field_goal_ids', $new_goal_ids);
-      $this->isSaved = $this->parentNode->save();
+      $new_goal_ids[] = $new_node->id();
+
+      $node->set($field_name, $new_goal_ids);
+
+      $this->isSaved = $node->save();
 
       $user = $this->parentNode->get('field_progression_user')->getValue();
 

@@ -1,11 +1,18 @@
 {{ attach_library('bc_2movepeople_dashboard/bc_2movepeople_dashboard.user-tasks') }}
 
-{% macro recursiveTasks(tasks, user) %}
-
+{% macro recursiveTasks(tasks, user, subgoal) %}
+  {% set attributes = create_attribute() %}
   {% for task in tasks %}
     {% set is_remind_class = (task.is_remind ? (task.is_remind == 2 ? 'is-remind-expired' : 'is-remind-warning') : '') %}
+    {%
+      set classes = [
+      'col-lg-8 col-md-8 col-sm-6 col-xs-12',
+      subgoal ? 'subtask',
+      is_remind_class ? is_remind_class,
+    ]
+    %}
     <div class="row user-task-box" id="task-row-{{task.id}}">
-      <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 {{is_remind_class}}">
+      <div{{ attributes.addClass(classes) }}">
         {{ task.title }}<br/>
         {{ 'Date'|trans }}: {{ task.date|date("d-m-Y") }}
       </div>
@@ -14,12 +21,12 @@
       </div>
     </div>
     {% if task.subgoals is not null %}
-      {{ _self.recursiveTasks(task.subgoals, user) }}
+      {{ _self.recursiveTasks(task.subgoals, user, 1) }}
     {% endif %}
   {% endfor %}
   
 {% endmacro %}
 
 <div class="dashboard-overview">
-{{ _self.recursiveTasks(tasks, user) }}
+{{ _self.recursiveTasks(tasks, user, 0) }}
 </div>
