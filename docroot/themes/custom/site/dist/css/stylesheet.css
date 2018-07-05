@@ -9532,6 +9532,9 @@ span.input-group-addon {
 .form-actions .text-right a.btn {
   margin-right: 0; }
 
+.subtask {
+  padding-left: 30px; }
+
 .div-form input, .div-form select, .div-form textarea {
   margin-bottom: 10px; }
 
