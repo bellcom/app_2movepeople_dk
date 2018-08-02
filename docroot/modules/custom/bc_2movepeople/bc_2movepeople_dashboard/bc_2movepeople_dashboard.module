@@ -18,6 +18,8 @@ define('BC_2MOVEPEOPLE_DASHBOARD_BUTTONS', serialize([
   ],
   'Navigation' => [
     'create_user' => t('Add new user'),
+    'feedback' => t('Dialogue rating'),
+    'self_rate' => t('Rates'),
   ],
 ]));
 

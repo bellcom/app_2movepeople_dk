@@ -36,10 +36,26 @@ class NavigationBlock extends BlockBase {
 
     $buttons = [];
 
+    $user_roles = $user->getRoles();
+
+    if (in_array("2mp_user", $user_roles)) {
+      $buttons['Navigation.self_rate'] = [
+        '#url' => Url::fromRoute('bc_2movepeople_rate_progression.self_rates_add', [
+          'navigation' => TRUE,
+        ]),
+        '#attributes' => [
+          'class' => ['use-ajax'],
+          'data-dialog-type' => 'modal',
+        ],
+      ];
+    }
+
     if (MovepeopleDashboardController::getProgressionTargets($user->id(), 'feedback')
     && $user->hasPermission('access provide feedback')) {
-      $buttons['feedback'] = [
-        '#url' => Url::fromRoute('bc_2movepeople_rate_progression.feedback_add'),
+      $buttons['Navigation.feedback'] = [
+        '#url' => Url::fromRoute('bc_2movepeople_rate_progression.feedback_add', [
+          'navigation' => TRUE,
+        ]),
         '#title' => t('Dialogue rating'),
         '#attributes' => [
           'class' => ['use-ajax'],
