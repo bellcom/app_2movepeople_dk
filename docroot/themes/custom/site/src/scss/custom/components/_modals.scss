@@ -118,6 +118,12 @@
     margin-left: -15px;
     margin-right: -15px;
   }
+
+  #drupal-modal {
+    .modal-dialog {
+      width: auto;
+    }
+  }
 }
 
 // Tablet - only
@@ -126,11 +132,6 @@
 
 // Desktop - and up
 @include media-breakpoint-up(md) {
-  #drupal-modal {
-    .modal-dialog {
-      width: auto;
-    }
-  }
 }
 
 // Desktop - only
