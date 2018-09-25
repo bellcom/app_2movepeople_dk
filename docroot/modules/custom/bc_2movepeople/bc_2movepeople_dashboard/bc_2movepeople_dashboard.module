@@ -9,7 +9,7 @@ define('BC_2MOVEPEOPLE_DASHBOARD_BUTTONS', serialize([
   'Progression' => [
     'feedback' => t('FIT'),
     'show_category' => t('Show category'),
-    'rate_category' => t('Rate category'),
+    'rate_category' => t('Rates'),
     'save_to_template' => t('Save to template'),
   ],
   'Milestone' => [
