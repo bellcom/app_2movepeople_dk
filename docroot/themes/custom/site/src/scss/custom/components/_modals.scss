@@ -89,6 +89,13 @@
   }
 }
 
+.ev-item {
+
+  + .ev-item {
+    margin-top: 10px;
+  }
+}
+
 .milestone-evaluation {
 
   .milestone-evaluation-footer{

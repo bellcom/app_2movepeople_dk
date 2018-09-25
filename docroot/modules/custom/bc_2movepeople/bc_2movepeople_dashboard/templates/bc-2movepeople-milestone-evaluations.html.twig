@@ -23,9 +23,13 @@
       <div class="ev-list">
         <h3>{{ 'Evaluering' |trans}}</h3>
         {% for target in item.targets %}
+
           <div class="ev-item">
-            <p><strong>{{ target.name }}</strong></p>
-            <p>{{ target.evaluation }}</p>
+            <p>
+              <strong>{{ target.name }}</strong>
+              <br>
+              {{ target.evaluation }}
+            </p>
           </div>
         {% endfor %}
       </div>
