@@ -9225,7 +9225,7 @@ div.custom-nav-divider {
     font-weight: bold; }
   .milestone-evaluation__item + .milestone-evaluation__item {
     margin-top: 30px;
-    border-top: 1px solid #F3F5F7; }
+    border-top: 1px solid #ddd; }
 
 .ev-list {
   margin-top: 20px; }
