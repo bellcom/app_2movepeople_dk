@@ -9217,7 +9217,7 @@ div.custom-nav-divider {
   max-height: 600px;
   overflow-y: auto; }
 
-.milestone-evaluation__item h2, .milestone-evaluation__item .heading-h2, .milestone-evaluation__item h3, .milestone-evaluation__item .heading-h3 {
+.milestone-evaluation__item h2, .milestone-evaluation__item .heading-h2, .milestone-evaluation__item h3, .milestone-evaluation__item .heading-h3, .milestone-evaluation__item h4, .milestone-evaluation__item .heading-h4 {
   font-weight: bold; }
 
 .milestone-evaluation__item + .milestone-evaluation__item {
