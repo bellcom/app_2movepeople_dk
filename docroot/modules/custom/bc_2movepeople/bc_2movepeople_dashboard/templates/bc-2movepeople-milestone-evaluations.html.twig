@@ -18,10 +18,11 @@
          class="btn btn-default btn-sm pull-right use-ajax">
         {{ 'Edit'|trans }}
       </a>
+
       <p>{{ item.milestone.purpose }}</p>
 
       <div class="ev-list">
-        <h3>{{ 'Evaluering' |trans}}</h3>
+        <h4>{{ 'Evaluering' |trans}}</h4>
         {% for target in item.targets %}
 
           <div class="ev-item">
