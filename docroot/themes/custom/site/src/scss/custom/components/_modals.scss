@@ -79,6 +79,11 @@
 }
 
 .milestone-evaluation__item {
+  padding-top: 30px;
+
+  h2 {
+    margin-top: 0;
+  }
 
   h2, h3, h4 {
     font-weight: bold;
@@ -86,7 +91,6 @@
 
   + .milestone-evaluation__item {
     margin-top: 30px;
-    padding-top: 30px;
 
     border-top: 1px solid #F3F5F7;
   }
