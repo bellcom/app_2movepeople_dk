@@ -78,8 +78,22 @@
   overflow-y: auto;
 }
 
-.milestone-evaluation .milestone-evaluation-footer{
-  margin: 10px 0 20px 0;
+.milestone-evaluation__item {
+
+  h2 {
+    font-weight: bold;
+  }
+
+  + .milestone-evaluation__item {
+    margin-top: 30px;
+  }
+}
+
+.milestone-evaluation {
+
+  .milestone-evaluation-footer{
+    margin: 10px 0 20px 0;
+  }
 }
 
 .bc-2movepeople-dashboard-user-managers-edit-form {
