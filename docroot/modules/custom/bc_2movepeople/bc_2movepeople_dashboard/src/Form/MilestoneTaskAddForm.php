@@ -102,7 +102,7 @@ class MilestoneTaskAddForm extends FormBase {
       '#type' => 'date',
       '#title' => $this->t('Deadline'),
       '#placeholder' => $this->t('Deadline'),
-      '#required' => TRUE,
+//      '#required' => TRUE,
     ];
 
     // Disable caching on this form.
