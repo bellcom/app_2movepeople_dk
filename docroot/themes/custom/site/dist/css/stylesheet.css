@@ -9223,6 +9223,9 @@ div.custom-nav-divider {
 .milestone-evaluation__item + .milestone-evaluation__item {
   margin-top: 30px; }
 
+.ev-list {
+  margin-top: 20px; }
+
 .ev-item + .ev-item {
   margin-top: 10px; }
 
