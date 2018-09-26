@@ -51,10 +51,14 @@ class NewUserCreateForm extends FormBase {
       '#markup' => '<h1 class="page-header">' . $this->t('Create Account') . '</h1>',
     ];
 
+    $form['social_security_number'] = [
+      '#type' => 'textfield',
+      '#placeholder' => $this->t('Social security number'),
+    ];
+
     $form['firstname'] = [
       '#type' => 'textfield',
-      '#placeholder' => $this->t('First Name'),
-
+      '#placeholder' => $this->t('Firstname'),
     ];
 
     $form['surname'] = [
@@ -165,6 +169,7 @@ class NewUserCreateForm extends FormBase {
       $user->enforceIsNew();
 
       // Optional.
+      $user->set('field_social_security_number', $form_state->getValue('social_security_number'));
       $user->set('field_user_firstname', $form_state->getValue('firstname'));
       $user->set('field_user_surname', $form_state->getValue('surname'));
 

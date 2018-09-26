@@ -1,0 +1,10 @@
+Progression:
+  feedback: 'Feedback buttons title'
+  show_category: 'Vis kategori title'
+  rate_category: ''
+  save_to_template: ''
+Milestone:
+  overall_evaluation: ''
+  show_target_milestones: ''
+Navigation:
+  create_user: ''

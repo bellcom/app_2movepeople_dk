@@ -8,6 +8,7 @@ dependencies:
     - field.field.user.user.field_connected_users
     - field.field.user.user.field_diagnose
     - field.field.user.user.field_organisation
+    - field.field.user.user.field_social_security_number
     - field.field.user.user.field_user_firstname
     - field.field.user.user.field_user_surname
     - field.field.user.user.user_picture
@@ -43,6 +44,11 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
+  masquerade:
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   user_picture:
     type: image
     weight: 0
@@ -58,5 +64,6 @@ hidden:
   field_connected_users: true
   field_diagnose: true
   field_organisation: true
+  field_social_security_number: true
   langcode: true
   member_for: true

@@ -9,9 +9,6 @@
   body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
-  .date {
-    float: right;
-  }
   .ev-header {
     margin-bottom: 10px;
   }
@@ -30,12 +27,23 @@
     {{ header }}
   </div>
 
-  <span class="date"><strong>{{ 'now' | date('d.m.Y') }}</strong></span>
   {% if name %}
     <div>
       {{ name }}
     </div>
   {% endif %}
+
+  {% if social_security_number %}
+    <div>
+      {{ 'Social security number' | trans }}: {{ social_security_number }}
+    </div>
+  {% endif %}
+
+  <div>
+    {{ 'Date' | trans }}: {{ 'now' | date('d.m.Y') }}
+  </div>
+
+  <br>
 
   {% for item in milestones_data %}
     <h1>{{ item.milestone.name }}</h1>

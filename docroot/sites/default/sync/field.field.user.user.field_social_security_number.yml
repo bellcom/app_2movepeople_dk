@@ -1,16 +1,16 @@
-uuid: c8cf05ea-8cfd-41c4-b70b-e8d232a3cb31
+uuid: 368d499a-7492-4e16-a833-9b99f9b151e6
 langcode: da
 status: true
 dependencies:
   config:
-    - field.storage.user.field_addiction
+    - field.storage.user.field_social_security_number
   module:
     - user
-id: user.user.field_addiction
-field_name: field_addiction
+id: user.user.field_social_security_number
+field_name: field_social_security_number
 entity_type: user
 bundle: user
-label: Afhængighed
+label: 'CPR nr.'
 description: ''
 required: false
 translatable: false

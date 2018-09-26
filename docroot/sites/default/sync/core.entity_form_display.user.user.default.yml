@@ -8,6 +8,7 @@ dependencies:
     - field.field.user.user.field_connected_users
     - field.field.user.user.field_diagnose
     - field.field.user.user.field_organisation
+    - field.field.user.user.field_social_security_number
     - field.field.user.user.field_user_firstname
     - field.field.user.user.field_user_surname
     - field.field.user.user.user_picture
@@ -31,7 +32,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_addiction:
-    weight: 9
+    weight: 10
     settings:
       size: 60
       placeholder: ''
@@ -39,7 +40,7 @@ content:
     type: string_textfield
     region: content
   field_age:
-    weight: 10
+    weight: 11
     settings:
       placeholder: ''
     third_party_settings: {  }
@@ -47,7 +48,7 @@ content:
     region: content
   field_connected_users:
     type: entity_reference_autocomplete
-    weight: 7
+    weight: 8
     region: content
     settings:
       match_operator: CONTAINS
@@ -55,7 +56,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_diagnose:
-    weight: 8
+    weight: 9
     settings:
       size: 60
       placeholder: ''
@@ -64,16 +65,24 @@ content:
     region: content
   field_organisation:
     type: entity_reference_autocomplete
-    weight: 6
+    weight: 7
     region: content
     settings:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_social_security_number:
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_user_firstname:
     type: string_textfield
-    weight: 4
+    weight: 5
     region: content
     settings:
       size: 60
@@ -81,7 +90,7 @@ content:
     third_party_settings: {  }
   field_user_surname:
     type: string_textfield
-    weight: 5
+    weight: 6
     region: content
     settings:
       size: 60
@@ -99,7 +108,7 @@ content:
     third_party_settings: {  }
   user_picture:
     type: image_image
-    weight: 11
+    weight: 12
     settings:
       preview_image_style: thumbnail
       progress_indicator: throbber

@@ -10,7 +10,7 @@ id: user.user.field_age
 field_name: field_age
 entity_type: user
 bundle: user
-label: Age
+label: Alder
 description: ''
 required: false
 translatable: false

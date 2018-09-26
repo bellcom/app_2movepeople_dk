@@ -1,5 +1,6 @@
 module:
   admin_toolbar: 0
+  admin_toolbar_tools: 0
   administerusersbyrole: 0
   administerusersbyrole_hack: 0
   bc_2movepeople: 0
@@ -92,6 +93,7 @@ module:
   text: 0
   token: 0
   toolbar: 0
+  twig_xdebug: 0
   update: 0
   user: 0
   video_embed_field: 0

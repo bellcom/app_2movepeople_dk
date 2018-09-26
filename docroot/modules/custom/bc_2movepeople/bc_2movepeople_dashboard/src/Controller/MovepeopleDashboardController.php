@@ -882,12 +882,16 @@ class MovepeopleDashboardController extends ControllerBase {
       $name = $field_firstname[0]['value'] . ' ' . $field_lastname[0]['value'];
     }
 
+    if ($field_social_security_number = $user->get('field_social_security_number')->getValue()) {
+      $social_security_number = $field_social_security_number[0]['value'];
+    }
+
     $build = [
       '#theme' => 'bc_2movepeople_milestone_evaluations_pdf',
       '#header' => empty($header_node) ? NULL : $header_node->body->view(['label' => 'hidden']),
       '#user' => $user->id(),
       '#name' => $name,
-      '#social_security_number' => $name,
+      '#social_security_number' => $social_security_number,
       '#milestones_data' => $this->getMilestoneEvaluationsData($user),
     ];
 
