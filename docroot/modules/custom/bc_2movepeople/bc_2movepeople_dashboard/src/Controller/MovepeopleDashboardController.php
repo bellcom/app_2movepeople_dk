@@ -874,10 +874,20 @@ class MovepeopleDashboardController extends ControllerBase {
         ->load($config->get('milestone_evaluation_header_nid'));
     }
 
+    $name = null;
+    $field_firstname = $user->get('field_user_firstname')->getValue();
+    $field_lastname = $user->get('field_user_surname')->getValue();
+
+    if (!empty($field_firstname[0]['value']) && !empty($field_lastname[0]['value'])) {
+      $name = $field_firstname[0]['value'] . ' ' . $field_lastname[0]['value'];
+    }
+
     $build = [
       '#theme' => 'bc_2movepeople_milestone_evaluations_pdf',
       '#header' => empty($header_node) ? NULL : $header_node->body->view(['label' => 'hidden']),
-      "#user" => $user->id(),
+      '#user' => $user->id(),
+      '#name' => $name,
+      '#social_security_number' => $name,
       '#milestones_data' => $this->getMilestoneEvaluationsData($user),
     ];
 

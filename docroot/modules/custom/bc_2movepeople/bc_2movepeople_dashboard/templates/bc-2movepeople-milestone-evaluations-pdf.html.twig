@@ -5,20 +5,50 @@
  * Template file for getMilestoneEvaluationsPdf.
  */
 #}
+<style>
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  .date {
+    float: right;
+  }
+  .ev-header {
+    margin-bottom: 10px;
+  }
+  .ev-header h1 {
+    margin: 0;
+    font-size: 44px;
+    font-weight: bold;
+  }
+  .ev-header p {
+    margin: 0;
+  }
+</style>
 
 <div class="milestone-evaluation">
-  <div class="ev-header">{{ header }}</div>
-  {% for item in milestones_data %}
-    <h2>{{ item.milestone.name }}</h2>
-    <p>{{ item.milestone.purpose }}</p>
-    <div class="ev-list">
-      <h3>{{ 'Evaluering' |trans}}</h3>
-      {% for target in item.targets %}
-        <div class="ev-item">
-          <h4>{{ target.name }}</h4>
-          <p>{{ target.evaluation }}</p>
-        </div>
-      {% endfor %}
+  <div class="ev-header">
+    {{ header }}
+  </div>
+
+  <span class="date"><strong>{{ 'now' | date('d.m.Y') }}</strong></span>
+  {% if name %}
+    <div>
+      {{ name }}
     </div>
+  {% endif %}
+
+  {% for item in milestones_data %}
+    <h1>{{ item.milestone.name }}</h1>
+    <p>{{ item.milestone.purpose }}</p>
+
+    <h2>{{ 'Evaluering' | trans }}</h2>
+    <p>
+      {% for target in item.targets %}
+        <strong>{{ target.name }}</strong>
+        <br>
+        {{ target.evaluation }}
+        <br><br>
+      {% endfor %}
+    </p>
   {% endfor %}
 </div>

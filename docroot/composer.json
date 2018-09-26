@@ -1,2 +1,10 @@
 {
+    "require": {
+        "drush/drush": "8.*"
+    },
+    "extra": {
+        "installer-paths": {
+            "core": ["type:drupal-core"]
+        }
+    }
 }
