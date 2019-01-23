@@ -16,9 +16,9 @@
  */
 #}
 {% block content %}
-  <div>
+  <div class="layout__sidebar__logo">
     {% if site_logo %}
-      <a class="layout__sidebar__logo" href="{{ path('<front>') }}" title="{{ 'Home'|t }}" rel="home">
+      <a href="{{ path('<front>') }}" title="{{ 'Home'|t }}" rel="home">
         <img src="{{ site_logo }}" class="layout__sidebar__logo__image" alt="{{ 'Home'|t }}" />
       </a>
     {% endif %}

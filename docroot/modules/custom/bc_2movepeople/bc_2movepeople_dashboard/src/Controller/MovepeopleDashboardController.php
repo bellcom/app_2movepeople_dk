@@ -784,19 +784,21 @@ class MovepeopleDashboardController extends ControllerBase {
   public static function getControlButtons(array $links, array $attributes = []) {
     $build = [
       '#type' => 'container',
-      '#attributes' => array_merge_recursive($attributes, ['class' => ['controll-buttons']]),
+      '#attributes' => array_merge_recursive($attributes, ['class' => ['layout__sidebar__controls']]),
     ];
 
     foreach ($links as $key => $link) {
       $button = _bc_2movepeople_dashboard_button($key);
       $link['#title'] = $button['name'];
+
       if (!empty($button['title'])) {
         $link['#attributes']['title'] = $button['title'];
       }
+
       $build[$key] = array_merge_recursive($link, [
         '#type' => 'link',
         '#attributes' => [
-          'class' => ['btn', 'btn-default'],
+          'class' => ['btn', 'btn-default', 'btn-block'],
         ],
       ]);
     }

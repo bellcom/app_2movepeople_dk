@@ -7,14 +7,18 @@
 // Styling
 // --------------------------------------------------
 
-#block-secondarynavigation, #block-settingsmenu,
+#block-secondarynavigation,
+#block-settingsmenu,
 #block-navigationblock {
+
   .nav > li > a {
     font-weight: bold;
     font-size: 15px;
-    padding: 15px 30px 15px 50px; 
+    padding: 12px 20px;
   }
-  .nav > li > a:hover, .nav > li > a:focus {
+
+  .nav > li > a:hover,
+  .nav > li > a:focus {
     text-decoration: none;
     background-color: $btn-nav-hover-color;
   }
@@ -57,7 +61,7 @@ div.custom-nav-divider {
   letter-spacing: 0.01em;
   position: relative;
   padding-bottom: 26px;
-  margin-bottom: 25px;
+  margin-bottom: 35px;
   
   i {
     position: absolute;
@@ -95,74 +99,35 @@ div.custom-nav-divider {
 // --------------------------------------------------
 
 // Mobile - and up
-@include media-breakpoint-up(xs) {
-}
+@include media-breakpoint-up(xs) {}
 
 // Mobile - only
-@include media-breakpoint-only(xs) {
-}
+@include media-breakpoint-only(xs) {}
 
 // Tablet - and up
-@include media-breakpoint-up(sm) {
-  #block-secondarynavigation, #block-settingsmenu,
-  #block-navigationblock {
-    .nav > li > a {
-      padding: 20px 15px 20px 50px; 
-    }
-  }
-}
+@include media-breakpoint-up(sm) {}
 
 // Tablet - only
-@include media-breakpoint-only(sm) {
-  #block-secondarynavigation, #block-settingsmenu,
-  #block-navigationblock {
-    .nav > li > a {
-      padding: 20px 15px 20px 50px; 
-    }
-  }
-}
+@include media-breakpoint-only(sm) {}
 
 // Desktop - and up
-@include media-breakpoint-up(md) {
-  #block-secondarynavigation, #block-settingsmenu,
-  #block-navigationblock {
-    .nav > li > a {
-      padding: 20px 15px 20px 50px; 
-    }
-  }
-}
+@include media-breakpoint-up(md) {}
 
 // Desktop - only
-@include media-breakpoint-only(md) {
-  #block-secondarynavigation, #block-settingsmenu,
-  #block-navigationblock {
-    .nav > li > a {
-      padding: 20px 15px 20px 50px; 
-    }
-  }
-}
+@include media-breakpoint-only(md) {}
 
 // Large desktop - and up
-@include media-breakpoint-up(lg) {
-  #block-secondarynavigation, #block-settingsmenu,
-  #block-navigationblock {
-    .nav > li > a {
-      padding: 20px 15px 20px 50px; 
-    }
-  }
-}
+@include media-breakpoint-up(lg) {}
 
 // Print
-@media print {
-}
+@media print {}
 
 // Touch
-.touchevents {
-}
+.touchevents {}
 
 // No touch
-.no-touchevents {
-}
+.no-touchevents {}
+
 // --------------------------------------------------
 // Mixins
 // --------------------------------------------------

@@ -3,7 +3,7 @@
 // |--------------------------------------------------------------------------
 // |
 // | This file contains styles for the following:
-// | - .left-container, .main-container
+// | -
 // |
 
 // --------------------------------------------------
@@ -108,28 +108,45 @@ html {
   width: 280px;
 
   background-color: $body-bg-secondary;
+
+  nav {
+
+    + .block {
+      margin-top: floor( ($grid-gutter-width / 2) );
+    }
+  }
 }
 .layout__content {
   flex-grow: 1;
 
-  padding-bottom: floor( ($grid-gutter-width / 2) );
+  padding: $grid-gutter-width 0;
 }
 
-// Logo
 .layout__sidebar__logo {
   display: block;
 
   text-align: center;
+
+  + nav,
+  + .block {
+    margin-top: $grid-gutter-width;
+  }
 }
 .layout__sidebar__logo__image {}
+.layout__sidebar__controls {
+  padding: 12px 35px;
+}
 
 .navbar {
   margin-bottom: floor( ($grid-gutter-width / 2) ) !important;
 }
 
 h1.page-header {
+  margin-top: 20px;
+
   border: none;
 
+  font-weight: $headings-font-weight-bold;
   color: $color-font-h1;
 }
 

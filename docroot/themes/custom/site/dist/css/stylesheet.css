@@ -8882,23 +8882,33 @@ html {
   padding: 30px 0;
   width: 280px;
   background-color: #fff; }
+  .layout__sidebar nav + .block {
+    margin-top: 15px; }
 
 .layout__content {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
-  padding-bottom: 15px; }
+  padding: 30px 0; }
 
 .layout__sidebar__logo {
   display: block;
   text-align: center; }
+  .layout__sidebar__logo + nav,
+  .layout__sidebar__logo + .block {
+    margin-top: 30px; }
+
+.layout__sidebar__controls {
+  padding: 12px 35px; }
 
 .navbar {
   margin-bottom: 15px !important; }
 
 h1.page-header, .page-header.heading-h1 {
+  margin-top: 20px;
   border: none;
+  font-weight: 700;
   color: #445c7e; }
 
 .breadcrumb {
@@ -9033,9 +9043,6 @@ a.btn-progress {
   padding-left: 9px;
   padding-right: 7px; }
 
-.left-container .region-sidebar-first .btn, .left-container .region-sidebar-first .user__controls__item--masquerade {
-  max-width: 195px; }
-
 .custom-login-form .btn, .custom-login-form .user__controls__item--masquerade {
   max-width: none; }
 
@@ -9096,22 +9103,28 @@ a.btn-progress {
   .custom-login-form {
     margin: 0; } }
 
-#block-secondarynavigation .nav > li > a, #block-settingsmenu .nav > li > a,
+#block-secondarynavigation .nav > li > a,
+#block-settingsmenu .nav > li > a,
 #block-navigationblock .nav > li > a {
   font-weight: bold;
   font-size: 15px;
-  padding: 15px 30px 15px 50px; }
+  padding: 12px 20px; }
 
-#block-secondarynavigation .nav > li > a:hover, #block-secondarynavigation .nav > li > a:focus, #block-settingsmenu .nav > li > a:hover, #block-settingsmenu .nav > li > a:focus,
+#block-secondarynavigation .nav > li > a:hover,
+#block-secondarynavigation .nav > li > a:focus,
+#block-settingsmenu .nav > li > a:hover,
+#block-settingsmenu .nav > li > a:focus,
 #block-navigationblock .nav > li > a:hover,
 #block-navigationblock .nav > li > a:focus {
   text-decoration: none;
   background-color: #f1f7fd; }
 
-#block-secondarynavigation .controll-buttons, #block-settingsmenu .controll-buttons,
+#block-secondarynavigation .controll-buttons,
+#block-settingsmenu .controll-buttons,
 #block-navigationblock .controll-buttons {
   padding-top: 10px; }
-  #block-secondarynavigation .controll-buttons a, #block-settingsmenu .controll-buttons a,
+  #block-secondarynavigation .controll-buttons a,
+  #block-settingsmenu .controll-buttons a,
   #block-navigationblock .controll-buttons a {
     margin: 10px 0; }
 
@@ -9140,7 +9153,7 @@ div.custom-nav-divider {
   letter-spacing: 0.01em;
   position: relative;
   padding-bottom: 26px;
-  margin-bottom: 25px; }
+  margin-bottom: 35px; }
   div.custom-nav-divider i {
     position: absolute;
     bottom: -25px;
@@ -9161,31 +9174,6 @@ div.custom-nav-divider {
     line-height: 48px; }
   div.custom-nav-divider i.customicon.ci-gear::before {
     line-height: 39px; }
-
-@media (min-width: 768px) {
-  #block-secondarynavigation .nav > li > a, #block-settingsmenu .nav > li > a,
-  #block-navigationblock .nav > li > a {
-    padding: 20px 15px 20px 50px; } }
-
-@media (min-width: 768px) and (max-width: 991px) {
-  #block-secondarynavigation .nav > li > a, #block-settingsmenu .nav > li > a,
-  #block-navigationblock .nav > li > a {
-    padding: 20px 15px 20px 50px; } }
-
-@media (min-width: 992px) {
-  #block-secondarynavigation .nav > li > a, #block-settingsmenu .nav > li > a,
-  #block-navigationblock .nav > li > a {
-    padding: 20px 15px 20px 50px; } }
-
-@media (min-width: 992px) and (max-width: 1199px) {
-  #block-secondarynavigation .nav > li > a, #block-settingsmenu .nav > li > a,
-  #block-navigationblock .nav > li > a {
-    padding: 20px 15px 20px 50px; } }
-
-@media (min-width: 1200px) {
-  #block-secondarynavigation .nav > li > a, #block-settingsmenu .nav > li > a,
-  #block-navigationblock .nav > li > a {
-    padding: 20px 15px 20px 50px; } }
 
 .modal-dialog .modal-content {
   min-width: 500px; }
