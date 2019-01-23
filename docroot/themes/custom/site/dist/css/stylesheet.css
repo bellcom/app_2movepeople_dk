@@ -8884,6 +8884,10 @@ html {
   background-color: #fff; }
   .layout__sidebar nav + .block {
     margin-top: 15px; }
+  .layout__sidebar .control-buttons {
+    padding: 12px 35px; }
+    .layout__sidebar .control-buttons .btn, .layout__sidebar .control-buttons .user__controls__item--masquerade {
+      display: block; }
 
 .layout__content {
   -webkit-box-flex: 1;
@@ -8898,9 +8902,6 @@ html {
   .layout__sidebar__logo + nav,
   .layout__sidebar__logo + .block {
     margin-top: 30px; }
-
-.layout__sidebar__controls {
-  padding: 12px 35px; }
 
 .navbar {
   margin-bottom: 15px !important; }
@@ -9118,15 +9119,6 @@ a.btn-progress {
 #block-navigationblock .nav > li > a:focus {
   text-decoration: none;
   background-color: #f1f7fd; }
-
-#block-secondarynavigation .controll-buttons,
-#block-settingsmenu .controll-buttons,
-#block-navigationblock .controll-buttons {
-  padding-top: 10px; }
-  #block-secondarynavigation .controll-buttons a,
-  #block-settingsmenu .controll-buttons a,
-  #block-navigationblock .controll-buttons a {
-    margin: 10px 0; }
 
 .customicon {
   font-style: normal;

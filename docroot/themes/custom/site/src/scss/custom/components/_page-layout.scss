@@ -115,6 +115,14 @@ html {
       margin-top: floor( ($grid-gutter-width / 2) );
     }
   }
+
+  .control-buttons {
+    padding: 12px 35px;
+
+    .btn {
+      display: block;
+    }
+  }
 }
 .layout__content {
   flex-grow: 1;
@@ -133,9 +141,6 @@ html {
   }
 }
 .layout__sidebar__logo__image {}
-.layout__sidebar__controls {
-  padding: 12px 35px;
-}
 
 .navbar {
   margin-bottom: floor( ($grid-gutter-width / 2) ) !important;
