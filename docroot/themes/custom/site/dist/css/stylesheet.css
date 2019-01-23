@@ -8390,37 +8390,6 @@ button.close {
   .panel-tertiary > .panel-footer + .panel-collapse > .panel-body {
     border-bottom-color: #2ecc71; }
 
-html,
-body,
-.outer-wrapper {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%; }
-
-body {
-  overflow-y: auto;
-  overflow-x: hidden; }
-
-.outer-wrapper,
-.inner-wrapper,
-.content,
-.footer {
-  position: relative; }
-
-.inner-wrapper {
-  min-height: 100%;
-  overflow: hidden;
-  background-color: #F2F5F7; }
-
-.footer-attached .footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: 0;
-  padding: 0; }
-
 .navigation-list {
   display: block;
   padding: 0;
@@ -8805,14 +8774,12 @@ header.navbar {
   text-overflow: ellipsis;
   line-height: normal; }
 
-html {
-  overflow: hidden; }
-
-.preload, .preload * {
-  -webkit-transition: none !important;
-  -moz-transition: none !important;
-  -ms-transition: none !important;
-  -o-transition: none !important; }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%; }
 
 .tabs-left {
   border-bottom: none;
@@ -8999,6 +8966,14 @@ h1.page-header, .page-header.heading-h1 {
         -webkit-transform: initial;
         -o-transform: initial;
         transform: initial; } }
+
+a,
+button,
+input[type="button"],
+input[type="submit"] {
+  -webkit-transition: all 300ms ease-in-out;
+  -o-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out; }
 
 .custom-checkbox-ok:before {
   content: '\e157';

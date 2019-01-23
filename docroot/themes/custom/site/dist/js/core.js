@@ -24,15 +24,7 @@ var pageLayout = (function ($) {
      * Register boot event handlers
      */
     function registerBootEventHandlers() {
-      $(window).load(function() {
-        $("#page-wrapper").removeClass("preload");
-      });
-
       $(".datepicker" ).datepicker();
-
-      $(window).scroll(function() {
-        $('#sidebar-wrapper').scrollTop($(this).scrollTop());
-      });
     }
 
     /**
@@ -53,18 +45,6 @@ var pageLayout = (function ($) {
         }
     }
 
-    /**
-     * Footer attached
-     */
-    function footerAttached() {
-        if ($('body').hasClass('footer-attached')) {
-            var $footer = $('.footer');
-            var footerHeight = $footer.outerHeight(true);
-
-            $('.inner-wrapper').css('padding-bottom', footerHeight);
-        }
-    }
-
     return pub;
 })(jQuery);
 
@@ -72,77 +52,77 @@ var pageLayout = (function ($) {
 /* JS for house illustration on services page */
 
 // Top
-jQuery(document).ready(function($){
-$("#top").mouseenter(function () { // show  
-    $(".info-modal").show();
-});
+jQuery(document).ready(function ($) {
+    $("#top").mouseenter(function () { // show
+        $(".info-modal").show();
+    });
 });
 
-jQuery(document).ready(function($){
-$(".info-modal").mouseleave(function () { // hide  on mouse out
-    $(".info-modal").hide();
-});
+jQuery(document).ready(function ($) {
+    $(".info-modal").mouseleave(function () { // hide  on mouse out
+        $(".info-modal").hide();
     });
-jQuery(document).ready(function($){    
-$(".middle, .bottom").mouseenter(function () { // show  
-    $(".info-modal").hide();
 });
+jQuery(document).ready(function ($) {
+    $(".middle, .bottom").mouseenter(function () { // show
+        $(".info-modal").hide();
     });
+});
 // Left
-jQuery(document).ready(function($){    
-$("#left").mouseenter(function () { // show  
-    $(".info-modal-left").show();
-});
+jQuery(document).ready(function ($) {
+    $("#left").mouseenter(function () { // show
+        $(".info-modal-left").show();
     });
-jQuery(document).ready(function($){    
-$(".info-modal-left").mouseleave(function () { // hide on mouse out
-    $(".info-modal-left").hide();
 });
+jQuery(document).ready(function ($) {
+    $(".info-modal-left").mouseleave(function () { // hide on mouse out
+        $(".info-modal-left").hide();
     });
-jQuery(document).ready(function($){    
-$(".right, .bottom, .top").mouseenter(function () { // show  
-    $(".info-modal-left").hide();
 });
+jQuery(document).ready(function ($) {
+    $(".right, .bottom, .top").mouseenter(function () { // show
+        $(".info-modal-left").hide();
     });
+});
 // Right
-jQuery(document).ready(function($){   
-$("#right").mouseenter(function () { // show  
-    $(".info-modal-right").show();
-});
+jQuery(document).ready(function ($) {
+    $("#right").mouseenter(function () { // show
+        $(".info-modal-right").show();
     });
-jQuery(document).ready(function($){   
-$(".info-modal-right").mouseleave(function () { // hide on mouse out 
-    $(".info-modal-right").hide();
 });
+jQuery(document).ready(function ($) {
+    $(".info-modal-right").mouseleave(function () { // hide on mouse out
+        $(".info-modal-right").hide();
     });
-jQuery(document).ready(function($){   
-$(".left, .bottom, .top").mouseenter(function () { // show  
-    $(".info-modal-right").hide();
 });
+jQuery(document).ready(function ($) {
+    $(".left, .bottom, .top").mouseenter(function () { // show
+        $(".info-modal-right").hide();
     });
+});
 // Bottom
-jQuery(document).ready(function($){   
-$("#bottom").mouseenter(function () { // show  
-    $(".info-modal-bottom").show();
-});
+jQuery(document).ready(function ($) {
+    $("#bottom").mouseenter(function () { // show
+        $(".info-modal-bottom").show();
     });
-jQuery(document).ready(function($){ 
-$(".info-modal-bottom").mouseleave(function () { // hide on mouse out
-    $(".info-modal-bottom").hide();
 });
+jQuery(document).ready(function ($) {
+    $(".info-modal-bottom").mouseleave(function () { // hide on mouse out
+        $(".info-modal-bottom").hide();
     });
-jQuery(document).ready(function($){ 
-$(".right, .left, .top").mouseenter(function () { // show  
-    $(".info-modal-bottom").hide();
 });
+jQuery(document).ready(function ($) {
+    $(".right, .left, .top").mouseenter(function () { // show
+        $(".info-modal-bottom").hide();
     });
+});
 
 // Overall action / Just for UX purpose
-jQuery(document).ready(function($){ 
-$("body").click(function () { // show  
-    $(".info-modal-bottom, .info-modal-left, .info-modal-right, .info-modal").hide();
-});
+jQuery(document).ready(function ($) {
+    $("body").click(function () { // show
+        $(".info-modal-bottom, .info-modal-left, .info-modal-right, .info-modal").hide();
     });
+});
 
 // Document ready
 (function ($) {
@@ -151,14 +131,14 @@ $("body").click(function () { // show
     // Enable page layout
     pageLayout.init();
 
-    var $search_link = $('.navbar').find('.navbar-nav').find('a[href="/search/node"]'),
-        $search_wrapper = $search_link.parents('li'),
-        $search_icon = $('<span />').addClass('icon fa fa-search').on('click', function() {
-            $('.search-inline').find('.search-inline-inner').toggleClass('visible');
-        });
-
-    $search_link.remove();
-    $search_wrapper.append($search_icon);
+    // var $search_link = $('.navbar').find('.navbar-nav').find('a[href="/search/node"]'),
+    //     $search_wrapper = $search_link.parents('li'),
+    //     $search_icon = $('<span />').addClass('icon fa fa-search').on('click', function() {
+    //         $('.search-inline').find('.search-inline-inner').toggleClass('visible');
+    //     });
+    //
+    // $search_link.remove();
+    // $search_wrapper.append($search_icon);
 
 })(jQuery);
 

@@ -14,17 +14,12 @@
 // Styling
 // --------------------------------------------------
 
-html {
-  overflow: hidden;
-}
-
-.preload {
-  &, & * {
-    -webkit-transition: none !important;
-    -moz-transition: none !important;
-    -ms-transition: none !important;
-    -o-transition: none !important;
-  }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .tabs-left {
