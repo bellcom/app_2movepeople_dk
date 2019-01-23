@@ -1,68 +1,48 @@
 {{ attach_library('bc_2movepeople_dashboard/bc_2movepeople_dashboard.sidebar-toggle') }}
 
-{% set container = theme.settings.fluid_container ? 'container-fluid' : 'container' %}
+<div class="layout__wrapper preload {% if menu_toggle_state %} active {% endif %}">
 
-<div id="page-wrapper" class="preload {% if menu_toggle_state %} active {% endif %}">
-  
-  {# Navbar #}
-  {% if page.navigation or page.navigation_collapsible %}
-    {% block navbar %}
-      {%
-        set navbar_classes = [
-          'navbar',
-          theme.settings.navbar_inverse ? 'navbar-inverse' : 'navbar-default',
-          theme.settings.navbar_position ? 'navbar-' ~ theme.settings.navbar_position|clean_class : container,
-        ]
-      %}
-      <header{{ navbar_attributes.addClass(navbar_classes) }} id="navbar" role="banner">
-        <div class="navbar-header">
-          <div  class="navbar-brand">
-            {#<a id="menu-toggle" href="#" class="glyphicon glyphicon-align-justify btn-menu toggle">#}
-            {{ menu_toggle }}
-            {#<a href="#">Project name</a>#}
-          </div>
-          <div id="navbar" class="collapse navbar-collapse">
-            {{ page.navigation }}
-          </div>
-
-        </div>
-        
-      </header>
-    {% endblock %}
-  {% endif %}
-
-  {# Sidebar First #}
-  <div id="sidebar-wrapper">
+  <!-- Begin - sidebar -->
+  <div id="sidebar-wrapper" class="layout__sidebar">
     <aside class="left-container" role="complementary">
-    {% if page.sidebar_first %}
-      {% block sidebar_first %}
-        {{ page.sidebar_first }}
-      {% endblock %}
-    {% endif %}
-    </aside>
-  </div>
-
-{# Main #}
-{% block main %}
-  <div id="page-content-wrapper" role="main" class="main-container {{ container }} js-quickedit-main-content">
-    
-    <div>
-
-      {# Header #}
-      {% if page.header %}
-        {% block header %}
-          <div class="col-sm-12" role="heading">
-            <div id="custom-form-system-messages"></div>
-            {{ page.header }}
-          </div>
+      {% if page.sidebar_first %}
+        {% block sidebar_first %}
+          {{ page.sidebar_first }}
         {% endblock %}
       {% endif %}
-    </div>
+    </aside>
+  </div>
+  <!-- End - sidebar -->
 
-    <div class="row">
-      <div class="main-container__content">
-        {# Content #}
-        <section{{ content_attributes.addClass('col-md-12') }}>
+  <!-- Begin - content -->
+  <div class="layout__content">
+
+    {# Navbar #}
+    {% if page.navigation or page.navigation_collapsible %}
+      {% block navbar %}
+        <header class="navbar navbar-static-top navbar-default" id="navbar" role="banner">
+          <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+              {{ page.navigation }}
+            </div>
+          </div>
+        </header>
+      {% endblock %}
+    {% endif %}
+
+    <div id="page-content-wrapper" role="main" class="main-container {{ container }} js-quickedit-main-content">
+      <div class="container-fluid">
+
+        {% if page.header %}
+          {% block header %}
+            <div>
+              <div id="custom-form-system-messages"></div>
+              {{ page.header }}
+            </div>
+          {% endblock %}
+        {% endif %}
+
+        <div class="main-container__content">
 
           {# Highlighted #}
           {% if page.highlighted %}
@@ -97,20 +77,11 @@
             <a id="main-content"></a>
             {{ page.content }}
           {% endblock %}
-        </section>
 
-        {# Sidebar Second #}
-        {% if page.sidebar_second %}
-          {% block sidebar_second %}
-            <aside class="col-sm-3" role="complementary">
-              {{ page.sidebar_second }}
-            </aside>
-          {% endblock %}
-        {% endif %}
+        </div>
       </div>
+    </div>
   </div>
+  <!-- End - content -->
 
-  </div>
-{% endblock %}
-</div>
 </div>

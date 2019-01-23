@@ -13,6 +13,7 @@
 // --------------------------------------------------
 // Styling
 // --------------------------------------------------
+
 html {
   overflow: hidden;
 }
@@ -88,112 +89,57 @@ html {
   }
 }
 
+.container-fluid {
+  max-width: 1300px;
+}
 
-.left-container {
-  width: $left-container-width;
+.layout__wrapper {
+  display: flex;
+
   height: 100%;
+  width: 100%;
 
-  div.region-sidebar-first {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.layout__sidebar {
+  padding: $grid-gutter-width 0;
 
-    nav:last-child {
-      margin-top: auto;
-    }
-    .blockBrand {
-      text-align: center;
-      padding-top: 10px;
-    }
-    .logoBrand {
-      display: inline-block;
-      width: $left-container-width;
-    }
-  }
+  width: 280px;
+
+  background-color: $body-bg-secondary;
+}
+.layout__content {
+  flex-grow: 1;
+
+  padding-bottom: floor( ($grid-gutter-width / 2) );
 }
 
-.main-container {
-  //margin-left: $left-container-width;
+// Logo
+.layout__sidebar__logo {
+  display: block;
 
-/*  .main-container__content {
-    padding-right: $main-container-content-padding - 45px;
-  }*/
+  text-align: center;
+}
+.layout__sidebar__logo__image {}
 
-  h1.page-header {
-    color: $color-font-h1;
-    border: none;
-    text-align: center;
-  }
+.navbar {
+  margin-bottom: floor( ($grid-gutter-width / 2) ) !important;
 }
 
-// toggle sidebar panel
-#page-wrapper {
-  padding-left: $left-container-width;
-  transition: all 0.4s ease 0s;
-  width:100%;
-  #sidebar-wrapper{
-    display: none;
-  }
-  &.active {
-    padding-left: 0;
-    #sidebar-wrapper {
-      left: 0;
-      display: block;
-    }
-  }
+h1.page-header {
+  border: none;
 
-  #sidebar-wrapper {
-    margin-left: -$left-container-width;
-    left: 0;
-    height: 100%;
-    float: left;
-    margin-top: -50px;
-    transition: all 0.4s ease 0s;
-    background-color: $body-bg-secondary;
-  }
-  
-  #page-content-wrapper {
-    width: 100%;
-    transition: all 0.4s ease 0s;
-    
-    .alert {
-      margin: 20px $main-container-content-padding - 60px 0 $main-container-content-padding - 60px;
-    }
-  }
-  
-  #menu-toggle {
-    text-decoration: none;
-    float: left;
-    color: $navbar-default-link-color;
-    padding-right: 15px;
+  color: $color-font-h1;
+}
 
-    .ajax-throbber {
-      display: none;
-    }
-  }
+.breadcrumb {
+  padding: 0;
 }
 
 // --------------------------------------------------
 // Variants
 // --------------------------------------------------
-body.toolbar-fixed {
-  #page-wrapper #sidebar-wrapper {
-    padding-top: 39px;
-  }
-
-  &.toolbar-tray-open {
-    #page-wrapper #sidebar-wrapper {
-      padding-top: 79px;
-    }
-  }
-
-  &.toolbar-tray-open.toolbar-vertical {
-    #page-wrapper #sidebar-wrapper {
-      padding-top: 39px;
-    }
-  }
-}
 
 // Modal dialog position
 .modal-dialog {
@@ -233,88 +179,13 @@ body.toolbar-fixed {
 // --------------------------------------------------
 
 // Mobile - and up
-@include media-breakpoint-up(xs) {
-}
+@include media-breakpoint-up(xs) {}
 
 // Mobile - only
-@include media-breakpoint-only(xs) {
-  #page-wrapper {
-    padding-left: 0;
-  }
-
-  #page-wrapper.active {
-    position: relative;
-    left: $left-container-width;
-  }
-
-  #page-wrapper.active #sidebar-wrapper {
-    left: $left-container-width;
-    width: $left-container-width;
-    transition: all 0.4s ease 0s;
-  }
-
-  #menu-toggle {
-    display: inline-block;
-  }
-
-  body.toolbar-fixed {
-    &.toolbar-tray-open.toolbar-vertical {
-      #page-wrapper #sidebar-wrapper {
-        //240px is the admin toolbar width, when vertical
-        margin-left: 240px-$left-container-width;
-      }
-    }
-  }
-}
+@include media-breakpoint-only(xs) {}
 
 // Tablet - and up
 @include media-breakpoint-up(sm) {
-  #page-wrapper #sidebar-wrapper {
-    left: $left-container-width;
-    display: block;
-  }
-  #page-wrapper.active #sidebar-wrapper {
-    display: none;
-  }
-
-  body.toolbar-fixed {
-    &.toolbar-tray-open.toolbar-vertical {
-      #page-wrapper {
-        #sidebar-wrapper {
-          //240px is the admin toolbar width, when vertical
-          left: 240+$left-container-width;
-        }
-        &.active {
-          #sidebar-wrapper {
-            left: 0;
-          }
-        }
-      }
-    }
-  }
-
-  // toggle sidebar panel
-  #page-wrapper {
-    #page-content-wrapper {
-      .alert {
-        margin: 20px $main-container-content-padding - 30px 0 $main-container-content-padding - 30px;
-      }
-    }
-  }
-  
-  .left-container {
-    div.region-sidebar-first {
-      .blockBrand {
-        padding-top: 22px;
-        padding-bottom: 34px;
-      }
-    }
-  }
-  .main-container {
-    h1.page-header {
-      text-align: left;
-    }
-  }
 
   .vertical-text {
     margin-top: initial;
@@ -354,64 +225,28 @@ body.toolbar-fixed {
       }
     }
   }
-
 }
 
 // Tablet - only
-@include media-breakpoint-only(sm) {
-  
-  .main-container {
-    .main-container__content {
-      padding-left: $main-container-content-padding - 30px;
-      padding-right: $main-container-content-padding - 30px;
-    }
-  }
-
-}
+@include media-breakpoint-only(sm) {}
 
 // Desktop - and up
-@include media-breakpoint-up(md) {
-
-  .main-container {
-    .main-container__content {
-      padding-left: $main-container-content-padding;
-      padding-right: $main-container-content-padding;
-    }
-  }
-  
-  // toggle sidebar panel
-  #page-wrapper {
-    #page-content-wrapper {
-      .alert {
-        margin: 20px $main-container-content-padding 0 $main-container-content-padding;
-      }
-    }
-  }
-
-
-}
+@include media-breakpoint-up(md) {}
 
 // Desktop - only
-@include media-breakpoint-only(md) {
-
-}
+@include media-breakpoint-only(md) {}
 
 // Large desktop - and up
-@include media-breakpoint-up(lg) {
-
-}
+@include media-breakpoint-up(lg) {}
 
 // Print
-@media print {
-}
+@media print {}
 
 // Touch
-.touchevents {
-}
+.touchevents {}
 
 // No touch
-.no-touchevents {
-}
+.no-touchevents {}
 
 // --------------------------------------------------
 // Mixins
