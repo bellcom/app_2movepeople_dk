@@ -4,3 +4,5 @@ type: module
 package: '2Movepeople'
 core: 8.x
 configure: bc_2movepeople.settings
+libraries:
+        - bc_2movepeople/toolbar-icon

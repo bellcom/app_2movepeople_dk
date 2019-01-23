@@ -7,17 +7,24 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 
+/*
+ * Implements hook_toolbar_alter()
+ */
+function bc_2movepeople_toolbar_alter(&$items) {
+  $items['administration']['#attached']['library'][] = 'bc_2movepeople/toolbar-icon';
+}
+
 /**
  * Implements hook_form_FORM_ID_alter().
  */
 function bc_2movepeople_form_user_form_alter(&$form, FormStateInterface $form_state) {
-  
+
   $form['#validate'][] = '_bc_2movepeople_user_form_validate';
   $config = \Drupal::config('bc_2movepeople.settings');
   if( !$config->get('email_required')){
     $form['account']['mail']['#required'] = 0;
   }
-  
+
   $current_user = \Drupal::currentUser();
   if ($current_user->id() == 1) {
     return;
@@ -34,7 +41,7 @@ function bc_2movepeople_form_user_form_alter(&$form, FormStateInterface $form_st
  * Validates submission values in the user_form form.
  */
 function _bc_2movepeople_user_form_validate(array &$form, FormStateInterface $form_state) {
-  
+
   //Unset mail Error when mail is empty and not requred
   $config = \Drupal::config('bc_2movepeople.settings');
 
