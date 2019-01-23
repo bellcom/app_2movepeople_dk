@@ -96,13 +96,17 @@ html {
 .layout__wrapper {
   display: flex;
 
-  height: 100%;
-  width: 100%;
+  min-height: 100%;
 
+  flex-wrap: wrap;
+  flex-grow: 1;
   flex-direction: row;
-  flex-wrap: nowrap;
 }
 .layout__sidebar {
+  display: flex;
+
+  flex-direction: column;
+
   padding: $grid-gutter-width 0;
 
   width: 280px;
@@ -125,6 +129,9 @@ html {
   }
 }
 .layout__content {
+  display: flex;
+
+  flex-direction: column;
   flex-grow: 1;
 
   padding: $grid-gutter-width 0;
