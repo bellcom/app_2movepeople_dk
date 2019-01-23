@@ -1,40 +1,49 @@
-{#
-/**
- * @file
- * Default theme implementation to present all user data.
- *
- * This template is used when viewing a registered user's page,
- * e.g., example.com/user/123. 123 being the user's ID.
- *
- * Available variables:
- * - content: A list of content items. Use 'content' to print all content, or
- *   print a subset such as 'content.field_example'. Fields attached to a user
- *   such as 'user_picture' are available as 'content.user_picture'.
- * - attributes: HTML attributes for the container element.
- * - user: A Drupal User entity.
- *
- * @see template_preprocess_user()
- *
- * @ingroup themeable
- *
- */
-#}
 <article{{ attributes }}>
-  {% if content %}
-    {% if content.user_picture|render %}
-      {{- content.user_picture -}}
-    {% else %}
-      <div class="field">
-        <img class="default img-responsive" src="/{{ base_path ~ directory }}/dist/img/icon-user.svg">
-      </div>
-    {% endif %}
-    <h2 class="content">
-      {{- content|without('user_picture') -}} 
-    </h2>
-    <div class="user-controls">
-      <a href="{{ path('bc_2movepeople_dashboard.user.edit_managers', {'user': user.id, 'destination': '/dashboard'}) }}" class="btn btn-default btn-sm use-ajax glyphicon-user" data-dialog-type="modal" data-dialog-options='{"width":500}' title="{{'Managers' | trans }}"></a>
-      <a href="{{ path('entity.user.edit_form', {'user': user.id, 'destination': '/dashboard'}) }}" class="btn btn-default btn-sm glyphicon-edit" title="{{'Edit' | trans }}"></a>
-      <a href="/user/{{user.id }}/cancel?destination=/dashboard" class="btn btn-default btn-sm glyphicon-remove" title="{{ 'Remove' | trans }}"></a>
+
+  {# Begin - image #}
+  {% if user.user_picture.value %}
+    <div class="user__image">
+      <a href="/dashboard/users/{{ uid }}/overview">
+        {{ content.user_picture }}
+      </a>
     </div>
   {% endif %}
+  {# End - image #}
+
+  {% if user.field_user_firstname.value and user.field_user_surname.value %}
+    {# Begin - heading #}
+    <div class="user__heading">
+      <a href="/dashboard/users/{{ uid }}/overview">
+        <h3 class="user__heading__title">
+          {{ user.field_user_firstname.value }} {{ user.field_user_surname.value }}
+        </h3>
+      </a>
+    </div>
+    {# End - heading #}
+  {% endif %}
+
+  <!-- Begin - controls -->
+  <div class="user__controls">
+
+    {# Begin - masquerade #}
+    <div class="user__controls__item user__controls__item--masquerade" title="{{ 'Switch to this user' | t }}" data-toggle="tooltip" data-placement="top">
+      {{ content.masquerade }}
+    </div>
+    {# End - masquerade #}
+
+    <!-- Begin - managers -->
+    <a href="{{ path('bc_2movepeople_dashboard.user.edit_managers', {'user': user.id, 'destination': '/dashboard'}) }}" class="btn btn-default btn-sm use-ajax glyphicon-user" data-dialog-type="modal" data-dialog-options='{"width":500}' title="{{'Managers' | trans }}" data-toggle="tooltip" data-placement="top"></a>
+    <!-- End - managers -->
+
+    <!-- Begin - edit -->
+    <a href="{{ path('entity.user.edit_form', {'user': user.id, 'destination': '/dashboard'}) }}" class="btn btn-default btn-sm glyphicon-edit" title="{{'Edit' | trans }}" data-toggle="tooltip" data-placement="top"></a>
+    <!-- End - edit -->
+
+    <!-- Begin - delete -->
+    <a href="/user/{{user.id }}/cancel?destination=/dashboard" class="btn btn-default btn-sm glyphicon-remove" title="{{ 'Remove' | trans }}" data-toggle="tooltip" data-placement="top"></a>
+    <!-- End - delete -->
+
+  </div>
+  <!-- End - controls -->
+
 </article>

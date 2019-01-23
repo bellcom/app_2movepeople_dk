@@ -6,7 +6,7 @@ theme:
       dist/css/stylesheet.css: {}
   js:
     dist/js/core.js: {}
-    #dist/js/modernizr.js: {}
+    dist/js/modernizr.js: {}
   dependencies:
     - core/drupal
     - core/jquery

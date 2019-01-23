@@ -73,3 +73,14 @@ function site_form_user_login_form_alter(&$form, FormStateInterface $form_state,
     unset($form['name']['#attributes']['autofocus']);
   }
 }
+
+/**
+ * Implements template_preprocess_user().
+ */
+function site_preprocess_user(&$variables) {
+  $user = $variables['user'];
+  $view_mode = $variables['elements']['#view_mode'];
+
+  $variables['url'] = $user->toUrl();
+  $variables['uid'] = $user->id();
+}

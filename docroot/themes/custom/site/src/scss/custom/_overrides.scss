@@ -1,0 +1,112 @@
+// |--------------------------------------------------------------------------
+// | Overrides
+// |--------------------------------------------------------------------------
+// |
+// | This file contains styles for the following:
+// | - img
+// | - .icon
+// | - .form-control
+// | - .row--equal-height-columns
+// |
+
+// --------------------------------------------------
+// Variables
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Mixins
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Styling
+// --------------------------------------------------
+
+img {
+  max-width: 100%;
+}
+
+.btn {
+  border: 0;
+}
+
+.icon {
+  @extend .fa; // Extend Font Awesome, so .icon can be used instead (or switched out)
+}
+
+.form-control {
+  // Remove inline shadow on iOS (https://stackoverflow.com/questions/23211656/remove-ios-input-shadow)
+  appearance: none;
+
+  &,
+  &:focus {
+    @include box-shadow(none);
+  }
+}
+
+// --------------------------------------------------
+// Variants
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Responsive
+// --------------------------------------------------
+
+// Mobile - and up
+@include media-breakpoint-up(xs) {}
+
+// Mobile - only
+@include media-breakpoint-only(xs) {}
+
+// Tablet - and up
+@include media-breakpoint-up(sm) {}
+
+// Tablet - only
+@include media-breakpoint-only(sm) {}
+
+// Desktop - and up
+@include media-breakpoint-up(md) {}
+
+// Desktop - only
+@include media-breakpoint-only(md) {}
+
+// Large desktop - and up
+@include media-breakpoint-up(lg) {}
+
+// Print
+@media print {}
+
+// Touch
+.touchevents {}
+
+// No touch
+.no-touchevents {}
+
+// Flexbox
+.flexbox {
+
+  .row--equal-height-columns {
+
+    &,
+    > .view-content {
+      display: flex;
+
+      flex-wrap: wrap;
+      flex-grow: 1;
+
+      > [class*='col-'] {
+        display: flex;
+
+        flex-direction: column;
+      }
+
+      // Fixes Safari issue (https://stackoverflow.com/questions/34250282/flexbox-safari-bug-flex-wrap)
+      &:after,
+      &:before {
+        content: normal; // IE doesn't support `initial`
+      }
+    }
+  }
+}
+
+// No flexbox
+.no-flexbox {}

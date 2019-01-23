@@ -1,4 +1,5 @@
-@import 'variables/loader';
-@import 'components/loader';
-@import 'dashboard/loader';
-@import 'entities/loader';
+@import "overrides";
+@import "variables/loader";
+@import "components/loader";
+@import "dashboard/loader";
+@import "entities/loader";

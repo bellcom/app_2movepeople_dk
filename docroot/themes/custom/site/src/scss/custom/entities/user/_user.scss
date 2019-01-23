@@ -10,55 +10,94 @@
 // Variables
 // --------------------------------------------------
 
+$user-padding-top-bottom: $grid-gutter-width / 2;
+$user-padding-left-right: $grid-gutter-width / 2;
+
+$user-heading-padding-top-bottom: 15px;
+
 // --------------------------------------------------
 // Styling
 // --------------------------------------------------
-.user {
-  &.user--compact {
-    outline: none;
 
+.user--compact {
+  display: flex;
+
+  flex-grow: 1;
+  flex-direction: column;
+
+  margin-bottom: 20px;
+
+  padding: $user-padding-top-bottom $user-padding-left-right;
+
+  background-color: $body-bg-secondary;
+
+  .user__controls{
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
 
-    min-height: 255px;
-    padding: 20px;
-    text-align: center;
-    background: $body-bg-secondary;
-    margin-bottom: 15px;
+    .btn {
 
-    div.field {
-      display: inline-block;
-    }
-    img {
-      width: 85px;
-      height: 85px;
-
-      &.default {
-        @include opacity(.2);
+      &::before {
+        font-family: 'Glyphicons Halflings';
       }
     }
+  }
+}
 
-    h2.content{
-      width:100%;
-      margin-bottom: 20px;
-      .field, & a:nth-last-child(1){
-        display: block;
-        @include text-trimmed();
-      }
-    }
-    & .user-controls{
-      display: flex;
-      width: 100%;
-      justify-content: flex-end;
+// Image.
+.user__image {
+  margin-top: 0 - $user-padding-top-bottom;
+  margin-left: 0 - $user-padding-left-right;
+  margin-right: 0 - $user-padding-left-right;
 
-      .btn {
-        &::before {
-          font-family: 'Glyphicons Halflings';
-        }
-      }
-    }
+  text-align: center;
+
+  img {
+    margin: auto;
+
+    max-width: 100%;
+  }
+
+  + .user__heading {
+    margin-top: 10px;
+  }
+}
+
+// Heading.
+.user__heading {
+  flex-grow: 1;
+
+  text-align: center;
+
+  + .user__controls {
+    margin-top: 10px;
+  }
+}
+.user__heading__title {
+  font-weight: $headings-font-weight-bold;
+}
+
+// Controls.
+.user__controls {
+  text-align: center;
+}
+
+.user__controls__item {}
+.user__controls__item--masquerade {
+  @extend .btn;
+  @extend .btn-default;
+  @extend .btn-sm;
+
+  font-size: 0 !important;
+
+  &:after {
+    display: inline-block;
+
+    font-size: $font-size-base;
+    font-family: 'Glyphicons Halflings';
+
+    // Retweet icon.
+    content: '\e115';
   }
 }
 
@@ -71,69 +110,34 @@
 // --------------------------------------------------
 
 // Mobile - and up
-@include media-breakpoint-up(xs) {
-}
+@include media-breakpoint-up(xs) {}
 
 // Mobile - only
-@include media-breakpoint-only(xs) {
-}
+@include media-breakpoint-only(xs) {}
 
 // Tablet - and up
-@include media-breakpoint-up(sm) {
-  .user {
-    &.user--compact {
-      margin-bottom: 20px;
-    }
-  }
-}
+@include media-breakpoint-up(sm) {}
 
 // Tablet - only
-@include media-breakpoint-only(sm) {
-  .user {
-    &.user--compact {
-      margin-bottom: 20px;
-    }
-  }
-}
+@include media-breakpoint-only(sm) {}
 
 // Desktop - and up
-@include media-breakpoint-up(md) {
-  .user {
-    &.user--compact {
-      margin-bottom: 20px;
-    }
-  }
-}
+@include media-breakpoint-up(md) {}
 
 // Desktop - only
-@include media-breakpoint-only(md) {
-  .user {
-    &.user--compact {
-      margin-bottom: 20px;
-    }
-  }
-}
+@include media-breakpoint-only(md) {}
 
 // Large desktop - and up
-@include media-breakpoint-up(lg) {
-  .user {
-    &.user--compact {
-      margin-bottom: 20px;
-    }
-  }
-}
+@include media-breakpoint-up(lg) {}
 
 // Print
-@media print {
-}
+@media print {}
 
 // Touch
-.touchevents {
-}
+.touchevents {}
 
 // No touch
-.no-touchevents {
-}
+.no-touchevents {}
 
 // --------------------------------------------------
 // Mixins

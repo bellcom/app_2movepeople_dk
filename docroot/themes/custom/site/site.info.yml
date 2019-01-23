@@ -9,15 +9,9 @@ libraries:
 
 regions:
   navigation: 'Navigation'
-  navigation_collapsible: 'Navigation (Collapsible)'
   header: 'Top Bar'
   help: 'Help'
-#  search: 'Search'
-#  slideshow: 'Slideshow'
   content: 'Content'
-  sidebar_first: 'Primary'
-  sidebar_second: 'Secondary'
-#  footer_menu: 'Footer menu'
-  footer: 'Footer'
+  sidebar_first: 'Sidebar - left'
 
 base theme: bellcom
