@@ -4,6 +4,7 @@ theme:
       'https://fonts.googleapis.com/css?family=Open+Sans:300,400,700|Exo+2:300,400,700': { type: external }
     theme:
       dist/css/stylesheet.css: {}
+      custom.css: {}
   js:
     dist/js/core.js: {}
     dist/js/modernizr.js: {}
