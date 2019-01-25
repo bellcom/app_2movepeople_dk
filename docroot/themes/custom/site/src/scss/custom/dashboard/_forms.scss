@@ -6,9 +6,11 @@
   margin-top: 5px;
   padding-top: 2px;
 }
+// Marked for removal
 .is-remind-warning {
   background-color: $form-remind-warning-bg !important;
 }
+// Marked for removal
 .is-remind-expired {
   background-color: $form-remind-expired-bg !important;
 }
@@ -80,7 +82,7 @@ span.input-group-addon {
     flex-direction: column;
     align-items: normal;
   }
-  & .custom-form-fields.div-form > *, 
+  & .custom-form-fields.div-form > *,
   & .custom-form-fields.custom-form-label > * {
     flex: 1;
     flex-grow: 1;
@@ -91,7 +93,7 @@ span.input-group-addon {
   }
   & .custom-form-fields.custom-form-label > * {
     margin-right: 15px;
-  }    
+  }
   & .custom-form-fields.custom-form-label .custom-form-label-complete-btn {
     margin-right: 0px;
   }
@@ -188,9 +190,9 @@ span.input-group-addon {
       }
     }
     & .custom-form-fields.div-form ,& .custom-form-fields.custom-form-label {
-      & .dashboard-accordion__action-btn, 
-      & .custom-form-field-due-date, 
-      & .custom-form-label-complete-btn, 
+      & .dashboard-accordion__action-btn,
+      & .custom-form-field-due-date,
+      & .custom-form-label-complete-btn,
       & .custom-form-label-due-date {
         flex: none;
       }

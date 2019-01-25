@@ -3,4 +3,54 @@
   These styles will be moved to the scss folder at some point in future.
 */
 
-body {}
+.form-group.js-form-wrapper.form-wrapper:not(.subtask):nth-child(odd):{
+	background-color: lightgray;
+}
+
+.is-remind-expired, .is-remind-warning, .subtask {
+	position: relative;
+}
+
+.is-remind-expired::before, .is-remind-warning::before {
+	content: "!";
+	position: absolute;
+	left: -13px;
+	display: block;
+	background-color: #FF6961;
+	border-radius: 5px;
+	color: white;
+	font-weight: bold;
+	font-size: 20px;
+	padding: 0px 10px;
+}
+
+.is-remind-warning::before {
+	background-color: #FCA44B;
+}
+
+.subtask::before{
+	content: "❱";
+	position: absolute;
+	left: 11px;
+	top: 8px;
+	display: block;
+	color: lightgray;
+	font-weight: bold;
+	font-size: 20px;
+	padding: 0px 10px;
+}
+
+.subtask .is-remind-expired::before, .subtask .is-remind-warning::before{
+	left: -43px;
+}
+
+/* For mobile stuff; fixed later */
+@media (max-width: 768px) {
+	.is-remind-expired::before{
+		top: 32px;
+	}
+
+	.subtask::before{
+		top: 29px;
+	}
+}
