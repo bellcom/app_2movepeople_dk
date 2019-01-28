@@ -29,6 +29,30 @@ bc_2movepeople_dashboard.user.edit_managers:
   requirements:
     _permission: 'access user dashboard'
 
+bc_2movepeople_dashboard.user.cancel:
+  path: '/dashboard/users/{user}/cancel'
+  options:
+    parameters:
+      user:
+        type: entity:user
+  defaults:
+    _title: 'Cancel user'
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\UserCancelForm'
+  requirements:
+    _permission: 'access user dashboard'
+
+bc_2movepeople_dashboard.user.edit:
+  path: '/dashboard/users/{user}/edit'
+  options:
+    parameters:
+      user:
+        type: entity:user
+  defaults:
+    _title: 'Cancel user'
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\UserEditForm'
+  requirements:
+    _permission: 'access user dashboard'
+
 bc_2movepeople_dashboard.user.milestones:
   path: '/dashboard/users/{user}/milestones'
   defaults:

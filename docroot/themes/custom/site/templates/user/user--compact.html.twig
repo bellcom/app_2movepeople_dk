@@ -36,12 +36,13 @@
     <!-- End - managers -->
 
     <!-- Begin - edit -->
-    <a href="{{ path('entity.user.edit_form', {'user': user.id, 'destination': '/dashboard'}) }}" class="btn btn-default btn-sm glyphicon-edit" title="{{'Edit' | trans }}" data-toggle="tooltip" data-placement="top"></a>
+    {#<a href="{{ path('bc_2movepeople_dashboard.user.edit', {'user': user.id, 'destination': '/dashboard'}) }}" class="btn btn-default btn-sm use-ajax glyphicon-edit" title="{{'Edit' | trans }}" data-toggle="tooltip" data-placement="top"></a>#}
+    <a href="{{ path('bc_2movepeople_dashboard.user.edit', {'user': user.id, 'destination': '/dashboard'}) }}" class="btn btn-default btn-sm glyphicon-edit" title="{{'Edit' | trans }}" data-toggle="tooltip" data-placement="top"></a>
     <!-- End - edit -->
 
-    <!-- Begin - delete -->
-    <a href="/user/{{user.id }}/cancel?destination=/dashboard" class="btn btn-default btn-sm glyphicon-remove" title="{{ 'Remove' | trans }}" data-toggle="tooltip" data-placement="top"></a>
-    <!-- End - delete -->
+    <!-- Begin - cancel -->
+    <a href="{{ path('bc_2movepeople_dashboard.user.cancel', { 'user': user.id, 'destination': '/dashboard' }) }}" class="btn btn-default btn-sm use-ajax glyphicon-remove" data-dialog-type="modal" title="{{ 'Remove' | trans }}" data-toggle="tooltip" data-placement="top"></a>
+    <!-- End - cancel -->
 
   </div>
   <!-- End - controls -->
