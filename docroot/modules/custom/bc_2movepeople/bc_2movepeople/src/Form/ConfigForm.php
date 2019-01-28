@@ -81,6 +81,29 @@ class ConfigForm extends ConfigFormBase {
       '#default_value' => $config->get('default_progression_template'),
     ];
 
+    // User.
+    $user_settings = \Drupal::config('user.settings');
+    $anonymous_name = $user_settings->get('anonymous');
+
+    $form['user'] = array(
+      '#type' => 'details',
+      '#title' => $this->t('User handling'),
+      '#open' => TRUE,
+    );
+
+    // User cancellation.
+    $form['user']['user_cancel_method'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('When cancelling the account'),
+      '#default_value' => $config->get('user_cancel_method') ? $config->get('user_cancel_method') : 'user_cancel_delete',
+      '#options' => [
+        'user_cancel_block' => t('Disable the account and keep its content.'),
+        'user_cancel_block_unpublish' => t('Disable the account and unpublish its content.'),
+        'user_cancel_reassign' => t('Delete the account and make its content belong to the %anonymous-name user.', ['%anonymous-name' => $anonymous_name]),
+        'user_cancel_delete' => t('Delete the account and its content.'),
+      ]
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -93,6 +116,7 @@ class ConfigForm extends ConfigFormBase {
       ->set('email_required', $form_state->getValue('email_required'))
       ->set('rates_separately', $form_state->getValue('rates_separately'))
       ->set('default_progression_template', $form_state->getValue('default_progression_template'))
+      ->set('user_cancel_method', $form_state->getValue('user_cancel_method'))
       ->save();
 
     parent::submitForm($form, $form_state);
