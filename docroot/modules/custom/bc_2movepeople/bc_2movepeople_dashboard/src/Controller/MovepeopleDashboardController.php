@@ -882,6 +882,7 @@ class MovepeopleDashboardController extends ControllerBase {
       $name = $field_firstname[0]['value'] . ' ' . $field_lastname[0]['value'];
     }
 
+    $social_security_number = '';
     if ($field_social_security_number = $user->get('field_social_security_number')->getValue()) {
       $social_security_number = $field_social_security_number[0]['value'];
     }
