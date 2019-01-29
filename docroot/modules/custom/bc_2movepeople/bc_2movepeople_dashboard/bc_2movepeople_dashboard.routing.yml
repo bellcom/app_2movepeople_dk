@@ -234,7 +234,7 @@ bc_2movepeople_dashboard.admin.settings_form:
     _admin_route: TRUE
 
 bc_2movepeople_dashboard.admin.buttons_title:
-  path: '/admin/bc_2movepeople/dashboard/settings'
+  path: '/admin/bc_2movepeople/dashboard/button-settings'
   defaults:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\AdminButtonsTitle'
     _title: '2Move People buttons settings '
