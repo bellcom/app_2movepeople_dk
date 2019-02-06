@@ -90,7 +90,7 @@ class MilestoneEditForm extends FormBase {
         '#suffix' => '</div></div>',
         '#attributes' => [
           'class' => ['btn-default', 'glyphicon', 'glyphicon-refresh'],
-		  'title' => this->t('Update'),
+		  'title' => $this->t('Update'),
         ],
         '#ajax' => [
           'callback' => '::ajaxSubmitForm',
