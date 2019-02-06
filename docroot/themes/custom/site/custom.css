@@ -3,6 +3,25 @@
   These styles will be moved to the scss folder at some point in future.
 */
 
+/*
+	Correction for milestones
+*/
+
+.milestone-buttons{
+	clear: both;
+}
+
+.milestone-buttons a{
+	color: white !important;
+	padding: 5px 20px;
+	color: white;
+	margin: 5px;
+	float: left;
+}
+/*
+	For showing errors better
+*/
+
 .form-group.js-form-wrapper.form-wrapper:not(.subtask):nth-child(odd):{
 	background-color: lightgray;
 }
