@@ -511,6 +511,8 @@ display:
         row: false
         arguments: false
         css_class: false
+        filters: false
+        filter_groups: false
       style:
         type: default
         options:
@@ -564,6 +566,49 @@ display:
           entity_field: uid
           plugin_id: user_uid
       css_class: 'row row--equal-height-columns'
+      filters:
+        status:
+          id: status
+          table: users_field_data
+          field: status
+          relationship: field_connected_users
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: boolean
+          entity_type: user
+          entity_field: status
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
     cache_metadata:
       max-age: -1
       contexts:
