@@ -14,6 +14,12 @@ $dashboard-padding: 22px;
 // --------------------------------------------------
 // Styling
 // --------------------------------------------------
+.row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 button span{
+	&.row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 button{
+		right: +25px !important;
+	}
+}
+
 .dashboard-overview {
   padding: $dashboard-padding;
   background-color: $body-bg-secondary;
@@ -34,8 +40,8 @@ $dashboard-padding: 22px;
     border-bottom: 2px solid $btn-nav-hover-color;
   }
 
-  .dashboard-overview__control-buttons, 
-  .edit-progression__control-buttons, 
+  .dashboard-overview__control-buttons,
+  .edit-progression__control-buttons,
   .dashboard-milestone__control-buttons {
     padding-bottom: 13px;
     text-align: center;
@@ -47,7 +53,7 @@ $dashboard-padding: 22px;
     }
   }
   .dashboard-milestone__control-buttons {
-    height: 55px; 
+    height: 55px;
   }
   & .div-form.form-item.row.form-inline{
     display: flex;
@@ -84,7 +90,7 @@ $dashboard-padding: 22px;
 }
 
 #progression_total_chart {
-  width: 100%; 
+  width: 100%;
   min-height: 450px;
   div {
     overflow-x: hidden;
@@ -121,7 +127,7 @@ $dashboard-padding: 22px;
 
 // Tablet - and up
 @include media-breakpoint-up(sm) {
-  
+
   .bc-2movepeople-dashboard-progression-edit-form {
     .left-btn-box {
       text-align: left;
@@ -130,7 +136,7 @@ $dashboard-padding: 22px;
       text-align: right;
     }
   }
-  
+
   .dashboard-overview {
     .dashboard-overview__control-buttons {
       text-align: right;
@@ -151,7 +157,7 @@ $dashboard-padding: 22px;
       }
     }
   }
-  
+
   .user-task-box {
     .right-btn-box  {
       text-align: right;
@@ -165,7 +171,7 @@ $dashboard-padding: 22px;
 
 // Desktop - and up
 @include media-breakpoint-up(md) {
-  
+
   .dashboard-overview {
     .dashboard-overview__control-buttons {
       .btn {

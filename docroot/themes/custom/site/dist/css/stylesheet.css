@@ -11650,6 +11650,10 @@ input[type=date]::-webkit-clear-button {
   z-index: 1;
 }
 
+.row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 button span.row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 button {
+  right: 25px !important;
+}
+
 .dashboard-overview {
   padding: 22px;
   background-color: #fff;
