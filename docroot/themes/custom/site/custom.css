@@ -4,8 +4,67 @@
 */
 
 /*
-	Correction for milestones
+	Force scroll-bar. Makes the website less jumpy.
 */
+
+body{
+	overflow-y: scroll;
+}
+
+/*
+	Corrections and improvements for milestones
+*/
+
+.form-actions.form-group.js-form-wrapper.form-wrapper,
+.row.custom-form-fields.dashboard-milestone__control-buttons{
+	height: 0px !important;
+	padding: 0px !important;
+	margin: 0px !important;
+}
+
+.row.custom-form-fields.dashboard-milestone__control-buttons:last-of-type .col-lg-12.col-md-12.col-sm-12.col-xs-12{
+	right: 289px;
+}
+
+.row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12{
+	clear: both;
+	position: absolute;
+	top: 4px;
+	right: 229px;
+	width: 0px;
+	height: 0px !important;
+}
+
+.collapse.in{
+	opacity: 1;
+}
+
+.collapsing,
+.collapse,
+.collapsing .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12{
+	opacity: 0;
+}
+
+.collapse.in,
+.collapsing,
+.collapse,
+.collapsing .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12{
+	transition: all 0.5s;
+}
+
+.collapsing .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12{
+	top: 25px;
+}
+
+.row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 button,
+.row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 a{
+	padding: 10px 15px !important;
+	font-size: 18px;
+}
+
+.relative{
+	position: relative;
+}
 
 .milestone-buttons{
 	clear: both;

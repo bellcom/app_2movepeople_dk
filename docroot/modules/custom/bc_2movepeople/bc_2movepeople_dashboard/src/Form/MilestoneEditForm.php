@@ -67,7 +67,7 @@ class MilestoneEditForm extends FormBase {
       '#title' => '',
       '#name' => 'add_task_btn',
       '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.tasks.add', ['node' => $this->node->id()]),
-      '#prefix' => '<div class="row custom-form-fields dashboard-milestone__control-buttons"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left-btn-box">',
+      '#prefix' => '<div class="row custom-form-fields dashboard-milestone__control-buttons"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">',
       '#suffix' => '</div></div>',
       '#attributes' => [
         'class' => ['use-ajax', 'btn', 'btn-default', 'link-btn', 'glyphicon', 'glyphicon-plus'],
@@ -86,7 +86,7 @@ class MilestoneEditForm extends FormBase {
         '#name' => 'submit',
         '#value' => '',
         '#button_type' => 'primary',
-        '#prefix' => '<div class="row custom-form-fields dashboard-milestone__control-buttons"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 right-btn-box">',
+        '#prefix' => '<div class="row custom-form-fields dashboard-milestone__control-buttons"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">',
         '#suffix' => '</div></div>',
         '#attributes' => [
           'class' => ['btn-default', 'glyphicon', 'glyphicon-refresh'],
