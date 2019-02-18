@@ -4,25 +4,6 @@
  * @file
  * Examples showing how to use some of the new JavaScript features in Drupal 8.
  */
-
-define('BC_2MOVEPEOPLE_DASHBOARD_BUTTONS', serialize([
-  'Progression' => [
-    'feedback' => t('FIT'),
-    'show_category' => t('Show category'),
-    'rate_category' => t('Rates'),
-    'save_to_template' => t('Save to template'),
-  ],
-  'Milestone' => [
-    'overall_evaluation' => t('Overall evaluation'),
-    'show_target_milestones' => t('Show Target Milestones'),
-  ],
-  'Navigation' => [
-    'create_user' => t('Add new user'),
-    'feedback' => t('Dialogue rating'),
-    'self_rate' => t('Rates'),
-  ],
-]));
-
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -139,6 +120,27 @@ function bc_2movepeople_dashboard_user_login($account) {
   }
   $response = new RedirectResponse($path);
   $response->send();
+  return $user_roles;
+}
+
+/**
+ * Implements hook_user_login() again, but for an entirely different purpose.
+ * The naming is probably a bit weird, but this was what I could come up with.
+ * ~ @inuitviking on github.com
+ */
+function bc_2movepeople_dashboard2_user_login($account) {
+	$account_roles = $account->getRoles();
+	$role = NULL;
+	if(in_array("2mp_supervisor", $account_roles)){
+		$role = "2mp_supervisor";
+	}elseif(in_array("2mp_manager", $account_roles)){
+		$role = "2mp_manager";
+	}elseif(in_array("2mp_user", $account_roles)){
+		$role = "2mp_user";
+	}elseif(in_array("administrator", $account_roles)){
+		$role = "administrator";
+	}
+	return $role;
 }
 
 /**
