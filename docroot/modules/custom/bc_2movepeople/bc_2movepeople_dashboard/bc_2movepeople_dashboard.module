@@ -17,7 +17,9 @@ define('BC_2MOVEPEOPLE_DASHBOARD_BUTTONS', serialize([
     'show_target_milestones' => t('Show Target Milestones'),
   ],
   'Navigation' => [
-    'create_user' => t('Add new user'),
+    'supervisor_create_user' => t('Add new employee (supervisor)'),
+    'manager_create_user' => t('Add new user (manager)'),
+    'create_user' => t('Add new user (others)'),
     'feedback' => t('Dialogue rating'),
     'self_rate' => t('Rates'),
   ],
