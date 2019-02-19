@@ -15,17 +15,17 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * This changes the button "Add new user / manager" according to the logged in user's role
  */
 
-// Get the current user id
-$uid = \Drupal::currentUser()->id();
-// Get the user entity
-$user = \Drupal\user\Entity\User::load($uid);
-// Put the user entity through this function and put the output in a variable
-$account_role = bc_2movepeople_dashboard2_user_login($user);
-$add_new_user_button = 'user';
-
-if($account_role === "2mp_supervisor"){
-	$add_new_user_button = 'manager';
-}
+//// Get the current user id
+//$uid = \Drupal::currentUser()->id();
+//// Get the user entity
+//$user = \Drupal\user\Entity\User::load($uid);
+//// Put the user entity through this function and put the output in a variable
+//$account_role = bc_2movepeople_dashboard2_user_login($user);
+//$add_new_user_button = 'user';
+//
+//if($account_role === "2mp_supervisor"){
+//	$add_new_user_button = 'manager';
+//}
 
 /**
  * This is moved from the bc_2movepeople_dashboard module in the bc_2movepeople_dashboard.module file.
@@ -35,23 +35,23 @@ if($account_role === "2mp_supervisor"){
  * solution I could come up with.
  * @inuitviking on github.com
  */
- define('BC_2MOVEPEOPLE_DASHBOARD_BUTTONS', serialize([
-   'Progression' => [
-     'feedback' => t('FIT'),
-     'show_category' => t('Show category'),
-     'rate_category' => t('Rates'),
-     'save_to_template' => t('Save to template'),
-   ],
-   'Milestone' => [
-     'overall_evaluation' => t('Overall evaluation'),
-     'show_target_milestones' => t('Show Target Milestones'),
-   ],
-   'Navigation' => [
-     'create_user' => t("Add new $add_new_user_button"),
-     'feedback' => t('Dialogue rating'),
-     'self_rate' => t('Rates'),
-   ],
- ]));
+// define('BC_2MOVEPEOPLE_DASHBOARD_BUTTONS', serialize([
+//   'Progression' => [
+//     'feedback' => t('FIT'),
+//     'show_category' => t('Show category'),
+//     'rate_category' => t('Rates'),
+//     'save_to_template' => t('Save to template'),
+//   ],
+//   'Milestone' => [
+//     'overall_evaluation' => t('Overall evaluation'),
+//     'show_target_milestones' => t('Show Target Milestones'),
+//   ],
+//   'Navigation' => [
+//     'create_user' => t("Add new $add_new_user_button"),
+//     'feedback' => t('Dialogue rating'),
+//     'self_rate' => t('Rates'),
+//   ],
+// ]));
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
