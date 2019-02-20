@@ -1,4 +1,4 @@
-uuid: ae4440a4-1700-4b45-a8c0-2abd92a62b02
+uuid: a73ea73a-b212-4969-a679-9e7e8a018b3a
 langcode: da
 status: true
 dependencies:
@@ -6,15 +6,15 @@ dependencies:
     - bc_2movepeople_dashboard
   theme:
     - site
-id: navigationblock
+id: whoami
 theme: site
 region: sidebar_first
-weight: -3
+weight: -6
 provider: null
-plugin: navigation_block
+plugin: whoami_block
 settings:
-  id: navigation_block
-  label: 'Navigation block'
-  provider: bc_2movepeople
+  id: whoami_block
+  label: 'Who am i'
+  provider: bc_2movepeople_dashboard
   label_display: '0'
 visibility: {  }
