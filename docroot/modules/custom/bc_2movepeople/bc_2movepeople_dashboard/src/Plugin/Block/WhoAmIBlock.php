@@ -49,7 +49,7 @@ class WhoAmIBlock extends BlockBase {
       '#attributes' => ['class' => ['who-am-i__image']],
     ];
 
-    if ($image_url) {
+    if (isset($image_url)) {
       $build['wrapper']['user-image']['image'] = [
         '#markup' => '<img src="' . $image_url . '" />',
       ];
