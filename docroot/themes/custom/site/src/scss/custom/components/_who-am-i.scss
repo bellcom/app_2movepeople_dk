@@ -1,0 +1,95 @@
+// |--------------------------------------------------------------------------
+// | Who am i
+// |--------------------------------------------------------------------------
+// |
+// | This file contains styles for the following:
+// | - .who-am-i
+// |
+
+// --------------------------------------------------
+// Variables
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Styling
+// --------------------------------------------------
+
+.who-am-i {
+  display: flex;
+
+  padding: 0 20px;
+
+  align-items: center;
+
+  &.form-group {
+    margin-bottom: 10px;
+  }
+
+  .form-group {
+    margin-bottom: 0;
+  }
+}
+
+.who-am-i__image {
+
+  img {
+    width: 55px;
+    height: 55px;
+
+    border-radius: 100%;
+    border: 4px solid $divider-color;
+  }
+
+  + .who-am-i__data {
+    margin-left: floor( ($grid-gutter-width / 2) );
+  }
+}
+
+.who-am-i__data {}
+.who-am-i__data__name {
+  color: $link-color;
+
+  font-size: 15px;
+  font-weight: $font-weight-bold;
+}
+.who-am-i__data__account-type {
+  color: $text-muted;
+}
+
+// --------------------------------------------------
+// Responsive
+// --------------------------------------------------
+
+// Mobile - and up
+@include media-breakpoint-up(xs) {}
+
+// Mobile - only
+@include media-breakpoint-only(xs) {}
+
+// Tablet - and up
+@include media-breakpoint-up(sm) {}
+
+// Tablet - only
+@include media-breakpoint-only(sm) {}
+
+// Desktop - and up
+@include media-breakpoint-up(md) {}
+
+// Desktop - only
+@include media-breakpoint-only(md) {}
+
+// Large desktop - and up
+@include media-breakpoint-up(lg) {}
+
+// Print
+@media print {}
+
+// Touch
+.touchevents {}
+
+// No touch
+.no-touchevents {}
+
+// --------------------------------------------------
+// Mixins
+// --------------------------------------------------
