@@ -38,17 +38,22 @@ class WhoAmIBlock extends BlockBase {
     ];
 
     // User image.
-    $image_uri = $user->user_picture->entity->getFileUri();
-    $image_style = ImageStyle::load('who_am_i');
-    $image_url = $image_style->buildUrl($image_uri);
+    if (!$user->user_picture->isEmpty()) {
+      $image_uri = $user->user_picture->entity->getFileUri();
+      $image_style = ImageStyle::load('who_am_i');
+      $image_url = $image_style->buildUrl($image_uri);
+    }
 
     $build['wrapper']['user-image'] = [
       '#type' => 'container',
       '#attributes' => ['class' => ['who-am-i__image']],
     ];
-    $build['wrapper']['user-image']['image'] = [
-      '#markup' => '<img src="' . $image_url . '" />',
-    ];
+
+    if ($image_url) {
+      $build['wrapper']['user-image']['image'] = [
+        '#markup' => '<img src="' . $image_url . '" />',
+      ];
+    }
 
     // Personal data.
     $roles = $user->getRoles();
