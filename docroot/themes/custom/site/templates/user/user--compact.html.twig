@@ -1,13 +1,11 @@
 <article{{ attributes }}>
 
   {# Begin - image #}
-  {% if user.user_picture.value %}
-    <div class="user__image">
-      <a href="/dashboard/users/{{ uid }}/overview">
-        {{ content.user_picture }}
-      </a>
-    </div>
-  {% endif %}
+  <div class="user__image">
+    <a href="/dashboard/users/{{ uid }}/overview">
+      {{ content.user_picture }}
+    </a>
+  </div>
   {# End - image #}
 
   {% if user.field_user_firstname.value and user.field_user_surname.value %}
@@ -36,8 +34,7 @@
     <!-- End - managers -->
 
     <!-- Begin - edit -->
-    {#<a href="{{ path('bc_2movepeople_dashboard.user.edit', {'user': user.id, 'destination': '/dashboard'}) }}" class="btn btn-default btn-sm use-ajax glyphicon-edit" title="{{'Edit' | trans }}" data-toggle="tooltip" data-placement="top"></a>#}
-    <a href="{{ path('bc_2movepeople_dashboard.user.edit', {'user': user.id, 'destination': '/dashboard'}) }}" class="btn btn-default btn-sm glyphicon-edit" title="{{'Edit' | trans }}" data-toggle="tooltip" data-placement="top"></a>
+    <a href="{{ path('bc_2movepeople_dashboard.user.edit', {'user': user.id, 'destination': '/dashboard'}) }}" class="btn btn-default btn-sm use-ajax glyphicon-edit" data-dialog-type="modal" title="{{'Edit' | trans }}" data-toggle="tooltip" data-placement="top"></a>
     <!-- End - edit -->
 
     <!-- Begin - cancel -->
