@@ -26,14 +26,15 @@
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "cweagans/composer-patches": "^1.6.0",
         "acquia/lightning": "~2.1.0",
-        "drupal/bootstrap": "^3.5",
-        "drupal/admin_toolbar": "^1.24",
+        "drupal/bootstrap": "^3.17",
+        "drupal/admin_toolbar": "^1.25",
         "drupal/field_permissions": "^1.0@beta",
         "drupal/flag": "^4.0@alpha",
         "drupal/administerusersbyrole": "^2.0",
         "drupal/masquerade": "^2.0@beta",
         "mpdf/mpdf": "^7.0",
-        "drupal/drush_language": "^1.0@RC"
+        "drupal/drush_language": "^1.0@RC",
+        "drupal/examples": "1.x-dev"
     },
     "repositories": [
         {
