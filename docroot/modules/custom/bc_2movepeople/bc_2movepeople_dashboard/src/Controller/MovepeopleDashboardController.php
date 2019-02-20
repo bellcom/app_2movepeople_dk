@@ -789,10 +789,7 @@ class MovepeopleDashboardController extends ControllerBase {
 
     foreach ($links as $key => $link) {
       $button = _bc_2movepeople_dashboard_button($key);
-      $link['#title'] = $button['name'];
-      if (!empty($button['title'])) {
-        $link['#attributes']['title'] = $button['title'];
-      }
+      $link['#title'] = !empty($button['title']) ? $button['title'] : $button['name'];
       $build[$key] = array_merge_recursive($link, [
         '#type' => 'link',
         '#attributes' => [

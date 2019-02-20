@@ -48,7 +48,7 @@ bc_2movepeople_dashboard.user.edit:
       user:
         type: entity:user
   defaults:
-    _title: 'Cancel user'
+    _title: 'Edit Account'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\UserEditForm'
   requirements:
     _permission: 'access user dashboard'

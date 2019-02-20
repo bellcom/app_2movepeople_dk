@@ -12,7 +12,8 @@ use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
  *
  * @Block(
  *   id = "navigation_block",
- *   admin_label = @Translation("Navigation block")
+ *   admin_label = @Translation("Navigation block"),
+ *   category = @Translation("2move"),
  * )
  */
 class NavigationBlock extends BlockBase {
