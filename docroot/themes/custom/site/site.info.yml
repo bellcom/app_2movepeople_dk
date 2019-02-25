@@ -8,7 +8,6 @@ libraries:
   - 'site/theme'
 
 regions:
-  navigation: 'Navigation'
   header: 'Top Bar'
   help: 'Help'
   content: 'Content'
