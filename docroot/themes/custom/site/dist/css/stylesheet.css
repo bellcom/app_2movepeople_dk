@@ -8848,7 +8848,7 @@ body {
       -ms-flex-direction: row;
           flex-direction: row; }
 
-.layout__sidebar {
+.layout__static-sidebar {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -8861,11 +8861,11 @@ body {
   padding: 30px 0;
   width: 280px;
   background-color: #fff; }
-  .layout__sidebar nav + .block {
+  .layout__static-sidebar nav + .block {
     margin-top: 15px; }
-  .layout__sidebar .control-buttons {
+  .layout__static-sidebar .control-buttons {
     padding: 12px 35px; }
-    .layout__sidebar .control-buttons .btn, .layout__sidebar .control-buttons .user__controls__item--masquerade {
+    .layout__static-sidebar .control-buttons .btn, .layout__static-sidebar .control-buttons .user__controls__item--masquerade {
       display: block; }
 
 .layout__content {
