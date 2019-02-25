@@ -88,7 +88,8 @@ body {
   max-width: 1300px;
 }
 
-.layout__wrapper {
+.layout__wrapper {}
+.layout__content {
   display: flex;
 
   min-height: 100%;
@@ -97,6 +98,7 @@ body {
   flex-grow: 1;
   flex-direction: row;
 }
+
 .layout__static-sidebar {
   display: flex;
 
@@ -123,7 +125,7 @@ body {
     }
   }
 }
-.layout__content {
+.layout__content__inner {
   display: flex;
 
   flex-direction: column;

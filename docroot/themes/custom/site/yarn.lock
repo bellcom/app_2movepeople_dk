@@ -494,6 +494,11 @@ console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
   integrity sha1-PXz0Rk22RG6mRL9LOVB/mFEAjo4=
 
+content-transitions@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/content-transitions/-/content-transitions-1.0.4.tgz#2891f7ca4b7b1652ce2e42749610e997f136f115"
+  integrity sha512-0W+phD6bocEX3rxNX4j8wWf8m4IntRx6htgUbFC21SXNU/DMVSRKB+jN4cupujabu5y1UpaMb/AE5zg+4Fs/aQ==
+
 continuable-cache@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/continuable-cache/-/continuable-cache-0.3.1.tgz#bd727a7faed77e71ff3985ac93351a912733ad0f"
@@ -871,6 +876,31 @@ flagged-respawn@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/flagged-respawn/-/flagged-respawn-1.0.1.tgz#e7de6f1279ddd9ca9aac8a5971d618606b3aab41"
   integrity sha512-lNaHNVymajmk0OJMBn8fVUAU1BtDeKIqKoVhk4xAALB57aALg6b4W0MfJ/cUE0g9YBXy5XhSlPIpYIJ7HaY/3Q==
+
+flexy-header@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/flexy-header/-/flexy-header-1.0.4.tgz#7eb9dd22f1f9bc08a138d26604d27996f6a52f50"
+  integrity sha512-A2TDXTmVg78nmaTIaTeL7zrkg/DGfPJyBZGFgC9HfbdT4uC8oNSBu+i2qlW0dfRqIh8++gHMRqz5DDdWof0SCg==
+
+flexy-layout@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/flexy-layout/-/flexy-layout-1.0.0.tgz#6af3a060996d8aa7bbe40dbef5feaeeb014bb972"
+  integrity sha1-avOgYJltiqe75A2+9f6u6wFLuXI=
+
+flexy-navigation@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/flexy-navigation/-/flexy-navigation-1.0.9.tgz#08872a37f74fcfe4b68a4b4eb203abb57ee29e2e"
+  integrity sha512-ORG3/YH8nRgcTVievvyb8G4U8ehGXwheG09W3WWNx5BDdGp94MNxuC2UaIHZT3Aq5NLHPFibZF1T4dz3Ed7bgw==
+
+flexy-row@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/flexy-row/-/flexy-row-1.0.0.tgz#8bb81deecf7f7efcbd4a7aa4fcdf982f28a273a5"
+  integrity sha1-i7gd7s9/fvy9Snqk/N+YLyiic6U=
+
+font-awesome@4.7.0:
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/font-awesome/-/font-awesome-4.7.0.tgz#8fa8cf0411a1a31afd07b06d2902bb9fc815a133"
+  integrity sha1-j6jPBBGhoxr9B7BtKQK7n8gVoTM=
 
 for-in@^1.0.1, for-in@^1.0.2:
   version "1.0.2"
@@ -1558,7 +1588,14 @@ jquery-bar-rating@^1.2.2:
   dependencies:
     jquery ">=1.7.2"
 
-jquery@>=1.7.2:
+jquery-slinky@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/jquery-slinky/-/jquery-slinky-3.0.0.tgz#bb95528bb782b9784408071847285e45d6a1dc7a"
+  integrity sha1-u5VSi7eCuXhECAcYRyheRdah3Ho=
+  dependencies:
+    jquery "^3.1.0"
+
+jquery@>=1.4.3, jquery@>=1.7.2, jquery@^3.1.0:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
   integrity sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==
@@ -2283,6 +2320,11 @@ read-pkg@^1.0.0:
     normalize-package-data "^2.3.2"
     path-type "^1.0.0"
 
+readable-bootstrap-breakpoints@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/readable-bootstrap-breakpoints/-/readable-bootstrap-breakpoints-1.0.2.tgz#476a5335abaf3f037d425e1893993385ab6e5253"
+  integrity sha512-S4eQtY5y9Q4e4OTCxjRn2COHiLpixTzQxIZDiMl86b+WWbYpZ4P2rz4iRnhbSpy6KpV+gzYnVMGFI8gXQQZwYA==
+
 readable-stream@^2.0.6, readable-stream@^2.2.2:
   version "2.3.6"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.3.6.tgz#b11c27d88b8ff1fbe070643cf94b0c79ae1b0aaf"
@@ -2538,10 +2580,27 @@ shebang-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
   integrity sha1-2kL0l0DAtC2yypcoVxyxkMmO/qM=
 
+sidr-bootstrap-theme@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/sidr-bootstrap-theme/-/sidr-bootstrap-theme-1.0.2.tgz#db68c4c045ccbd9af388e6a3d8ed55d2e39774c4"
+  integrity sha512-ykIw7kcK67lvBcO9OPYawv+xqb6D+OaZYfG3yNMK7veqfF9uKRwg+HD8rqSvnYxBV+nQohr3UFTp1p9CnopOuw==
+
+sidr@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/sidr/-/sidr-2.2.1.tgz#2291376575d2559f4b0c563f7d40e224dd3ecc70"
+  integrity sha1-IpE3ZXXSVZ9LDFY/fUDiJN0+zHA=
+  dependencies:
+    jquery ">=1.4.3"
+
 signal-exit@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
+
+slinky-bootstrap-theme@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/slinky-bootstrap-theme/-/slinky-bootstrap-theme-1.0.2.tgz#21f43d4ff746d6f160d77b374dd5fe8956c145e5"
+  integrity sha512-9j0gWgnRptpHIbd9i5V5C16sheuIjXPQyK2V7/CAEA0LUVZBqhvEuJ94lKAdYivSNdOLHF6ZyNTg9trJQzkuYg==
 
 snapdragon-node@^2.0.1:
   version "2.1.1"

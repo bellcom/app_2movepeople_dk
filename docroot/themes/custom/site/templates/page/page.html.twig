@@ -20,77 +20,107 @@
 
   {% endif %}
 
-  {% if page.sidebar_left__desktop %}
+  <!-- Begin - header static -->
+  <header class="flexy-header flexy-header--static visible-xs">
+    <div class="flexy-header__row flexy-header__row--first">
+      <div class="container">
+        <div class="flexy-row">
 
-    <!-- Begin - static sidebar -->
-    <div class="layout__static-sidebar">
-      <aside class="left-container" role="complementary">
-        {% if page.sidebar_left__desktop %}
-          {% block sidebar_left__desktop %}
-            {{ page.sidebar_left__desktop }}
-          {% endblock %}
-        {% endif %}
-      </aside>
-    </div>
-    <!-- End - static sidebar -->
+          <!-- Begin - logo -->
+          <a href="{{ url('<front>') }}" class="flexy-header__logo">
+            <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIwLjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAyNTAgMTAwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyNTAgMTAwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+Cgkuc3Qwe2ZpbGw6IzFDMUMxQzt9Cjwvc3R5bGU+CjxnPgoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTk5LjQsNzYuMmMwLDAuMi0wLjIsMC40LTAuNCwwLjRoLThjLTAuMiwwLTAuNC0wLjItMC40LTAuNFYyMy45YzAtMC4yLDAuMi0wLjQsMC40LTAuNGg4CgkJYzAuMiwwLDAuNCwwLjIsMC40LDAuNFY3Ni4yeiIvPgoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTExMS43LDc2LjJjMCwwLjItMC4yLDAuNC0wLjQsMC40aC04Yy0wLjIsMC0wLjQtMC4yLTAuNC0wLjRWMjMuOWMwLTAuMiwwLjItMC40LDAuNC0wLjRoOAoJCWMwLjIsMCwwLjQsMC4yLDAuNCwwLjRWNzYuMnoiLz4KCTxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik02NSw1NC4zbDUuNyw1LjdjMC4yLDAuMiwwLjQsMC4yLDAuNiwwbDE0LjktMTQuOWMwLjgtMC44LDEuMy0yLDEuMy0zLjFjMC0xLjItMC41LTIuMy0xLjMtMy4xCgkJYy00LjMtNC4zLTEwLTYuNi0xNi02LjZjLTYuMSwwLTExLjgsMi40LTE2LDYuNmMtMi4xLDIuMS0zLjgsNC42LTQuOSw3LjNjLTMuNi04LjItMTEuNy0xNC0yMS4xLTE0Yy01LjIsMC0xMCwxLjgtMTMuOCw0Ljd2LTEzCgkJYzAtMC4yLTAuMi0wLjQtMC40LTAuNEg2Yy0wLjIsMC0wLjQsMC4yLTAuNCwwLjRWNTVjMCwxMi41LDEwLjIsMjIuNywyMi43LDIyLjdjOS40LDAsMTcuNS01LjcsMjAuOS0xMy45YzEuMSwyLjcsMi44LDUuMSw0LjksNy4zCgkJYzQuMyw0LjMsMTAsNi42LDE2LDYuNmM1LjksMCwxMS41LTIuMywxNS43LTYuNGMwLjItMC4yLDAuMi0wLjQsMC0wLjZMODAuMiw2NWMtMC4yLTAuMi0wLjQtMC4yLTAuNiwwYy0yLjYsMi40LTUuOSwzLjgtOS41LDMuOAoJCWMtMy43LDAtNy4yLTEuNC05LjgtNC4xYy0yLjYtMi42LTQuMS02LjEtNC4xLTkuOHMxLjQtNy4yLDQuMS05LjhjNC4zLTQuMywxMC44LTUuMiwxNS45LTIuNkw2NSw1My43QzY0LjksNTMuOSw2NC45LDU0LjIsNjUsNTQuMwoJCXogTTI4LjIsNjguOGMtNy42LDAtMTMuOC02LjItMTMuOC0xMy44czYuMi0xMy44LDEzLjgtMTMuOFM0Miw0Ny40LDQyLDU1QzQyLjEsNjIuNiwzNS45LDY4LjgsMjguMiw2OC44eiIvPgoJPHBhdGggY2xhc3M9InN0MCIgZD0iTTEzNy43LDQxLjFjMy4zLDAsNi41LDEuMiw5LDMuNGMwLjIsMC4yLDAuNCwwLjIsMC42LDBsMC4xLTAuMWMxLjEtMi40LDIuNi00LjcsNC4zLTYuNgoJCWMwLjItMC4yLDAuMS0wLjQsMC0wLjZjLTQtMy4xLTguOS00LjktMTQtNC45QzEyNS4yLDMyLjMsMTE1LDQyLjUsMTE1LDU1czEwLjIsMjIuNywyMi43LDIyLjdjNS4xLDAsMTAuMS0xLjgsMTQtNC45CgkJYzAuMi0wLjIsMC4yLTAuNCwwLTAuNmMtMS44LTItMy4yLTQuMi00LjMtNi42YzAsMCwwLTAuMS0wLjEtMC4xYy0wLjItMC4yLTAuNC0wLjItMC42LDBjLTIuNSwyLjItNS43LDMuNC05LDMuNAoJCWMtNy42LDAtMTMuOC02LjItMTMuOC0xMy44QzEyMy44LDQ3LjMsMTMwLDQxLjEsMTM3LjcsNDEuMXoiLz4KCTxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0yMjEuMSwzMi4yYy00LjQsMC04LjcsMS4zLTEyLjMsMy43Yy0zLjYtMi4zLTcuOC0zLjctMTIuMy0zLjdjLTQuNCwwLTguNiwxLjMtMTIuMywzLjdsMCwwCgkJYy0zLjUtMi4zLTcuOC0zLjYtMTIuMy0zLjZjLTEyLjUsMC0yMi43LDEwLjItMjIuNywyMi43czEwLjIsMjIuNywyMi43LDIyLjdzMjIuNy0xMC4yLDIyLjctMjIuN2MwLTQuNy0xLjQtOS0zLjgtMTIuNgoJCWMxLjgtMC44LDMuNy0xLjMsNS44LTEuM2M3LjYsMCwxMy44LDYuMiwxMy44LDEzLjh2MjEuNGMwLDAuMiwwLjIsMC40LDAuNCwwLjRoOGMwLjIsMCwwLjQtMC4yLDAuNC0wLjRWNTQuOQoJCWMwLTQuNi0xLjQtOC45LTMuOC0xMi41YzEuOC0wLjgsMy44LTEuMyw1LjgtMS4zYzcuNiwwLDEzLjgsNi4yLDEzLjgsMTMuOHYyMS40YzAsMC4yLDAuMiwwLjQsMC40LDAuNGg4YzAuMiwwLDAuNC0wLjIsMC40LTAuNAoJCVY1NC45QzI0My43LDQyLjQsMjMzLjUsMzIuMiwyMjEuMSwzMi4yeiBNMTcxLjgsNjguOGMtNy42LDAtMTMuOC02LjItMTMuOC0xMy44czYuMi0xMy44LDEzLjgtMTMuOHMxMy44LDYuMiwxMy44LDEzLjgKCQlTMTc5LjQsNjguOCwxNzEuOCw2OC44eiIvPgo8L2c+Cjwvc3ZnPgo=">
+          </a>
+          <!-- End - logo -->
 
-  {% endif %}
+          <div class="flexy-spacer"></div>
 
-  <!-- Begin - content -->
-  <div class="layout__content">
-
-    <div id="page-content-wrapper" role="main" class="main-container {{ container }} js-quickedit-main-content">
-      <div class="container-fluid">
-
-        {% if page.header %}
-          {% block header %}
-            <div>
-              <div id="custom-form-system-messages"></div>
-              {{ page.header }}
-            </div>
-          {% endblock %}
-        {% endif %}
-
-        <div class="main-container__content">
-
-          {# Highlighted #}
-          {% if page.highlighted %}
-            {% block highlighted %}
-              <div class="highlighted">{{ page.highlighted }}</div>
-            {% endblock %}
-          {% endif %}
-
-          {# Breadcrumbs #}
-          {% if breadcrumb %}
-            {% block breadcrumb %}
-              {{ breadcrumb }}
-            {% endblock %}
-          {% endif %}
-
-          {# Action Links #}
-          {% if action_links %}
-            {% block action_links %}
-              <ul class="action-links">{{ action_links }}</ul>
-            {% endblock %}
-          {% endif %}
-
-          {# Help #}
-          {% if page.help %}
-            {% block help %}
-              {{ page.help }}
-            {% endblock %}
-          {% endif %}
-
-          {# Content #}
-          {% block content %}
-            <a id="main-content"></a>
-            {{ page.content }}
-          {% endblock %}
+          <!-- Begin - responsive toggle -->
+          <button
+            class="flexy-header__sidebar-toggle sidr-toggle--right visible-xs visible-sm">
+            <span class="icon fa fa-bars"></span>
+          </button>
+          <!-- End - responsive toggle -->
 
         </div>
       </div>
     </div>
-  </div>
+  </header>
+  <!-- End - header static -->
+
+  <!-- Begin - content -->
+  <main class="layout__content" role="main">
+
+    {% if page.sidebar_left__desktop %}
+
+      <!-- Begin - static sidebar -->
+      <div class="layout__static-sidebar hidden-xs">
+        <aside class="left-container" role="complementary">
+          {% if page.sidebar_left__desktop %}
+            {% block sidebar_left__desktop %}
+              {{ page.sidebar_left__desktop }}
+            {% endblock %}
+          {% endif %}
+        </aside>
+      </div>
+      <!-- End - static sidebar -->
+
+    {% endif %}
+
+    <div class="layout__content__inner">
+      <div id="page-content-wrapper" class="main-container {{ container }} js-quickedit-main-content">
+        <div class="container-fluid">
+
+          {% if page.header %}
+            {% block header %}
+              <div>
+                <div id="custom-form-system-messages"></div>
+                {{ page.header }}
+              </div>
+            {% endblock %}
+          {% endif %}
+
+          <div class="main-container__content">
+
+            {# Highlighted #}
+            {% if page.highlighted %}
+              {% block highlighted %}
+                <div class="highlighted">{{ page.highlighted }}</div>
+              {% endblock %}
+            {% endif %}
+
+            {# Breadcrumbs #}
+            {% if breadcrumb %}
+              {% block breadcrumb %}
+                {{ breadcrumb }}
+              {% endblock %}
+            {% endif %}
+
+            {# Action Links #}
+            {% if action_links %}
+              {% block action_links %}
+                <ul class="action-links">{{ action_links }}</ul>
+              {% endblock %}
+            {% endif %}
+
+            {# Help #}
+            {% if page.help %}
+              {% block help %}
+                {{ page.help }}
+              {% endblock %}
+            {% endif %}
+
+            {# Content #}
+            {% block content %}
+              <a id="main-content"></a>
+              {{ page.content }}
+            {% endblock %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
   <!-- End - content -->
 
 </div>

@@ -20,6 +20,10 @@
   "concat": {
     "core": [
       "src/vendor/bootstrap/dist/js/bootstrap.js",
+      "node_modules/flexy-header/javascripts/flexy-header.js",
+      "node_modules/flexy-navigation/javascripts/flexy-navigation.js",
+      "node_modules/sidr/dist/jquery.sidr.js",
+      "node_modules/jquery-slinky/dist/jquery.slinky.js",
       "src/vendor/jquery-sticky/jquery.sticky.js",
       "node_modules/jquery-bar-rating/dist/jquery.barrating.min.js",
       "src/js/page-layout.js",
