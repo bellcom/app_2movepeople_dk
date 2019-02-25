@@ -15,6 +15,33 @@ body{
 	Corrections and improvements for milestones
 */
 
+input[type="date"].form-control,
+input[type="time"].form-control,
+input[type="datetime-local"].form-control,
+input[type="month"].form-control {
+	line-height: 25px !important;
+}
+
+.custom-form-fields.div-form{
+	padding-right: 0 !important;
+	padding-left: 30px !important;
+}
+
+.panel-body{
+	padding: 15px 5px !important;
+}
+
+.panel-group .panel{
+	padding-bottom: 2px;
+}
+
+.dashboard-accordion .panel-heading a:link,
+.dashboard-accordion .panel-heading a:hover,
+.dashboard-accordion .panel-heading a:visited,
+.dashboard-accordion .panel-heading a:active{
+	margin-top: 4px;
+}
+
 .form-actions.form-group.js-form-wrapper.form-wrapper,
 .row.custom-form-fields.dashboard-milestone__control-buttons{
 	height: 0px !important;
@@ -99,6 +126,11 @@ body{
 	margin: 5px;
 	float: left;
 }
+
+.milestone-buttons a span{
+	padding-top: 0px !important;
+}
+
 /*
 	For showing errors better
 */
@@ -114,7 +146,7 @@ body{
 .is-remind-expired::before, .is-remind-warning::before {
 	content: "!";
 	position: absolute;
-	left: -13px;
+	left: 0px;
 	display: block;
 	background-color: #FF6961;
 	border-radius: 5px;
@@ -131,7 +163,7 @@ body{
 .subtask::before{
 	content: "❱";
 	position: absolute;
-	left: 11px;
+	left:25px;
 	top: 8px;
 	display: block;
 	color: lightgray;
@@ -141,7 +173,7 @@ body{
 }
 
 .subtask .is-remind-expired::before, .subtask .is-remind-warning::before{
-	left: -43px;
+	left: -30px;
 }
 
 /* For mobile stuff; fixed later */
