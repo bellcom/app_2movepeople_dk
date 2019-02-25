@@ -8,7 +8,7 @@ dependencies:
     - site
 id: whoami
 theme: site
-region: sidebar_first
+region: sidebar_left__desktop
 weight: -6
 provider: null
 plugin: whoami_block

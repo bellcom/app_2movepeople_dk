@@ -10,7 +10,7 @@ dependencies:
     - site
 id: settingsmenu
 theme: site
-region: sidebar_first
+region: sidebar_left__desktop
 weight: -4
 provider: null
 plugin: 'system_menu_block:settings-menu'

@@ -8,8 +8,8 @@ dependencies:
     - site
 id: masquerade
 theme: site
-region: sidebar_first
-weight: -2
+region: navigation
+weight: -6
 provider: null
 plugin: masquerade
 settings:

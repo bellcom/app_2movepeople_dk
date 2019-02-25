@@ -10,7 +10,7 @@ _core:
   default_config_hash: NDwadleLD3YVSbDUaakxyYZyINYtkFtOVGShfq4kWy8
 id: site_branding
 theme: site
-region: sidebar_first
+region: sidebar_left__desktop
 weight: -7
 provider: null
 plugin: system_branding_block

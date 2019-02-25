@@ -8,7 +8,7 @@ dependencies:
     - site
 id: navigationblock
 theme: site
-region: sidebar_first
+region: sidebar_left__desktop
 weight: -3
 provider: null
 plugin: navigation_block

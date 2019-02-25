@@ -12,6 +12,7 @@ regions:
   header: 'Top Bar'
   help: 'Help'
   content: 'Content'
-  sidebar_first: 'Sidebar - left'
+  sidebar_left__desktop: 'Left sidebar - desktop'
+  sidebar_left-mobile__navigation: 'Left sidebar - mobile - navigation'
 
 base theme: bellcom

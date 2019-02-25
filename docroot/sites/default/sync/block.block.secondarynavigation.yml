@@ -10,7 +10,7 @@ dependencies:
     - site
 id: secondarynavigation
 theme: site
-region: sidebar_first
+region: sidebar_left__desktop
 weight: -5
 provider: null
 plugin: 'system_menu_block:secondary-navigation'

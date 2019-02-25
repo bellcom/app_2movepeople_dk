@@ -1,18 +1,40 @@
-{{ attach_library('bc_2movepeople_dashboard/bc_2movepeople_dashboard.sidebar-toggle') }}
+<div class="layout__wrapper">
 
-<div class="layout__wrapper preload {% if menu_toggle_state %} active {% endif %}">
+  {% if page.sidebar_left-mobile__navigation %}
 
-  <!-- Begin - sidebar -->
-  <div id="sidebar-wrapper" class="layout__sidebar">
-    <aside class="left-container" role="complementary">
-      {% if page.sidebar_first %}
-        {% block sidebar_first %}
-          {{ page.sidebar_first }}
-        {% endblock %}
-      {% endif %}
+    <!-- Begin - sidr source provider -->
+    <aside class="sidr-source-provider">
+
+      <!-- Begin - navigation -->
+      <nav class="slinky-menu" role="navigation">
+
+        {% if page.sidebar_left-mobile__navigation %}
+          {{ page.sidebar_left-mobile__navigation }}
+        {% endif %}
+
+      </nav>
+      <!-- End - navigation -->
+
     </aside>
-  </div>
-  <!-- End - sidebar -->
+    <!-- End - sidr source provider -->
+
+  {% endif %}
+
+  {% if page.sidebar_left__desktop %}
+
+    <!-- Begin - static sidebar -->
+    <div class="layout__static-sidebar">
+      <aside class="left-container" role="complementary">
+        {% if page.sidebar_left__desktop %}
+          {% block sidebar_left__desktop %}
+            {{ page.sidebar_left__desktop }}
+          {% endblock %}
+        {% endif %}
+      </aside>
+    </div>
+    <!-- End - static sidebar -->
+
+  {% endif %}
 
   <!-- Begin - content -->
   <div class="layout__content">
