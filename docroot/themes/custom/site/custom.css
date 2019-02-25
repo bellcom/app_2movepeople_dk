@@ -1,19 +1,9 @@
 /*
-  Add custom CSS styles in here.
-  These styles will be moved to the scss folder at some point in future.
+ * Add custom CSS styles in here.
+ * These styles will be moved to the scss folder at some point in future.
 */
 
-/*
-	Force scroll-bar. Makes the website less jumpy.
-*/
-
-body{
-	overflow-y: scroll;
-}
-
-/*
-	Corrections and improvements for milestones
-*/
+/* Corrections and improvements for milestones */
 
 input[type="date"].form-control,
 input[type="time"].form-control,
@@ -43,88 +33,88 @@ input[type="month"].form-control {
 }
 
 .form-actions.form-group.js-form-wrapper.form-wrapper,
-.row.custom-form-fields.dashboard-milestone__control-buttons{
-	height: 0px !important;
-	padding: 0px !important;
-	margin: 0px !important;
+.row.custom-form-fields.dashboard-milestone__control-buttons {
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
-.row.custom-form-fields.dashboard-milestone__control-buttons:last-of-type .col-lg-12.col-md-12.col-sm-12.col-xs-12{
-	right: 289px;
+.row.custom-form-fields.dashboard-milestone__control-buttons:last-of-type .col-lg-12.col-md-12.col-sm-12.col-xs-12 {
+  right: 289px;
 }
 
-.row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12{
-	clear: both;
-	position: absolute;
-	top: 4px;
-	right: 229px;
-	width: 0px;
-	height: 0px !important;
+.row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 {
+  clear: both;
+  position: absolute;
+  top: 4px;
+  right: 229px;
+  width: 0px;
+  height: 0px !important;
 }
 
-.collapse.in{
-	opacity: 1;
+.collapse.in {
+  opacity: 1;
 }
 
 .collapsing,
 .collapse,
-.collapsing .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12{
-	opacity: 0;
+.collapsing .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 {
+  opacity: 0;
 }
 
 .collapse.in,
 .collapsing,
 .collapse,
-.collapsing .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12{
-	transition: all 0.5s;
+.collapsing .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 {
+  transition: all 0.5s;
 }
 
-.collapsing .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12{
-	top: 25px;
+.collapsing .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 {
+  top: 25px;
 }
 
 .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 button,
-.row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 a{
-	padding: 10px 15px !important;
-	font-size: 18px;
+.row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 a {
+  padding: 10px 15px !important;
+  font-size: 18px;
 }
 
-.row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 button:disabled{
-	color: #7DC4EE;
-	transition: none;
+.row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 button:disabled {
+  color: #7DC4EE;
+  transition: none;
 }
 
-.row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 button:disabled span{
-	color: #FFF;
-	transition: none;
+.row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 button:disabled span {
+  color: #FFF;
+  transition: none;
 }
 
 .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 a span,
-.row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 button span{
-	display: block;
-	position: absolute;
-	top: 14px;
-	font-size: 18px;
-	font-weight: bolder;
-	margin: 0 auto;
-	background-color: #7DC4EE;
-	border-radius: 100%;
+.row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 button span {
+  display: block;
+  position: absolute;
+  top: 14px;
+  font-size: 18px;
+  font-weight: bolder;
+  margin: 0 auto;
+  background-color: #7DC4EE;
+  border-radius: 100%;
 }
 
-.relative{
-	position: relative;
+.relative {
+  position: relative;
 }
 
-.milestone-buttons{
-	clear: both;
+.milestone-buttons {
+  clear: both;
 }
 
-.milestone-buttons a{
-	color: white !important;
-	padding: 5px 20px;
-	color: white;
-	margin: 5px;
-	float: left;
+.milestone-buttons a {
+  color: white !important;
+  padding: 5px 20px;
+  color: white;
+  margin: 5px;
+  float: left;
 }
 
 .milestone-buttons a span{
@@ -135,12 +125,12 @@ input[type="month"].form-control {
 	For showing errors better
 */
 
-.form-group.js-form-wrapper.form-wrapper:not(.subtask):nth-child(odd):{
-	background-color: lightgray;
+.form-group.js-form-wrapper.form-wrapper:not(.subtask):nth-child(odd) {
+  background-color: lightgray;
 }
 
 .is-remind-expired, .is-remind-warning, .subtask {
-	position: relative;
+  position: relative;
 }
 
 .is-remind-expired::before, .is-remind-warning::before {
@@ -157,7 +147,7 @@ input[type="month"].form-control {
 }
 
 .is-remind-warning::before {
-	background-color: #FCA44B;
+  background-color: #FCA44B;
 }
 
 .subtask::before{
@@ -178,11 +168,11 @@ input[type="month"].form-control {
 
 /* For mobile stuff; fixed later */
 @media (max-width: 768px) {
-	.is-remind-expired::before{
-		top: 32px;
-	}
+  .is-remind-expired::before {
+    top: 32px;
+  }
 
-	.subtask::before{
-		top: 29px;
-	}
+  .subtask::before {
+    top: 29px;
+  }
 }
