@@ -1,10 +1,10 @@
 {
-  "name": "site",
-  "version": "0.0.1",
   "private": true,
-  "description": "Website base grunt setup.",
-  "author": "Morten Nissen <mn@bellcom.dk>",
-  "license": "MIT",
+  "scripts": {
+    "dev": "npm run development",
+    "development": "grunt build",
+    "watch": "grunt watch"
+  },
   "dependencies": {
     "content-transitions": "^1.0.4",
     "flexy-header": "^1.0.4",
@@ -12,6 +12,15 @@
     "flexy-navigation": "^1.0.9",
     "flexy-row": "^1.0.0",
     "font-awesome": "4.7.0",
+    "jquery-bar-rating": "^1.2.2",
+    "jquery-slinky": "^3.0.0",
+    "readable-bootstrap-breakpoints": "^1.0.2",
+    "sidr": "^2.2.1",
+    "sidr-bootstrap-theme": "^1.0.2",
+    "slinky-bootstrap-theme": "^1.0.2"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
     "grunt-autoprefixer": "^3.0.4",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.0.0",
@@ -21,20 +30,6 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-modernizr": "^1.0.2",
     "grunt-sass": "^1.2.1",
-    "grunt-shell": "^1.3.1",
-    "jquery-bar-rating": "^1.2.2",
-    "jquery-slinky": "^3.0.0",
-    "readable-bootstrap-breakpoints": "^1.0.2",
-    "sidr": "^2.2.1",
-    "sidr-bootstrap-theme": "^1.0.2",
-    "slinky-bootstrap-theme": "^1.0.2"
-  },
-  "devDependencies": {
-    "grunt": "^1.0.1"
-  },
-  "scripts": {
-    "dev": "npm run development",
-    "development": "grunt build",
-    "watch": "grunt watch"
+    "grunt-shell": "^1.3.1"
   }
 }
