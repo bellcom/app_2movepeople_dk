@@ -799,6 +799,127 @@ var flexy_navigation = (function ($) {
 }());
 !function(e){var t;e.fn.slinky=function(a){var s=e.extend({label:"Back",title:!1,speed:300,resize:!0},a),i=e(this),n=i.children().first();i.addClass("slinky-menu");var r=function(e,t){var a=Math.round(parseInt(n.get(0).style.left))||0;n.css("left",a-100*e+"%"),"function"==typeof t&&setTimeout(t,s.speed)},l=function(e){i.height(e.outerHeight())},d=function(e){i.css("transition-duration",e+"ms"),n.css("transition-duration",e+"ms")};if(d(s.speed),e("a + ul",i).prev().addClass("next"),e("li > ul",i).prepend('<li class="header">'),s.title===!0&&e("li > ul",i).each(function(){var t=e(this).parent().find("a").first().text(),a=e("<h2>").text(t);e("> .header",this).append(a)}),s.title||s.label!==!0){var o=e("<a>").text(s.label).prop("href","#").addClass("back");e(".header",i).append(o)}else e("li > ul",i).each(function(){var t=e(this).parent().find("a").first().text(),a=e("<a>").text(t).prop("href","#").addClass("back");e("> .header",this).append(a)});e("a",i).on("click",function(a){if(!(t+s.speed>Date.now())){t=Date.now();var n=e(this);/#/.test(this.href)&&a.preventDefault(),n.hasClass("next")?(i.find(".active").removeClass("active"),n.next().show().addClass("active"),r(1),s.resize&&l(n.next())):n.hasClass("back")&&(r(-1,function(){i.find(".active").removeClass("active"),n.parent().parent().hide().parentsUntil(i,"ul").first().addClass("active")}),s.resize&&l(n.parent().parent().parentsUntil(i,"ul")))}}),this.jump=function(t,a){t=e(t);var n=i.find(".active");n=n.length>0?n.parentsUntil(i,"ul").length:0,i.find("ul").removeClass("active").hide();var o=t.parentsUntil(i,"ul");o.show(),t.show().addClass("active"),a===!1&&d(0),r(o.length-n),s.resize&&l(t),a===!1&&d(s.speed)},this.home=function(t){t===!1&&d(0);var a=i.find(".active"),n=a.parentsUntil(i,"li").length;n>0&&(r(-n,function(){a.removeClass("active")}),s.resize&&l(e(a.parentsUntil(i,"li").get(n-1)).parent())),t===!1&&d(s.speed)},this.destroy=function(){e(".header",i).remove(),e("a",i).removeClass("next").off("click"),i.removeClass("slinky-menu").css("transition-duration",""),n.css("transition-duration","")};var c=i.find(".active");return c.length>0&&(c.removeClass("active"),this.jump(c,!1)),this}}(jQuery);
 !function(t){"function"==typeof define&&define.amd?define(["jquery"],t):"object"==typeof module&&module.exports?module.exports=t(require("jquery")):t(jQuery)}(function(t){var e=function(){function e(){var e=this,n=function(){var n=["br-wrapper"];""!==e.options.theme&&n.push("br-theme-"+e.options.theme),e.$elem.wrap(t("<div />",{"class":n.join(" ")}))},i=function(){e.$elem.unwrap()},a=function(n){return t.isNumeric(n)&&(n=Math.floor(n)),t('option[value="'+n+'"]',e.$elem)},r=function(){var n=e.options.initialRating;return n?a(n):t("option:selected",e.$elem)},o=function(){var n=e.$elem.find('option[value="'+e.options.emptyValue+'"]');return!n.length&&e.options.allowEmpty?(n=t("<option />",{value:e.options.emptyValue}),n.prependTo(e.$elem)):n},l=function(t){var n=e.$elem.data("barrating");return"undefined"!=typeof t?n[t]:n},s=function(t,n){null!==n&&"object"==typeof n?e.$elem.data("barrating",n):e.$elem.data("barrating")[t]=n},u=function(){var t=r(),n=o(),i=t.val(),a=t.data("html")?t.data("html"):t.text(),l=null!==e.options.allowEmpty?e.options.allowEmpty:!!n.length,u=n.length?n.val():null,d=n.length?n.text():null;s(null,{userOptions:e.options,ratingValue:i,ratingText:a,originalRatingValue:i,originalRatingText:a,allowEmpty:l,emptyRatingValue:u,emptyRatingText:d,readOnly:e.options.readonly,ratingMade:!1})},d=function(){e.$elem.removeData("barrating")},c=function(){return l("ratingText")},f=function(){return l("ratingValue")},g=function(){var n=t("<div />",{"class":"br-widget"});return e.$elem.find("option").each(function(){var i,a,r,o;i=t(this).val(),i!==l("emptyRatingValue")&&(a=t(this).text(),r=t(this).data("html"),r&&(a=r),o=t("<a />",{href:"#","data-rating-value":i,"data-rating-text":a,html:e.options.showValues?a:""}),n.append(o))}),e.options.showSelectedRating&&n.append(t("<div />",{text:"","class":"br-current-rating"})),e.options.reverse&&n.addClass("br-reverse"),e.options.readonly&&n.addClass("br-readonly"),n},p=function(){return l("userOptions").reverse?"nextAll":"prevAll"},h=function(t){a(t).prop("selected",!0),e.$elem.change()},m=function(){t("option",e.$elem).prop("selected",function(){return this.defaultSelected}),e.$elem.change()},v=function(t){t=t?t:c(),t==l("emptyRatingText")&&(t=""),e.options.showSelectedRating&&e.$elem.parent().find(".br-current-rating").text(t)},y=function(t){return Math.round(Math.floor(10*t)/10%1*100)},b=function(){e.$widget.find("a").removeClass(function(t,e){return(e.match(/(^|\s)br-\S+/g)||[]).join(" ")})},w=function(){var n,i,a=e.$widget.find('a[data-rating-value="'+f()+'"]'),r=l("userOptions").initialRating,o=t.isNumeric(f())?f():0,s=y(r);if(b(),a.addClass("br-selected br-current")[p()]().addClass("br-selected"),!l("ratingMade")&&t.isNumeric(r)){if(o>=r||!s)return;n=e.$widget.find("a"),i=a.length?a[l("userOptions").reverse?"prev":"next"]():n[l("userOptions").reverse?"last":"first"](),i.addClass("br-fractional"),i.addClass("br-fractional-"+s)}},$=function(t){return l("allowEmpty")&&l("userOptions").deselectable?f()==t.attr("data-rating-value"):!1},x=function(n){n.on("click.barrating",function(n){var i,a,r=t(this),o=l("userOptions");return n.preventDefault(),i=r.attr("data-rating-value"),a=r.attr("data-rating-text"),$(r)&&(i=l("emptyRatingValue"),a=l("emptyRatingText")),s("ratingValue",i),s("ratingText",a),s("ratingMade",!0),h(i),v(a),w(),o.onSelect.call(e,f(),c(),n),!1})},R=function(e){e.on("mouseenter.barrating",function(){var e=t(this);b(),e.addClass("br-active")[p()]().addClass("br-active"),v(e.attr("data-rating-text"))})},V=function(t){e.$widget.on("mouseleave.barrating blur.barrating",function(){v(),w()})},O=function(e){e.on("touchstart.barrating",function(e){e.preventDefault(),e.stopPropagation(),t(this).click()})},C=function(t){t.on("click.barrating",function(t){t.preventDefault()})},S=function(t){x(t),e.options.hoverState&&(R(t),V(t))},T=function(t){t.off(".barrating")},j=function(t){var n=e.$widget.find("a");O&&O(n),t?(T(n),C(n)):S(n)};this.show=function(){l()||(n(),u(),e.$widget=g(),e.$widget.insertAfter(e.$elem),w(),v(),j(e.options.readonly),e.$elem.hide())},this.readonly=function(t){"boolean"==typeof t&&l("readOnly")!=t&&(j(t),s("readOnly",t),e.$widget.toggleClass("br-readonly"))},this.set=function(t){var n=l("userOptions");0!==e.$elem.find('option[value="'+t+'"]').length&&(s("ratingValue",t),s("ratingText",e.$elem.find('option[value="'+t+'"]').text()),s("ratingMade",!0),h(f()),v(c()),w(),n.silent||n.onSelect.call(this,f(),c()))},this.clear=function(){var t=l("userOptions");s("ratingValue",l("originalRatingValue")),s("ratingText",l("originalRatingText")),s("ratingMade",!1),m(),v(c()),w(),t.onClear.call(this,f(),c())},this.destroy=function(){var t=f(),n=c(),a=l("userOptions");T(e.$widget.find("a")),e.$widget.remove(),d(),i(),e.$elem.show(),a.onDestroy.call(this,t,n)}}return e.prototype.init=function(e,n){return this.$elem=t(n),this.options=t.extend({},t.fn.barrating.defaults,e),this.options},e}();t.fn.barrating=function(n,i){return this.each(function(){var a=new e;if(t(this).is("select")||t.error("Sorry, this plugin only works with select fields."),a.hasOwnProperty(n)){if(a.init(i,this),"show"===n)return a.show(i);if(a.$elem.data("barrating"))return a.$widget=t(this).next(".br-widget"),a[n](i)}else{if("object"==typeof n||!n)return i=n,a.init(i,this),a.show();t.error("Method "+n+" does not exist on jQuery.barrating")}})},t.fn.barrating.defaults={theme:"",initialRating:null,allowEmpty:null,emptyValue:"",showValues:!1,showSelectedRating:!0,deselectable:!0,reverse:!1,readonly:!1,fastClicks:!0,hoverState:!0,silent:!1,onSelect:function(t,e,n){},onClear:function(t,e){},onDestroy:function(t,e){}},t.fn.barrating.BarRating=e});
+;(function($){
+  //pass in just the context as a $(obj) or a settings JS object
+  $.fn.autogrow = function(opts) {
+    var that = $(this).css({overflow: 'hidden', resize: 'none'}) //prevent scrollies
+        , selector = that.selector
+        , defaults = {
+          context: $(document) //what to wire events to
+          , animate: true //if you want the size change to animate
+          , speed: 200 //speed of animation
+          , fixMinHeight: true //if you don't want the box to shrink below its initial size
+          , cloneClass: 'autogrowclone' //helper CSS class for clone if you need to add special rules
+          , onInitialize: false //resizes the textareas when the plugin is initialized
+        }
+    ;
+    opts = $.isPlainObject(opts) ? opts : {context: opts ? opts : $(document)};
+    opts = $.extend({}, defaults, opts);
+    that.each(function(i, elem){
+      var min, clone;
+      elem = $(elem);
+      //if the element is "invisible", we get an incorrect height value
+      //to get correct value, clone and append to the body.
+      if (elem.is(':visible') || parseInt(elem.css('height'), 10) > 0) {
+        min = parseInt(elem.css('height'), 10) || elem.innerHeight();
+      } else {
+        clone = elem.clone()
+            .addClass(opts.cloneClass)
+            .val(elem.val())
+            .css({
+              position: 'absolute'
+              , visibility: 'hidden'
+              , display: 'block'
+            })
+        ;
+        $('body').append(clone);
+        min = clone.innerHeight();
+        clone.remove();
+      }
+      if (opts.fixMinHeight) {
+        elem.data('autogrow-start-height', min); //set min height
+      }
+      elem.css('height', min);
+
+      if (opts.onInitialize && elem.length) {
+        resize.call(elem[0]);
+      }
+    });
+    opts.context
+        .on('keyup paste', selector, resize)
+    ;
+
+    function resize (e){
+      var box = $(this)
+          , oldHeight = box.innerHeight()
+          , newHeight = this.scrollHeight
+          , minHeight = box.data('autogrow-start-height') || 0
+          , clone
+      ;
+      if (oldHeight < newHeight) { //user is typing
+        this.scrollTop = 0; //try to reduce the top of the content hiding for a second
+        if(opts.animate) {
+          box.stop().animate({height: newHeight}, {duration: opts.speed, complete: notifyGrown});
+        } else {
+          box.innerHeight(newHeight);
+          notifyGrown();
+        }
+
+      } else if (!e || e.which == 8 || e.which == 46 || (e.ctrlKey && e.which == 88)) { //user is deleting, backspacing, or cutting
+        if (oldHeight > minHeight) { //shrink!
+          //this cloning part is not particularly necessary. however, it helps with animation
+          //since the only way to cleanly calculate where to shrink the box to is to incrementally
+          //reduce the height of the box until the $.innerHeight() and the scrollHeight differ.
+          //doing this on an exact clone to figure out the height first and then applying it to the
+          //actual box makes it look cleaner to the user
+          clone = box.clone()
+          //add clone class for extra css rules
+              .addClass(opts.cloneClass)
+              //make "invisible", remove height restriction potentially imposed by existing CSS
+              .css({position: 'absolute', zIndex:-10, height: ''})
+              //populate with content for consistent measuring
+              .val(box.val())
+          ;
+          box.after(clone); //append as close to the box as possible for best CSS matching for clone
+          do { //reduce height until they don't match
+            newHeight = clone[0].scrollHeight - 1;
+            clone.innerHeight(newHeight);
+          } while (newHeight === clone[0].scrollHeight);
+          newHeight++; //adding one back eliminates a wiggle on deletion
+          clone.remove();
+          box.focus(); // Fix issue with Chrome losing focus from the textarea.
+
+          //if user selects all and deletes or holds down delete til beginning
+          //user could get here and shrink whole box
+          newHeight < minHeight && (newHeight = minHeight);
+          if(oldHeight > newHeight) {
+            if(opts.animate) {
+              box.stop().animate({height: newHeight}, {duration: opts.speed, complete: notifyShrunk});
+            } else {
+              box.innerHeight(newHeight);
+              notifyShrunk();
+            }
+          }
+
+        } else { //just set to the minHeight
+          box.innerHeight(minHeight);
+        }
+      }
+    }
+
+    // Trigger event to indicate a textarea has grown.
+    function notifyGrown() {
+      opts.context.trigger('autogrow:grow');
+    }
+
+    // Trigger event to indicate a textarea has shrunk.
+    function notifyShrunk() {
+      opts.context.trigger('autogrow:shrink');
+    }
+
+    return that;
+  }
+})(jQuery);
 // |--------------------------------------------------------------------------
 // | Page layout
 // |--------------------------------------------------------------------------
@@ -926,37 +1047,49 @@ jQuery(document).ready(function ($) {
 
 // Document ready
 (function ($) {
-    'use strict';
+  'use strict';
 
-    // Enable page layout
-    pageLayout.init();
+  // Enable page layout
+  pageLayout.init();
 
-    // Sidr
-    $('.slinky-menu')
-        .find('ul, li, a')
-        .removeClass();
+  // Sidr
+  $('.slinky-menu')
+      .find('ul, li, a')
+      .removeClass();
 
-    $('.sidr-toggle--right').sidr({
-        name: 'sidr-main',
-        side: 'right',
-        renaming: false,
-        body: '.layout__wrapper',
-        source: '.sidr-source-provider'
-    });
+  $('.sidr-toggle--right').sidr({
+    name: 'sidr-main',
+    side: 'right',
+    renaming: false,
+    body: '.layout__wrapper',
+    source: '.sidr-source-provider'
+  });
 
-    // Slinky
-    $('.sidr .slinky-menu').slinky({
-        title: true,
-        label: ''
-    });
+  // Slinky
+  $('.sidr .slinky-menu').slinky({
+    title: true,
+    label: ''
+  });
 
-    // Enable / disable Bootstrap tooltips, based upon touch events
-    if(Modernizr.touchevents) {
-        $('[data-toggle="tooltip"]').tooltip('hide');
-    }
-    else {
-        $('[data-toggle="tooltip"]').tooltip();
-    }
+  // Enable / disable Bootstrap tooltips, based upon touch events
+  if (Modernizr.touchevents) {
+    $('[data-toggle="tooltip"]').tooltip('hide');
+  }
+  else {
+    $('[data-toggle="tooltip"]').tooltip();
+  }
+
+  // Enable autogrow on milestone textarea.
+  $('.path-dashboard .purpose textarea').autogrow();
+
+  // Update milestone form on the fly.
+  $('.dashboard-overview .form-control').on('change', function (event) {
+    var $element = $(this);
+    var $parent = $element.parents('.panel');
+    var $submit_button = $parent.find('.js-form-submit.glyphicon-refresh');
+
+    $submit_button.click();
+  });
 
 })(jQuery);
 

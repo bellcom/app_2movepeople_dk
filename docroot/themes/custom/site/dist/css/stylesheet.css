@@ -10195,7 +10195,7 @@ span.input-group-addon {
   margin-bottom: 10px; }
 
 .dashboard-overview form[class^="bc-2movepeople-dashboard-milestone-edit-form-"] .purpose {
-  height: 155px; }
+  margin-bottom: 30px; }
 
 .dashboard-overview form[class^="bc-2movepeople-dashboard-milestone-edit-form-"] .custom-form-fields.div-form {
   padding: 2px 15px 2px 15px;
@@ -10497,4 +10497,146 @@ span.task.completed {
     font-size: 14px;
     font-family: 'Glyphicons Halflings';
     content: '\e115'; }
+
+.path-dashboard .dashboard-overview .form-control {
+  padding-left: 10px;
+  padding-right: 10px; }
+
+.path-dashboard .dashboard-overview input[type="date"].form-control,
+.path-dashboard .dashboard-overview input[type="time"].form-control,
+.path-dashboard .dashboard-overview input[type="datetime-local"].form-control,
+.path-dashboard .dashboard-overview input[type="month"].form-control {
+  line-height: 25px !important; }
+
+.path-dashboard .dashboard-overview .panel form > .form-wrapper {
+  padding-left: 15px; }
+
+.path-dashboard .custom-form-fields.div-form {
+  padding-right: 0 !important; }
+
+.path-dashboard .panel-body {
+  padding: 15px 5px !important; }
+
+.path-dashboard .panel-group .panel {
+  padding-bottom: 2px; }
+
+.path-dashboard .dashboard-accordion .panel-heading a:link,
+.path-dashboard .dashboard-accordion .panel-heading a:hover,
+.path-dashboard .dashboard-accordion .panel-heading a:visited,
+.path-dashboard .dashboard-accordion .panel-heading a:active {
+  margin-top: 4px; }
+
+.path-dashboard .form-actions.form-group.js-form-wrapper.form-wrapper,
+.path-dashboard .row.custom-form-fields.dashboard-milestone__control-buttons {
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important; }
+
+.path-dashboard .row.custom-form-fields.dashboard-milestone__control-buttons:last-of-type .col-lg-12.col-md-12.col-sm-12.col-xs-12 {
+  right: 303px; }
+
+.path-dashboard .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 {
+  clear: both;
+  position: absolute;
+  top: 7px;
+  right: 246px;
+  width: 0;
+  height: 0 !important; }
+
+.path-dashboard .collapse.in {
+  opacity: 1; }
+
+.path-dashboard .collapsing,
+.path-dashboard .collapse,
+.path-dashboard .collapsing .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 {
+  opacity: 0; }
+
+.path-dashboard .collapse.in,
+.path-dashboard .collapsing,
+.path-dashboard .collapse,
+.path-dashboard .collapsing .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 {
+  -webkit-transition: all 0.5s;
+       -o-transition: all 0.5s;
+          transition: all 0.5s; }
+
+.path-dashboard .collapsing .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 {
+  top: 25px; }
+
+.path-dashboard .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 button {
+  display: none; }
+
+.path-dashboard .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 a {
+  padding: 5px 15px !important;
+  font-size: 18px; }
+
+.path-dashboard .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 a span {
+  display: block;
+  position: absolute;
+  top: 9px;
+  font-size: 18px;
+  font-weight: bolder;
+  margin: 0 auto;
+  background-color: #7DC4EE;
+  border-radius: 100%; }
+
+.path-dashboard .relative {
+  position: relative; }
+
+.path-dashboard .milestone-buttons {
+  clear: both;
+  padding-top: 4px; }
+
+.path-dashboard .milestone-buttons a {
+  color: white !important;
+  padding: 5px 20px;
+  color: white;
+  margin: 5px;
+  float: left; }
+  .path-dashboard .milestone-buttons a .glyphicon-refresh {
+    display: block;
+    position: absolute;
+    top: 16px;
+    font-size: 18px;
+    font-weight: bolder;
+    margin: 0 auto;
+    background-color: #7DC4EE; }
+
+.path-dashboard .milestone-buttons a span {
+  padding-top: 0 !important; }
+
+.path-dashboard .is-remind-expired,
+.path-dashboard .is-remind-warning,
+.path-dashboard .subtask {
+  position: relative; }
+
+.path-dashboard .is-remind-expired::before,
+.path-dashboard .is-remind-warning::before {
+  content: "!";
+  position: absolute;
+  left: -15px;
+  display: block;
+  background-color: #FF6961;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 0 10px; }
+
+.path-dashboard .is-remind-warning::before {
+  background-color: #FCA44B; }
+
+.path-dashboard .subtask::before {
+  content: "❱";
+  position: absolute;
+  left: 21px;
+  top: 12px;
+  display: block;
+  color: lightgray;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 0 10px; }
+
+.path-dashboard .subtask .is-remind-expired::before,
+.path-dashboard .subtask .is-remind-warning::before {
+  left: -30px; }
 /*# sourceMappingURL=stylesheet.css.map */

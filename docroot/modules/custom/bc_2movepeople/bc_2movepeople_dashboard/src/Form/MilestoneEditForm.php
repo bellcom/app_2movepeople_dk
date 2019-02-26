@@ -72,6 +72,7 @@ class MilestoneEditForm extends FormBase {
       '#attributes' => [
         'class' => ['use-ajax', 'btn', 'btn-default', 'link-btn', 'glyphicon', 'glyphicon-plus'],
         'data-dialog-type' => 'modal',
+        'data-toggle' => 'tooltip',
 		'title' => $this->t('Add new task'),
       ],
     ];

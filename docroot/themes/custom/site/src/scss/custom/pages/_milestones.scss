@@ -1,0 +1,241 @@
+// |--------------------------------------------------------------------------
+// | Milestones
+// |--------------------------------------------------------------------------
+// |
+// | This file contains styles for the following:
+// | - .path-dashboard
+// |
+
+// --------------------------------------------------
+// Variables
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Mixins
+// --------------------------------------------------
+
+@mixin path-dashboard-mixin() {}
+
+// --------------------------------------------------
+// Styling
+// --------------------------------------------------
+
+.path-dashboard {
+
+  .dashboard-overview {
+
+    .form-control {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    input[type="date"].form-control,
+    input[type="time"].form-control,
+    input[type="datetime-local"].form-control,
+    input[type="month"].form-control {
+      line-height: 25px !important;
+    }
+
+    .panel {
+
+      form {
+
+        > .form-wrapper {
+          padding-left: 15px;
+        }
+      }
+    }
+  }
+
+  .custom-form-fields.div-form {
+    padding-right: 0 !important;
+    //padding-left: 30px !important;
+  }
+
+  .panel-body {
+    padding: 15px 5px !important;
+  }
+
+  .panel-group .panel {
+    padding-bottom: 2px;
+  }
+
+  .dashboard-accordion .panel-heading a:link,
+  .dashboard-accordion .panel-heading a:hover,
+  .dashboard-accordion .panel-heading a:visited,
+  .dashboard-accordion .panel-heading a:active {
+    margin-top: 4px;
+  }
+
+  .form-actions.form-group.js-form-wrapper.form-wrapper,
+  .row.custom-form-fields.dashboard-milestone__control-buttons {
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .row.custom-form-fields.dashboard-milestone__control-buttons:last-of-type .col-lg-12.col-md-12.col-sm-12.col-xs-12 {
+    right: 303px;
+  }
+
+  .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 {
+    clear: both;
+    position: absolute;
+    top: 7px;
+    right: 246px;
+    width: 0;
+    height: 0 !important;
+  }
+
+  .collapse.in {
+    opacity: 1;
+  }
+
+  .collapsing,
+  .collapse,
+  .collapsing .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 {
+    opacity: 0;
+  }
+
+  .collapse.in,
+  .collapsing,
+  .collapse,
+  .collapsing .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 {
+    transition: all 0.5s;
+  }
+
+  .collapsing .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 {
+    top: 25px;
+  }
+
+  .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 button {
+    display: none;
+  }
+
+  .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 a {
+    padding: 5px 15px !important;
+    font-size: 18px;
+  }
+
+  .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 a span {
+    display: block;
+    position: absolute;
+    top: 9px;
+    font-size: 18px;
+    font-weight: bolder;
+    margin: 0 auto;
+    background-color: #7DC4EE;
+    border-radius: 100%;
+  }
+
+  .relative {
+    position: relative;
+  }
+
+  .milestone-buttons {
+    clear: both;
+    padding-top: 4px;
+  }
+
+  .milestone-buttons a {
+    color: white !important;
+    padding: 5px 20px;
+    color: white;
+    margin: 5px;
+    float: left;
+
+    .glyphicon-refresh {
+      display: block;
+      position: absolute;
+      top: 16px;
+      font-size: 18px;
+      font-weight: bolder;
+      margin: 0 auto;
+      background-color: #7DC4EE;
+    }
+  }
+
+  .milestone-buttons a span {
+    padding-top: 0 !important;
+  }
+
+  // For showing errors better
+  .is-remind-expired,
+  .is-remind-warning,
+  .subtask {
+    position: relative;
+  }
+
+  .is-remind-expired::before,
+  .is-remind-warning::before {
+    content: "!";
+    position: absolute;
+    left: -15px;
+    display: block;
+    background-color: #FF6961;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 0 10px;
+  }
+
+  .is-remind-warning::before {
+    background-color: #FCA44B;
+  }
+
+  .subtask::before {
+    content: "❱";
+    position: absolute;
+    left: 21px;
+    top: 12px;
+    display: block;
+    color: lightgray;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 0 10px;
+  }
+
+  .subtask .is-remind-expired::before,
+  .subtask .is-remind-warning::before {
+    left: -30px;
+  }
+}
+
+// --------------------------------------------------
+// Variants
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Responsive
+// --------------------------------------------------
+
+// Mobile - and up
+@media #{$breakpoint-mobile-and-up} {}
+
+// Mobile - only
+@media #{$breakpoint-mobile-only} {}
+
+// Tablet - and up
+@media #{$breakpoint-tablet-and-up} {}
+
+// Tablet - only
+@media #{$breakpoint-tablet-only} {}
+
+// Desktop - and up
+@media #{$breakpoint-desktop-and-up} {}
+
+// Desktop - only
+@media #{$breakpoint-desktop-only} {}
+
+// Large desktop - and up
+@media #{$breakpoint-large-desktop-and-up} {}
+
+// Print
+@media print {}
+
+// Touch
+.touchevents {}
+
+// No touch
+.no-touchevents {}

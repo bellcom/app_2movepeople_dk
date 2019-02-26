@@ -73,7 +73,7 @@ span.input-group-addon {
 }
 .dashboard-overview form[class^="bc-2movepeople-dashboard-milestone-edit-form-"] {
   & .purpose {
-    height: 155px;
+    margin-bottom: $grid-gutter-width;
   }
   & .custom-form-fields.div-form {
     padding: 2px 15px 2px 15px;
