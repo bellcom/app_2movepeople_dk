@@ -88,7 +88,18 @@ $user-heading-padding-top-bottom: 15px;
   @extend .btn-default;
   @extend .btn-sm;
 
+  position: relative;
+
   font-size: 0 !important;
+
+  a {
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 
   &:after {
     display: inline-block;

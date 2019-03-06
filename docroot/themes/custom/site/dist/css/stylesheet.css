@@ -10491,7 +10491,14 @@ span.task.completed {
   text-align: center; }
 
 .user__controls__item--masquerade {
+  position: relative;
   font-size: 0 !important; }
+  .user__controls__item--masquerade a {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; }
   .user__controls__item--masquerade:after {
     display: inline-block;
     font-size: 14px;

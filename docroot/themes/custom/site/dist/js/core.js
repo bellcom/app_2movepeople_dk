@@ -1054,8 +1054,8 @@ jQuery(document).ready(function ($) {
 
   // Sidr
   $('.slinky-menu')
-      .find('ul, li, a')
-      .removeClass();
+    .find('ul, li, a')
+    .removeClass();
 
   $('.sidr-toggle--right').sidr({
     name: 'sidr-main',
