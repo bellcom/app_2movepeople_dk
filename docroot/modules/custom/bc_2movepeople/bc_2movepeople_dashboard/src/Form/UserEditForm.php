@@ -8,7 +8,6 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Url;
 use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Ajax\HtmlCommand;
-use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 
 /**
@@ -47,27 +46,6 @@ class UserEditForm extends FormBase {
       '#placeholder' => $this->t('Surname'),
       '#default_value' => $user->get('field_user_surname')->value
     ];
-
-//    $config = \Drupal::config('bc_2movepeople.settings');
-//    $email_required = $config->get('email_required');
-//
-//    $form['email'] = [
-//      '#type' => 'email',
-//      '#placeholder' => $this->t('Email'),
-//      '#required' => $email_required,
-//      '#default_value' => $user->get('mail')->value
-//    ];
-
-//    $form['password'] = [
-//      '#type' => 'password',
-//      '#placeholder' => $this->t('Password'),
-//      '#size' => 10,
-//    ];
-//    $form['password_confirm'] = [
-//      '#type' => 'password',
-//      '#placeholder' => $this->t('Confirm Password'),
-//      '#size' => 10,
-//    ];
 
     $form['actions'] = [
       '#type' => 'actions',
@@ -130,11 +108,6 @@ class UserEditForm extends FormBase {
     if (!$form_state->getErrors()) {
       $user = $form_state->get('user');
 
-      // Mandatory.
-//      $user->setEmail($form_state->getValue('email'));
-//      $user->setUsername($form_state->getValue('username'));
-//      $user->setPassword($form_state->getValue('password'));
-
       // Optional.
       $user->set('field_social_security_number', $form_state->getValue('social_security_number'));
       $user->set('field_user_firstname', $form_state->getValue('firstname'));
@@ -162,34 +135,6 @@ class UserEditForm extends FormBase {
     if (strlen($surname) < 2) {
       $form_state->setErrorByName('surname', $this->t('The Surname %surname is not valid.', ['%surname' => $surname]));
     }
-
-//    // Check Username.
-//    $username = CommonFormUtils::cleanInput($form_state->getValue('username'));
-//    if (strlen($username) < 2) {
-//      $form_state->setErrorByName('username', $this->t('The Username %username is not valid.', ['%username' => $username]));
-//    }
-//    if (!empty(user_load_by_name($username))) {
-//      $form_state->setErrorByName('username', $this->t('The Username %username already exists.', ['%username' => $username]));
-//    }
-//
-//    // Check Email.
-//    $email = CommonFormUtils::cleanInput(trim($form_state->getValue('email')));
-//    if ($form['email']['#required_but_empty']) {
-//      $form_state->setErrorByName('email', $this->t('The Email address is required'));
-//    }
-//    elseif (!\Drupal::service('email.validator')->isValid($email) and !empty($email)) {
-//      $form_state->setErrorByName('email', $this->t('The Email address %mail is not valid.', ['%mail' => $email]));
-//    }
-//    if (!empty(user_load_by_mail($email))) {
-//      $form_state->setErrorByName('email', $this->t('The Email address %mail already exists.', ['%mail' => $email]));
-//    }
-//
-//    // Check Password.
-//    $password = CommonFormUtils::cleanInput($form_state->getValue('password'));
-//    $password_confirm = CommonFormUtils::cleanInput($form_state->getValue('password_confirm'));
-//    if (strlen($password) < 2 || $password != $password_confirm) {
-//      $form_state->setErrorByName('password', $this->t('The passwords do not match.'));
-//    }
   }
 
 }
