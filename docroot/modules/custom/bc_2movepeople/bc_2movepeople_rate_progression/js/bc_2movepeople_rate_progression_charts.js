@@ -189,8 +189,8 @@
       };
     }
     console.log('Data', data);
-    var cdata = new google.visualization.arrayToDataTable(data);
-    console.log('Chart data', cdata);
+    var googleChartData = new google.visualization.arrayToDataTable(data);
+    console.log('Chart data', googleChartData);
     progression_type = $('#' + element).attr('progression');
 
     if (progression_type == 'feedback') {
@@ -241,7 +241,7 @@
 
         chart = new google.visualization.LineChart(ctx);
 
-        chart.draw(cdata, options);
+        chart.draw(googleChartData, options);
         break;
       }
       case 'bar': {
@@ -250,63 +250,56 @@
 
         chart = new google.visualization.ColumnChart(ctx);
 
-        chart.draw(cdata, options);
+        chart.draw(googleChartData, options);
         break;
       }
       case 'radar': {
         var color = Chart.helpers.color;
+        var colors = ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913'];
         ctx.classList.add('hidden');
         radarCtx.classList.remove('hidden');
 
-        var myData = {
-          labels: ['Løb', 'Svømning', 'Spisning', 'Cykling', 'Brydning', 'Triatlon'],
-          datasets: [
-            {
-              label: 'Løb',
-              data: [13, 8, 4, 2, 1, 3],
-              backgroundColor: color('#ebbab2').alpha(0.3).rgbString(),
-              borderColor: color('#ebbab2').alpha(0.3).rgbString()
-            },
-            {
-              label: 'Svømning',
-              data: [1, 10, 9, 7, 8, 2],
-              backgroundColor: color('#4782a6').alpha(0.3).rgbString(),
-              borderColor: color('#4782a6').alpha(0.3).rgbString()
-            },
-            {
-              label: 'Spisning',
-              data: [10, 6, 1, 5, 11, 3],
-              backgroundColor: color('#60d5d5').alpha(0.3).rgbString(),
-              borderColor: color('#60d5d5').alpha(0.3).rgbString()
-            },
-            {
-              label: 'Cykling',
-              data: [11, 2, 4, 2, 12, 8],
-              backgroundColor: color('#f2188e').alpha(0.3).rgbString(),
-              borderColor: color('#f2188e').alpha(0.3).rgbString()
-            },
-            {
-              label: 'Brydning',
-              data: [1, 4, 9, 5, 2, 11],
-              backgroundColor: color('#980299').alpha(0.3).rgbString(),
-              borderColor: color('#980299').alpha(0.3).rgbString()
-            },
-            {
-              label: 'Brydning',
-              data: [7, null, 5, 7, 3, 8],
-              backgroundColor: color('#dc3913').alpha(0.3).rgbString(),
-              borderColor: color('#dc3913').alpha(0.3).rgbString()
+        // Get labels.
+        var labels = data[0].map(function (label) {
+          return label.label;
+        });
+        labels.shift(); // Remove the first element in the array.
+
+        // Get datasets.
+        var datasets = data;
+        datasets.shift(); // Remove the labels.
+        var transformedDataset = datasets.map(function (dataset) {
+          var label = dataset[0];
+          var data = dataset;
+          data.shift(); // Remove the label.
+
+          var transformedData = data.map(function (item) {
+            if (item === null) {
+              return 0;
             }
-          ]
-        };
-        var myOptions = {
-          color: ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913']
-        };
+
+            return item;
+          });
+
+          return {
+            label: label,
+            data: transformedData
+          };
+        });
+
+        // Add colors to the dataset items.
+        for (var i = 0; i < transformedDataset.length; i++) {
+          transformedDataset[i].borderColor = color(colors[i]).alpha(0.3).rgbString();
+          transformedDataset[i].backgroundColor = color(colors[i]).alpha(0.3).rgbString();
+        }
 
         chart = new Chart(radarCtx, {
           type: 'radar',
-          data: myData,
-          options: myOptions
+          data: {
+            labels: labels,
+            datasets: transformedDataset
+          },
+          options: {}
         });
         break;
       }
