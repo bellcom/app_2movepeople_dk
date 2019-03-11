@@ -188,9 +188,7 @@
         type: type
       };
     }
-    console.log('Data', data);
     var googleChartData = new google.visualization.arrayToDataTable(data);
-    console.log('Chart data', googleChartData);
     progression_type = $('#' + element).attr('progression');
 
     if (progression_type == 'feedback') {
