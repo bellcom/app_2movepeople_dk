@@ -188,7 +188,9 @@
         type: type
       };
     }
+    console.log('Data', data);
     var cdata = new google.visualization.arrayToDataTable(data);
+    console.log('Chart data', cdata);
     progression_type = $('#' + element).attr('progression');
 
     if (progression_type == 'feedback') {
@@ -252,16 +254,54 @@
         break;
       }
       case 'radar': {
+        var color = Chart.helpers.color;
         ctx.classList.add('hidden');
         radarCtx.classList.remove('hidden');
 
         var myData = {
-          labels: ['Running', 'Swimming', 'Eating', 'Cycling'],
-          datasets: [{
-            data: [20, 10, 4, 2]
-          }]
+          labels: ['Løb', 'Svømning', 'Spisning', 'Cykling', 'Brydning', 'Triatlon'],
+          datasets: [
+            {
+              label: 'Løb',
+              data: [13, 8, 4, 2, 1, 3],
+              backgroundColor: color('#ebbab2').alpha(0.3).rgbString(),
+              borderColor: color('#ebbab2').alpha(0.3).rgbString()
+            },
+            {
+              label: 'Svømning',
+              data: [1, 10, 9, 7, 8, 2],
+              backgroundColor: color('#4782a6').alpha(0.3).rgbString(),
+              borderColor: color('#4782a6').alpha(0.3).rgbString()
+            },
+            {
+              label: 'Spisning',
+              data: [10, 6, 1, 5, 11, 3],
+              backgroundColor: color('#60d5d5').alpha(0.3).rgbString(),
+              borderColor: color('#60d5d5').alpha(0.3).rgbString()
+            },
+            {
+              label: 'Cykling',
+              data: [11, 2, 4, 2, 12, 8],
+              backgroundColor: color('#f2188e').alpha(0.3).rgbString(),
+              borderColor: color('#f2188e').alpha(0.3).rgbString()
+            },
+            {
+              label: 'Brydning',
+              data: [1, 4, 9, 5, 2, 11],
+              backgroundColor: color('#980299').alpha(0.3).rgbString(),
+              borderColor: color('#980299').alpha(0.3).rgbString()
+            },
+            {
+              label: 'Brydning',
+              data: [7, null, 5, 7, 3, 8],
+              backgroundColor: color('#dc3913').alpha(0.3).rgbString(),
+              borderColor: color('#dc3913').alpha(0.3).rgbString()
+            }
+          ]
         };
-        var myOptions = {};
+        var myOptions = {
+          color: ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913']
+        };
 
         chart = new Chart(radarCtx, {
           type: 'radar',
