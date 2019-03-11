@@ -87,6 +87,11 @@
         $('#progression_total_chart').text('');
         $(this).graphTotalLoad('bar');
       });
+
+      $('.radar-graph-btn').change(function () {
+        $('#progression_total_chart').text('');
+        $(this).graphTotalLoad('radar');
+      });
     }
   };
 
@@ -168,6 +173,10 @@
   }
 
   function drawChart(element, data, title = '', chart_type = 'line') {
+    var ctx = document.getElementById(element);
+    var radarCtx = document.getElementById('radarChart');
+    var chart;
+
     var header = data[0];
     for (i = 0; i < header.length; i++) {
       if (typeof header[i] !== 'string') {
@@ -223,11 +232,45 @@
       };
     }
 
-    var chart = (chart_type == 'line' ?
-        new google.visualization.LineChart(document.getElementById(element)) :
-        new google.visualization.ColumnChart(document.getElementById(element)));
+    switch (chart_type) {
+      case 'line': {
+        radarCtx.classList.add('hidden');
+        ctx.classList.remove('hidden');
 
-    chart.draw(cdata, options);
+        chart = new google.visualization.LineChart(ctx);
+
+        chart.draw(cdata, options);
+        break;
+      }
+      case 'bar': {
+        radarCtx.classList.add('hidden');
+        ctx.classList.remove('hidden');
+
+        chart = new google.visualization.ColumnChart(ctx);
+
+        chart.draw(cdata, options);
+        break;
+      }
+      case 'radar': {
+        ctx.classList.add('hidden');
+        radarCtx.classList.remove('hidden');
+
+        var myData = {
+          labels: ['Running', 'Swimming', 'Eating', 'Cycling'],
+          datasets: [{
+            data: [20, 10, 4, 2]
+          }]
+        };
+        var myOptions = {};
+
+        chart = new Chart(radarCtx, {
+          type: 'radar',
+          data: myData,
+          options: myOptions
+        });
+        break;
+      }
+    }
   }
 
   function updateProgressionChart(progression_id, chart_type = 'line') {
