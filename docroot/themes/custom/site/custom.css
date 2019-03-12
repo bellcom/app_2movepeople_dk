@@ -5,6 +5,41 @@
 
 /* Corrections and improvements for milestones */
 
+.dashboard-overview.dashboard-overview-task-rows .row.user-task-box .is-remind-expired::before,
+.dashboard-overview.dashboard-overview-task-rows .row.user-task-box .is-remind-warning::before{
+	content: "";
+	left: -3px;
+	top: 5px;
+	width: 10px;
+	height: 10px;
+	border-radius: 100%;
+	padding: 0;
+}
+
+.dashboard-overview.dashboard-overview-task-rows .row.user-task-box .subtask::before{
+	content: "❱";
+	left: 0;
+	top: 3px;
+	color: gray;
+	font-size: 20px;
+}
+
+.dashboard-overview.dashboard-overview-task-rows .row.user-task-box .dashboard-overview-task-title{
+	font-weight:bold;
+}
+
+.dashboard-overview.dashboard-overview-task-rows .row.user-task-box .dashboard-overview-task-date{
+	font-size: 12px;
+}
+
+.dashboard-overview.dashboard-overview-task-rows .row.user-task-box .right-btn-box,
+.dashboard-overview.dashboard-overview-task-rows .row.user-task-box{
+	padding-right: 0px;
+}
+
+.dashboard-overview.dashboard-overview-task-rows .row.user-task-box .right-btn-box{
+	margin-top: 2px;
+}
 
 /* For mobile stuff; fixed later */
 @media (max-width: 768px) {
