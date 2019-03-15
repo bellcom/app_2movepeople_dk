@@ -12,6 +12,6 @@ regions:
   help: 'Help'
   content: 'Content'
   sidebar_left__desktop: 'Left sidebar - desktop'
-  sidebar_left-mobile__navigation: 'Left sidebar - mobile - navigation'
+  sidebar_left__mobile: 'Left sidebar - mobile'
 
 base theme: bellcom

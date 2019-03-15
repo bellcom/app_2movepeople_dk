@@ -10015,13 +10015,14 @@ input[type="date"]::-webkit-clear-button {
 .who-am-i__data__account-type {
   color: #9aadb4; }
 
-.sidr .logo {
-  padding: 10px 15px; }
-  .sidr .logo img {
-    max-height: 50px; }
-
-.sidr .logo + .slinky-menu {
-  margin-top: 15px; }
+.sidr {
+  padding-top: 20px; }
+  .sidr .logo {
+    padding: 10px 15px; }
+    .sidr .logo img {
+      max-height: 50px; }
+  .sidr .logo + .slinky-menu {
+    margin-top: 15px; }
 
 .slinky-menu {
   color: #fff; }

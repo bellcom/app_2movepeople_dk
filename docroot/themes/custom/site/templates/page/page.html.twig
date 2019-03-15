@@ -1,20 +1,10 @@
 <div class="layout__wrapper">
 
-  {% if page.sidebar_left-mobile__navigation %}
+  {% if page.sidebar_left__mobile %}
 
     <!-- Begin - sidr source provider -->
     <aside class="sidr-source-provider">
-
-      <!-- Begin - navigation -->
-      <nav class="slinky-menu" role="navigation">
-
-        {% if page.sidebar_left-mobile__navigation %}
-          {{ page.sidebar_left-mobile__navigation }}
-        {% endif %}
-
-      </nav>
-      <!-- End - navigation -->
-
+      {{ page.sidebar_left__mobile }}
     </aside>
     <!-- End - sidr source provider -->
 

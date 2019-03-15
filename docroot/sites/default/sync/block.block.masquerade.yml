@@ -8,7 +8,7 @@ dependencies:
     - site
 id: masquerade
 theme: site
-region: navigation
+region: header
 weight: -6
 provider: null
 plugin: masquerade
