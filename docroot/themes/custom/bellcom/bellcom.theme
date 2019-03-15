@@ -1,148 +1,64 @@
 <?php
+use Drupal\Component\Utility\Html;
 
 /**
- * @file
- * Functions to support theming in the bellcom theme.
+ * Implements hook_preprocess_page().
  */
+function bellcom_preprocess_page(array &$variables) {}
 
 /**
- * Implements hook_preprocess_HOOK() for html.html.twig.
+ * Implements hook_preprocess_HOOK().
  */
-function bellcom_preprocess_html(array &$variables) {
-  /* Add class to html tag */
-  //$variables['html_attributes']->addClass('no-js');
+function bellcom_preprocess_taxonomy_term(&$variables) {
+  $term = $variables['term'];
+  $view_mode = $variables['view_mode'];
 
-  // Don't display the site name twice on the front page (and potentially others)
-  /*if (isset($variables['head_title_array']['title']) && isset($variables['head_title_array']['name']) && ($variables['head_title_array']['title'] == $variables['head_title_array']['name'])) {
-    $variables['head_title'] = $variables['head_title_array']['name'];
-  }*/
+  // Entity variables
+  $variables['attributes']['class'][] = HTML::cleanCssIdentifier('entity-' . $view_mode);
+  $variables['attributes']['class'][] = HTML::cleanCssIdentifier('entity-' . $view_mode . '--' . $term->bundle());
 }
 
 /**
- * Implements hook_page_attachments_alter().
+ * Implements hook_preprocess_HOOK().
  */
-function bellcom_page_attachments_alter(array &$page) {
-  // Tell IE to use latest rendering engine (not to use compatibility mode).
-  /*$ie_edge = [
-    '#type' => 'html_tag',
-    '#tag' => 'meta',
-    '#attributes' => [
-    'http-equiv' => 'X-UA-Compatible',
-    'content' => 'IE=edge',
-    ],
-  ];
-  $page['#attached']['html_head'][] = [$ie_edge, 'ie_edge'];*/
+function bellcom_preprocess_node(&$variables) {
+  $node = $variables['node'];
+  $view_mode = $variables['view_mode'];
+
+  // Entity variables
+  $variables['attributes']['class'][] = HTML::cleanCssIdentifier('entity-' . $view_mode);
+  $variables['attributes']['class'][] = HTML::cleanCssIdentifier('entity-' . $view_mode . '--' . $node->getType());
 }
 
 /**
- * Implements hook_preprocess_page() for page.html.twig.
+ * Implements hook_preprocess_HOOK().
  */
-function bellcom_preprocess_page(array &$variables) {
+function bellcom_preprocess_paragraph(&$variables) {
+  $paragraph = $variables['paragraph'];
+  $view_mode = $variables['view_mode'];
 
+  // Entity variables
+  $variables['attributes']['class'][] = HTML::cleanCssIdentifier('entity-' . $view_mode);
+  $variables['attributes']['class'][] = HTML::cleanCssIdentifier('entity-' . $view_mode . '--' . $paragraph->getType());
 }
 
 /**
- * Implements hook_theme_suggestions_page_alter().
- */
-function bellcom_theme_suggestions_page_alter(array &$suggestions, array $variables) {
-
-}
-
-/**
- * Implements hook_theme_suggestions_node_alter().
- */
-function bellcom_theme_suggestions_node_alter(array &$suggestions, array $variables) {
-  /*$node = $variables['elements']['#node'];
-
-  if ($variables['elements']['#view_mode'] == "full") {
-
-  }*/
-}
-
-/**
- * Implements hook_preprocess_HOOK() for Block document templates.
+ * Implements hook_preprocess_HOOK().
  */
 function bellcom_preprocess_block(array &$variables) {
-
+  $variables['content']['#attributes']['block'] = $variables['elements']['#id'];
 }
 
 /**
- * Implements hook_theme_suggestions_field_alter().
+ * Implements hook_theme_suggestions_HOOK_alter().
  */
-function bellcom_theme_suggestions_field_alter(array &$suggestions, array $variables) {
-  /*$element = $variables['element'];
-  $suggestions[] = 'field__' . $element['#view_mode'];
-  $suggestions[] = 'field__' . $element['#view_mode'] . '__' . $element['#field_name'];*/
+function bellcom_theme_suggestions_menu_alter(array &$suggestions, array $variables) {
+  if (!empty($variables['attributes']['block'])) {
+    $block = Drupal\block\Entity\Block::load($variables['attributes']['block']);
+    $suggestions[] = 'menu__' . $block->getRegion();
+  }
 }
 
-/**
- * Implements hook_theme_suggestions_field_alter().
- */
-function bellcom_theme_suggestions_fieldset_alter(array &$suggestions, array $variables) {
-  /*$element = $variables['element'];
-  if (isset($element['#attributes']['class']) && in_array('form-composite', $element['#attributes']['class'])) {
-    $suggestions[] = 'fieldset__form_composite';
-  }*/
-}
-
-/**
- * Implements hook_preprocess_node().
- */
-function bellcom_preprocess_node(array &$variables) {
-  // Default to turning off byline/submitted.
-  //$variables['display_submitted'] = FALSE;
-}
-
-/**
- * Implements hook_theme_suggestions_views_view_alter().
- */
-function bellcom_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
-
-}
-
-/**
- * Implements hook_preprocess_form().
- */
-function bellcom_preprocess_form(array &$variables) {
-  //$variables['attributes']['novalidate'] = 'novalidate';
-}
-
-/**
- * Implements hook_preprocess_select().
- */
-function bellcom_preprocess_select(array &$variables) {
-  //$variables['attributes']['class'][] = 'select-chosen';
-}
-
-/**
- * Implements hook_preprocess_field().
- */
-function bellcom_preprocess_field(array &$variables, $hook) {
-  /*switch ($variables['element']['#field_name']) {
-  }*/
-}
-
-/**
- * Implements hook_preprocess_details().
- */
-function bellcom_preprocess_details(array &$variables) {
-  /*$variables['attributes']['class'][] = 'details';
-  $variables['summary_attributes']['class'] = 'summary';*/
-}
-
-/**
- * Implements hook_theme_suggestions_details_alter().
- */
-function bellcom_theme_suggestions_details_alter(array &$suggestions, array $variables) {
-
-}
-
-/**
- * Implements hook_preprocess_menu_local_task().
- */
-function bellcom_preprocess_menu_local_task(array &$variables) {
-  //$variables['element']['#link']['url']->setOption('attributes', ['class'=>'rounded']);
-}
 
 /**
  * Implements hook_theme_suggestions_hook
