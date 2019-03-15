@@ -13,8 +13,8 @@
     %}
     <div class="row user-task-box" id="task-row-{{task.id}}">
       <div{{ attributes.addClass(classes) }}">
-        {{ task.title }}<br/>
-        {{ 'Date'|trans }}: {{ task.date|date("d-m-Y") }}
+	      <span class="dashboard-overview-task-title">{{ task.title }}</span><br/>
+	      <span class="dashboard-overview-task-date">{{ 'Date'|trans }}: {{ task.date|date("d-m-Y") }}</span>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 right-btn-box">
         <a href="{{ path('bc_2movepeople_dashboard.user.task.complete', {'user': user, 'node': task.id}) }}" class="btn btn-info use-ajax link-btn" data-dialog-type="modal" data-dialog-options='{"width":640}' role="button">{{ 'Complete'|trans }}</a>
@@ -27,6 +27,6 @@
   
 {% endmacro %}
 
-<div class="dashboard-overview">
+<div class="dashboard-overview dashboard-overview-task-rows">
 {{ _self.recursiveTasks(tasks, user, 0) }}
 </div>
