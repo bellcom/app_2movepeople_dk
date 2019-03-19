@@ -50,6 +50,8 @@ function site_preprocess_page(array &$variables) {
     '#theme' => 'bc_2movepeople_menu_toggle',
     '#state' => empty((integer) $state) ? '0' : $state,
   ];
+
+  $variables['relative_logo_url'] = file_url_transform_relative(file_create_url(theme_get_setting('logo.url')));
 }
 
 /**
