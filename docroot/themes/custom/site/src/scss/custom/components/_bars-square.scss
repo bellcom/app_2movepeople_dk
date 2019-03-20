@@ -1,7 +1,9 @@
 // --------------------------------------------------
 // Variables
 // --------------------------------------------------
-$color-bkg-selected: $body-bg;
+
+$color-bkg-selected: darken($body-bg, 40%);
+$color-bkg-selected-font-color: #fff;
 
 .br-theme-bars-square {
 
@@ -26,6 +28,7 @@ $color-bkg-selected: $body-bg;
       &.br-selected {
         border: 1px solid $color-bkg-selected;
         background: $color-bkg-selected;
+        color: $color-bkg-selected-font-color;
       }
     }
 
@@ -45,6 +48,7 @@ $color-bkg-selected: $body-bg;
       &.br-active, &.br-selected {
         border: 1px solid $color-bkg-selected;
         background: $color-bkg-selected;
+        color: $color-bkg-selected-font-color;
       }
     }
   }

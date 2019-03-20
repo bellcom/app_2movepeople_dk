@@ -9387,7 +9387,7 @@ body {
     .vertical-text li a {
       border-bottom: 1px solid #ddd;
       border-right-color: transparent;
-      text-align: center;
+      text-align: left;
       border-radius: 4px 4px 0px 0px;
       display: inline-block;
       white-space: nowrap;
@@ -9529,7 +9529,7 @@ h1.page-header, .page-header.heading-h1 {
       .vertical-text li a {
         border-bottom: initial;
         border-right-color: transparent;
-        text-align: center;
+        text-align: left;
         border-radius: 4px 0 0 4px;
         display: block;
         white-space: initial;
@@ -9781,7 +9781,7 @@ div.custom-nav-divider {
   min-height: 300px;
   max-height: 450px;
   overflow-y: auto;
-  margin-bottom: 5px; }
+  margin-bottom: 30px; }
 
 #bc_2movepeople-rate-progression-add-form {
   margin-bottom: 5px;
@@ -9936,8 +9936,9 @@ table.table-bordered-сustom td span.column-data-box {
     line-height: 2;
     text-align: center; }
     .br-theme-bars-square .br-widget a.br-active, .br-theme-bars-square .br-widget a.br-selected {
-      border: 1px solid #F2F5F7;
-      background: #F2F5F7; }
+      border: 1px solid #7494a9;
+      background: #7494a9;
+      color: #fff; }
   .br-theme-bars-square .br-widget .br-current-rating {
     clear: both;
     width: 330px;
@@ -9948,8 +9949,9 @@ table.table-bordered-сustom td span.column-data-box {
 .br-theme-bars-square .br-readonly a {
   cursor: default; }
   .br-theme-bars-square .br-readonly a.br-active, .br-theme-bars-square .br-readonly a.br-selected {
-    border: 1px solid #F2F5F7;
-    background: #F2F5F7; }
+    border: 1px solid #7494a9;
+    background: #7494a9;
+    color: #fff; }
 
 .select-wrapper.rating-wrapper:after {
   display: none; }

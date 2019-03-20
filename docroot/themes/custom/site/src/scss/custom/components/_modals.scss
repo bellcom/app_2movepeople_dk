@@ -67,7 +67,7 @@
   min-height:300px;
   max-height: 450px;
   overflow-y: auto;
-  margin-bottom: 5px;
+  margin-bottom: $grid-gutter-width;
 }
 
 #bc_2movepeople-rate-progression-add-form {
