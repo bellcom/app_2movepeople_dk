@@ -6,14 +6,12 @@ dependencies:
     - field.field.node.page.body
     - field.field.node.page.field_meta_tags
     - field.field.node.page.panelizer
-    - field.field.node.page.scheduled_update
     - node.type.page
   module:
-    - inline_entity_form
+    - datetime
     - metatag
     - path
     - text
-    - workbench_moderation
 _core:
   default_config_hash: tVHAlgXqmXCiZUPjTXmibfQrGs4-EXfmIWbYhKVii94
 id: node.page.default
@@ -46,7 +44,8 @@ content:
     type: language_select
     weight: 2
     region: content
-    settings: {  }
+    settings:
+      include_locked: true
     third_party_settings: {  }
   path:
     type: path
@@ -61,17 +60,17 @@ content:
     weight: 3
     third_party_settings: {  }
     region: content
-  scheduled_update:
-    type: inline_entity_form_complex
+  scheduled_publication:
+    type: datetime_default
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
     settings:
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      allow_new: true
-      allow_existing: false
-      match_operator: CONTAINS
-      form_mode: default
-    weight: 26
+      display_label: true
+    weight: 121
     third_party_settings: {  }
     region: content
   sticky:

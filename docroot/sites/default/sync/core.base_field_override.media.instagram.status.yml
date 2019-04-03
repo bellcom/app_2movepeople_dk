@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - media_entity.bundle.instagram
+    - media.type.instagram
 id: media.instagram.status
 field_name: status
 entity_type: media

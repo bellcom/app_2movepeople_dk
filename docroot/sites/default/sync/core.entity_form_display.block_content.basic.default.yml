@@ -6,8 +6,8 @@ dependencies:
     - block_content.type.basic
     - field.field.block_content.basic.body
   module:
+    - datetime
     - text
-    - workbench_moderation
 _core:
   default_config_hash: S0f54eS7by2OoFl_NrvBK9UGTPx51cktxKhvwMy0Jls
 id: block_content.basic.default
@@ -35,6 +35,13 @@ content:
   langcode:
     type: language_select
     weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  scheduled_publication:
+    type: datetime_default
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }

@@ -12,10 +12,13 @@ display:
           sort_desc_label: Desc
       fields:
         uid:
+          admin_label: 'Authored by'
           separator: ', '
         created:
+          admin_label: 'Authored on'
           separator: ', '
         moderation_state:
+          admin_label: 'Moderation state'
           alter:
             text: 'Set to <strong>{{ moderation_state }}</strong> on {{ created }} by {{ uid }}'
           separator: ', '

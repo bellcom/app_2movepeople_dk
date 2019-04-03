@@ -12,8 +12,8 @@ dependencies:
     - field.field.node.progression_target.field_purpose
     - node.type.progression_target
   module:
+    - datetime
     - path
-    - workbench_moderation
 id: node.progression_target.default
 targetEntityType: node
 bundle: progression_target
@@ -73,7 +73,8 @@ content:
     type: language_select
     weight: 2
     region: content
-    settings: {  }
+    settings:
+      include_locked: true
     third_party_settings: {  }
   path:
     type: path
@@ -88,6 +89,19 @@ content:
     weight: 9
     region: content
     third_party_settings: {  }
+  scheduled_publication:
+    type: datetime_default
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 121
+    third_party_settings: {  }
+    region: content
   sticky:
     type: boolean_checkbox
     settings:
@@ -103,6 +117,9 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  translation:
+    weight: 10
+    region: content
   uid:
     type: entity_reference_autocomplete
     weight: 5

@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - media_entity.bundle.tweet
+    - media.type.tweet
 id: media.tweet.name
 field_name: name
 entity_type: media

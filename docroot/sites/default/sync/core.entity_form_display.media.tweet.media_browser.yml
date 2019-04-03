@@ -6,9 +6,10 @@ dependencies:
     - core.entity_form_mode.media.media_browser
     - field.field.media.tweet.embed_code
     - field.field.media.tweet.field_media_in_library
-    - media_entity.bundle.tweet
+    - media.type.tweet
   module:
-    - workbench_moderation
+    - datetime
+    - path
 _core:
   default_config_hash: WYt7qUipUVviLaZYZEdzc047DMFB_ghGY8gwU0OenB0
 id: media.tweet.media_browser
@@ -27,7 +28,8 @@ content:
     type: language_select
     weight: 2
     region: content
-    settings: {  }
+    settings:
+      include_locked: true
     third_party_settings: {  }
   name:
     type: string_textfield
@@ -37,11 +39,30 @@ content:
       placeholder: ''
     third_party_settings: {  }
     region: content
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   preview:
     weight: null
     settings: {  }
     third_party_settings: {  }
     region: content
+  scheduled_publication:
+    type: datetime_default
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 100
+    region: content
+    third_party_settings: {  }
 hidden:
   created: true
   embed_code: true

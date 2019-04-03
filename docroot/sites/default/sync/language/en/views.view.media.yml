@@ -5,7 +5,7 @@ display:
     display_options:
       exposed_form:
         options:
-          submit_button: Apply
+          submit_button: Filter
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
           sort_asc_label: Asc
@@ -31,7 +31,7 @@ display:
           label: 'Media name'
           separator: ', '
         bundle:
-          label: Provider
+          label: Source
           separator: ', '
         uid:
           label: Author
@@ -48,22 +48,22 @@ display:
         operations:
           label: Operations
       filters:
+        name:
+          expose:
+            label: 'Media name'
+        bundle:
+          expose:
+            label: Source
         status:
           expose:
             label: 'True'
           group_info:
-            label: 'Publishing status'
+            label: 'Published status'
             group_items:
               1:
                 title: Published
               2:
                 title: Unpublished
-        bundle:
-          expose:
-            label: Provider
-        name:
-          expose:
-            label: 'Media name'
         langcode:
           expose:
             label: Language

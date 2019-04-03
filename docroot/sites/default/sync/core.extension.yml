@@ -1,8 +1,6 @@
 module:
   admin_toolbar: 0
-  admin_toolbar_tools: 0
   administerusersbyrole: 0
-  administerusersbyrole_hack: 0
   bc_2movepeople: 0
   bc_2movepeople_dashboard: 0
   bc_2movepeople_rate_progression: 0
@@ -14,6 +12,7 @@ module:
   config_translation: 0
   contact: 0
   contact_storage: 0
+  content_moderation: 0
   contextual: 0
   ctools: 0
   ctools_block: 0
@@ -40,7 +39,6 @@ module:
   jsonapi: 0
   language: 0
   layout_discovery: 0
-  lightning_api: 0
   lightning_contact_form: 0
   lightning_core: 0
   lightning_landing_page: 0
@@ -48,24 +46,19 @@ module:
   lightning_media: 0
   lightning_media_document: 0
   lightning_media_image: 0
-  lightning_media_instagram: 0
-  lightning_media_twitter: 0
   lightning_media_video: 0
   lightning_page: 0
   lightning_roles: 0
-  lightning_scheduled_updates: 0
+  lightning_scheduler: 0
   lightning_search: 0
   lightning_workflow: 0
   link: 0
   locale: 0
   masquerade: 0
-  media_entity: 0
-  media_entity_document: 0
-  media_entity_image: 0
-  media_entity_instagram: 0
-  media_entity_twitter: 0
+  media: 0
   menu_ui: 0
   metatag: 0
+  migrate: 0
   node: 0
   openapi: 0
   openapi_redoc: 0
@@ -78,15 +71,12 @@ module:
   path: 0
   quickedit: 0
   rdf: 0
-  scheduled_updates: 0
   schemata: 0
   schemata_json_schema: 0
   search_api: 0
   search_api_db: 0
   serialization: 0
   shortcut: 0
-  simple_oauth: 0
-  simple_oauth_extras: 0
   syslog: 0
   system: 0
   taxonomy: 0
@@ -100,7 +90,6 @@ module:
   video_embed_media: 0
   views_infinite_scroll: 0
   views_ui: 0
-  workbench_moderation: 0
   workflows: 0
   menu_link_content: 1
   content_translation: 10
