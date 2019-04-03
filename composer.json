@@ -33,7 +33,9 @@
         "mpdf/mpdf": "^7.0",
         "drupal/drush_language": "^1.0@RC",
         "drupal/examples": "1.x-dev",
-        "drush/drush": "~8.1"
+        "drush/drush": "~8.1",
+        "drupal/config_update": "1.6.0",
+        "drupal/media_entity": "2.0.0-alpha2"
     },
     "repositories": {
         "0": {

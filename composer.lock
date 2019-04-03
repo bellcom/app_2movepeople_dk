@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c3cdcb2534f0feb8806e65c615c3c31e",
+    "content-hash": "597cf2adc2474773658139e9d83ae966",
     "packages": [
         {
             "name": "acquia/lightning",
@@ -4093,7 +4093,7 @@
                 },
                 "drupal": {
                     "version": "8.x-4.2",
-                    "datestamp": "1523670784",
+                    "datestamp": "1500497642",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
