@@ -22,40 +22,50 @@ $ drush updb
 $ drush language-import da sites/default/po/da.po
 ```
 
-## Maintenance
-```drush make```, ```drush pm-download```, ```drush pm-update``` and their ilk are the old-school way of maintaining your code base. Forget them. You're in Composer land now!
+## Update path details
 
-Let this handy table be your guide:
+### Initial point lightning version v 2.1.7
+```
+git reset --hard HEAD
+git checkout 97a7f7a5a9737859f1c61984caa06eaff375ed26
+composer install
+drush cr
+drush pm-uninstall scheduled_updates lightning_scheduled_updates simple_oauth admin_toolbar_tools media_entity_instagram media_entity_twitter -y
+```
 
-| Task                                            | Drush                                         | Composer                                          |
-|-------------------------------------------------|-----------------------------------------------|---------------------------------------------------|
-| Installing a contrib project (latest version)   | ```drush pm-download PROJECT```               | ```composer require drupal/PROJECT```         |
-| Installing a contrib project (specific version) | ```drush pm-download PROJECT-8.x-1.0-beta3``` | ```composer require drupal/PROJECT:1.0.0-beta3``` |
-| Updating all contrib projects and Drupal core   | ```drush pm-update```                         | ```composer update```                             |
-| Updating a single contrib project               | ```drush pm-update PROJECT```                 | ```composer update drupal/PROJECT```              |
-| Updating Drupal core                            | ```drush pm-update drupal```                  | ```composer update drupal/core```                 |
+### Update acquia/lightning to v 2.2.8
+```
+git reset --hard HEAD
+git checkout b9bd5abda90bd284fa346350b671c2baf0c41a39
+composer install
+// You can provbaly get an error with DrupalComposer\DrupalScaffold. Try to run composer install again.
+composer install
+drush cr
+drush en content_moderation lightning_scheduler wbm2cm -y 
+drush cr
+drush updb -y
+drush wbm2cm-migrate
+// You can provbaly get an error with Drupal/Core/Render/Renderer in first try. Try to run wbm2cm-migrate again.
+drush wbm2cm-migrate
+drush pm-uninstall wbm2cm -y 
+```
 
-The magic is that Composer, unlike Drush, is a *dependency manager*. If module ```foo version: 1.0.0``` depends on ```baz version: 3.2.0```, Composer will not let you update baz to ```3.3.0``` (or downgrade it to ```3.1.0```, for that matter). Drush has no concept of dependency management. If you've ever accidentally hosed a site because of dependency issues like this, you've probably already realized how valuable Composer can be.
+### Update acquia/lightning to v 3.1.6
+```
+git reset --hard HEAD
+git checkout bb538d44ef8aeb168eb51183ce4975ad2e1c363c
+composer install
+drush php:eval "Drupal::keyValue('system.schema')->deleteMultiple(['openapi_redoc', 'openapi_swagger_ui']);"
+drush cr
+drush updb -y
+```
 
-But to be clear: it is still very helpful to use a site management tool like Drush or Drupal Console. Tasks such as database updates (```drush updatedb```) are still firmly in the province of such utilities. This installer will install a copy of Drush (local to the project) in the ```bin``` directory.
-
-### Specifying a version
-you can specify a version from the command line with:
-
-    $ composer require drupal/<modulename>:<version> 
-
-For example:
-
-    $ composer require drupal/ctools:3.0.0-alpha26
-    $ composer require drupal/token:1.x-dev 
-
-In these examples, the composer version 3.0.0-alpha26 maps to the drupal.org version 8.x-3.0-alpha26 and 1.x-dev maps to 8.x-1.x branch on drupal.org.
-
-If you specify a branch, such as 1.x you must add -dev to the end of the version.
-
-**Composer is only responsible for maintaining the code base**.
-
-## Source Control
-If you peek at the ```.gitignore``` we provide, you'll see that certain directories, including all directories containing contributed projects, are excluded from source control. This might be a bit disconcerting if you're newly arrived from Planet Drush, but in a Composer-based project like this one, **you SHOULD NOT commit your installed dependencies to source control**.
-
-When you set up the project, Composer will create a file called ```composer.lock```, which is a list of which dependencies were installed, and in which versions. **Commit ```composer.lock``` to source control!** Then, when your colleagues want to spin up their own copies of the project, all they'll have to do is run ```composer install```, which will install the correct versions of everything in ```composer.lock```.
+### Update acquia/lightning to v 3.2.7
+```
+git reset --hard HEAD
+git checkout 5fad1a45cac5e068f2e6ee96a116cac5370471f0
+composer install
+drush cr
+drush updb -y
+drush cim -y
+```
