@@ -1,5 +1,5 @@
 uuid: 553ad950-33f9-429a-8a48-5d156d961592
-langcode: en
+langcode: da
 status: true
 dependencies:
   config:
@@ -9,6 +9,7 @@ dependencies:
     - field.field.user.user.field_connected_users
     - field.field.user.user.field_diagnose
     - field.field.user.user.field_organisation
+    - field.field.user.user.field_social_security_number
     - field.field.user.user.field_user_firstname
     - field.field.user.user.field_user_surname
     - field.field.user.user.user_picture
@@ -44,6 +45,11 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
+  masquerade:
+    weight: 50
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   user_picture:
     type: image
     weight: 0
@@ -59,5 +65,7 @@ hidden:
   field_connected_users: true
   field_diagnose: true
   field_organisation: true
+  field_social_security_number: true
   langcode: true
   member_for: true
+  name: true

@@ -3,3 +3,5 @@ entity_embed:
 _core:
   default_config_hash: 4nmcXJFKVTtCJfBZHrgQjtLh_cBJsaNBZGj6UGNQwJs
 langcode: da
+entity_browser:
+  override_widget: true

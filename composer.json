@@ -17,15 +17,13 @@
         "behat/behat": "^3.0",
         "se/selenium-server-standalone": "^2.53",
         "composer/composer": "^1.3",
-        "drush/drush": "^9.0",
         "drupal/console": "^1.0",
         "drupal/twig_xdebug": "^1.0"
     },
     "require": {
-        "composer/installers": "^1.0",
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "cweagans/composer-patches": "^1.6.0",
-        "acquia/lightning": "~2.1.0",
+        "acquia/lightning": "^3.2.7",
         "drupal/bootstrap": "^3.17",
         "drupal/admin_toolbar": "^1.25",
         "drupal/field_permissions": "^1.0@beta",
@@ -34,21 +32,29 @@
         "drupal/masquerade": "^2.0@beta",
         "mpdf/mpdf": "^7.0",
         "drupal/drush_language": "^1.0@RC",
-        "drupal/examples": "1.x-dev"
+        "drupal/examples": "1.x-dev",
+        "drush/drush": "~8.1",
+        "drupal/config_update": "1.6.0",
+        "drupal/media_entity": "2.0.0-alpha2",
+        "zaporylie/composer-drupal-optimizations": "^1.1"
     },
-    "repositories": [
-        {
+    "repositories": {
+        "0": {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        "asset-packagist": {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
         }
-    ],
+    },
     "scripts": {
-      "post-install-cmd": [
-        "DrupalComposer\\DrupalScaffold\\Plugin::scaffold"
-      ],
-      "post-update-cmd": [
-        "DrupalComposer\\DrupalScaffold\\Plugin::scaffold"
-      ]
+        "post-install-cmd": [
+            "DrupalComposer\\DrupalScaffold\\Plugin::scaffold"
+        ],
+        "post-update-cmd": [
+            "DrupalComposer\\DrupalScaffold\\Plugin::scaffold"
+        ]
     },
     "config": {
         "bin-dir": "bin/"
@@ -69,6 +75,10 @@
             ],
             "drush/contrib/{$name}": [
                 "type:drupal-drush"
+            ],
+            "docroot/libraries/{$name}": [
+                "type:bower-asset",
+                "type:npm-asset"
             ]
         },
         "enable-patching": true,
@@ -76,6 +86,10 @@
             "drupal/core": {
                 "2449895 - Imported PO files have no public URL but have a link at admin/content/files": "https://www.drupal.org/files/issues/locale-po-files-public-url-exception-2449895-11.patch"
             }
-        }
+        },
+        "installer-types": [
+            "bower-asset",
+            "npm-asset"
+        ]
     }
 }

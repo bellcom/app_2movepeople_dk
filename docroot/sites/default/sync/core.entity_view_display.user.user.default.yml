@@ -67,3 +67,4 @@ hidden:
   field_social_security_number: true
   langcode: true
   member_for: true
+  name: true

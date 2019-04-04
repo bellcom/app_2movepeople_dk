@@ -8,11 +8,11 @@ dependencies:
     - field.field.node.landing_page.panelizer
     - node.type.landing_page
   module:
+    - datetime
     - metatag
     - panelizer
     - path
     - text
-    - workbench_moderation
 _core:
   default_config_hash: gbJANtRP0ILowLUikpUINaFS4Mhm3taD_ceZtkAus_8
 id: node.landing_page.default
@@ -45,7 +45,8 @@ content:
     type: language_select
     weight: 2
     region: content
-    settings: {  }
+    settings:
+      include_locked: true
     third_party_settings: {  }
   panelizer:
     type: panelizer
@@ -57,6 +58,19 @@ content:
     type: path
     weight: 4
     settings: {  }
+    third_party_settings: {  }
+    region: content
+  scheduled_publication:
+    type: datetime_default
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 121
     third_party_settings: {  }
     region: content
   title:

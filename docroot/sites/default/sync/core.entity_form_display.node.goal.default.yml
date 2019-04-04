@@ -7,6 +7,7 @@ dependencies:
     - field.field.node.goal.field_activity_title
     - field.field.node.goal.field_due_date
     - field.field.node.goal.field_evaluation
+    - field.field.node.goal.field_is_manager_task
     - field.field.node.goal.field_responsible_manager
     - field.field.node.goal.field_subgoal
     - field.field.node.goal.field_task_complete
@@ -15,7 +16,6 @@ dependencies:
     - datetime
     - path
     - text
-    - workbench_moderation
 id: node.goal.default
 targetEntityType: node
 bundle: goal
@@ -87,7 +87,8 @@ content:
     type: language_select
     weight: 2
     region: content
-    settings: {  }
+    settings:
+      include_locked: true
     third_party_settings: {  }
   path:
     type: path
@@ -102,6 +103,19 @@ content:
     weight: 9
     region: content
     third_party_settings: {  }
+  scheduled_publication:
+    type: datetime_default
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 121
+    third_party_settings: {  }
+    region: content
   sticky:
     type: boolean_checkbox
     settings:

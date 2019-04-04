@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - media_entity.bundle.video
+    - media.type.video
 id: media.video.created
 field_name: created
 entity_type: media
