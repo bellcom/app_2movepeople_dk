@@ -11,7 +11,6 @@ dependencies:
     - file
     - image
     - media
-    - system
     - user
     - views_infinite_scroll
 _core:
@@ -737,6 +736,7 @@ display:
               authenticated: authenticated
               anonymous: '0'
               administrator: '0'
+            placeholder: ''
           is_grouped: false
           group_info:
             label: ''
@@ -822,7 +822,7 @@ display:
           admin_label: ''
           empty: true
           tokenize: false
-          content: 'No content available.'
+          content: 'No media available.'
           plugin_id: text_custom
       relationships: {  }
       arguments: {  }
@@ -1063,6 +1063,7 @@ display:
               landing_page_reviewer: '0'
               media_creator: '0'
               media_manager: '0'
+            placeholder: ''
           is_grouped: false
           group_info:
             label: ''
@@ -1486,6 +1487,7 @@ display:
               landing_page_reviewer: '0'
               media_creator: '0'
               media_manager: '0'
+            placeholder: ''
           is_grouped: false
           group_info:
             label: ''
@@ -1651,16 +1653,7 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
-      path: admin/content/media
-      menu:
-        type: tab
-        title: Media
-        description: ''
-        expanded: false
-        parent: ''
-        weight: 0
-        context: '0'
-        menu_name: main
+      path: admin/content/media-table
       display_description: ''
     cache_metadata:
       max-age: 0

@@ -12,7 +12,7 @@ dependencies:
     - field.field.node.progression_target.field_purpose
     - node.type.progression_target
   module:
-    - datetime
+    - content_moderation
     - path
 id: node.progression_target.default
 targetEntityType: node
@@ -76,6 +76,12 @@ content:
     settings:
       include_locked: true
     third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    settings: {  }
+    region: content
+    third_party_settings: {  }
   path:
     type: path
     weight: 11
@@ -88,12 +94,6 @@ content:
       display_label: true
     weight: 9
     region: content
-    third_party_settings: {  }
-  scheduled_publication:
-    type: datetime_default
-    weight: 20
-    region: content
-    settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
@@ -120,6 +120,8 @@ content:
   translation:
     weight: 10
     region: content
+    settings: {  }
+    third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
     weight: 5

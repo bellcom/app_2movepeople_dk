@@ -1,5 +1,15 @@
-label: Editorial
 type_settings:
+  transitions:
+    archived_draft:
+      label: 'Restore to Draft'
+    archive:
+      label: Archive
+    archived_published:
+      label: 'Restore from archive'
+    create_new_draft:
+      label: 'Create New Draft'
+    publish:
+      label: Publish
   states:
     archived:
       label: Archived
@@ -7,14 +17,4 @@ type_settings:
       label: Draft
     published:
       label: Published
-  transitions:
-    archive:
-      label: Archive
-    archived_draft:
-      label: 'Restore to Draft'
-    archived_published:
-      label: Restore
-    create_new_draft:
-      label: 'Create New Draft'
-    publish:
-      label: Publish
+label: Editorial

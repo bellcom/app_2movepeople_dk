@@ -1,4 +1,4 @@
-label: 'Save to my media library'
+label: 'Show in media library'
 settings:
-  on_label: 'Saved to my media library'
-  off_label: 'Not in my media library'
+  on_label: 'Shown in media library'
+  off_label: 'Hidden in media library'
