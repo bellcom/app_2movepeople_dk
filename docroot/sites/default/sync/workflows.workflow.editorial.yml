@@ -1,11 +1,12 @@
-uuid: 56ff51a1-df75-4c94-8ea4-a8bc77d6863d
+uuid: d15e08fd-eb40-470a-88bb-b951b67870cb
 langcode: da
 status: true
 dependencies:
+  config:
+    - node.type.landing_page
+    - node.type.page
   module:
     - content_moderation
-_core:
-  default_config_hash: T_JxNjYlfoRBi7Bj1zs5Xv9xv1btuBkKp5C1tNrjMhI
 id: editorial
 label: Editorial
 type: content_moderation
@@ -13,50 +14,86 @@ type_settings:
   states:
     archived:
       label: Archived
-      weight: 5
       published: false
       default_revision: true
+      weight: 1
     draft:
       label: Draft
       published: false
       default_revision: false
-      weight: -5
+      weight: 2
+    needs_review:
+      label: 'Needs Review'
+      published: false
+      default_revision: false
+      weight: 3
     published:
       label: Published
       published: true
       default_revision: true
-      weight: 0
+      weight: 4
   transitions:
-    archive:
+    archived_published:
+      label: Un-archive
+      from:
+        - archived
+      to: published
+      weight: 1
+    draft_draft:
+      label: 'Create New Draft'
+      from:
+        - draft
+      to: draft
+      weight: 2
+    draft_needs_review:
+      label: 'Request Review'
+      from:
+        - draft
+      to: needs_review
+      weight: 3
+    draft_published:
+      label: Publish
+      from:
+        - draft
+      to: published
+      weight: 4
+    needs_review_draft:
+      label: 'Send Back to Draft'
+      from:
+        - needs_review
+      to: draft
+      weight: 5
+    needs_review_needs_review:
+      label: 'Keep in Review'
+      from:
+        - needs_review
+      to: needs_review
+      weight: 6
+    needs_review_published:
+      label: Publish
+      from:
+        - needs_review
+      to: published
+      weight: 7
+    published_archived:
       label: Archive
       from:
         - published
       to: archived
-      weight: 2
-    archived_draft:
-      label: 'Restore to Draft'
-      from:
-        - archived
-      to: draft
-      weight: 3
-    archived_published:
-      label: Restore
-      from:
-        - archived
-      to: published
-      weight: 4
-    create_new_draft:
+      weight: 8
+    published_draft:
       label: 'Create New Draft'
+      from:
+        - published
       to: draft
-      weight: 0
-      from:
-        - draft
-        - published
-    publish:
+      weight: 9
+    published_published:
       label: Publish
-      to: published
-      weight: 1
       from:
-        - draft
         - published
-  entity_types: {  }
+      to: published
+      weight: 10
+  entity_types:
+    node:
+      - landing_page
+      - page
