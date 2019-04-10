@@ -21,7 +21,7 @@ class ProgressionTargetMilestoneEditForm extends ProgressionTargetEditForm {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL, $limit = NULL) {
 
     $this->node = $node;
 
