@@ -1,6 +1,6 @@
 uuid: 4f8b6698-0fa9-4de3-8af2-f0948df90aa6
 langcode: da
-status: false
+status: true
 dependencies:
   module:
     - masquerade
@@ -8,8 +8,8 @@ dependencies:
     - site
 id: masquerade
 theme: site
-region: header
-weight: -6
+region: sidebar_left__desktop
+weight: -4
 provider: null
 plugin: masquerade
 settings:
