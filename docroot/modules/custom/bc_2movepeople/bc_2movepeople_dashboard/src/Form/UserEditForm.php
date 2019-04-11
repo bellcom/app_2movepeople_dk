@@ -131,11 +131,14 @@ class UserEditForm extends FormBase {
     if (!$form_state->getErrors()) {
       $user = $form_state->get('user');
 
+      // Mandatory.
+      $user->setEmail($form_state->getValue('email'));
+      $user->setUsername($form_state->getValue('username'));
+
       // Optional.
       $user->set('field_social_security_number', $form_state->getValue('social_security_number'));
       $user->set('field_user_firstname', $form_state->getValue('firstname'));
       $user->set('field_user_surname', $form_state->getValue('surname'));
-      $user->set('mail', $form_state->getValue('email'));
 
       // Update user account.
       $user->save();
@@ -159,6 +162,19 @@ class UserEditForm extends FormBase {
     $surname = CommonFormUtils::cleanInput($form_state->getValue('surname'));
     if (strlen($surname) < 2) {
       $form_state->setErrorByName('surname', $this->t('The Surname %surname is not valid.', ['%surname' => $surname]));
+    }
+
+    // Check Username.
+    $username = CommonFormUtils::cleanInput($form_state->getValue('username'));
+    if (strlen($username) < 2) {
+      $form_state->setErrorByName('username', $this->t('The Username %username is not valid.', ['%username' => $username]));
+    }
+    if ($user->get('name')->value !== $username) {
+      if (!empty(user_load_by_name($username))) {
+        $form_state->setErrorByName('username',
+          $this->t('The Username %username already exists.',
+            ['%username' => $username]));
+      }
     }
 
     // Check Email.
