@@ -170,6 +170,10 @@
 
 // Tablet - and up
 @include media-breakpoint-up(sm) {
+
+  .modal-dialog {
+    min-width: 500px;
+  }
   
   .modal-body__progression-tabs {
     width:700px; 

@@ -9746,6 +9746,8 @@ div.custom-nav-divider {
   overflow-y: auto; }
 
 @media (min-width: 768px) {
+  .modal-dialog {
+    min-width: 500px; }
   .modal-body__progression-tabs {
     width: 700px;
     min-height: 300px;
