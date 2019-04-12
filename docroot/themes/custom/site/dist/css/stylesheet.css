@@ -10084,11 +10084,10 @@ input[type="date"]::-webkit-clear-button {
   margin-top: 5px;
   padding-top: 2px; }
 
-.is-remind-warning {
-  background-color: none !important; }
-
+.is-completed,
+.is-remind-warning,
 .is-remind-expired {
-  background-color: none !important; }
+  background-color: unset !important; }
 
 .custom-form-label {
   font-weight: bold; }
@@ -10548,10 +10547,23 @@ span.task.completed {
 .path-dashboard .milestone-buttons a span {
   padding-top: 0 !important; }
 
+.path-dashboard .is-completed,
 .path-dashboard .is-remind-expired,
 .path-dashboard .is-remind-warning,
 .path-dashboard .subtask {
   position: relative; }
+
+.path-dashboard .is-completed::before {
+  content: "✓";
+  position: absolute;
+  left: -15px;
+  display: block;
+  background-color: #5cb85c;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 0 5px; }
 
 .path-dashboard .is-remind-expired::before,
 .path-dashboard .is-remind-warning::before {
@@ -10580,6 +10592,7 @@ span.task.completed {
   font-size: 20px;
   padding: 0 10px; }
 
+.path-dashboard .subtask .is-completed::before,
 .path-dashboard .subtask .is-remind-expired::before,
 .path-dashboard .subtask .is-remind-warning::before {
   left: -30px; }
