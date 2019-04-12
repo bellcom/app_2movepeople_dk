@@ -9339,6 +9339,9 @@ body {
 .container-fluid {
   max-width: 1300px; }
 
+.layout__wrapper {
+  z-index: 5; }
+
 .layout__content {
   display: -webkit-box;
   display: -webkit-flex;
@@ -9946,7 +9949,8 @@ input[type="date"]::-webkit-clear-button {
   color: #9aadb4; }
 
 .sidr {
-  padding-top: 20px; }
+  padding-top: 20px;
+  z-index: 0; }
   .sidr .logo {
     padding: 10px 15px; }
     .sidr .logo img {
