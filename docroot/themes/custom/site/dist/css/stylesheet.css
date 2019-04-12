@@ -9728,9 +9728,6 @@ div.custom-nav-divider {
   div.custom-nav-divider i.customicon.ci-gear::before {
     line-height: 39px; }
 
-.modal-dialog .modal-content {
-  min-width: 500px; }
-
 .modal-dialog .modal-header {
   background-color: #50afe8 !important;
   padding: 15px 35px;
