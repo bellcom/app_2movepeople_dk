@@ -201,7 +201,7 @@ bc_2movepeople_dashboard.user.tasks:
       user:
         type: entity:user
   defaults:
-    _title: "User's tasks"
+    _title: "Scheduled tasks"
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getUserTasks'
   requirements:
 #    _permission: 'access content'
