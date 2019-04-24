@@ -7,12 +7,12 @@ Milestone:
   overall_evaluation: 'Samlet evaluering'
   show_target_milestones: 'Vis mål'
 Navigation:
-  create_user: 'Others - add'
+  create_user: 'Tilføj bruger'
   supervisor:
     create_user: 'Tilføj ny medarbejder'
   manager:
     create_user: 'Tilføj ny bruger (manager)'
   feedback: Feedback
   self_rate: Målinger
-  supervisor_create_user: 'Supervisor - add'
-  manager_create_user: 'Manager - add'
+  supervisor_create_user: 'Tilføj manager'
+  manager_create_user: 'Tilføj bruger'

@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-24 10:18+0200\n"
-"PO-Revision-Date: 2019-04-24 10:18+0200\n"
+"POT-Creation-Date: 2019-04-24 10:57+0200\n"
+"PO-Revision-Date: 2019-04-24 10:57+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -85,7 +85,7 @@ msgid "Bulk update"
 msgstr "Bulk update"
 
 msgid "Username"
-msgstr "Username"
+msgstr "Brugernavn"
 
 msgid "Status"
 msgstr "Status"
@@ -871,7 +871,7 @@ msgid "Account Name"
 msgstr "Kontonavn"
 
 msgid "Email"
-msgstr "E-mail"
+msgstr "E-mail adresse"
 
 msgid "Parent"
 msgstr "Overordnet element"
@@ -919,7 +919,7 @@ msgid "The hashed password"
 msgstr "Adgangskoden (hash)"
 
 msgid "Email address"
-msgstr "E-mail-adresse"
+msgstr "E-mail adresse"
 
 msgid "Password"
 msgstr "Kodeord"
@@ -1972,7 +1972,7 @@ msgid "Save to template"
 msgstr "Gem som skabelon"
 
 msgid "Show Target Milestones"
-msgstr "Vis Mål"
+msgstr "Vis mål"
 
 msgid "Target Milestones"
 msgstr "Mål"
@@ -1997,6 +1997,9 @@ msgstr "Tilføj ny kategori"
 
 msgid "Edit category"
 msgstr "Ret kategori"
+
+msgid "User progressions"
+msgstr "Feedback"
 
 msgid "None"
 msgstr "Ingen"
@@ -2039,6 +2042,9 @@ msgstr "Medarbejdere"
 
 msgid "Clients"
 msgstr "Borgere"
+
+msgid "Categories"
+msgstr "Kategorier"
 
 msgid "Add new milestone"
 msgstr "Tilføj mål"
@@ -2359,6 +2365,9 @@ msgstr "Ansvarlig leder"
 msgid "Add new task"
 msgstr "Tilføj ny opgave"
 
+msgid "Delete milestone"
+msgstr "Slet mål"
+
 msgid "Evaluate milestone"
 msgstr "Evaluer mål"
 
@@ -2437,6 +2446,9 @@ msgstr "Kopier opgaven til en progression"
 msgid "Dialogue rating"
 msgstr "Feedback"
 
+msgid "Enable milestones/tasks"
+msgstr "Aktivér mål/opgaver"
+
 msgid "The configuration options have been saved."
 msgstr "Indstillingerne er blevet gemt."
 
@@ -2470,6 +2482,9 @@ msgstr "@size KB"
 
 msgid "The First Name %firstname is not valid."
 msgstr "The First Name %firstname er ikke gyldig."
+
+msgid "The Username %username is not valid."
+msgstr "Brugernavnet %username er ikke gyldigt."
 
 msgid "Records successfully deleted."
 msgstr "Delmål'et blev slettet"
@@ -9448,11 +9463,26 @@ msgstr "Opdatér graf"
 msgid "Rate"
 msgstr "Giv feedback"
 
+msgid "Social security number"
+msgstr "CPR nr."
+
+msgid "Firstname"
+msgstr "Fornavn"
+
 msgid "Switch to this user"
 msgstr "Skift til denne bruger"
 
 msgid "Add new manager"
 msgstr "Tilføj ny medarbejder"
+
+msgid "Are you sure that you want to cancel the user?"
+msgstr "Er du sikker på at du vil slette denne bruger?"
+
+msgid "Edit Account"
+msgstr "Redigér konto"
+
+msgid "The Username %username already exists."
+msgstr "Brugernavnet %username eksisterer allerede."
 
 msgid "Published status"
 msgstr "Publishing status"
