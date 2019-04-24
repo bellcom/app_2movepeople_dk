@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-24 09:52+0200\n"
-"PO-Revision-Date: 2019-04-24 09:52+0200\n"
+"POT-Creation-Date: 2019-04-24 10:18+0200\n"
+"PO-Revision-Date: 2019-04-24 10:18+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -39,9 +39,6 @@ msgstr "Media"
 msgid "User"
 msgstr "User"
 
-msgid "Moderation state"
-msgstr ""
-
 msgid "Taxonomy term"
 msgstr "Ord i ordforråd"
 
@@ -49,7 +46,7 @@ msgid "Master"
 msgstr "Master"
 
 msgid "Filter"
-msgstr "Apply"
+msgstr "Filter"
 
 msgid "Reset"
 msgstr "Reset"
@@ -245,12 +242,6 @@ msgstr "Redigér"
 
 msgid "My account"
 msgstr "Min konto"
-
-msgid "Edit user account"
-msgstr "Rediger konto"
-
-msgid "Edit profile"
-msgstr "Rediger profil"
 
 msgid "Log out"
 msgstr "Log ud"
@@ -817,7 +808,7 @@ msgid "ID"
 msgstr "ID"
 
 msgid "Type"
-msgstr "Provider"
+msgstr "Type"
 
 msgid "Language code"
 msgstr "Sprogkode"
@@ -829,7 +820,7 @@ msgid "Path"
 msgstr "Sti"
 
 msgid "Authored by"
-msgstr ""
+msgstr "Skrevet af"
 
 msgid "Label"
 msgstr "Etiket"
@@ -1975,7 +1966,7 @@ msgid "Show category"
 msgstr "Vis kategori"
 
 msgid "Rate category"
-msgstr "Udfyld progressionen 1"
+msgstr "Udfyld progressionen"
 
 msgid "Save to template"
 msgstr "Gem som skabelon"
@@ -2011,7 +2002,7 @@ msgid "None"
 msgstr "Ingen"
 
 msgid "User's rates add"
-msgstr "Progressionsmåling"
+msgstr "Evaluering 2"
 
 msgid "Forgot Password?"
 msgstr "Glemt kodeord"
@@ -2049,9 +2040,6 @@ msgstr "Medarbejdere"
 msgid "Clients"
 msgstr "Borgere"
 
-msgid "Categories"
-msgstr "Kategorier"
-
 msgid "Add new milestone"
 msgstr "Tilføj mål"
 
@@ -2069,9 +2057,6 @@ msgstr "Handling"
 
 msgid "Evaluation"
 msgstr "Evaluering"
-
-msgid "Deadline"
-msgstr "Slutdato"
 
 msgid "Add new milestone task"
 msgstr "Tilføj delmål"
@@ -2101,7 +2086,7 @@ msgid "Delete category"
 msgstr "Slet kategori"
 
 msgid "Goal rate add"
-msgstr "Feedback"
+msgstr "Evaluering 3"
 
 msgid "Milestone"
 msgstr "Milepæl"
@@ -2140,7 +2125,7 @@ msgid "Time"
 msgstr "Tid"
 
 msgid "Authored on"
-msgstr ""
+msgstr "Skrevet den"
 
 msgid "Format: %format. Leave blank to use the time of form submission."
 msgstr ""
@@ -2209,9 +2194,6 @@ msgstr "Brug kontekstuelle links"
 
 msgid "Use Panels Dashboard"
 msgstr "Brug Panel oversigt"
-
-msgid "Cancel own user account"
-msgstr "Opsig egen konto"
 
 msgid "1 second"
 msgid_plural "@count seconds"
@@ -2371,17 +2353,11 @@ msgstr "Mål og delmål"
 msgid "- None selected -"
 msgstr "- Intet valgt -"
 
-msgid "Cancel account"
-msgstr "Opsig konto"
-
 msgid "Responsible manager"
 msgstr "Ansvarlig leder"
 
 msgid "Add new task"
-msgstr "Tilføj nyt delmål"
-
-msgid "Delete milestone"
-msgstr "Slet delmål"
+msgstr "Tilføj ny opgave"
 
 msgid "Evaluate milestone"
 msgstr "Evaluer mål"
@@ -2403,40 +2379,11 @@ msgstr ""
 "Der er ikke nogen spørgsmål at lave en evaluering på - opret et "
 "spørgsmål"
 
-msgid "Disable the account and keep its content."
-msgstr "Deaktivér kontoen og behold dens indhold."
-
-msgid "Disable the account and unpublish its content."
-msgstr "Deaktivér kontoen og afpublicér dens indhold."
-
-msgid ""
-"Delete the account and make its content belong to the %anonymous-name "
-"user."
-msgstr "Slet kontoen og overdrag dens indhold til %anonymous-name."
-
-msgid "Delete the account and its content."
-msgstr "Slet kontoen og dens indhold."
-
-msgid "When cancelling the account"
-msgstr "Når kontoen opsiges"
-
-msgid "Require email confirmation to cancel account"
-msgstr "Kræv e-mail bekræftelse for opsigelse af konto"
-
-msgid "Are you sure you want to cancel the account %name?"
-msgstr "Er du sikker på, at du vil opsige %name?"
-
 msgid "An error has occurred."
 msgstr "Der er opstået en fejl."
 
-msgid "Cancelling account"
-msgstr "Opsiger konto"
-
 msgid "Cannot add field @table.@field: field already exists."
 msgstr "Kan ikke tilføje feltet table.field: Feltet eksisterer allerede."
-
-msgid "Cancelled."
-msgstr "Opsagt"
 
 msgid "File added"
 msgstr "Fil tilføjet"
@@ -2462,9 +2409,6 @@ msgstr "forfatter"
 msgid "Site's default language (@lang_name)"
 msgstr "Sitets standardsprog (@lang_name)"
 
-msgid "Cancel accounts"
-msgstr "Opsig konti"
-
 msgid ""
 "Category @category_name is deleted. It had @goals goals and @rates "
 "rates values"
@@ -2477,9 +2421,6 @@ msgstr "Milepælen @category_name blev slettet. Den havde @tasks opgaver"
 
 msgid "Go to previous page"
 msgstr "Gå til forrige side"
-
-msgid "Upload requirements"
-msgstr "Krav"
 
 msgid "-Select category-"
 msgstr "-Vælg kategori-"
@@ -2529,9 +2470,6 @@ msgstr "@size KB"
 
 msgid "The First Name %firstname is not valid."
 msgstr "The First Name %firstname er ikke gyldig."
-
-msgid "The Username %username is not valid."
-msgstr "Brugernavnet %username er ikke gyldigt."
 
 msgid "Records successfully deleted."
 msgstr "Delmål'et blev slettet"
@@ -3045,7 +2983,7 @@ msgid "The update has been performed."
 msgstr "Opdatering udført."
 
 msgid "Source"
-msgstr "Provider"
+msgstr "Kilde"
 
 msgid "Undo"
 msgstr "Fortryd"
