@@ -230,7 +230,7 @@ display:
                 operator: '='
                 value: '1'
               2:
-                title: Unpublished
+                title: 'Ikke udgivet'
                 operator: '='
                 value: '0'
           plugin_id: boolean
@@ -331,7 +331,7 @@ display:
           order: DESC
           exposed: true
           expose:
-            label: 'Newest first'
+            label: 'Nyeste først'
           granularity: second
           entity_type: media
           entity_field: created

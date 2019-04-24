@@ -1,9 +1,27 @@
-label: 'People (administerusersbyrole)'
-description: 'Find and manage people - for admin or sub-admin'
 display:
   default:
-    display_title: Master
     display_options:
+      fields:
+        roles:
+          label: Roles
+          separator: ', '
+        user_bulk_form:
+          label: 'Bulk update'
+        name:
+          label: Username
+        status:
+          label: Status
+          settings:
+            format_custom_true: Active
+            format_custom_false: Blocked
+        created:
+          label: 'Member for'
+        access:
+          label: 'Last access'
+        operations:
+          label: Operations
+        mail:
+          separator: ', '
       exposed_form:
         options:
           submit_button: Filter
@@ -22,37 +40,10 @@ display:
             items_per_page_label: 'Items per page'
             items_per_page_options_all_label: '- All -'
             offset_label: Offset
-      fields:
-        user_bulk_form:
-          label: 'Bulk update'
-        name:
-          label: Username
-        status:
-          label: Status
-          settings:
-            format_custom_true: Active
-            format_custom_false: Blocked
-        roles:
-          label: Roles
-          separator: ', '
-        created:
-          label: 'Member for'
-        access:
-          label: 'Last access'
-        operations:
-          label: Operations
-        mail:
-          separator: ', '
       filters:
         combine:
           expose:
             label: 'Name or email contains'
-        roles_target_id:
-          expose:
-            label: Role
-        permission:
-          expose:
-            label: Permission
         status:
           group_info:
             label: Status
@@ -61,11 +52,18 @@ display:
                 title: Active
               2:
                 title: Blocked
+        roles_target_id:
+          expose:
+            label: Role
+        permission:
+          expose:
+            label: Permission
       title: People
       empty:
         area_text_custom:
           content: 'No people available.'
       use_more_text: more
+    display_title: Master
   page_1:
     display_title: Page
     display_options:
@@ -75,3 +73,5 @@ display:
       tab_options:
         title: People
         description: 'Manage user accounts, roles, and permissions.'
+label: 'People (administerusersbyrole)'
+description: 'Find and manage people - for admin or sub-admin'

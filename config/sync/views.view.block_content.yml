@@ -10,7 +10,7 @@ _core:
 id: block_content
 label: 'Custom block library'
 module: views
-description: 'Find and manage custom blocks.'
+description: 'Find og håndtér brugerdefinerede blokke.'
 tag: default
 base_table: block_content_field_data
 base_field: id

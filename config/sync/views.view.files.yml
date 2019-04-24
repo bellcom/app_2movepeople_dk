@@ -8,9 +8,9 @@ dependencies:
 _core:
   default_config_hash: rRWxAX-IQkJ5viACQRovRkC784EyCl9493GU_G23n2Q
 id: files
-label: Files
+label: Filer
 module: file
-description: 'Find and manage files.'
+description: 'Find og håndtér filer.'
 tag: default
 base_table: file_managed
 base_field: fid
@@ -40,7 +40,7 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Apply
+          submit_button: Filter
           reset_button: false
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
@@ -302,7 +302,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Size
+          label: Størrelse
           exclude: false
           alter:
             alter_text: false
@@ -398,7 +398,7 @@ display:
           type: boolean
           settings:
             format: custom
-            format_custom_false: Temporary
+            format_custom_false: Midlertidig
             format_custom_true: Permanent
           plugin_id: field
           entity_type: file
@@ -410,7 +410,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Upload date'
+          label: Upload-dato
           exclude: false
           alter:
             alter_text: false
@@ -522,7 +522,7 @@ display:
           relationship: fid
           group_type: sum
           admin_label: ''
-          label: 'Used in'
+          label: 'Brugt i'
           exclude: false
           alter:
             alter_text: false
@@ -568,7 +568,7 @@ display:
           decimal: .
           separator: ','
           format_plural: true
-          format_plural_string: !!binary MSBwbGFjZQNAY291bnQgcGxhY2Vz
+          format_plural_string: !!binary MSBzdGVkA0Bjb3VudCBzdGVkZXI=
           prefix: ''
           suffix: ''
           plugin_id: numeric
@@ -586,7 +586,7 @@ display:
           exposed: true
           expose:
             operator_id: filemime_op
-            label: Filename
+            label: Filnavn
             description: ''
             use_operator: false
             operator: filename_op
@@ -697,7 +697,7 @@ display:
           entity_type: file
           entity_field: status
       sorts: {  }
-      title: Files
+      title: Filer
       header: {  }
       footer: {  }
       empty:
@@ -706,7 +706,7 @@ display:
           table: views
           field: area_text_custom
           empty: true
-          content: 'No files available.'
+          content: 'Ingen tilgængelige filer.'
           plugin_id: text_custom
       relationships:
         fid:
@@ -733,13 +733,13 @@ display:
   page_1:
     display_plugin: page
     id: page_1
-    display_title: 'Files overview'
+    display_title: Filoversigt
     position: 1
     display_options:
       path: admin/content/files
       menu:
         type: tab
-        title: Files
+        title: Filer
         description: ''
         menu_name: admin
         weight: 0
@@ -917,7 +917,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Registering module'
+          label: 'Registrerer modul'
           exclude: false
           alter:
             alter_text: false
@@ -966,7 +966,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Use count'
+          label: 'Brug antal'
           exclude: false
           alter:
             alter_text: false
@@ -1032,7 +1032,7 @@ display:
             title_enable: false
             title: Alle
           title_enable: true
-          title: 'File usage information for {{ arguments.fid }}'
+          title: 'Information om brug af filen {{ arguments.fid }}'
           default_argument_type: fixed
           default_argument_options:
             argument: ''

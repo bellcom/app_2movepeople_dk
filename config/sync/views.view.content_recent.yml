@@ -8,9 +8,9 @@ dependencies:
 _core:
   default_config_hash: sqwEJaSgef4rCaRMf-JdNAdV_kCICU1SfQh5Wl2sUrc
 id: content_recent
-label: 'Recent content'
+label: 'Seneste indhold'
 module: node
-description: 'Recent content.'
+description: 'Seneste indhold.'
 tag: default
 base_table: node_field_data
 base_field: nid
@@ -258,7 +258,7 @@ display:
           entity_type: node
           entity_field: changed
           plugin_id: date
-      title: 'Recent content'
+      title: 'Seneste indhold'
       header: {  }
       footer: {  }
       empty:
@@ -271,7 +271,7 @@ display:
           admin_label: ''
           empty: true
           tokenize: false
-          content: 'No content available.'
+          content: 'Der er intet indhold at vise.'
           plugin_id: text_custom
       relationships:
         uid:

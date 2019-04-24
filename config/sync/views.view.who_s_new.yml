@@ -7,9 +7,9 @@ dependencies:
 _core:
   default_config_hash: o_8fSWHZOVIbydZACGsSX09DtuJhqkRmNOzcVj-4bQI
 id: who_s_new
-label: 'Who''s new'
+label: 'Nye brugere'
 module: user
-description: 'Shows a list of the newest user accounts on the site.'
+description: 'Viser en liste af de nyeste brugerkonti på sitet.'
 tag: default
 base_table: users_field_data
 base_field: uid
@@ -163,7 +163,7 @@ display:
           plugin_id: date
           entity_type: user
           entity_field: created
-      title: 'Who''s new'
+      title: 'Nye brugere'
       header: {  }
       footer: {  }
       empty: {  }
@@ -180,11 +180,11 @@ display:
   block_1:
     display_plugin: block
     id: block_1
-    display_title: 'Who''s new'
+    display_title: 'Nye brugere'
     position: 1
     display_options:
-      display_description: 'A list of new users'
-      block_description: 'Who''s new'
+      display_description: 'En liste af nye brugere'
+      block_description: 'Nye brugere'
       block_category: User
       display_extenders: {  }
     cache_metadata:

@@ -9,7 +9,7 @@ _core:
 id: user_admin_people
 label: People
 module: user
-description: 'Find and manage people interacting with your site.'
+description: 'Find og håndtér personer som bruger dit site.'
 tag: default
 base_table: users_field_data
 base_field: uid
@@ -38,7 +38,7 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Apply
+          submit_button: Filter
           reset_button: true
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
@@ -895,7 +895,7 @@ display:
       menu:
         type: 'default tab'
         title: List
-        description: 'Find and manage people interacting with your site.'
+        description: 'Find og håndtér personer som bruger dit site.'
         menu_name: admin
         weight: -10
         context: ''

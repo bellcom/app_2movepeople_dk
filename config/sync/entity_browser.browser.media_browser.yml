@@ -10,12 +10,12 @@ dependencies:
 _core:
   default_config_hash: D9N3yb_9pTuhS5RYJ2c7eFzHgtexTWA07Ij5oCyshpQ
 name: media_browser
-label: 'Media browser'
+label: Mediebrowser
 display: iframe
 display_configuration:
   width: 100%
   height: '640'
-  link_text: 'Select entities'
+  link_text: 'Tilføj media'
   auto_open: true
 selection_display: no_display
 selection_display_configuration: {  }

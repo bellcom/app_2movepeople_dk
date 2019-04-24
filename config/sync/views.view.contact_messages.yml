@@ -64,8 +64,8 @@ display:
             offset: false
             offset_label: Offset
           tags:
-            previous: '‹ previous'
-            next: 'next ›'
+            previous: '‹ forrige'
+            next: 'næste ›'
             first: '« first'
             last: 'last »'
           quantity: 9

@@ -10,7 +10,7 @@ dependencies:
     - media
 _core:
   default_config_hash: t5RloB_VKSNiTH5ZuoOxvVOQSlVBcyG0pcQOr0IA15k
-label: 'Media browser'
+label: Mediebrowser
 id: media_browser
 type_id: entity
 type_settings:
