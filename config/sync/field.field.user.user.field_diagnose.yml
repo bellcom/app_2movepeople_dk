@@ -1,0 +1,20 @@
+uuid: 0161dc89-d1b3-40ee-be8c-47eb95cd0d09
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_diagnose
+  module:
+    - user
+id: user.user.field_diagnose
+field_name: field_diagnose
+entity_type: user
+bundle: user
+label: Diagnose
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

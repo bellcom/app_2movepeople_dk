@@ -1,0 +1,23 @@
+uuid: ad6b4039-932a-4373-8e04-c00c9a02d248
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_is_manager_task
+    - node.type.goal
+id: node.goal.field_is_manager_task
+field_name: field_is_manager_task
+entity_type: node
+bundle: goal
+label: 'Is manager task'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

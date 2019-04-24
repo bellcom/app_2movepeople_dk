@@ -1,0 +1,24 @@
+uuid: a1c45396-4229-4511-b73f-15787b5102c6
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_age
+  module:
+    - user
+id: user.user.field_age
+field_name: field_age
+entity_type: user
+bundle: user
+label: Alder
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 1
+  max: 100
+  prefix: ''
+  suffix: ''
+field_type: integer

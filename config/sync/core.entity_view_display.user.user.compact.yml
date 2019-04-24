@@ -1,0 +1,71 @@
+uuid: 553ad950-33f9-429a-8a48-5d156d961592
+langcode: da
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.user.compact
+    - field.field.user.user.field_addiction
+    - field.field.user.user.field_age
+    - field.field.user.user.field_connected_users
+    - field.field.user.user.field_diagnose
+    - field.field.user.user.field_organisation
+    - field.field.user.user.field_social_security_number
+    - field.field.user.user.field_user_firstname
+    - field.field.user.user.field_user_surname
+    - field.field.user.user.user_picture
+    - image.style.user_picture_compact
+  module:
+    - image
+    - panelizer
+    - user
+third_party_settings:
+  panelizer:
+    enable: false
+    custom: false
+    allow: false
+    default: default
+id: user.user.compact
+targetEntityType: user
+bundle: user
+mode: compact
+content:
+  field_user_firstname:
+    type: string
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_user_surname:
+    type: string
+    weight: 2
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  masquerade:
+    weight: 50
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  user_picture:
+    type: image
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      image_style: user_picture_compact
+      image_link: ''
+    third_party_settings: {  }
+hidden:
+  field_addiction: true
+  field_age: true
+  field_connected_users: true
+  field_diagnose: true
+  field_organisation: true
+  field_social_security_number: true
+  langcode: true
+  member_for: true
+  name: true

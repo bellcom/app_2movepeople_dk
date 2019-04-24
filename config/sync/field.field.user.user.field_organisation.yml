@@ -1,0 +1,29 @@
+uuid: 6be934b2-5ada-4d84-ac26-d4d3e736bf95
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_organisation
+    - taxonomy.vocabulary.organisation
+  module:
+    - user
+id: user.user.field_organisation
+field_name: field_organisation
+entity_type: user
+bundle: user
+label: Organisation
+description: 'Vælg en organisatorisk enhed til brugeren. Vælges flere enheder vil brugeren kunne vælges  i disse enheder.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      organisation: organisation
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
