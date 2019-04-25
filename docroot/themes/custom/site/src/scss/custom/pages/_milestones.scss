@@ -160,10 +160,23 @@
   }
 
   // For showing errors better
+  .is-completed,
   .is-remind-expired,
   .is-remind-warning,
   .subtask {
     position: relative;
+  }
+  .is-completed::before {
+    content: "✓";
+    position: absolute;
+    left: -15px;
+    display: block;
+    background-color: $brand-success;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 0 5px;
   }
 
   .is-remind-expired::before,
@@ -196,6 +209,7 @@
     padding: 0 10px;
   }
 
+  .subtask .is-completed::before,
   .subtask .is-remind-expired::before,
   .subtask .is-remind-warning::before {
     left: -30px;

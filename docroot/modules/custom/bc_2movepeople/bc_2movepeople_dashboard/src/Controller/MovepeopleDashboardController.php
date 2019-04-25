@@ -531,8 +531,12 @@ class MovepeopleDashboardController extends ControllerBase {
    * @params
    * $target_id - progression target nid
    *
+   * @param \Drupal\Core\Session\AccountInterface $user
+   *
    * @return array
    *   User tasks render array.
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function getUserTasks(AccountInterface $user) {
     $user_name = $user->getDisplayName();
@@ -553,17 +557,20 @@ class MovepeopleDashboardController extends ControllerBase {
     foreach ($progression_targets as $progrdata) {
       $goal_ids = $progrdata->get('field_goal_ids')->getValue();
 
-      foreach ($goal_ids as $tid) {
-        $goal_id = $tid['target_id'];
-        $goal = self::getGoal($goal_id);
+      foreach ($goal_ids as $goal_id) {
+        $tid = $goal_id['target_id'];
+        $goal = self::getGoal($tid);
+
+        $date = ($goal['date'] ? $goal['date'] : date('Y-m-d'));
         if ($goal['completed'] || !empty($goal['responsible_manager'])) {
           continue;
         }
 
-        list($year, $month, $day) = explode('-', $goal['date']);
-        $timestamp = mktime($hour, $minute, $second, $month, $day, $year);
+        list($year, $month, $day) = explode('-', $date);
 
-        $is_remind = self::isRemindSession($goal['date']);
+        $timestamp = mktime((int) $hour, (int) $minute, (int) $second, (int) $month, (int) $day, (int) $year);
+        $is_remind = self::isRemindSession($date);
+
         $goal['is_remind'] = $is_remind;
 
         $tasks[$timestamp] = $goal;
@@ -572,16 +579,9 @@ class MovepeopleDashboardController extends ControllerBase {
     }
     ksort($tasks, SORT_NUMERIC);
 
-    if (empty($tasks)) {
-      $title = t('Hi %name you have no scheduled tasks.', ['%name' => $user_name]);
-    }
-    else {
-      $title = t('Hi %name here are your tasks', ['%name' => $user_name]);
-    }
-
     $build = [
       "#theme" => 'bc_2movepeople_dashboard_user_tasks_overview',
-      "#title" => $title,
+      "#title" => t('Scheduled tasks for %name.', ['%name' => $user_name]),
       "#tasks" => $tasks,
       "#user" => $user->id(),
     ];
