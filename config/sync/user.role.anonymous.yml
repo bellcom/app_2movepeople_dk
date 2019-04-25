@@ -12,4 +12,5 @@ permissions:
   - 'access administration pages'
   - 'access content'
   - 'access site-wide contact form'
+  - 'create connected users'
   - 'view media'
