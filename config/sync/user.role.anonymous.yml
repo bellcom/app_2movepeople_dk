@@ -9,6 +9,7 @@ label: 'Anonym bruger'
 weight: 0
 is_admin: false
 permissions:
+  - 'access administration pages'
   - 'access content'
   - 'access site-wide contact form'
   - 'view media'
