@@ -62,7 +62,7 @@ bc_2movepeople_dashboard.user.milestones:
   requirements:
     _permission: 'access user dashboard'
     _user_is_logged_in: 'TRUE'
-    
+
 bc_2movepeople_dashboard.user.progressions.add:
   path: '/dashboard/users/{user}/progressions/add/{limit}'
   options:
@@ -75,7 +75,7 @@ bc_2movepeople_dashboard.user.progressions.add:
     limit: NULL
   requirements:
     _permission: 'access user dashboard'
-    
+
 bc_2movepeople_dashboard.user.progressions:
   path: '/dashboard/users/{user}/progressions/{limit}'
   defaults:
@@ -85,7 +85,7 @@ bc_2movepeople_dashboard.user.progressions:
   requirements:
     _permission: 'access user dashboard'
     _user_is_logged_in: 'TRUE'
-    
+
 bc_2movepeople_dashboard.milestone.evaluations:
   path: '/dashboard/users/{user}/milestone/evaluations'
   defaults:
@@ -95,7 +95,7 @@ bc_2movepeople_dashboard.milestone.evaluations:
   requirements:
     _permission: 'access user dashboard'
     _user_is_logged_in: 'TRUE'
-    
+
 bc_2movepeople_dashboard.milestone.evaluations.pdf:
   path: '/dashboard/users/{user}/milestone/evaluations/pdf'
   defaults:
@@ -105,7 +105,7 @@ bc_2movepeople_dashboard.milestone.evaluations.pdf:
   requirements:
     _permission: 'access user dashboard'
     _user_is_logged_in: 'TRUE'
-    
+
 bc_2movepeople_dashboard.progressions.edit:
   path: '/dashboard/progressions/{node}/edit/{limit}'
   options:
@@ -118,7 +118,7 @@ bc_2movepeople_dashboard.progressions.edit:
     limit: NULL
   requirements:
     _permission: 'access user dashboard'
-    
+
 bc_2movepeople_dashboard.milestone.edit:
   path: '/dashboard/milestone/{node}/edit'
   options:
@@ -130,7 +130,7 @@ bc_2movepeople_dashboard.milestone.edit:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionTargetMilestoneEditForm'
   requirements:
     _permission: 'access user dashboard'
-    
+
 bc_2movepeople_dashboard.milestone.evaluate:
   path: '/dashboard/milestone/{node}/evaluate'
   options:
@@ -142,7 +142,7 @@ bc_2movepeople_dashboard.milestone.evaluate:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionTargetMilestoneEvaluateForm'
   requirements:
     _permission: 'access user dashboard'
-    
+
 bc_2movepeople_dashboard.progression.tasks.add:
   path: '/dashboard/progressions/{node}/tasks/add/{limit}'
   options:
@@ -179,7 +179,7 @@ bc_2movepeople_dashboard.milestone.tasks.add:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskAddForm'
   requirements:
     _permission: 'access user dashboard'
-    
+
 bc_2movepeople_dashboard.milestone.tasks.clone:
   path: '/dashboard/milestones/users/{user}/tasks/{node}/clone'
   options:
@@ -258,14 +258,3 @@ bc_2movepeople_dashboard.save_to_tpl:
     _title: 'Save category and questions to template'
   requirements:
     _permission: 'access category template'
-
-bc_2movepeople_dashboard.menu_toogle:
-  path: '/bc_2movepeople/menu-toggle/{state}'
-  defaults:
-    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::menuToggle'
-  options:
-    parameters:
-      state:
-        type: string
-  requirements:
-    _permission: 'access content'
