@@ -22,3 +22,10 @@ table_responsive: '-1'
 table: ''
 button_iconize: 0
 breadcrumb_home: 1
+cdn_provider: ''
+region_wells:
+  header: ''
+  help: ''
+  content: ''
+  sidebar_left__desktop: ''
+  sidebar_left__mobile: ''
