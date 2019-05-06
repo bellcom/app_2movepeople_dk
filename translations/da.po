@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-24 10:57+0200\n"
-"PO-Revision-Date: 2019-04-24 10:57+0200\n"
+"POT-Creation-Date: 2019-05-06 12:35+0200\n"
+"PO-Revision-Date: 2019-05-06 12:35+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -9492,4 +9492,13 @@ msgstr "There are no custom blocks available. "
 
 msgid "No media available."
 msgstr "No media available."
+
+msgid "Scheduled tasks for %name."
+msgstr "Planlagte opgaver for %name."
+
+msgid "There is no current active tasks."
+msgstr "Der er p.t. ingen aktive opgaver."
+
+msgid "Scheduled tasks"
+msgstr "Planlagte opgaver"
 
