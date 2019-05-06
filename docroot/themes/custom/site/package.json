@@ -6,7 +6,6 @@
     "watch": "grunt watch"
   },
   "dependencies": {
-    "bootstrap-sass": "^3.4.1",
     "content-transitions": "^1.0.4",
     "flexy-header": "^1.0.4",
     "flexy-layout": "^1.0.0",
