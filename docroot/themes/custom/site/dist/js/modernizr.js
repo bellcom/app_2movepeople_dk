@@ -1,6 +1,6 @@
 /*!
  * modernizr v3.6.0
- * Build https://modernizr.com/download?-flexbox-svg-touchevents-setclasses-dontmin
+ * Build https://modernizr.com/download?-animation-arrow-contains-flexbox-svg-target-template-touchevents-setclasses-dontmin
  *
  * Copyright (c)
  *  Faruk Ates
@@ -233,6 +233,160 @@
   ;
 
   /**
+   * createElement is a convenience wrapper around document.createElement. Since we
+   * use createElement all over the place, this allows for (slightly) smaller code
+   * as well as abstracting away issues with creating elements in contexts other than
+   * HTML documents (e.g. SVG documents).
+   *
+   * @access private
+   * @function createElement
+   * @returns {HTMLElement|SVGElement} An HTML or SVG element
+   */
+
+  function createElement() {
+    if (typeof document.createElement !== 'function') {
+      // This is the case in IE7, where the type of createElement is "object".
+      // For this reason, we cannot call apply() as Object is not a Function.
+      return document.createElement(arguments[0]);
+    } else if (isSVG) {
+      return document.createElementNS.call(document, 'http://www.w3.org/2000/svg', arguments[0]);
+    } else {
+      return document.createElement.apply(document, arguments);
+    }
+  }
+
+  ;
+/*!
+{
+  "name": "Web Animation API",
+  "property": "animation",
+  "tags": ["webanimations"],
+  "polyfills": ["webanimationsjs"],
+  "notes": [{
+    "name": "Introducing Web Animations",
+    "href": "http://brian.sol1.net/svg/2013/06/26/introducing-web-animations/"
+  }]
+}
+!*/
+/* DOC
+Detects support for the Web Animation API, a way to create css animations in js
+*/
+
+  Modernizr.addTest('webanimations', 'animate' in createElement('div'));
+
+/*!
+{
+  "name": "CSS :target pseudo-class",
+  "caniuse": "css-sel3",
+  "property": "target",
+  "tags": ["css"],
+  "notes": [{
+    "name": "MDN documentation",
+    "href": "https://developer.mozilla.org/en-US/docs/Web/CSS/:target"
+  }],
+  "authors": ["@zachleat"],
+  "warnings": ["Opera Mini supports :target but doesn't update the hash for anchor links."]
+}
+!*/
+/* DOC
+Detects support for the ':target' CSS pseudo-class.
+*/
+
+  // querySelector
+  Modernizr.addTest('target', function() {
+    var doc = window.document;
+    if (!('querySelectorAll' in doc)) {
+      return false;
+    }
+
+    try {
+      doc.querySelectorAll(':target');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  });
+
+/*!
+{
+  "name": "Template Tag",
+  "property": "template",
+  "tags": ["elem"],
+  "notes": [{
+    "name": "HTML5Rocks Article",
+    "href": "http://www.html5rocks.com/en/tutorials/webcomponents/template/"
+  },{
+    "name": "W3 Spec",
+    "href": "https://dvcs.w3.org/hg/webcomponents/raw-file/tip/spec/templates/index.html"
+  }]
+}
+!*/
+
+  Modernizr.addTest('template', 'content' in createElement('template'));
+
+/*!
+{
+  "name": "ES6 Arrow Functions",
+  "property": "arrow",
+  "authors": ["Vincent Riemer"],
+  "tags": ["es6"]
+}
+!*/
+/* DOC
+Check if browser implements ECMAScript 6 Arrow Functions per specification.
+*/
+
+  Modernizr.addTest('arrow', function() {
+    try {
+      // eslint-disable-next-line
+      eval('()=>{}');
+    } catch (e) {
+      return false;
+    }
+    return true;
+  });
+
+/*!
+{
+  "name": "ES5 String.prototype.contains",
+  "property": "contains",
+  "authors": ["Robert Kowalski"],
+  "tags": ["es6"]
+}
+!*/
+/* DOC
+Check if browser implements ECMAScript 6 `String.prototype.contains` per specification.
+*/
+
+  Modernizr.addTest('contains', is(String.prototype.contains, 'function'));
+
+/*!
+{
+  "name": "SVG",
+  "property": "svg",
+  "caniuse": "svg",
+  "tags": ["svg"],
+  "authors": ["Erik Dahlstrom"],
+  "polyfills": [
+    "svgweb",
+    "raphael",
+    "amplesdk",
+    "canvg",
+    "svg-boilerplate",
+    "sie",
+    "dojogfx",
+    "fabricjs"
+  ]
+}
+!*/
+/* DOC
+Detects support for SVG in `<embed>` or `<object>` elements.
+*/
+
+  Modernizr.addTest('svg', !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect);
+
+
+  /**
    * List of property values to set for css tests. See ticket #21
    * http://git.io/vUGl4
    *
@@ -272,31 +426,6 @@
   ModernizrProto._prefixes = prefixes;
 
   
-
-  /**
-   * createElement is a convenience wrapper around document.createElement. Since we
-   * use createElement all over the place, this allows for (slightly) smaller code
-   * as well as abstracting away issues with creating elements in contexts other than
-   * HTML documents (e.g. SVG documents).
-   *
-   * @access private
-   * @function createElement
-   * @returns {HTMLElement|SVGElement} An HTML or SVG element
-   */
-
-  function createElement() {
-    if (typeof document.createElement !== 'function') {
-      // This is the case in IE7, where the type of createElement is "object".
-      // For this reason, we cannot call apply() as Object is not a Function.
-      return document.createElement(arguments[0]);
-    } else if (isSVG) {
-      return document.createElementNS.call(document, 'http://www.w3.org/2000/svg', arguments[0]);
-    } else {
-      return document.createElement.apply(document, arguments);
-    }
-  }
-
-  ;
 
   /**
    * getBody returns the body of a document, or an element that can stand in for
@@ -508,31 +637,6 @@ This test will also return `true` for Firefox 4 Multitouch support.
     }
     return bool;
   });
-
-/*!
-{
-  "name": "SVG",
-  "property": "svg",
-  "caniuse": "svg",
-  "tags": ["svg"],
-  "authors": ["Erik Dahlstrom"],
-  "polyfills": [
-    "svgweb",
-    "raphael",
-    "amplesdk",
-    "canvg",
-    "svg-boilerplate",
-    "sie",
-    "dojogfx",
-    "fabricjs"
-  ]
-}
-!*/
-/* DOC
-Detects support for SVG in `<embed>` or `<object>` elements.
-*/
-
-  Modernizr.addTest('svg', !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect);
 
 
   /**
