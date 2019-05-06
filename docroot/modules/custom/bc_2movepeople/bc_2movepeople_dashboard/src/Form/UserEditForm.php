@@ -77,7 +77,7 @@ class UserEditForm extends FormBase {
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#name' => 'submit',
-      '#value' => $this->t('Edit Account'),
+      '#value' => $this->t('Save'),
       '#attributes' => [
         'class' => ['btn-submit-default'],
       ],

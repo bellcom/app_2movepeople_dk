@@ -47,10 +47,6 @@ class NewUserCreateForm extends FormBase {
       '#weight' => -100,
     ];
 
-    $form['title'] = [
-      '#markup' => '<h1 class="page-header">' . $this->t('Create Account') . '</h1>',
-    ];
-
     $form['social_security_number'] = [
       '#type' => 'textfield',
       '#placeholder' => $this->t('Social security number'),
@@ -113,7 +109,7 @@ class NewUserCreateForm extends FormBase {
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#name' => 'submit',
-      '#value' => $this->t('Create Account'),
+      '#value' => $this->t('Save'),
       '#attributes' => [
         'class' => ['btn-submit-default'],
       ],
