@@ -49,22 +49,22 @@ class NewUserCreateForm extends FormBase {
 
     $form['social_security_number'] = [
       '#type' => 'textfield',
-      '#placeholder' => $this->t('Social security number'),
+      '#title' => $this->t('Social security number'),
     ];
 
     $form['firstname'] = [
       '#type' => 'textfield',
-      '#placeholder' => $this->t('Firstname'),
+      '#title' => $this->t('Firstname'),
     ];
 
     $form['surname'] = [
       '#type' => 'textfield',
-      '#placeholder' => $this->t('Surname'),
+      '#title' => $this->t('Surname'),
     ];
 
     $form['username'] = [
       '#type' => 'textfield',
-      '#placeholder' => $this->t('Username'),
+      '#title' => $this->t('Username'),
     ];
 
     $config = \Drupal::config('bc_2movepeople.settings');
@@ -72,7 +72,7 @@ class NewUserCreateForm extends FormBase {
 
     $form['email'] = [
       '#type' => 'email',
-      '#placeholder' => $this->t('Email'),
+      '#title' => $this->t('Email'),
       '#required' => $email_required,
     ];
 
@@ -90,12 +90,12 @@ class NewUserCreateForm extends FormBase {
 
     $form['password'] = [
       '#type' => 'password',
-      '#placeholder' => $this->t('Password'),
+      '#title' => $this->t('Password'),
       '#size' => 10,
     ];
     $form['password_confirm'] = [
       '#type' => 'password',
-      '#placeholder' => $this->t('Confirm Password'),
+      '#title' => $this->t('Confirm Password'),
       '#size' => 10,
     ];
 

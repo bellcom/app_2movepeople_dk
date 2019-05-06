@@ -53,7 +53,7 @@ class SaveToTemplateForm extends FormBase {
     ];
     $form['template_id'] = [
       '#type' => 'select',
-      '#placeholder' => $this->t('Chose existing template'),
+      '#title' => $this->t('Chose existing template'),
       '#options' => $options,
       '#states' => [
         'visible' => [
@@ -64,7 +64,7 @@ class SaveToTemplateForm extends FormBase {
 
     $form['template_name'] = [
       '#type' => 'textfield',
-      '#placeholder' => $this->t('Template name'),
+      '#title' => $this->t('Template name'),
       '#size' => 40,
       '#states' => [
         'visible' => [
