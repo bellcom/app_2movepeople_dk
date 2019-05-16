@@ -172,7 +172,10 @@
 @include media-breakpoint-up(sm) {
 
   .modal-dialog {
-    min-width: 500px;
+
+    > .modal-content {
+      min-width: 700px;
+    }
   }
   
   .modal-body__progression-tabs {
