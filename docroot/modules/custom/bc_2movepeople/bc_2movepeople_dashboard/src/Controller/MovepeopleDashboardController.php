@@ -210,12 +210,13 @@ class MovepeopleDashboardController extends ControllerBase {
   public function getUserOverviewImplementation(AccountInterface $user) {
     $build = [];
     $roles = $user->getRoles();
+
     if (in_array('2mp_user', $roles)) {
       $build = $this->getUserOverview($user);
     }
-
-    if (in_array('2mp_manager', $roles)) {
+    else {
       $build['#title'] = $this->t('Clients');
+
       $build['content'] = $this->renderConnectedUsers($user);
     }
 

@@ -355,7 +355,18 @@ display:
       sorts: {  }
       header: {  }
       footer: {  }
-      empty: {  }
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          tokenize: false
+          content: "<div class=\"col-xs-12\">\r\n  Vi fandt ingen tilknyttede borgere.\r\n</div>"
+          plugin_id: text_custom
       relationships:
         field_connected_users:
           id: field_connected_users
@@ -513,6 +524,7 @@ display:
         css_class: false
         filters: false
         filter_groups: false
+        empty: true
       style:
         type: default
         options:
