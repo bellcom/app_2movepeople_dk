@@ -266,7 +266,6 @@ class MovepeopleDashboardController extends ControllerBase {
       // Add 'Rate category' btn if there are any questions.
       if (!$questions_found) {
         $controls['Progression.rate_category'] = [
-          '#url' => '<current>',
           '#attributes' => [
             'disabled' => 'disabled',
           ],
