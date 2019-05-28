@@ -6,9 +6,8 @@
  */
 #}
 
-{#{{ breakpoint() }}#}
-
 {{ message }}
+
 <div class="milestone-evaluation">
 
   {% for item in milestones_data %}
@@ -17,7 +16,8 @@
 
       <a href="{{ path('bc_2movepeople_dashboard.milestone.evaluate', {'node':item.milestone.id})}}"
          id="btn-evaluering"
-         class="btn btn-default btn-sm pull-right">
+         data-dialog-type="dialog"
+         class="btn btn-default btn-sm pull-right btn-progress use-ajax">
         {{ 'Edit'|trans }}
       </a>
 
@@ -40,6 +40,6 @@
   {% endfor %}
 
   <div class="milestone-evaluation-footer">
-    <a href="{{ path('bc_2movepeople_dashboard.milestone.evaluations.pdf', {'user': user})}}" id="btn-evaluering" class="btn btn-default">{{ 'Save as PDF'|trans }}</a>
+    <a href="{{ path('bc_2movepeople_dashboard.milestone.evaluations.pdf', {'user': user})}}" class="btn btn-default">{{ 'Save as PDF'|trans }}</a>
   </div>
 </div>
