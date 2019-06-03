@@ -1,0 +1,9 @@
+os2logging.admin.settings_form:
+  path: '/admin/config/os2logging/settings'
+  defaults:
+    _form: '\Drupal\os2logging\Form\AdminSettingsForm'
+    _title: 'OS2logging settings'
+  requirements:
+    _permission: 'administer os2logging settings'
+  options:
+    _admin_route: TRUE

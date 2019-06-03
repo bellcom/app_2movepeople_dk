@@ -1,0 +1,4 @@
+os2logging.admin.settings_form:
+  title: 'Administer OS2logging'
+  description: ''
+  route_name: os2logging.admin.settings_form
