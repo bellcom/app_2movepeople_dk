@@ -1,9 +1,0 @@
-parameters:
-  monolog.channel_handlers:
-    os2logging: ['os2logging']
-  monolog.processors: ['message_placeholder', 'current_user', 'request_uri', 'ip', 'referer']
-
-services:
-  monolog.handler.os2logging:
-    class: Monolog\Handler\RotatingFileHandler
-    arguments: ['private://logs/node_load.log', 60, 'monolog.level.info']

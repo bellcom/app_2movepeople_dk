@@ -16,8 +16,8 @@ function os2logging_entity_load(array $entities, $type) {
         if (in_array($entity->getType(), $types_to_process)) {
 
           // Log entry.
-          $log = \Drupal::logger('os2logging');
-          $log->info('Node load');
+          $logger = \Drupal::logger('os2logging');
+          $logger->info('Node load');
         }
       }
     }
