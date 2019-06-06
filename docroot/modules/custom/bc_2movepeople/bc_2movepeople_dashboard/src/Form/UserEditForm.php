@@ -34,29 +34,29 @@ class UserEditForm extends FormBase {
 
     // SSN.
     $form['social_security_number'] = [
+      '#title' => $this->t('Social security number'),
       '#type' => 'textfield',
-      '#placeholder' => $this->t('Social security number'),
       '#default_value' => $user->get('field_social_security_number')->value,
     ];
 
     // Firstname.
     $form['firstname'] = [
+      '#title' => $this->t('Firstname'),
       '#type' => 'textfield',
-      '#placeholder' => $this->t('Firstname'),
       '#default_value' => $user->get('field_user_firstname')->value,
     ];
 
     // Lastname.
     $form['surname'] = [
+      '#title' => $this->t('Surname'),
       '#type' => 'textfield',
-      '#placeholder' => $this->t('Surname'),
       '#default_value' => $user->get('field_user_surname')->value,
     ];
 
     // Username.
     $form['username'] = [
+      '#title' => $this->t('Username'),
       '#type' => 'textfield',
-      '#placeholder' => $this->t('Username'),
       '#required' => TRUE,
       '#default_value' => $user->get('name')->value,
     ];
@@ -64,8 +64,8 @@ class UserEditForm extends FormBase {
     // E-mail address.
     $email_required = $config->get('email_required');
     $form['email'] = [
+      '#title' => $this->t('Email'),
       '#type' => 'email',
-      '#placeholder' => $this->t('Email'),
       '#required' => $email_required,
       '#default_value' => $user->get('mail')->value,
     ];
@@ -77,7 +77,7 @@ class UserEditForm extends FormBase {
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#name' => 'submit',
-      '#value' => $this->t('Edit Account'),
+      '#value' => $this->t('Save'),
       '#attributes' => [
         'class' => ['btn-submit-default'],
       ],

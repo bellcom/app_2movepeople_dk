@@ -1044,14 +1044,13 @@ jQuery(document).ready(function ($) {
     });
 });
 
-// Document ready
 (function ($) {
   'use strict';
 
-  // Enable page layout
+  // Enable page layout.
   pageLayout.init();
 
-  // Sidr
+  // Sidr.
   $('.sidr-toggle--right').sidr({
     name: 'sidr-main',
     side: 'right',
@@ -1059,14 +1058,6 @@ jQuery(document).ready(function ($) {
     body: '.layout__wrapper',
     source: '.sidr-source-provider'
   });
-
-  // Enable / disable Bootstrap tooltips, based upon touch events
-  if (Modernizr.touchevents) {
-    $('[data-toggle="tooltip"]').tooltip('hide');
-  }
-  else {
-    $('[data-toggle="tooltip"]').tooltip();
-  }
 
   // Enable autogrow on milestone textarea.
   $('.path-dashboard .purpose textarea').autogrow();

@@ -56,7 +56,6 @@ class MilestoneTaskAddForm extends FormBase {
     $form['title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Task'),
-      '#placeholder' => $this->t('Task'),
       '#required' => TRUE,
     ];
 
@@ -90,18 +89,15 @@ class MilestoneTaskAddForm extends FormBase {
     $form['activity_title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Activity'),
-      '#placeholder' => $this->t('Activity'),
       '#required' => TRUE,
     ];
     $form['evaluation'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Evaluation'),
-      '#placeholder' => $this->t('Evaluation'),
     ];
     $form['due_date'] = [
       '#type' => 'date',
       '#title' => $this->t('Deadline'),
-      '#placeholder' => $this->t('Deadline'),
 //      '#required' => TRUE,
     ];
 

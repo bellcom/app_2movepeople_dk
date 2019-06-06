@@ -19,7 +19,6 @@
   },
   "concat": {
     "core": [
-      "src/vendor/bootstrap/dist/js/bootstrap.js",
       "node_modules/flexy-header/javascripts/flexy-header.js",
       "node_modules/flexy-navigation/javascripts/flexy-navigation.js",
       "node_modules/sidr/dist/jquery.sidr.js",

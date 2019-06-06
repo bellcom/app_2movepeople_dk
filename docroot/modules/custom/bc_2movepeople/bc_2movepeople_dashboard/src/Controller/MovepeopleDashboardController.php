@@ -210,12 +210,13 @@ class MovepeopleDashboardController extends ControllerBase {
   public function getUserOverviewImplementation(AccountInterface $user) {
     $build = [];
     $roles = $user->getRoles();
+
     if (in_array('2mp_user', $roles)) {
       $build = $this->getUserOverview($user);
     }
-
-    if (in_array('2mp_manager', $roles)) {
+    else {
       $build['#title'] = $this->t('Clients');
+
       $build['content'] = $this->renderConnectedUsers($user);
     }
 
@@ -263,7 +264,14 @@ class MovepeopleDashboardController extends ControllerBase {
       }
 
       // Add 'Rate category' btn if there are any questions.
-      if ($questions_found) {
+      if (!$questions_found) {
+        $controls['Progression.rate_category'] = [
+          '#attributes' => [
+            'disabled' => 'disabled',
+          ],
+        ];
+      }
+      else {
         $controls['Progression.rate_category'] = [
           '#url' => Url::fromRoute('bc_2movepeople_rate_progression.user_rates_add', ['user' => $user->id()]),
           '#attributes' => [
@@ -271,10 +279,6 @@ class MovepeopleDashboardController extends ControllerBase {
             'data-dialog-type' => 'modal',
           ],
         ];
-      }
-      else {
-        // No questions - do not show 'Rate category' btn, but add a message.
-        $build['#table_progression']['message'] = t('To rate users you have to add Categories and question inside categories');
       }
 
       $result_progression = $this->getProgressionsTable($entity_progression_ids);
@@ -785,9 +789,22 @@ class MovepeopleDashboardController extends ControllerBase {
 
     foreach ($links as $key => $link) {
       $button = _bc_2movepeople_dashboard_button($key);
-      $link['#title'] = !empty($button['title']) ? $button['title'] : $button['name'];
+      $value = !empty($button['title']) ? $button['title'] : $button['name'];
+
+      // Button (only buttons can be disabled).
+      if (isset($link['#attributes']['disabled'])) {
+        $type = 'button';
+        $link['#value'] = $value;
+      }
+
+      // Link.
+      else {
+        $type = 'link';
+        $link['#title'] = $value;
+      }
+
       $build[$key] = array_merge_recursive($link, [
-        '#type' => 'link',
+        '#type' => $type,
         '#attributes' => [
           'class' => ['btn', 'btn-default'],
         ],

@@ -94,3 +94,5 @@ views: 0.0.0
 lightning: 0.0.0
 media_library: 8.6.13
 admin_toolbar_tools: 1.26.0
+os2logging: 0.0.0
+monolog: 1.3.0

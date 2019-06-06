@@ -22,3 +22,13 @@ table_responsive: '-1'
 table: ''
 button_iconize: 0
 breadcrumb_home: 1
+region_wells:
+  header: ''
+  help: ''
+  content: ''
+  sidebar_left__desktop: ''
+  sidebar_left__mobile: ''
+include_deprecated: 1
+cdn_jsdelivr_version: 3.3.7
+tooltip_enabled: 1
+popover_enabled: 1
