@@ -71,9 +71,3 @@ private
 # Files that might appear on external disks
 .Spotlight-V100
 .Trashes
-
-#Because of site reinstall issue VI-206 we don't change this files
-/config/sync/field.storage.node.body.yml
-/config/sync/field.storage.node.panelizer.yml
-
-
