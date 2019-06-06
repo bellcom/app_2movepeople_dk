@@ -34,29 +34,29 @@ class UserEditForm extends FormBase {
 
     // SSN.
     $form['social_security_number'] = [
+      '#title' => $this->t('Social security number'),
       '#type' => 'textfield',
-      '#placeholder' => $this->t('Social security number'),
       '#default_value' => $user->get('field_social_security_number')->value,
     ];
 
     // Firstname.
     $form['firstname'] = [
+      '#title' => $this->t('Firstname'),
       '#type' => 'textfield',
-      '#placeholder' => $this->t('Firstname'),
       '#default_value' => $user->get('field_user_firstname')->value,
     ];
 
     // Lastname.
     $form['surname'] = [
+      '#title' => $this->t('Surname'),
       '#type' => 'textfield',
-      '#placeholder' => $this->t('Surname'),
       '#default_value' => $user->get('field_user_surname')->value,
     ];
 
     // Username.
     $form['username'] = [
+      '#title' => $this->t('Username'),
       '#type' => 'textfield',
-      '#placeholder' => $this->t('Username'),
       '#required' => TRUE,
       '#default_value' => $user->get('name')->value,
     ];
@@ -64,8 +64,8 @@ class UserEditForm extends FormBase {
     // E-mail address.
     $email_required = $config->get('email_required');
     $form['email'] = [
+      '#title' => $this->t('Email'),
       '#type' => 'email',
-      '#placeholder' => $this->t('Email'),
       '#required' => $email_required,
       '#default_value' => $user->get('mail')->value,
     ];
@@ -77,7 +77,7 @@ class UserEditForm extends FormBase {
     $form['actions']['submit'] = [
       '#type' => 'submit',
       '#name' => 'submit',
-      '#value' => $this->t('Edit Account'),
+      '#value' => $this->t('Save'),
       '#attributes' => [
         'class' => ['btn-submit-default'],
       ],
@@ -131,11 +131,14 @@ class UserEditForm extends FormBase {
     if (!$form_state->getErrors()) {
       $user = $form_state->get('user');
 
+      // Mandatory.
+      $user->setEmail($form_state->getValue('email'));
+      $user->setUsername($form_state->getValue('username'));
+
       // Optional.
       $user->set('field_social_security_number', $form_state->getValue('social_security_number'));
       $user->set('field_user_firstname', $form_state->getValue('firstname'));
       $user->set('field_user_surname', $form_state->getValue('surname'));
-      $user->set('mail', $form_state->getValue('email'));
 
       // Update user account.
       $user->save();
@@ -159,6 +162,19 @@ class UserEditForm extends FormBase {
     $surname = CommonFormUtils::cleanInput($form_state->getValue('surname'));
     if (strlen($surname) < 2) {
       $form_state->setErrorByName('surname', $this->t('The Surname %surname is not valid.', ['%surname' => $surname]));
+    }
+
+    // Check Username.
+    $username = CommonFormUtils::cleanInput($form_state->getValue('username'));
+    if (strlen($username) < 2) {
+      $form_state->setErrorByName('username', $this->t('The Username %username is not valid.', ['%username' => $username]));
+    }
+    if ($user->get('name')->value !== $username) {
+      if (!empty(user_load_by_name($username))) {
+        $form_state->setErrorByName('username',
+          $this->t('The Username %username already exists.',
+            ['%username' => $username]));
+      }
     }
 
     // Check Email.

@@ -28,5 +28,9 @@
 {% endmacro %}
 
 <div class="dashboard-overview dashboard-overview-task-rows">
-{{ _self.recursiveTasks(tasks, user, 0) }}
+  {% if tasks %}
+    {{ _self.recursiveTasks(tasks, user, 0) }}
+  {% else %}
+    {{ 'There is no current active tasks.' | trans }}
+  {% endif %}
 </div>

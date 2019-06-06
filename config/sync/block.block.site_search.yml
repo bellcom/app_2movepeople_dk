@@ -1,0 +1,31 @@
+uuid: d6e2b88e-4f05-417a-9479-adc2f4b1213d
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.search
+  module:
+    - system
+    - views
+  theme:
+    - site
+_core:
+  default_config_hash: UDHpza-uTXT90uUqIrgPDBW4XrHBA1XpzSBQyyRB2Yg
+id: site_search
+theme: site
+region: content
+weight: -6
+provider: null
+plugin: 'views_exposed_filter_block:search-page'
+settings:
+  id: 'views_exposed_filter_block:search-page'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    pages: /search
+    negate: false
+    context_mapping: {  }

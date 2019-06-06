@@ -7,12 +7,10 @@
   padding-top: 2px;
 }
 // Marked for removal
-.is-remind-warning {
-  background-color: $form-remind-warning-bg !important;
-}
-// Marked for removal
+.is-completed,
+.is-remind-warning,
 .is-remind-expired {
-  background-color: $form-remind-expired-bg !important;
+  background-color: unset !important;
 }
 
 .custom-form-label {

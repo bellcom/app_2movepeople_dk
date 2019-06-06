@@ -23,11 +23,13 @@
   <!-- Begin - controls -->
   <div class="user__controls">
 
-    {# Begin - masquerade #}
-    <div class="user__controls__item user__controls__item--masquerade" title="{{ 'Switch to this user' | t }}" data-toggle="tooltip" data-placement="top">
-      {{ content.masquerade }}
-    </div>
-    {# End - masquerade #}
+    {% if content.masquerade %}
+      {# Begin - masquerade #}
+      <div class="user__controls__item user__controls__item--masquerade" title="{{ 'Switch to this user' | t }}" data-toggle="tooltip" data-placement="top">
+        {{ content.masquerade }}
+      </div>
+      {# End - masquerade #}
+    {% endif %}
 
     <!-- Begin - managers -->
     <a href="{{ path('bc_2movepeople_dashboard.user.edit_managers', {'user': user.id, 'destination': '/dashboard'}) }}" class="btn btn-default btn-sm use-ajax glyphicon-user" data-dialog-type="modal" data-dialog-options='{"width":500}' title="{{'Managers' | trans }}" data-toggle="tooltip" data-placement="top"></a>

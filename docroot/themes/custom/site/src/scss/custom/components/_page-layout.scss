@@ -88,7 +88,9 @@ body {
   max-width: 1300px;
 }
 
-.layout__wrapper {}
+.layout__wrapper {
+  z-index: 5;
+}
 .layout__content {
   display: flex;
 
@@ -166,39 +168,6 @@ h1.page-header {
 // --------------------------------------------------
 // Variants
 // --------------------------------------------------
-
-// Modal dialog position
-.modal-dialog {
-  min-height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  h1.page-header {
-    border-bottom: 0;
-    text-align: center;
-    color: $color-font-h1;
-  }
-  #bc_2movepeople-dashboard-user-create-form {
-    input {
-      margin-bottom: 20px;
-    }
-  }
-}
-
-// Modal background background
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-/*  z-index: @zindex-modal-background;*/
-  background-color: #9cafc4;
-  // Fade for backdrop
-  &.fade { opacity: 0; }
-  &.in { opacity:0.7; }
-}
 
 // --------------------------------------------------
 // Responsive

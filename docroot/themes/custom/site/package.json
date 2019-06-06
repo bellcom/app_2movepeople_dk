@@ -13,11 +13,9 @@
     "flexy-row": "^1.0.0",
     "font-awesome": "4.7.0",
     "jquery-bar-rating": "^1.2.2",
-    "jquery-slinky": "^3.0.0",
     "readable-bootstrap-breakpoints": "^1.0.2",
     "sidr": "^2.2.1",
-    "sidr-bootstrap-theme": "^1.0.2",
-    "slinky-bootstrap-theme": "^1.0.2"
+    "sidr-bootstrap-theme": "^1.0.2"
   },
   "devDependencies": {
     "grunt": "^1.0.1",

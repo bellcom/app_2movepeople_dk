@@ -1588,14 +1588,7 @@ jquery-bar-rating@^1.2.2:
   dependencies:
     jquery ">=1.7.2"
 
-jquery-slinky@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/jquery-slinky/-/jquery-slinky-3.0.0.tgz#bb95528bb782b9784408071847285e45d6a1dc7a"
-  integrity sha1-u5VSi7eCuXhECAcYRyheRdah3Ho=
-  dependencies:
-    jquery "^3.1.0"
-
-jquery@>=1.4.3, jquery@>=1.7.2, jquery@^3.1.0:
+jquery@>=1.4.3, jquery@>=1.7.2:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
   integrity sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==
@@ -2596,11 +2589,6 @@ signal-exit@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
-
-slinky-bootstrap-theme@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/slinky-bootstrap-theme/-/slinky-bootstrap-theme-1.0.2.tgz#21f43d4ff746d6f160d77b374dd5fe8956c145e5"
-  integrity sha512-9j0gWgnRptpHIbd9i5V5C16sheuIjXPQyK2V7/CAEA0LUVZBqhvEuJ94lKAdYivSNdOLHF6ZyNTg9trJQzkuYg==
 
 snapdragon-node@^2.0.1:
   version "2.1.1"

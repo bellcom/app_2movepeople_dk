@@ -45,7 +45,6 @@ class ProgressionTaskEditForm extends FormBase {
     $form['title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Question'),
-      '#placeholder' => $this->t('Question'),
       '#required' => TRUE,
     ];
     

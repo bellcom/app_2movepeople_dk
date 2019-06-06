@@ -1,0 +1,31 @@
+display:
+  default:
+    display_options:
+      fields:
+        uid:
+          admin_label: 'Authored by'
+          separator: ', '
+        created:
+          admin_label: 'Authored on'
+          separator: ', '
+        moderation_state:
+          admin_label: 'Moderation state'
+          alter:
+            text: 'Set to <strong>{{ moderation_state }}</strong> on {{ revision_timestamp }} by {{ revision_uid }}'
+          separator: ', '
+      exposed_form:
+        options:
+          submit_button: Apply
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      title: 'Moderation History'
+      arguments:
+        nid:
+          exception:
+            title: All
+    display_title: Master
+  page:
+    display_title: Page
+label: 'Moderation history'
