@@ -67,12 +67,12 @@ class TaskReminderUtils  {
           // Set and update reminder data
           self::setReminderDataDB($user, $goal, $reminder_data);
         }
-      }  
+      }
     }
   }
   
   /**
-   * compares tasks due date with current reminder date 
+   * compares tasks due date with current reminder date
    *
    * @params
    *
@@ -84,7 +84,7 @@ class TaskReminderUtils  {
     $result = array();
     $config = \Drupal::config('bc_2movepeople_dashboard.AdminSettings');
     $reminder_days = $config->get('task_reminder_due_date');
-       
+
     // $current_date = new DrupalDateTime('now');
     $current_date_add = new DrupalDateTime('now');
     $current_date_add->modify('+'.$reminder_days.' day');
@@ -113,9 +113,12 @@ class TaskReminderUtils  {
       $progression_id = array_shift(array_values($progressions_ids)); // ???
       
       $progression = Node::load($progression_id);
+      if (empty($progression)) {
+        continue;
+      }
       $user_id = $progression->get('field_progression_user')->getValue()[0]['target_id'];
 
-      $result[$user_id][] = $nid; 
+      $result[$user_id][] = $nid;
     }
 
     return $result;
@@ -133,7 +136,7 @@ class TaskReminderUtils  {
   public static function getReminderDataDB($nid) {
     
     $result = array();
-      
+
     $query = \Drupal::database()->select('bc_2movepeople_dashboard_task_reminder', 'tr');
     $query->fields('tr', ['nid', 'reminded_count', 'email', 'reminded_date']);
     $query->condition('nid', $nid);
@@ -141,7 +144,7 @@ class TaskReminderUtils  {
 
     while ($row = $query_result->fetchAssoc()) {
       $result = $row;
-    }  
+    }
 
     return $result;
   }
@@ -177,7 +180,7 @@ class TaskReminderUtils  {
       ]);
       $query->condition('nid', $goal->id());
       $query->execute();
-    } 
+    }
     // INSERT
     else {
       $query = \Drupal::database()->insert('bc_2movepeople_dashboard_task_reminder');
