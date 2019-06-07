@@ -8,7 +8,7 @@ dependencies:
     - field.field.node.page.panelizer
     - node.type.page
   module:
-    - datetime
+    - content_moderation
     - metatag
     - path
     - text

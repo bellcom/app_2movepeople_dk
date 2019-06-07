@@ -13,6 +13,7 @@ dependencies:
     - field.field.node.goal.field_task_complete
     - node.type.goal
   module:
+    - content_moderation
     - datetime
     - path
     - text
