@@ -8,7 +8,7 @@ dependencies:
     - field.field.node.landing_page.panelizer
     - node.type.landing_page
   module:
-    - datetime
+    - content_moderation
     - metatag
     - panelizer
     - path
