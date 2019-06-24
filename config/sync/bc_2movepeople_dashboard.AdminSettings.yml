@@ -6,3 +6,8 @@ task_reminder_email_body: "Hej @name<br><br>\r\n\r\n@task_title - due to expire:
 responsible_manager_email_subject: 'Task assigned'
 responsible_manager_email_body: "Hi @manager<br><br>\r\n\r\nYou are settled as responsible manager of @task_title  task of @user\r\n\r\n<br><br>"
 milestone_evaluation_header_nid: '1779'
+sbsys: null
+sbsys_email:
+  to: qwe@qwe.qwe
+  subject: qweqw
+  message: 'wqerwqer adfgsfdg'

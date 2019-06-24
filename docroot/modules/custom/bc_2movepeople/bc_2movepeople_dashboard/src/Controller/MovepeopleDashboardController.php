@@ -2,11 +2,14 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Controller;
 
+use Drupal\Core\Mail\MailManagerInterface;
+use Drupal\user\Entity\User;
 use Mpdf\Mpdf;
 use Drupal\Core\Mail\Plugin\Mail\PhpMail;
 use Drupal\Core\Url;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Controller\ControllerBase;
+use Mpdf\Output\Destination;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\bc_2movepeople_dashboard\bc_2movepeople_dashboardStorage;
@@ -17,6 +20,7 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Component\Utility\Html;
 use Drupal\views\Views;
 use Drupal\user\UserInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Contains MovepeopleDashboardController.
@@ -24,6 +28,7 @@ use Drupal\user\UserInterface;
 class MovepeopleDashboardController extends ControllerBase {
 
   protected $database;
+  protected $mailManager;
   protected $fStr;
   protected $pStr;
 
@@ -32,17 +37,19 @@ class MovepeopleDashboardController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-        $container->get('database')
+        $container->get('database'),
+        $container->get('plugin.manager.mail')
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(Connection $database) {
+  public function __construct(Connection $database, MailManagerInterface $mail_manager) {
     $this->database = $database;
     $this->fStr = 'feedback';
     $this->pStr = 'progress';
+    $this->mailManager = $mail_manager;
   }
 
   /**
@@ -875,6 +882,17 @@ class MovepeopleDashboardController extends ControllerBase {
    * Output a PDF of user evaluations.
    */
   public function getMilestoneEvaluationsPdf(AccountInterface $user) {
+    $html = $this->getMilestoneEvaluationsContent($user);
+    $mpdf = new Mpdf(['tempDir' => 'sites/default/files/tmp']);
+    $mpdf->WriteHTML($html);
+    $mpdf->Output('user_' . $user->id() . '_evaluations.pdf', 'D');
+    exit;
+  }
+
+  /**
+   * Milestone Evaluations content generate mathod.
+   */
+  private function getMilestoneEvaluationsContent(AccountInterface $user) {
     $config = $this->config('bc_2movepeople_dashboard.AdminSettings');
 
     // Load Milestone evaluation header.
@@ -908,10 +926,61 @@ class MovepeopleDashboardController extends ControllerBase {
 
     $html = \Drupal::service('renderer')->renderRoot($build);
     $html = Html::transformRootRelativeUrlsToAbsolute($html, \Drupal::request()->getSchemeAndHttpHost());
+    return $html;
+  }
+
+  /**
+   * Milestone Evaluations PDF page.
+   *
+   * Output a PDF of user evaluations.
+   */
+  public function sendMilestoneEvaluationsToSbsys(AccountInterface $user) {
+    $config = $this->config('bc_2movepeople_dashboard.AdminSettings');
+    $attachments = [];
+
+    // Getting PDF file.
+    $html = $this->getMilestoneEvaluationsContent($user);
     $mpdf = new Mpdf(['tempDir' => 'sites/default/files/tmp']);
     $mpdf->WriteHTML($html);
-    $mpdf->Output('user_' . $user->id() . '_evaluations.pdf', 'D');
-    exit;
+    $pdf_content = $mpdf->Output('user_' . $user->id() . '_evaluations.pdf', Destination::STRING_RETURN);
+    $attachments[] = [
+      'filecontent' => $pdf_content,
+      'filename' => 'evaluation.pdf',
+      'filemime' => 'application/pdf',
+    ];
+    // Gettings xml file.
+    $xml_content = \Drupal::service('sbsys_integration.xml_handler')->generate(['key' => User::load($user->id())]);
+    $attachments[] = [
+      'filecontent' => $xml_content,
+      'filename' => 'sbsys.xm',
+      'filemime' => 'application/xml',
+    ];
+
+    $to = $config->get('sbsys_email.to');
+    $subject = $config->get('sbsys_email.subject');
+    $message = $config->get('sbsys_email.message');
+
+    $mail = $this->mailManager->mail(
+      'bc_2movepeople_dashboard',
+      'sbsys',
+      $to,
+      \Drupal::languageManager()->getDefaultLanguage()->getId(), [
+        'subject' => $subject,
+        'body' => $message,
+        'attachments' => $attachments,
+      ]
+    );
+    
+    if ($mail['result']) {
+      drupal_set_message($this->t('Email has been sent to sbsys'));
+    }
+    else {
+      drupal_set_message($this->t('Email sending to SBSYS failed. See error log for more details.'));
+    }
+  
+    $url = Url::fromRoute('<front>');
+    $response = new RedirectResponse($url->toString());
+    $response->send();
   }
 
 }
