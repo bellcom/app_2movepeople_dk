@@ -106,6 +106,16 @@ bc_2movepeople_dashboard.milestone.evaluations.pdf:
     _permission: 'access user dashboard'
     _user_is_logged_in: 'TRUE'
 
+bc_2movepeople_dashboard.milestone.evaluations.sbsys:
+  path: '/dashboard/users/{user}/milestone/evaluations/sbsys'
+  defaults:
+    _title: 'Send info to sbsys'
+    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::sendMilestoneEvaluationsToSbsys'
+    limit: NULL
+  requirements:
+    _permission: 'access user dashboard'
+    _user_is_logged_in: 'TRUE'
+
 bc_2movepeople_dashboard.progressions.edit:
   path: '/dashboard/progressions/{node}/edit/{limit}'
   options:
