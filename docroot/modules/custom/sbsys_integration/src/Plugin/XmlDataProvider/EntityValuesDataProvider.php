@@ -124,9 +124,12 @@ class EntityValuesDataProvider extends XmlDataProviderBase {
       ];
     }
     else {
+      $entity_type_bundles = empty($bundles[$entity_type]) ? NULL : array_keys($bundles[$entity_type]);
       $plugin_settings['entity_bundle'] = [
         '#type' => 'hidden',
-        '#default_value' => empty($bundles[$entity_type]) ? NULL : reset(array_keys($bundles[$entity_type])),
+        '#value' => empty($entity_type_bundles[0]) ? NULL : $entity_type_bundles[0],
+        '#prefix' => '<div id="entity-bundle-wrapper">',
+        '#suffix' => '</div>',
       ];
     }
 
