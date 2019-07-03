@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains sbsys_integration.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function sbsys_integration_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the sbsys_integration module.
+    case 'help.page.sbsys_integration':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= check_markup(file_get_contents(drupal_get_path('module', 'sbsys_integration') . '/README.md'));
+      return $output;
+
+    default:
+  }
+}

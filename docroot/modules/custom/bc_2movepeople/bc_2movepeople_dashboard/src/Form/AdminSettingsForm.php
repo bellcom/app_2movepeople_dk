@@ -165,6 +165,33 @@ class AdminSettingsForm extends ConfigFormBase {
       ];
     }
 
+    // SBSYS Email settings.
+    $form['sbsys_email'] = array(
+      '#type' => 'details',
+      '#title' => $this->t('SBSYS Email settings'),
+      '#tree' => TRUE,
+      '#open' => FALSE,
+    );
+
+    $form['sbsys_email']['to'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('To'),
+      '#description' => $this->t('Email address to send sbsysemail'),
+      '#default_value' => $config->get('sbsys_email.to'),
+    ];
+
+    $form['sbsys_email']['subject'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Subject'),
+      '#default_value' => $config->get('sbsys_email.subject'),
+    ];
+
+    $form['sbsys_email']['message'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Message'),
+      '#default_value' => $config->get('sbsys_email.message'),
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -196,6 +223,7 @@ class AdminSettingsForm extends ConfigFormBase {
       ->set('responsible_manager_email_subject', $form_state->getValue('responsible_manager_email_subject'))
       ->set('responsible_manager_email_body', $form_state->getValue('responsible_manager_email_body'))
       ->set('milestone_evaluation_header_nid', $form_state->getValue('milestone_evaluation_header_nid'))
+      ->set('sbsys_email', $form_state->getValue('sbsys_email'))
       ->save();
   }
 

@@ -96,3 +96,6 @@ media_library: 8.6.13
 admin_toolbar_tools: 1.26.0
 os2logging: 0.0.0
 monolog: 1.3.0
+sbsys_integration: 0.0.0
+mailsystem: 4.1.0
+swiftmailer: 1.0.0-beta2

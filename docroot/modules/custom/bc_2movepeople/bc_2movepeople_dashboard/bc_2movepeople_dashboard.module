@@ -189,6 +189,24 @@ function bc_2movepeople_dashboard_node_delete($node) {
 }
 
 /**
+ * Implements hook_mail().
+ */
+function bc_2movepeople_dashboard_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'sbsys':
+      $message['subject'] = $params['subject'];
+      $message['body'][] = $params['body'];
+      $message['params']['attachments'] = $params['attachments'];
+      
+      if (!isset($params['from'])) {
+        $params['from'] = \Drupal::config('system.site')->get('mail');
+      }
+
+      break;
+  }
+}
+
+/**
  * Implements hook entity_update().
  */
 function bc_2movepeople_dashboard_entity_update(EntityInterface $entity) {
