@@ -507,9 +507,9 @@ display:
           element_label_class: ''
           element_label_colon: false
           element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: false
-          empty: ''
+          element_wrapper_class: 'col-xs-12 col-sm-4 col-md-3'
+          element_default_classes: true
+          empty: "<div class=\"col-xs-12\">\r\n  Vi fandt ingen resultater.\r\n</div>"
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
@@ -529,7 +529,7 @@ display:
         type: default
         options:
           grouping: {  }
-          row_class: 'col-xs-12 col-sm-4 col-md-3'
+          row_class: ''
           default_row_class: false
       row:
         type: fields
