@@ -204,10 +204,15 @@ class MovepeopleDashboardController extends ControllerBase {
     if (!$user->hasPermission('access user dashboard')) {
       return $this->redirect('bc_2movepeople_dashboard.user.tasks', ['user' => $user->id()]);
     }
-    $build['content'] = $this->renderConnectedUsers($user->getAccount());
+    $build['content'] = $this->renderMyConnectedUsers();
+
     if (in_array('2mp_supervisor', $user->getRoles())) {
       $build['#title'] = $this->t('Managers');
     }
+    else {
+      $build['#title'] = $this->t('Clients');
+    }
+
     return $build;
   }
 
@@ -222,9 +227,14 @@ class MovepeopleDashboardController extends ControllerBase {
       $build = $this->getUserOverview($user);
     }
     else {
-      $build['#title'] = $this->t('Clients');
-
       $build['content'] = $this->renderConnectedUsers($user);
+    }
+
+    if (in_array('2mp_supervisor', $roles)) {
+      $build['#title'] = $this->t('Managers');
+    }
+    else {
+      $build['#title'] = $this->t('Clients');
     }
 
     return $build;
@@ -362,6 +372,27 @@ class MovepeopleDashboardController extends ControllerBase {
     $view->setDisplay($display);
     $view->preExecute();
     $view->execute();
+    return $view->render();
+  }
+
+  /**
+   * Render callback function for My connected users list.
+   */
+  public static function renderMyConnectedUsers() {
+    $user = \Drupal::currentUser();
+    $user->getAccount();
+    $args = [$user->id()];
+    $view = Views::getView('2mp_connected_users');
+
+    if (!is_object($view)) {
+      return '';
+    }
+
+    $view->setArguments($args);
+    $view->setDisplay('my_users_list');
+    $view->preExecute();
+    $view->execute();
+
     return $view->render();
   }
 
