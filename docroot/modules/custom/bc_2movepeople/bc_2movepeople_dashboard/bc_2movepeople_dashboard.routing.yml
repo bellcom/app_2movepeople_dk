@@ -239,7 +239,7 @@ bc_2movepeople_dashboard.admin.settings_form:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\AdminSettingsForm'
     _title: '2Move People settings form'
   requirements:
-    _permission: 'access administration pages'
+    _permission: 'administer bc_2movepeople settings'
   options:
     _admin_route: TRUE
 
@@ -249,7 +249,7 @@ bc_2movepeople_dashboard.admin.buttons_title:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\AdminButtonsTitle'
     _title: '2Move People buttons settings '
   requirements:
-    _permission: 'access administration pages'
+    _permission: 'administer bc_2movepeople settings'
   options:
     _admin_route: TRUE
 
