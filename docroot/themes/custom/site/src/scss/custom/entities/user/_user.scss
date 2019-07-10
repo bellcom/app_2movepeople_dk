@@ -19,6 +19,12 @@ $user-heading-padding-top-bottom: 15px;
 // Styling
 // --------------------------------------------------
 
+.user--full {
+  padding: $user-padding-top-bottom $user-padding-left-right;
+
+  background-color: $body-bg-secondary;
+}
+
 .user--compact {
   display: flex;
 
