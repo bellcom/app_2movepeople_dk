@@ -2,7 +2,7 @@ parameters:
   # Handlers per channel.
   monolog.channel_handlers:
     # If not specified use the default handlers.
-    default: ['syslog']
+    default: ['os2logging_watchdog']
     # Log php channel to web server's error log.
     php: ['error_log']
     os2logging: ['os2logging_rotating_file']
@@ -33,6 +33,9 @@ services:
     arguments: ['drupal']
   monolog.handler.null:
     class: Monolog\Handler\NullHandler
+  monolog.handler.os2logging_watchdog:
+    class: Monolog\Handler\RotatingFileHandler
+    arguments: ['private://logs/os2logging_watchdog.log', 60, 'monolog.level.debug']
   monolog.handler.os2logging_rotating_file:
     class: Monolog\Handler\RotatingFileHandler
     arguments: ['private://logs/node_load.log', 60, 'monolog.level.debug']
