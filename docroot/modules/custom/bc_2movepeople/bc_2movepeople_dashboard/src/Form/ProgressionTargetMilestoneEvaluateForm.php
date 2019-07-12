@@ -67,21 +67,31 @@ class ProgressionTargetMilestoneEvaluateForm extends FormBase {
       ],
     ];
 
-    foreach ($goal_ids as $tid) {
-      $form['goals']['#tree'] = TRUE;
-      $goal_id = $tid['target_id'];
-      $goal = MovepeopleDashboardController::getGoal($goal_id, $node);
-
-      $form['goals'][$goal['id']] = [
-        '#type' => 'container'
+    // No goals to evaluate.
+    if (count($goal_ids) === 0) {
+      $form['goals'] = [
+        '#markup' => $this->t('Currently no goals to evaluate.'),
       ];
+    }
 
-      $form['goals'][$goal['id']]['field_evaluation'] = [
-        '#type' => 'textarea',
-        '#title' => $goal['title'],
-        '#default_value' => $goal['evaluation'],
-        '#suffix' => '<br/>',
-      ];
+    // There is goals to evaluate.
+    else {
+      foreach ($goal_ids as $tid) {
+        $form['goals']['#tree'] = TRUE;
+        $goal_id = $tid['target_id'];
+        $goal = MovepeopleDashboardController::getGoal($goal_id, $node);
+
+        $form['goals'][$goal['id']] = [
+          '#type' => 'container',
+        ];
+
+        $form['goals'][$goal['id']]['field_evaluation'] = [
+          '#type' => 'textarea',
+          '#title' => $goal['title'],
+          '#default_value' => $goal['evaluation'],
+          '#suffix' => '<br/>',
+        ];
+      }
     }
 
     // Disable caching on this form.

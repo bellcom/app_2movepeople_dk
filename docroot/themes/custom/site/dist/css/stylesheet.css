@@ -10371,6 +10371,10 @@ span.task.completed {
   padding-left: 10px;
   margin-bottom: 5px; }
 
+.user--full {
+  padding: 15px 15px;
+  background-color: #fff; }
+
 .user--compact {
   display: -webkit-box;
   display: -webkit-flex;

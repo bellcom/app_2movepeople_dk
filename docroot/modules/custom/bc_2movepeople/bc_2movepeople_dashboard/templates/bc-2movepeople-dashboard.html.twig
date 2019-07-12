@@ -78,13 +78,13 @@
                           <label class="btn btn-default">
                             <input type="radio" name="chart_type-{{ progression_target.id }}" class="bar-graph-btn" autocomplete="off" data-progression-id="{{ progression_target.id }}" value="{{ 'Bar' | trans }}"> {{ 'Bar' | trans }}
                           </label>
-                          <label class="btn btn-default">
-                            <input type="radio" name="chart_type-{{ progression_target.id }}" class="radar-graph-btn" autocomplete="off" data-progression-id="{{ progression_target.id }}" value="{{ 'Radar' | trans }}"> {{ 'Radar' | trans }}
-                          </label>
+{#                          <label class="btn btn-default">#}
+{#                            <input type="radio" name="chart_type-{{ progression_target.id }}" class="radar-graph-btn" autocomplete="off" data-progression-id="{{ progression_target.id }}" value="{{ 'Radar' | trans }}"> {{ 'Radar' | trans }}#}
+{#                          </label>#}
                         </div>
                       </div>
                       <div class="div-chart" {% if progression_target.feedback %} progression="feedback" {% else %} progression="progress"  {% endif %} id="div_chart_{{ progression_target.id }}"></div>
-                      <canvas id="radarChart" class="hidden" width="400" height="400"></canvas>
+{#                      <canvas id="radarChart" class="hidden" width="400" height="400"></canvas>#}
                       <div class="div-form form-item row form-inline" id="div_form_{{ progression_target.id }}" style="display:none">
                         <div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
                           <label for="date_from_{{ progression_target.id }}" class="control-label">{{ 'From date' | trans}} </label>
