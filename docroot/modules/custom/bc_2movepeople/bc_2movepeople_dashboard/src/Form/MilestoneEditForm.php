@@ -2,6 +2,8 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Form;
 
+use Drupal\Core\Ajax\CssCommand;
+use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Url;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -218,6 +220,23 @@ class MilestoneEditForm extends FormBase {
       $messages = \Drupal::service('renderer')->render($message);
       $ajax_response->addCommand(new HtmlCommand('#custom-form-system-messages', $messages));
       $ajax_response->addCommand(new ReplaceCommand('#complete_btn_box' . $goal_id, $form[$prefix . 'goals'][$goal_id]['complete_btn']));
+
+      // Update icon class.
+      $icon_class = '';
+      $remind_types = [
+        1 => 'is-remind-warning',
+        2 => 'is-remind-expired',
+      ];
+      $is_remind = MovepeopleDashboardController::isRemindSession($goal['date']);
+
+      if (! (bool) $goal['completed']) {
+        $icon_class = ' is-completed';
+      }
+      elseif ($is_remind) {
+        $icon_class = ' ' . $remind_types[$is_remind];
+      }
+
+      $ajax_response->addCommand(new InvokeCommand(NULL, 'alterClass', ['#goal_row_' . $goal_id, $icon_class]));
     }
 
     return $ajax_response;

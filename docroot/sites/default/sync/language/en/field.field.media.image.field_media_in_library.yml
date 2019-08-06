@@ -1,4 +1,0 @@
-label: 'Save to my media library'
-settings:
-  on_label: 'Saved to my media library'
-  off_label: 'Not in my media library'

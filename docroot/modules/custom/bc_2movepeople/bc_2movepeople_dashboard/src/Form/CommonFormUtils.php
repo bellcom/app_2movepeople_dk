@@ -89,15 +89,18 @@ class CommonFormUtils {
       $form['goals'][$goal_id]['#attributes']['class'][] = 'subtask';
     }
 
-    $remind_class = '';
-    if ($is_remind) {
-      $remind_class = ' ' . $remind_types[$is_remind];
+    $icon_class = '';
+    if ($goal['completed']) {
+      $icon_class = ' is-completed';
+    }
+    elseif ($is_remind) {
+      $icon_class = ' ' . $remind_types[$is_remind];
     }
 
     $form['goals'][$goal_id]['title'] = [
       '#type' => 'textfield',
       '#default_value' => $goal['title'],
-      '#prefix' => '<div class="custom-form-fields div-form' . $remind_class . '" id="goal_row_' . $goal_id . '">'
+      '#prefix' => '<div class="custom-form-fields div-form' . $icon_class . '" id="goal_row_' . $goal_id . '">'
       . '<div class="custom-form-field-title"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Task') . '</div>',
       '#suffix' => '</div>',
     ];

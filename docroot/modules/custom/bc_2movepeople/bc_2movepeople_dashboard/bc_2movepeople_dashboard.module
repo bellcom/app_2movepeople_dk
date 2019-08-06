@@ -108,12 +108,6 @@ function bc_2movepeople_dashboard_theme() {
         'milestones_data' => [],
       ],
     ],
-    'bc_2movepeople_menu_toggle' => [
-      'template' => 'bc-2movepeople-menu-toggle',
-      'variables' => [
-        'state' => NULL,
-      ],
-    ],
   ];
 }
 
@@ -191,6 +185,24 @@ function bc_2movepeople_dashboard_node_delete($node) {
         '@rates' => $rates_values,
       ]), 'status');
     }
+  }
+}
+
+/**
+ * Implements hook_mail().
+ */
+function bc_2movepeople_dashboard_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'sbsys':
+      $message['subject'] = $params['subject'];
+      $message['body'][] = $params['body'];
+      $message['params']['attachments'] = $params['attachments'];
+      
+      if (!isset($params['from'])) {
+        $params['from'] = \Drupal::config('system.site')->get('mail');
+      }
+
+      break;
   }
 }
 

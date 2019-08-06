@@ -1,0 +1,25 @@
+uuid: c6adb685-128e-4ce6-948b-d70d907a899e
+langcode: da
+status: true
+dependencies:
+  config:
+    - system.menu.settings-menu
+  module:
+    - system
+  theme:
+    - site
+id: sidr_settings_menu
+theme: site
+region: sidebar_left__mobile
+weight: -7
+provider: null
+plugin: 'system_menu_block:settings-menu'
+settings:
+  id: 'system_menu_block:settings-menu'
+  label: 'Settings menu'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility: {  }

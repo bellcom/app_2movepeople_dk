@@ -8,7 +8,6 @@
 use Drupal\Core\Url;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -43,6 +42,11 @@ function site_preprocess_page(array &$variables) {
       MovepeopleDashboardController::setUserTasksReminder(\Drupal::currentUser()->id());
     }
   }
+
+  // @TODO This code has to be cleaned up with all menu_toggle related code.
+  // We have removed burger menu on rebuilding main layout
+  // @see 6392252228be69369563a1bc0f0570efb6669e5e.
+  /*
   $session = new Session();
   $state = $session->get('menu_toggle');
   $variables['menu_toggle_state'] = (integer) $state;
@@ -50,7 +54,7 @@ function site_preprocess_page(array &$variables) {
     '#theme' => 'bc_2movepeople_menu_toggle',
     '#state' => empty((integer) $state) ? '0' : $state,
   ];
-
+  */
   $variables['relative_logo_url'] = file_url_transform_relative(file_create_url(theme_get_setting('logo.url')));
 }
 

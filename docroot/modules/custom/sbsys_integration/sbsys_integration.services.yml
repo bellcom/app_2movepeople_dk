@@ -1,0 +1,7 @@
+services:
+  plugin.manager.xml_data_provider:
+    class: Drupal\sbsys_integration\Plugin\XmlDataProviderManager
+    parent: default_plugin_manager
+  sbsys_integration.xml_handler:
+    class: Drupal\sbsys_integration\XmlHandler
+    arguments: ['@config.factory', '@plugin.manager.xml_data_provider']

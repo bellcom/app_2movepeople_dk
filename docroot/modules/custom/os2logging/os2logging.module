@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * Implements hook_entity_load().
+ */
+function os2logging_entity_load(array $entities, $type) {
+
+  // Node.
+  if ($type === 'node') {
+    $config = \Drupal::config('os2logging.AdminSettings');
+
+    if ($config_types = $config->get('node_types')) {
+      $types_to_process = _filter_empty_array_values($config_types);
+
+      foreach ($entities as $entity) {
+        if (in_array($entity->getType(), $types_to_process)) {
+
+          // Log entry.
+          $logger = \Drupal::logger('os2logging');
+          $logger->info('Node load');
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Helper function for filtering out empty array values.
+ *
+ * @param array $array
+ *
+ * @return array
+ */
+function _filter_empty_array_values(array $array) {
+  $return = [];
+
+  foreach ($array as $key => $value) {
+    if ($value) {
+      $return[] = $value;
+    }
+  }
+
+  return $return;
+}

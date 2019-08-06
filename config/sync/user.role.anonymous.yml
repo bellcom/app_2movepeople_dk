@@ -1,0 +1,15 @@
+uuid: 5551b745-6d07-4568-acbe-6dcbd7b737ed
+langcode: da
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: j5zLMOdJBqC0bMvSdth5UebkprJB8g_2FXHqhfpJzow
+id: anonymous
+label: 'Anonym bruger'
+weight: 0
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access site-wide contact form'
+  - 'create connected users'
+  - 'view media'

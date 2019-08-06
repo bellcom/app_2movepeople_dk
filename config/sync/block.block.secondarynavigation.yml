@@ -1,0 +1,25 @@
+uuid: f943c595-54bc-4f07-b6d0-2cb3b2b8a852
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.secondary-navigation
+  module:
+    - system
+  theme:
+    - site
+id: secondarynavigation
+theme: site
+region: sidebar_left__desktop
+weight: -7
+provider: null
+plugin: 'system_menu_block:secondary-navigation'
+settings:
+  id: 'system_menu_block:secondary-navigation'
+  label: 'Secondary navigation'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility: {  }

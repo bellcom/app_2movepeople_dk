@@ -23,6 +23,8 @@
 .sidr {
   padding-top: 20px;
 
+  z-index: 0;
+
   .logo {
     padding: 10px floor( ( $grid-gutter-width / 2 ) );
 
