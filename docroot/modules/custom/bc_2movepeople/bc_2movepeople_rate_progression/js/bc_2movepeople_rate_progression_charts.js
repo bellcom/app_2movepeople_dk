@@ -234,7 +234,7 @@
 
     switch (chart_type) {
       case 'line': {
-        radarCtx.classList.add('hidden');
+        // radarCtx.classList.add('hidden');
         ctx.classList.remove('hidden');
 
         chart = new google.visualization.LineChart(ctx);
@@ -243,7 +243,7 @@
         break;
       }
       case 'bar': {
-        radarCtx.classList.add('hidden');
+        // radarCtx.classList.add('hidden');
         ctx.classList.remove('hidden');
 
         chart = new google.visualization.ColumnChart(ctx);
