@@ -124,6 +124,10 @@ body {
 
     .btn {
       display: block;
+
+      + .btn {
+        margin-top: 15px;
+      }
     }
   }
 }
