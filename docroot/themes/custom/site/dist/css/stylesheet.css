@@ -9380,6 +9380,8 @@ body {
     padding: 12px 35px; }
     .layout__static-sidebar .control-buttons .btn, .layout__static-sidebar .control-buttons .user__controls__item--masquerade {
       display: block; }
+      .layout__static-sidebar .control-buttons .btn + .btn, .layout__static-sidebar .control-buttons .user__controls__item--masquerade + .btn, .layout__static-sidebar .control-buttons .btn + .user__controls__item--masquerade, .layout__static-sidebar .control-buttons .user__controls__item--masquerade + .user__controls__item--masquerade {
+        margin-top: 15px; }
 
 .layout__content__inner {
   display: -webkit-box;
