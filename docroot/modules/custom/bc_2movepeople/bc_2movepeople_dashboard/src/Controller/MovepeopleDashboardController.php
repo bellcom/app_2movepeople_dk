@@ -252,7 +252,6 @@ class MovepeopleDashboardController extends ControllerBase {
 
     $entity_progression_ids = array_keys($this->getProgressionTargets($user->id(), 'progression'));
     $entity_milestone_ids = array_keys($this->getProgressionTargets($user->id(), 'target_milestone'));
-
     if (!empty($entity_progression_ids)) {
 
       // We need to know if there are any questions on categories to show
@@ -311,7 +310,6 @@ class MovepeopleDashboardController extends ControllerBase {
       }
 
       if (!empty($result_progression['data'])) {
-
         $build['#table_progression']['data'] = [
           "#theme" => "bc_2movepeople_dashboard_progression_total_table",
           "#type" => 'progression',
@@ -321,12 +319,12 @@ class MovepeopleDashboardController extends ControllerBase {
       }
     }
     else {
-      $controls = [
-        [
-          '#title' => $this->t('Create categories'),
-          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
-        ],
+      $controls['Progression.create_categories'] = [
+        '#title' => $this->t('Create categories'),
+        '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
       ];
+
+      $build['#table_progression']['empty'] = $this->t('Currently no measurements found. You need to create a category to create measurements.');
     }
     $build['#table_progression']['controls'] = $this->getControlButtons($controls, ['class' => 'dashboard-overview__control-buttons']);
 
