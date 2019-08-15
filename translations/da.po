@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-07-05 14:18+0200\n"
-"PO-Revision-Date: 2019-07-05 14:18+0200\n"
+"POT-Creation-Date: 2019-08-15 09:34+0200\n"
+"PO-Revision-Date: 2019-08-15 09:34+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -38,9 +38,6 @@ msgstr "Media"
 
 msgid "User"
 msgstr "User"
-
-msgid "Moderation state"
-msgstr ""
 
 msgid "Taxonomy term"
 msgstr "Ord i ordforråd"
@@ -361,7 +358,7 @@ msgid "Keywords"
 msgstr "Keywords"
 
 msgid "All"
-msgstr "All"
+msgstr "Alle"
 
 msgid "Action"
 msgstr "Action"
@@ -2840,6 +2837,9 @@ msgstr "Navnet på den nye skabelon"
 
 msgid "Save category and questions to template"
 msgstr "Gem kategori og spørgsmål som skabelon"
+
+msgid "Create categories"
+msgstr "Opret kategorier"
 
 msgid "Samlet evaluering"
 msgstr "Samlet evaluering"
@@ -10193,4 +10193,11 @@ msgstr "Apply Filters"
 
 msgid "Send data to SBSYS"
 msgstr "Send data til SBSys"
+
+msgid ""
+"Currently no measurements found. You need to create a category to "
+"create measurements."
+msgstr ""
+"Vi fandt ingen målinger. Førend du kan oprette målinger skal du "
+"oprette en kategori."
 
