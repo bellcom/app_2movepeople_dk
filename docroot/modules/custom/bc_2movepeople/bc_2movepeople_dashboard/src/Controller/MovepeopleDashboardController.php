@@ -516,13 +516,15 @@ class MovepeopleDashboardController extends ControllerBase {
     if ($dates) {
       foreach ($entity_ids as $key => $target_id) {
         $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($target_id);
-        $title = $nodedata->get('title')->value;
-        $table[$key] = array_fill(1, count($dates), 0);
-        $avg_rates = self::getTargetAveragePoints($target_id);
-        foreach ($avg_rates as $row) {
-          $table[$key][array_search($row->dates, $header)] = round((float) $row->avg_rates, 2);
+        if ($nodedata) {
+          $title = $nodedata->get('title')->value;
+          $table[$key] = array_fill(1, count($dates), 0);
+          $avg_rates = self::getTargetAveragePoints($target_id);
+          foreach ($avg_rates as $row) {
+            $table[$key][array_search($row->dates, $header)] = round((float) $row->avg_rates, 2);
+          }
+          $table[$key] = array_merge([$title], $table[$key]);
         }
-        $table[$key] = array_merge([$title], $table[$key]);
       }
     }
 

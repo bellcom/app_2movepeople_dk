@@ -6,7 +6,7 @@
  */
 #}
 {#{{ attach_library('bc_2movepeople_dashboard/bc_2movepeople_dashboard.accordion') }}#}
-{{ attach_library('bc_2movepeople_rate_progression/bc_2movepeople_rate_progression.charts') }}
+{{ attach_library('bc_2movepeople_rate_progression/bc_2movepeople_rate_progression.charts.dashboard') }}
 
 <div id="form-system-messages"></div>
 
@@ -36,7 +36,7 @@
                   <div>
                     <div class="row">
                       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 left-btn-box">
-                        <a href="{{ path('bc_2movepeople_dashboard.progressions.edit', {'node': progression_target.id, 'limit': limit}) }}" 
+                        <a href="{{ path('bc_2movepeople_dashboard.progressions.edit', {'node': progression_target.id, 'limit': limit}) }}"
                            class="btn btn-default btn-sm btn-progress">{{ 'Edit category'|trans }}</a>
                       </div>
                           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 right-btn-box">
