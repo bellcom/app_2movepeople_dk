@@ -1,6 +1,6 @@
 uuid: ae4440a4-1700-4b45-a8c0-2abd92a62b02
 langcode: da
-status: true
+status: false
 dependencies:
   module:
     - bc_2movepeople_dashboard
