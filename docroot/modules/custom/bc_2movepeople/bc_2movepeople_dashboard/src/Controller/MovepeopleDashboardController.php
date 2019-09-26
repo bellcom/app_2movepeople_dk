@@ -250,8 +250,8 @@ class MovepeopleDashboardController extends ControllerBase {
       "#user" => $user->id(),
     ];
 
-    $entity_progression_ids = array_keys($this->getProgressionTargets($user->id(), 'progression'));
-    $entity_milestone_ids = array_keys($this->getProgressionTargets($user->id(), 'target_milestone'));
+    $entity_progression_ids = $this->getProgressionTargets($user->id(), 'progression');
+    $entity_milestone_ids = $this->getProgressionTargets($user->id(), 'target_milestone');
     if (!empty($entity_progression_ids)) {
 
       // We need to know if there are any questions on categories to show
@@ -463,6 +463,7 @@ class MovepeopleDashboardController extends ControllerBase {
     $query->condition('field_progression_user', $user_id);
     $query->condition('field_progression_type', $progression_types[$progression_type], 'IN');
     $entity_ids = $query->execute();
+
     return $entity_ids;
   }
 
