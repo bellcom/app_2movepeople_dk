@@ -270,7 +270,7 @@ class MovepeopleDashboardController extends ControllerBase {
           '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id(), 'limit' => $this->fStr]),
         ];
         $controls['Progression.show_category'] = [
-          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id(), 'limit' => $this->pStr]),
+          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
         ];
       }
       else {
