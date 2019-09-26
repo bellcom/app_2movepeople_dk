@@ -14,40 +14,53 @@ use Drupal\bc_2movepeople_rate_progression\Progression\Target;
 class RateController extends ControllerBase {
 
   /**
-   * Implementation create note endpoint.
+   * Returns progression target rates.
    *
-   * Creates a note, saves it in the database and redirects to the read
-   * endpoint in order to update a note with generated ID.
+   * Used for charts drawing.
    *
    * @param int $progression_target_id
    *   Id of progression.
    *
    * @return \Symfony\Component\HttpFoundation\JsonResponse
-   *   JSON Object responce.
+   *   JSON object build as:
+   *   {
+   *     label: [
+   *       "Label 1",
+   *       "Label 2"
+   *       ...
+   *     ],
+   *     datasets: [
+   *       {
+   *          values: [0,1,3]
+   *       },
+   *       {
+   *          values: [2,3,4]
+   *       },
+   *       ...
+   *     ]
+   *   }
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function rateGet($progression_target_id) {
     $data = array(
-      'chart_title' => '',
-      'series' => array(),
-      'values' => array(),
+      'labels' => array(),
+      'datasets' => array(),
     );
 
     $progression_target = new Target($progression_target_id);
-    $progression_target_data = $progression_target->getProgressionTarget();
     $goals = $progression_target->getAllGoals();
 
-    $data['chart_title'] = $progression_target_data->get('title')->value;
     $rates = array();
     isset($_GET['to']) ? $date_to = strtotime($_GET['to']) : NULL;
     isset($_GET['from']) ? $date_from = strtotime($_GET['from']) : NULL;
 
-    foreach ($goals as $key => $id) {
-      $goal_id = $id;
-      $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($goal_id);
+    foreach ($goals as $goalDelta => $goalId) {
+      $goalNode = \Drupal::entityTypeManager()->getStorage('node')->load($goalId);
       $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
       $query->fields('rates', array('rate'))
-       // ->condition('uid', \Drupal::currentUser()->id(), '=')
-        ->condition('goal_id', $goal_id, '=')
+        ->condition('goal_id', $goalId, '=')
         ->condition('progression_target_id', $progression_target_id, '=')
         ->condition('status', TRUE);
       if (isset($date_to)) {
@@ -58,28 +71,25 @@ class RateController extends ControllerBase {
         $query->condition('created', $date_from, '>=');
       }
 
-      $query->orderBy('created', 'DESC');
+      $query->orderBy('created', 'ACS');
       if (!isset($date_to) && !isset($date_from)) {
         $query->range(0, 5);
       }
 
       $result = $query->execute()->fetchAll();
       if ($result) {
-        $data['series'][$key] = $nodedata->get('title')->value;
+        $data['labels'][$goalDelta] = $goalNode->get('title')->value . ' ' . $goalNode->id();
       }
       foreach ($result as $row) {
-        $rates[$key][] = (int) $row->rate;
+        $rates[$goalDelta][] = (int) $row->rate;
       }
     }
-    if (is_array($rates) && count($rates) > 0) {
-      array_unshift($rates, NULL);
-      $rates = array_reverse(call_user_func_array("array_map", $rates));
-    }
-    foreach ($rates as $key => $val) {
-      if (!is_array($val)) {
-        $val = array($val);
+
+    foreach ($rates as $goalDelta => $goalRates) {
+      if (!is_array($goalRates)) {
+        $goalRates = array($goalRates);
       }
-      $data['values'][$key] = array_merge(array(" "), $val);
+      $data['datasets'][$goalDelta]['values'] = $goalRates;
     }
 
     return new JsonResponse($data);
