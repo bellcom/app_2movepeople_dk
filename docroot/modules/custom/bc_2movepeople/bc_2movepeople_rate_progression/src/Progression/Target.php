@@ -20,9 +20,9 @@ class Target {
   protected $node;
 
   public function __construct($progression_target_id) {
-
     $this->node = \Drupal::entityTypeManager()->getStorage('node')->load($progression_target_id);
-    $mtid = $this->node->get('field_goal_ids')->getValue();
+    $node = \Drupal::entityTypeManager()->getStorage('node')->load($progression_target_id);
+    $mtid = $node->get('field_goal_ids')->getValue();
     foreach ($mtid as $tid) {
       $this->getGoals($tid['target_id']);
     }

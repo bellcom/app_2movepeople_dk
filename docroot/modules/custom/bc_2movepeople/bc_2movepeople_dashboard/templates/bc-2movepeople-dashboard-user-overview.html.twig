@@ -16,12 +16,12 @@
           <label class="btn btn-default">
             <input type="radio" name="chart_type" class="bar-graph-btn" autocomplete="off"> {{ 'Bar' | trans }}
           </label>
-{#          <label class="btn btn-default">#}
-{#            <input type="radio" name="chart_type" class="radar-graph-btn" autocomplete="off"> {{ 'Radar' | trans }}#}
-{#          </label>#}
+          <label class="btn btn-default">
+            <input type="radio" name="chart_type" class="radar-graph-btn" autocomplete="off"> {{ 'Radar' | trans }}
+          </label>
         </div>
       </div>
-      <div id="progression_total_chart"></div>
+      <canvas id="progression_total_chart"></canvas>
 {#      <canvas id="radarChart" class="hidden" width="400" height="400"></canvas>#}
     </div>
   {% endif %}
