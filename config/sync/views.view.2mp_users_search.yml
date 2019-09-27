@@ -225,6 +225,7 @@ display:
           plugin_id: search_api
       display_extenders: {  }
       use_ajax: true
+      css_class: 'row row--equal-height-columns'
     cache_metadata:
       max-age: -1
       contexts:
