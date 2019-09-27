@@ -6,8 +6,6 @@
 (function ($) {
   Drupal.behaviors.dashboardCharts = {
     attach: function (context, settings) {
-      // google.charts.load('current', {packages: ['corechart', 'bar']});
-      google.charts.load('current', {packages: ['corechart']});
 
       $('#accordion-progressions').on('show.bs.collapse', function (e) {
         var header = $(e.target).parent().find('.panel-heading');
@@ -21,53 +19,35 @@
         var panel = $(this).find('.panel-body');
 
         DashboardChart.load(header, panel);
-
-        $(window).resize(function () {
-
-          var panel = $('.panel-collapse.collapse.in').parent();
-          var heading = $(panel).find('.panel-heading');
-
-          if (heading.length > 0) {
-            var progression_id = $(heading).attr('data-progression-id');
-
-            if (DashboardChart.data[progression_id].length > 0) {
-              var element = $(panel).find('.div-chart').attr('id');
-              var chart_type = $("input[name='chart_type-" + progression_id + "']:checked").val();
-              moveCharts.drawChart(element, DashboardChart.data[progression_id], DashboardChart.header[progression_id], chart_type);
-            }
-          }
-        });
       });
 
-      //      $("#dialog-message").dialog({
-      //        modal: true,
-      //        autoOpen: false,
-      //        buttons: {
-      //          Ok: function () {
-      //            $(this).dialog("close");
-      //          }
-      //        }
-      //      });
-
+      // Update action.
       $('.btn-update').click(function () {
         var progression_id = $(this).attr('data-progression-id');
+
         updateProgressionChart(progression_id);
       });
 
-      $('.line-graph-btn').change(function () {
+      $('.line-graph-btn, .bar-graph-btn, .radar-graph-btn').change(function (e) {
         var progression_id = $(this).attr('data-progression-id');
         var header = $('#accordion-progressions-heading-' + progression_id);
         var panel = $(header).parent().find('.panel-body');
-        $('#div_chart_' + progression_id).text('');
-        DashboardChart.load(header, panel, true, 'line');
-      });
+        var type;
+        var $target = $(e.target);
 
-      $('.bar-graph-btn').change(function () {
-        var progression_id = $(this).attr('data-progression-id');
-        var header = $('#accordion-progressions-heading-' + progression_id);
-        var panel = $(header).parent().find('.panel-body');
+        if ($target.hasClass('bar-graph-btn')) {
+          type = 'bar';
+        }
+        else if ($target.hasClass('radar-graph-btn')) {
+          type = 'radar';
+        }
+        else if ($target.hasClass('line-graph-btn')) {
+          type = 'line';
+        }
+
         $('#div_chart_' + progression_id).text('');
-        DashboardChart.load(header, panel, true, 'bar');
+
+        DashboardChart.load(header, panel, true, type);
       });
     }
   };
@@ -77,11 +57,12 @@
     header: {},
 
     load: function (header, panel, reload, chart_type = 'line') {
-      if ($(panel).find('.div-chart div').length > 0 && reload == false) {
+      if ($(panel).find('.div-chart div').length > 0 && reload === false) {
         return;
       }
 
       var progression_id = header.attr('data-progression-id');
+
       $.ajax({
         type: 'GET',
         url: '/rates/' + progression_id + '/get',
@@ -89,23 +70,10 @@
         success: function (data) {
           if (data.values.length) {
             $(panel).find('.div-form').show();
-            google.charts.setOnLoadCallback(function () {
-              var element = $(panel).find('.div-chart').attr('id');
-              var arr = [['']];
-              for (var key in data.series) {
-                var label = '';
-                if (data.series.hasOwnProperty(key)) {
-                  label = data.series[key];
-                }
-                arr[0].push(label);
-              }
-              data.values.forEach(function (item) {
-                arr.push(item);
-              });
-              DashboardChart.data[progression_id] = arr;
-              DashboardChart.header[progression_id] = data.chart_title;
-              moveCharts.drawChart(element, arr, data.chart_title, chart_type);
-            });
+            var element = $(panel).find('.div-chart').attr('id');
+            var mutatedData = charty.convertDataToDatasets(data);
+
+            charty.drawChart(element, mutatedData, chart_type);
           }
           else {
             $(panel).find('.div-form').hide();
@@ -128,19 +96,10 @@
       success: function (data) {
         if (data.values.length) {
           $(panel).find('.div-form').show();
-          google.charts.setOnLoadCallback(function () {
-            var element = $(panel).find('.div-chart').attr('id');
+          var element = $(panel).find('.div-chart').attr('id');
+          var mutatedData = charty.convertDataToDatasets(data);
 
-            var arr = [
-              [''].concat(data.series)
-            ];
-
-            data.values.forEach(function (item) {
-              arr.push(item);
-            });
-
-            moveCharts.drawChart(element, arr, data.chart_title, chart_type);
-          });
+          charty.drawChart(element, mutatedData, chart_type);
         }
         else {
           $(panel).find('.div-form').hide();
@@ -161,18 +120,9 @@
       dataType: 'json',
       success: function (data) {
         if (data.values.length) {
-          google.charts.setOnLoadCallback(function () {
-            var arr = [
-              [''].concat(Object.values(data.series))
-            ];
-            data.values.forEach(function (item) {
-              arr.push(item);
-            });
-            moveCharts.drawChart('div_chart_' + progression_id, arr, data.chart_title, chart_type);
-          });
-        }
-        else {
-          //  $("#dialog-message").dialog("open");
+          var mutatedData = charty.convertDataToDatasets(data);
+
+          charty.drawChart('div_chart_' + progression_id, mutatedData, chart_type);
         }
       }
     });
@@ -181,6 +131,7 @@
   $.fn.graphReload = function (element) {
     var panel = $(element).parent('.ui-accordion-content');
     var header = $('#' + panel.attr('aria-labelledby'));
+
     loadGraph(header, panel, true);
   };
 

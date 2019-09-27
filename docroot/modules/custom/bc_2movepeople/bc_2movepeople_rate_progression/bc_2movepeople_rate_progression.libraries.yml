@@ -1,5 +1,9 @@
 bc_2movepeople_rate_progression.charts.base:
+  css:
+    base:
+      "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css": {type: external}
   js:
+    "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js": {type: external}
     js/progression_charts_base.js: {}
 bc_2movepeople_rate_progression.charts.dashboard:
   js:
@@ -11,10 +15,3 @@ bc_2movepeople_rate_progression.charts.total:
     js/progression_charts_total_chart.js: {}
   dependencies:
     - bc_2movepeople_rate_progression/bc_2movepeople_rate_progression.charts.base
-bc_2movepeople_rate_progression.charts:
-  css:
-    base:
-      "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css": {type: external}
-  js:
-    "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js": {type: external}
-    js/bc_2movepeople_rate_progression_charts.js: {}

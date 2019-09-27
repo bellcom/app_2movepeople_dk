@@ -4,143 +4,101 @@
  * and open the template in the editor.
  */
 (function ($) {
-  var moveCharts;
+  var charty;
 
-  moveCharts = {
-    drawChart : function drawChart(element, data, title = '', chart_type = 'line') {
-      var ctx = document.getElementById(element);
-      var radarCtx = document.getElementById('radarChart');
-      var chart;
+  charty = {
+    truncateString: function (string, length = 25) {
+      var ellipsis = '...';
 
-      var header = data[0];
-      for (i = 0; i < header.length; i++) {
-        if (typeof header[i] !== 'string') {
-          break;
-        }
-        var type = (i == 0) ? 'string' : 'number';
-        data[0][i] = {
-          label: header[i],
-          type: type
+      if (string.length > length) {
+        return string.substring(0, length - ellipsis.length) + ellipsis;
+      }
+
+      return string;
+    },
+    convertDataToDatasets : function (data) {
+      var mutatedDatasets = [];
+
+      for (var dataset of data.values) {
+        var mutatedDataset = {
+          label: false,
+          values: dataset
         };
-      }
-      var googleChartData = new google.visualization.arrayToDataTable(data);
-      progression_type = $('#' + element).attr('progression');
 
-      if (progression_type == 'feedback') {
-        var options = {
-          title: title,
-          bars: 'vertical',
-          curveType: 'function',
-          vAxis: {
-            minValue: 0,
-            ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-          },
-          chartArea: {
-            // height: "450px",
-            top: '5%',
-            bottom: '20%',
-            width: '90%'
-          },
-          legend: {position: 'bottom'},
-          pointSize: 5,
-          colors: ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913']
-        };
-      }
-      else {
-        var options = {
-          title: title,
-          bars: 'vertical',
-          curveType: 'function',
-          vAxis: {
-            minValue: 0,
-            ticks: [0, 1, 2, 3, 4, 5]
-          },
-          chartArea: {
-            // height: "450px",
-            top: '5%',
-            bottom: '20%',
-            width: '90%'
-          },
-          legend: {position: 'bottom'},
-          pointSize: 5,
-          colors: ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913']
-        };
+        mutatedDatasets.push(mutatedDataset);
       }
 
-      switch (chart_type) {
-        case 'line': {
-          // radarCtx.classList.add('hidden');
-          ctx.classList.remove('hidden');
+      var mutatedData = {
+        labels: data.series,
+        datasets: mutatedDatasets,
+      };
 
-          chart = new google.visualization.LineChart(ctx);
+      return mutatedData;
+    },
+    drawChart: function (element, data, chart_type = 'line') {
+      var iteration = 1;
+      var colors = ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913'];
+      var canvas = document.createElement('CANVAS');
+      var container = document.getElementById(element);
+      canvas.style.height = '30vh';
+      container.innerHTML = '';
+      container.appendChild(canvas);
 
-          chart.draw(googleChartData, options);
-          break;
+      var ctx = canvas.getContext('2d');
+      var labels = [];
+      var datasets = [];
+      var options = {
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+        animation: {
+          duration: 0
+        },
+        hover: {
+          animationDuration: 0
+        },
+        responsiveAnimationDuration: 0,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
         }
-        case 'bar': {
-          // radarCtx.classList.add('hidden');
-          ctx.classList.remove('hidden');
+      };
 
-          chart = new google.visualization.ColumnChart(ctx);
-
-          chart.draw(googleChartData, options);
-          break;
-        }
-        case 'radar': {
-          var color = Chart.helpers.color;
-          var colors = ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913'];
-          ctx.classList.add('hidden');
-          radarCtx.classList.remove('hidden');
-
-          // Get labels.
-          var labels = data[0].map(function (label) {
-            return label.label;
-          });
-          labels.shift(); // Remove the first element in the array.
-
-          // Get datasets.
-          var datasets = data;
-          datasets.shift(); // Remove the labels.
-          var transformedDataset = datasets.map(function (dataset) {
-            var label = dataset[0];
-            var data = dataset;
-            data.shift(); // Remove the label.
-
-            var transformedData = data.map(function (item) {
-              if (item === null) {
-                return 0;
-              }
-
-              return item;
-            });
-
-            return {
-              label: label,
-              data: transformedData
-            };
-          });
-
-          // Add colors to the dataset items.
-          for (var i = 0; i < transformedDataset.length; i++) {
-            transformedDataset[i].borderColor = color(colors[i]).alpha(0.3).rgbString();
-            transformedDataset[i].backgroundColor = color(colors[i]).alpha(0.3).rgbString();
-          }
-
-          chart = new Chart(radarCtx, {
-            type: 'radar',
-            data: {
-              labels: labels,
-              datasets: transformedDataset
-            },
-            options: {}
-          });
-          break;
-        }
+      // Labels.
+      for (var label of data.labels) {
+        labels.push(charty.truncateString(label, 25));
       }
+
+      // Datasets.
+      for (var dataset of data.datasets) {
+        datasets.push({
+          label: dataset.label,
+          data: dataset.values,
+          backgroundColor: colors[iteration],
+          borderColor: colors[iteration],
+          fill: false,
+          borderWidth: 2
+        });
+
+        iteration++;
+      }
+
+      new Chart(ctx, {
+        type: chart_type,
+        data: {
+          labels: labels,
+          datasets: datasets
+        },
+        options: options,
+      });
     }
   };
 
-  window.moveCharts = moveCharts;
+  window.charty = charty;
 })(jQuery);
 
 
