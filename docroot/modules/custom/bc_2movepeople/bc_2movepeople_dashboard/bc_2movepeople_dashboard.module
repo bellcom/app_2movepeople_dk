@@ -39,6 +39,8 @@ use Drupal\Core\Link;
  * Implements hook_theme().
  */
 function bc_2movepeople_dashboard_theme() {
+  $moduleHandler = \Drupal::service('module_handler');
+
   return [
     'bc_2movepeople_dashboard_accordion' => [
       'template' => 'accordion',
@@ -97,6 +99,7 @@ function bc_2movepeople_dashboard_theme() {
         'name' => NULL,
         'social_security_number' => NULL,
         'milestones_data' => [],
+        'sbsys_enabled' => $moduleHandler->moduleExists('sbsys_integration'),
       ],
     ],
     'bc_2movepeople_milestone_evaluations_pdf' => [
