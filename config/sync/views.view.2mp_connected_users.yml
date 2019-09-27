@@ -922,6 +922,7 @@ display:
           entity_type: user
           entity_field: uid
           plugin_id: user_uid
+      enabled: false
     cache_metadata:
       max-age: -1
       contexts:

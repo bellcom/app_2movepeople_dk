@@ -1,0 +1,80 @@
+uuid: 3ac0175f-414d-4c1c-a225-81bf014717ae
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_user_firstname
+    - field.storage.user.field_user_surname
+    - search_api.server.database
+  module:
+    - user
+    - search_api
+id: 2mp_users
+name: '2MP Users'
+description: 'indexes all 2MP users'
+read_only: false
+field_settings:
+  connected_to_uid:
+    label: '(Connected to) Reverse reference: User using Tilknyttede brugere » User ID'
+    datasource_id: 'entity:user'
+    property_path: 'search_api_reverse_entity_references_user__field_connected_users:uid'
+    type: integer
+  field_user_firstname:
+    label: Fornavn
+    datasource_id: 'entity:user'
+    property_path: field_user_firstname
+    type: text
+    dependencies:
+      config:
+        - field.storage.user.field_user_firstname
+  field_user_surname:
+    label: Efternavn
+    datasource_id: 'entity:user'
+    property_path: field_user_surname
+    type: text
+    dependencies:
+      config:
+        - field.storage.user.field_user_surname
+  name:
+    label: Name
+    datasource_id: 'entity:user'
+    property_path: name
+    type: text
+    dependencies:
+      module:
+        - user
+  uid:
+    label: 'Bruger ID'
+    datasource_id: 'entity:user'
+    property_path: uid
+    type: integer
+    dependencies:
+      module:
+        - user
+datasource_settings:
+  'entity:user':
+    languages:
+      default: true
+      selected: {  }
+processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
+  entity_status: {  }
+  ignorecase:
+    all_fields: false
+    fields:
+      - field_user_firstname
+      - field_user_surname
+      - name
+    weights:
+      preprocess_index: -20
+      preprocess_query: -20
+  rendered_item: {  }
+  reverse_entity_references: {  }
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  index_directly: true
+  cron_limit: 50
+server: database

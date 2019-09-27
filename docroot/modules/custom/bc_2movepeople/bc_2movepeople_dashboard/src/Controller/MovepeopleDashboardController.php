@@ -378,16 +378,11 @@ class MovepeopleDashboardController extends ControllerBase {
    */
   public static function renderMyConnectedUsers() {
     $user = \Drupal::currentUser();
-    $user->getAccount();
     $args = [$user->id()];
-    $view = Views::getView('2mp_connected_users');
 
-    if (!is_object($view)) {
-      return '';
-    }
-
+    $view = Views::getView('2mp_users_search');
     $view->setArguments($args);
-    $view->setDisplay('my_users_list');
+    $view->setDisplay('2mp_users_search_my_users_list');
     $view->preExecute();
     $view->execute();
 
