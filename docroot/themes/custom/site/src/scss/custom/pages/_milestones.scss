@@ -24,18 +24,6 @@
 
   .dashboard-overview {
 
-    .form-control {
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-
-    input[type="date"].form-control,
-    input[type="time"].form-control,
-    input[type="datetime-local"].form-control,
-    input[type="month"].form-control {
-      line-height: 25px !important;
-    }
-
     .panel {
 
       form {
@@ -65,13 +53,6 @@
   .dashboard-accordion .panel-heading a:visited,
   .dashboard-accordion .panel-heading a:active {
     margin-top: 4px;
-  }
-
-  .form-actions.form-group.js-form-wrapper.form-wrapper,
-  .row.custom-form-fields.dashboard-milestone__control-buttons {
-    height: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
   }
 
   .row.custom-form-fields.dashboard-milestone__control-buttons:last-of-type .col-lg-12.col-md-12.col-sm-12.col-xs-12 {

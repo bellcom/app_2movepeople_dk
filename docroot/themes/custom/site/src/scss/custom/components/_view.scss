@@ -19,3 +19,18 @@
     }
   }
 }
+
+.view {
+
+  &.row {
+
+    // Exposed filter.
+    // Apply the same padding as we do on .col-*.
+    // Unfortunately the filters is placed within the .row but has
+    // no .col-* applied around it.
+    .view-filters {
+      padding-left:  ceil(($grid-gutter-width / 2));
+      padding-right: floor(($grid-gutter-width / 2));
+    }
+  }
+}
