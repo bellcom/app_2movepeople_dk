@@ -20,9 +20,12 @@
       var mutatedDatasets = [];
 
       for (var dataset of data.values) {
+        var shiftedDataset = dataset.slice();
+        shiftedDataset.shift();
+
         var mutatedDataset = {
           label: false,
-          values: dataset
+          values: shiftedDataset
         };
 
         mutatedDatasets.push(mutatedDataset);

@@ -51,6 +51,10 @@
         });
       }
 
+      // Mutate labels.
+      var mutatedLabels = arr[0].slice();
+      mutatedLabels.shift();
+
       // Mutate data.
       var mutatedDatasets = [];
       var datasets = arr.slice();
@@ -70,7 +74,7 @@
       }
 
       var mutatedData = {
-        labels: arr[0],
+        labels: mutatedLabels,
         datasets: mutatedDatasets
       };
 

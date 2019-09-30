@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 (function ($) {
   Drupal.behaviors.dashboardCharts = {
     attach: function (context, settings) {
@@ -89,6 +84,7 @@
     }
 
     var progression_id = header.attr('data-progression-id');
+
     $.ajax({
       type: 'GET',
       url: '/rates/' + progression_id + '/get',
