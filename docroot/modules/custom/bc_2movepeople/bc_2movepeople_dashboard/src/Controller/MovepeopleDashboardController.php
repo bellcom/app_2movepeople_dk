@@ -218,6 +218,20 @@ class MovepeopleDashboardController extends ControllerBase {
 
   /**
    * User overview page callback implementation.
+   *
+   */
+  public function getUserOverviewTitle(AccountInterface $user){
+    $roles = $user->getRoles();
+    if (in_array('2mp_user', $roles)) {
+      return $user->label();
+    }
+    else {
+      return $this->t('User overview');
+    }
+  }
+
+  /**
+   * User overview page callback implementation.
    */
   public function getUserOverviewImplementation(AccountInterface $user) {
     $build = [];
@@ -225,6 +239,7 @@ class MovepeopleDashboardController extends ControllerBase {
 
     if (in_array('2mp_user', $roles)) {
       $build = $this->getUserOverview($user);
+      $build['#title'] = $user->label();
     }
     else {
       $build['content'] = $this->renderConnectedUsers($user);
@@ -232,9 +247,6 @@ class MovepeopleDashboardController extends ControllerBase {
 
     if (in_array('2mp_supervisor', $roles)) {
       $build['#title'] = $this->t('Managers');
-    }
-    else {
-      $build['#title'] = $this->t('Clients');
     }
 
     return $build;
