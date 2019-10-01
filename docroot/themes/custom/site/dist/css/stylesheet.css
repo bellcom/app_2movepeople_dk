@@ -9220,6 +9220,11 @@ img {
     -webkit-box-shadow: none;
     box-shadow: none; }
 
+.flexbox .row--equal-height-columns .view-filters {
+  -webkit-flex-basis: 100%;
+      -ms-flex-preferred-size: 100%;
+          flex-basis: 100%; }
+
 .flexbox .row--equal-height-columns,
 .flexbox .row--equal-height-columns > .view-content {
   display: -webkit-box;
