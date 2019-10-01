@@ -10,7 +10,7 @@ bc_2movepeople_dashboard.main:
 bc_2movepeople_dashboard.user.overview:
   path: '/dashboard/users/{user}/overview'
   defaults:
-    _title: 'User overview'
+    _title_callback: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getUserOverviewTitle'
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getUserOverviewImplementation'
   requirements:
     _permission: 'access user dashboard'
