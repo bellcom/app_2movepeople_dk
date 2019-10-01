@@ -32,7 +32,8 @@ class NavigationBlock extends BlockBase {
     ];
 
     if ($user->hasPermission('access user dashboard')) {
-      $build['connected_users'] = MovepeopleDashboardController::renderConnectedUsers($user->getAccount(), 'block_links_simple');
+      // Disabling list of users: 2M-271 / 2M-282 on the dashboard.
+      //$build['connected_users'] = MovepeopleDashboardController::renderConnectedUsers($user->getAccount(), 'block_links_simple');
     }
 
     $buttons = [];

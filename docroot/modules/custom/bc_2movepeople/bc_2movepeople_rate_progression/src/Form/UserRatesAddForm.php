@@ -256,7 +256,7 @@ class UserRatesAddForm extends FormBase {
 
     if (\Drupal::currentUser()->id() != $this->user->id()) {
       $response->addCommand(new ReplaceCommand("#progression_total_table", \Drupal::service('renderer')->render($build)));
-      $response->addCommand(new InvokeCommand(NULL, 'graphTotalLoad', array('#progression_total_chart')));
+      $response->addCommand(new InvokeCommand(NULL, 'graphTotalLoad'));
     }
     else {
       drupal_set_message('Your submission succesfuly saved');

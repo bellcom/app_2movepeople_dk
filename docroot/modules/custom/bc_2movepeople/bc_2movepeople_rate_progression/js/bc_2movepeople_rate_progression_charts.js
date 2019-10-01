@@ -1,17 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 (function ($) {
   Drupal.behaviors.dashboardCharts = {
     attach: function (context, settings) {
-      // google.charts.load('current', {packages: ['corechart', 'bar']});
-      google.charts.load('current', {packages: ['corechart']});
 
       $('#accordion-progressions').on('show.bs.collapse', function (e) {
         var header = $(e.target).parent().find('.panel-heading');
         var panel = $(e.target).find('.panel-body');
+
+        console.log('Load 0');
 
         DashboardChart.load(header, panel);
       });
@@ -19,6 +14,8 @@
       $('#accordion-progressions .panel.panel-default').each(function () {
         var header = $(this).find('.panel-heading');
         var panel = $(this).find('.panel-body');
+
+        console.log('Load 2');
 
         DashboardChart.load(header, panel);
 
@@ -33,64 +30,66 @@
             if (DashboardChart.data[progression_id].length > 0) {
               var element = $(panel).find('.div-chart').attr('id');
               var chart_type = $("input[name='chart_type-" + progression_id + "']:checked").val();
-              drawChart(element, DashboardChart.data[progression_id], DashboardChart.header[progression_id], chart_type);
+
+              console.log('Load 22');
+              drawChart(element, DashboardChart.data[progression_id], chart_type);
             }
           }
         });
       });
 
-      //      $("#dialog-message").dialog({
-      //        modal: true,
-      //        autoOpen: false,
-      //        buttons: {
-      //          Ok: function () {
-      //            $(this).dialog("close");
-      //          }
-      //        }
-      //      });
-
+      // Update action.
       $('.btn-update').click(function () {
         var progression_id = $(this).attr('data-progression-id');
+
         updateProgressionChart(progression_id);
       });
 
-      $('.line-graph-btn').change(function () {
+      $('.line-graph-btn, .bar-graph-btn, .radar-graph-btn').change(function (e) {
         var progression_id = $(this).attr('data-progression-id');
         var header = $('#accordion-progressions-heading-' + progression_id);
         var panel = $(header).parent().find('.panel-body');
-        $('#div_chart_' + progression_id).text('');
-        DashboardChart.load(header, panel, true, 'line');
-      });
+        var type;
+        var $target = $(e.target);
 
-      $('.bar-graph-btn').change(function () {
-        var progression_id = $(this).attr('data-progression-id');
-        var header = $('#accordion-progressions-heading-' + progression_id);
-        var panel = $(header).parent().find('.panel-body');
+        if ($target.hasClass('bar-graph-btn')) {
+          type = 'bar';
+        }
+        else if ($target.hasClass('radar-graph-btn')) {
+          type = 'radar';
+        }
+        else if ($target.hasClass('line-graph-btn')) {
+          type = 'line';
+        }
+
         $('#div_chart_' + progression_id).text('');
-        DashboardChart.load(header, panel, true, 'bar');
+
+        DashboardChart.load(header, panel, true, type);
       });
     }
   };
 
   Drupal.behaviors.totalChart = {
     attach: function (context, settings) {
-      // google.charts.load('current', {packages: ['corechart', 'bar']});
-      google.charts.load('current', {packages: ['corechart']});
       $(this).graphTotalLoad();
 
-      $('.line-graph-btn').change(function () {
-        $('#progression_total_chart').text('');
-        $(this).graphTotalLoad('line');
-      });
+      $('.line-graph-btn, .bar-graph-btn, .radar-graph-btn').change(function (e) {
+        var type;
+        var $target = $(e.target);
 
-      $('.bar-graph-btn').change(function () {
         $('#progression_total_chart').text('');
-        $(this).graphTotalLoad('bar');
-      });
 
-      $('.radar-graph-btn').change(function () {
-        $('#progression_total_chart').text('');
-        $(this).graphTotalLoad('radar');
+        if ($target.hasClass('bar-graph-btn')) {
+          type = 'bar';
+        }
+        else if ($target.hasClass('radar-graph-btn')) {
+          type = 'radar';
+        }
+        else if ($target.hasClass('line-graph-btn')) {
+          type = 'line';
+        }
+
+        $(this).graphTotalLoad(type);
       });
     }
   };
@@ -100,11 +99,14 @@
     header: {},
 
     load: function (header, panel, reload, chart_type = 'line') {
-      if ($(panel).find('.div-chart div').length > 0 && reload == false) {
+      if ($(panel).find('.div-chart div').length > 0 && reload === false) {
         return;
       }
 
+      console.log('Load 1');
+
       var progression_id = header.attr('data-progression-id');
+
       $.ajax({
         type: 'GET',
         url: '/rates/' + progression_id + '/get',
@@ -112,23 +114,47 @@
         success: function (data) {
           if (data.values.length) {
             $(panel).find('.div-form').show();
-            google.charts.setOnLoadCallback(function () {
-              var element = $(panel).find('.div-chart').attr('id');
-              var arr = [['']];
-              for (var key in data.series) {
-                var label = '';
-                if (data.series.hasOwnProperty(key)) {
-                  label = data.series[key];
-                }
-                arr[0].push(label);
-              }
-              data.values.forEach(function (item) {
-                arr.push(item);
-              });
-              DashboardChart.data[progression_id] = arr;
-              DashboardChart.header[progression_id] = data.chart_title;
-              drawChart(element, arr, data.chart_title, chart_type);
-            });
+            var element = $(panel).find('.div-chart').attr('id');
+
+            var labels = [
+              "Har du overskud i hverdagen til, at fokusere på både dit arbejde og privatliv?",
+              "Hvorledes vil du vurdere din nuværende helbredstilstand i almindelighed både fysisk og psykisk?",
+              "Hvor tit har du sovet dårligt: fx uroligt, haft svært ved at falde i søvn, vågnet for tidligt?"
+            ];
+            var datasets = [
+              {
+                date: '010202022129',
+                values: [5, 2, 3]
+              },
+              {
+                date: '010202022129',
+                values: [4, 3, 1]
+              },
+              {
+                date: '010202022129',
+                values: [2, 2, 5]
+              },
+            ];
+
+            var json = {
+              labels: labels,
+              datasets: [
+                {
+                  date: '010202022129',
+                  values: [5, 2, 3]
+                },
+                {
+                  date: '010202022129',
+                  values: [4, 3, 1]
+                },
+                {
+                  date: '010202022129',
+                  values: [2, 2, 5]
+                },
+              ]
+            };
+
+            drawChart(element, json, chart_type);
           }
           else {
             $(panel).find('.div-form').hide();
@@ -144,6 +170,9 @@
     }
 
     var progression_id = header.attr('data-progression-id');
+
+    console.log('Load 5');
+
     $.ajax({
       type: 'GET',
       url: '/rates/' + progression_id + '/get',
@@ -151,19 +180,19 @@
       success: function (data) {
         if (data.values.length) {
           $(panel).find('.div-form').show();
-          google.charts.setOnLoadCallback(function () {
-            var element = $(panel).find('.div-chart').attr('id');
-
-            var arr = [
-              [''].concat(data.series)
-            ];
-
-            data.values.forEach(function (item) {
-              arr.push(item);
-            });
-
-            drawChart(element, arr, data.chart_title, chart_type);
-          });
+          // google.charts.setOnLoadCallback(function () {
+          //   var element = $(panel).find('.div-chart').attr('id');
+          //
+          //   var arr = [
+          //     [''].concat(data.series)
+          //   ];
+          //
+          //   data.values.forEach(function (item) {
+          //     arr.push(item);
+          //   });
+          //
+          //   drawChart(element, arr, data.chart_title, chart_type);
+          // });
         }
         else {
           $(panel).find('.div-form').hide();
@@ -172,136 +201,76 @@
     });
   }
 
-  function drawChart(element, data, title = '', chart_type = 'line') {
-    var ctx = document.getElementById(element);
-    var radarCtx = document.getElementById('radarChart');
-    var chart;
-
-    var header = data[0];
-    for (i = 0; i < header.length; i++) {
-      if (typeof header[i] !== 'string') {
-        break;
+  function drawChart(element, data, chart_type = 'line') {
+    var iteration = 1;
+    var colors = ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913'];
+    var ctx = document.getElementById(element).getContext('2d');
+    var labels = [];
+    var datasets = [];
+    var options = {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
       }
-      var type = (i == 0) ? 'string' : 'number';
-      data[0][i] = {
-        label: header[i],
-        type: type
-      };
-    }
-    var googleChartData = new google.visualization.arrayToDataTable(data);
-    progression_type = $('#' + element).attr('progression');
+    };
 
-    if (progression_type == 'feedback') {
-      var options = {
-        title: title,
-        bars: 'vertical',
-        curveType: 'function',
-        vAxis: {
-          minValue: 0,
-          ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-        },
-        chartArea: {
-          // height: "450px",
-          top: '5%',
-          bottom: '20%',
-          width: '90%'
-        },
-        legend: {position: 'bottom'},
-        pointSize: 5,
-        colors: ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913']
-      };
+    // Labels.
+    for (var label of data.labels) {
+      labels.push(truncateString(label, 25));
     }
-    else {
-      var options = {
-        title: title,
-        bars: 'vertical',
-        curveType: 'function',
-        vAxis: {
-          minValue: 0,
-          ticks: [0, 1, 2, 3, 4, 5]
-        },
-        chartArea: {
-          // height: "450px",
-          top: '5%',
-          bottom: '20%',
-          width: '90%'
-        },
-        legend: {position: 'bottom'},
-        pointSize: 5,
-        colors: ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913']
-      };
+
+    // Datasets.
+    for (var dataset of data.datasets) {
+      datasets.push({
+        label: dataset.date,
+        data: dataset.values,
+        backgroundColor: colors[iteration],
+        borderColor: colors[iteration],
+        fill: false,
+        borderWidth: 2
+      });
+
+      iteration++;
     }
 
     switch (chart_type) {
       case 'line': {
-        // radarCtx.classList.add('hidden');
-        ctx.classList.remove('hidden');
+        options = {};
 
-        chart = new google.visualization.LineChart(ctx);
-
-        chart.draw(googleChartData, options);
         break;
+
       }
       case 'bar': {
-        // radarCtx.classList.add('hidden');
-        ctx.classList.remove('hidden');
+        options = {};
 
-        chart = new google.visualization.ColumnChart(ctx);
-
-        chart.draw(googleChartData, options);
         break;
+
       }
       case 'radar': {
-        var color = Chart.helpers.color;
-        var colors = ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913'];
-        ctx.classList.add('hidden');
-        radarCtx.classList.remove('hidden');
+        options = {};
 
-        // Get labels.
-        var labels = data[0].map(function (label) {
-          return label.label;
-        });
-        labels.shift(); // Remove the first element in the array.
-
-        // Get datasets.
-        var datasets = data;
-        datasets.shift(); // Remove the labels.
-        var transformedDataset = datasets.map(function (dataset) {
-          var label = dataset[0];
-          var data = dataset;
-          data.shift(); // Remove the label.
-
-          var transformedData = data.map(function (item) {
-            if (item === null) {
-              return 0;
-            }
-
-            return item;
-          });
-
-          return {
-            label: label,
-            data: transformedData
-          };
-        });
-
-        // Add colors to the dataset items.
-        for (var i = 0; i < transformedDataset.length; i++) {
-          transformedDataset[i].borderColor = color(colors[i]).alpha(0.3).rgbString();
-          transformedDataset[i].backgroundColor = color(colors[i]).alpha(0.3).rgbString();
-        }
-
-        chart = new Chart(radarCtx, {
-          type: 'radar',
-          data: {
-            labels: labels,
-            datasets: transformedDataset
-          },
-          options: {}
-        });
         break;
+
       }
     }
+
+    // Remove class.
+    document
+      .getElementById(element)
+      .classList
+      .remove('hidden');
+
+    var chart = new Chart(ctx, {
+      type: chart_type,
+      data: {
+        labels: labels,
+        datasets: datasets
+      },
+      options: options,
+    });
   }
 
   function updateProgressionChart(progression_id, chart_type = 'line') {
@@ -316,15 +285,15 @@
       dataType: 'json',
       success: function (data) {
         if (data.values.length) {
-          google.charts.setOnLoadCallback(function () {
-            var arr = [
-              [''].concat(Object.values(data.series))
-            ];
-            data.values.forEach(function (item) {
-              arr.push(item);
-            });
-            drawChart('div_chart_' + progression_id, arr, data.chart_title, chart_type);
-          });
+          // google.charts.setOnLoadCallback(function () {
+          //   var arr = [
+          //     [''].concat(Object.values(data.series))
+          //   ];
+          //   data.values.forEach(function (item) {
+          //     arr.push(item);
+          //   });
+          //   drawChart('div_chart_' + progression_id, arr, data.chart_title, chart_type);
+          // });
         }
         else {
           //  $("#dialog-message").dialog("open");
@@ -332,6 +301,18 @@
       }
     });
   }
+
+  function truncateString (string, length = 25) {
+    var ellipsis = '...';
+
+    console.log('string', string);
+
+    if (string.length > length) {
+      return string.substring(0, length - ellipsis.length) + ellipsis;
+    }
+
+    return string;
+  };
 
   $.fn.graphReload = function (element) {
     var panel = $(element).parent('.ui-accordion-content');
@@ -359,12 +340,12 @@
         });
 
       }
-      google.charts.setOnLoadCallback(function () {
-        drawChart('progression_total_chart', arr, '', chart_type);
-      });
+      // google.charts.setOnLoadCallback(function () {
+      //   drawChart('progression_total_chart', arr, chart_type);
+      // });
 
       $(window).resize(function () {
-        drawChart('progression_total_chart', arr, '', chart_type);
+        drawChart('progression_total_chart', arr, chart_type);
       });
     }
   };
@@ -378,12 +359,4 @@
     return ColCount;
   }
 
-  //  $(window).resize(function() {
-  //    if ($('#progression_total_table').length > 0) {
-  //      alert(555);
-  //    }
-  //  });
-
 })(jQuery);
-
-

@@ -7,6 +7,7 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Misc;
 
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 use Drupal\Core\Datetime\DrupalDateTime;
@@ -18,44 +19,34 @@ use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
  *
  * @package Drupal\bc_2movepeople_dashboard\\Misc
  */
-class TaskReminderUtils  {
- 
+class TaskReminderUtils {
+
   /**
-   * main wrapper function for checking and sending reminder to users
-   *
-   * @params
-   *
-   * @return
-   *
+   * Main wrapper function for checking and sending reminder to users and managers.
    */
   public static function bulkReminder() {
-    
     $config = \Drupal::config('bc_2movepeople_dashboard.AdminSettings');
-    $user_tasks = self::getUsersDueDateGoals();
-    
-    foreach ($user_tasks AS $uid => $goals_ids) {
-      
-      $user = null;
-      foreach ($goals_ids AS $nid) {
-        
+    $user_tasks = self::getDueDateGoals();
+
+    foreach ($user_tasks as $uid => $goals_ids) {
+      $user = NULL;
+      foreach ($goals_ids as $nid) {
         $reminder_data = self::getReminderDataDB($nid);
-        
-        if (sizeof($reminder_data) == 0  || $reminder_data['reminded_count'] < 1) {
-         
-          // Get objects
+        if (count($reminder_data) == 0 || $reminder_data['reminded_count'] < 1) {
+          // Get objects.
           $user = is_null($user) ? User::load($uid) : $user;
           $goal = Node::load($nid);
-         
-          // Prepare data
+
+          // Prepare data.
           $subject = $config->get('task_reminder_email_subject');
           $body = $config->get('task_reminder_email_body');
           $body = str_replace("@name", $user->getDisplayName(), $body);
           $body = str_replace("@task_title", $goal->get('title')->value, $body);
           $body = str_replace("@due_date", $goal->get('field_due_date')->value, $body);
-          
+
           $to = $user->get('mail')->value;
 
-          // Send email
+          // Send email.
           MovepeopleDashboardController::sendMail([
               'to' => $to,
               'from' => \Drupal::config('system.site')->get('mail'),
@@ -64,61 +55,75 @@ class TaskReminderUtils  {
               'sender' => t('System notify')
           ]);
 
-          // Set and update reminder data
+          // Set and update reminder data.
           self::setReminderDataDB($user, $goal, $reminder_data);
         }
       }
     }
   }
-  
+
   /**
-   * compares tasks due date with current reminder date
+   * Returns a list of the tasks.
    *
-   * @params
+   * Returns a list of the tasks for both user and managers which need to be
+   * reminded about.
+   * Compares tasks due date with current reminder date.
    *
-   * @return associative array (key - user id, value - goals ids)
-   *
+   * @return array
+   *   array(
+   *     'user_uid' => array(
+   *       '0' => goal_1_nid,
+   *       '1' => goal_2_nid,
+   *       ...
+   *     );
    */
-  public static function getUsersDueDateGoals() {
-    
+  public static function getDueDateGoals() {
     $result = array();
+
     $config = \Drupal::config('bc_2movepeople_dashboard.AdminSettings');
     $reminder_days = $config->get('task_reminder_due_date');
 
-    // $current_date = new DrupalDateTime('now');
-    $current_date_add = new DrupalDateTime('now');
-    $current_date_add->modify('+'.$reminder_days.' day');
-    
+    $reminderDate = new DrupalDateTime('now');
+    $reminderDate->modify('+' . $reminder_days . ' day');
+
+    // Getting list of goals.
     $goals_query = \Drupal::entityQuery('node');
-    
     $time_group = $goals_query->orConditionGroup()
-    //  ->condition('field_due_date', $current_date->format(DATETIME_DATE_STORAGE_FORMAT), '<')
-      ->condition('field_due_date', $current_date_add->format(DATETIME_DATE_STORAGE_FORMAT), '<=');
-    
+      ->condition('field_due_date', $reminderDate->format(DateTimeItemInterface::DATE_STORAGE_FORMAT), '<=');
     $goals_query->condition('status', 1)
       ->condition('type', 'goal')
-      ->condition('field_responsible_manager', FALSE)
       ->condition('field_task_complete', FALSE)
       ->condition($time_group);
     $goals_ids = $goals_query->execute();
-    
-    foreach ($goals_ids AS $nid) {
-      $progressions_query = \Drupal::entityQuery('node');
-      $progressions_query->condition('status', 1);
-      $progressions_query->condition('type', 'progression_target');
-      $progressions_query->condition('field_progression_type', 'target_milestone');
-      $progressions_query->condition('field_goal_ids', $nid);
-      $progressions_ids = $progressions_query->execute();
-      
-      $progression_id = array_shift(array_values($progressions_ids)); // ???
-      
-      $progression = Node::load($progression_id);
-      if (empty($progression)) {
-        continue;
-      }
-      $user_id = $progression->get('field_progression_user')->getValue()[0]['target_id'];
+    $goals = Node::loadMultiple($goals_ids);
 
-      $result[$user_id][] = $nid;
+    // Looping though goals.
+    foreach ($goals as $goal) {
+      // Is manager goal.
+      if (!$goal->get('field_responsible_manager')->isEmpty() && $goal->get('field_responsible_manager')->first()->getValue()['target_id'] != 0) {
+        $manager_uid = $goal->get('field_responsible_manager')->first()->getValue()['target_id'];
+        $result[$manager_uid][] = $goal->id();
+      }
+      // Is user goal.
+      else {
+        $progressions_query = \Drupal::entityQuery('node');
+        $progressions_query->condition('status', 1);
+        $progressions_query->condition('type', 'progression_target');
+        $progressions_query->condition('field_progression_type', 'target_milestone');
+        $progressions_query->condition('field_goal_ids', $goal->id());
+        $progressions_ids = $progressions_query->execute();
+        $ids = array_values($progressions_ids);
+        $progression_id = reset($ids);
+
+        if ($progression_id) {
+          $progression = Node::load($progression_id);
+          if (empty($progression)) {
+            continue;
+          }
+          $user_id = $progression->get('field_progression_user')->getValue()[0]['target_id'];
+          $result[$user_id][] = $goal->id();
+        }
+      }
     }
 
     return $result;
@@ -134,7 +139,7 @@ class TaskReminderUtils  {
    *
    */
   public static function getReminderDataDB($nid) {
-    
+
     $result = array();
 
     $query = \Drupal::database()->select('bc_2movepeople_dashboard_task_reminder', 'tr');
@@ -148,7 +153,7 @@ class TaskReminderUtils  {
 
     return $result;
   }
-  
+
   /**
    * insert/update reminder data in DB
    *
@@ -161,17 +166,17 @@ class TaskReminderUtils  {
    *
    */
   public static function setReminderDataDB($user, $goal, $reminder_data = array()) {
-    
+
     $current_date = new DrupalDateTime('now');
     $current_unixtimestamp = $current_date->getTimestamp();
     $email = $user->get('mail')->value;
-    
+
     // UPDATE
     if ($reminder_data && sizeof($reminder_data) > 0) {
 
       $reminded_count = $reminder_data['reminded_count'] ? $reminder_data['reminded_count'] : 0;
       $reminded_count++;
-      
+
       $query = \Drupal::database()->update('bc_2movepeople_dashboard_task_reminder');
       $query->fields([
         'email' => $email,

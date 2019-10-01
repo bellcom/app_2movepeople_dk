@@ -41,6 +41,8 @@
 
   <div class="milestone-evaluation-footer">
     <a href="{{ path('bc_2movepeople_dashboard.milestone.evaluations.pdf', {'user': user})}}" class="btn btn-default">{{ 'Save as PDF'|trans }}</a>
-    <a href="{{ path('bc_2movepeople_dashboard.milestone.evaluations.sbsys', {'user': user})}}" class="btn btn-default">{{ 'Send data to SBSYS'|trans }}</a>
+    {% if (sbsys_enabled) %}
+      <a href="{{ path('bc_2movepeople_dashboard.milestone.evaluations.sbsys', {'user': user})}}" class="btn btn-default">{{ 'Send data to SBSYS'|trans }}</a>
+    {% endif %}
   </div>
 </div>

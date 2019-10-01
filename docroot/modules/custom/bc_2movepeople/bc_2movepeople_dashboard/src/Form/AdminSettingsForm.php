@@ -166,31 +166,34 @@ class AdminSettingsForm extends ConfigFormBase {
     }
 
     // SBSYS Email settings.
-    $form['sbsys_email'] = array(
-      '#type' => 'details',
-      '#title' => $this->t('SBSYS Email settings'),
-      '#tree' => TRUE,
-      '#open' => FALSE,
-    );
+    $moduleHandler = \Drupal::service('module_handler');
+    if ($moduleHandler->moduleExists('sbsys_integration')) {
+      $form['sbsys_email'] = array(
+        '#type' => 'details',
+        '#title' => $this->t('SBSYS Email settings'),
+        '#tree' => TRUE,
+        '#open' => FALSE,
+      );
 
-    $form['sbsys_email']['to'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('To'),
-      '#description' => $this->t('Email address to send sbsysemail'),
-      '#default_value' => $config->get('sbsys_email.to'),
-    ];
+      $form['sbsys_email']['to'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('To'),
+        '#description' => $this->t('Email address to send sbsysemail'),
+        '#default_value' => $config->get('sbsys_email.to'),
+      ];
 
-    $form['sbsys_email']['subject'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Subject'),
-      '#default_value' => $config->get('sbsys_email.subject'),
-    ];
+      $form['sbsys_email']['subject'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Subject'),
+        '#default_value' => $config->get('sbsys_email.subject'),
+      ];
 
-    $form['sbsys_email']['message'] = [
-      '#type' => 'textarea',
-      '#title' => $this->t('Message'),
-      '#default_value' => $config->get('sbsys_email.message'),
-    ];
+      $form['sbsys_email']['message'] = [
+        '#type' => 'textarea',
+        '#title' => $this->t('Message'),
+        '#default_value' => $config->get('sbsys_email.message'),
+      ];
+    }
 
     return parent::buildForm($form, $form_state);
   }
@@ -214,7 +217,7 @@ class AdminSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
 
-    $this->config('bc_2movepeople_dashboard.AdminSettings')
+    $config = $this->config('bc_2movepeople_dashboard.AdminSettings')
       ->set('task_complete_email_subject', $form_state->getValue('task_complete_email_subject'))
       ->set('task_complete_email_body', $form_state->getValue('task_complete_email_body'))
       ->set('task_reminder_due_date', $form_state->getValue('task_reminder_due_date'))
@@ -222,9 +225,14 @@ class AdminSettingsForm extends ConfigFormBase {
       ->set('task_reminder_email_body', $form_state->getValue('task_reminder_email_body'))
       ->set('responsible_manager_email_subject', $form_state->getValue('responsible_manager_email_subject'))
       ->set('responsible_manager_email_body', $form_state->getValue('responsible_manager_email_body'))
-      ->set('milestone_evaluation_header_nid', $form_state->getValue('milestone_evaluation_header_nid'))
-      ->set('sbsys_email', $form_state->getValue('sbsys_email'))
-      ->save();
+      ->set('milestone_evaluation_header_nid', $form_state->getValue('milestone_evaluation_header_nid'));
+
+    $moduleHandler = \Drupal::service('module_handler');
+    if ($moduleHandler->moduleExists('sbsys_integration')) {
+      $config->set('sbsys_email', $form_state->getValue('sbsys_email'));
+    }
+
+    $config->save();
   }
 
 }

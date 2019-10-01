@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\user\Entity\User;
 /**
  * @file
  * Examples showing how to use some of the new JavaScript features in Drupal 8.
@@ -39,6 +40,8 @@ use Drupal\Core\Link;
  * Implements hook_theme().
  */
 function bc_2movepeople_dashboard_theme() {
+  $moduleHandler = \Drupal::service('module_handler');
+
   return [
     'bc_2movepeople_dashboard_accordion' => [
       'template' => 'accordion',
@@ -97,6 +100,7 @@ function bc_2movepeople_dashboard_theme() {
         'name' => NULL,
         'social_security_number' => NULL,
         'milestones_data' => [],
+        'sbsys_enabled' => $moduleHandler->moduleExists('sbsys_integration'),
       ],
     ],
     'bc_2movepeople_milestone_evaluations_pdf' => [
@@ -364,4 +368,40 @@ function _bc_2movepeople_dashboard_button($key) {
   }
 
   return $button;
+}
+
+/**
+ * Implements hook_user_format_name_alter().
+ *
+ * If user has both first and last names, they are used as the user display
+ * name.
+ */
+function bc_2movepeople_dashboard_user_format_name_alter(&$name, $account) {
+  if ($account instanceof UserInterface == FALSE) {
+    $user = User::load($account->id());
+  }
+  else {
+    $user = $account;
+  }
+
+  $firstName = '';
+  $lastName = '';
+
+  // Getting first name.
+  if ($user->field_user_firstname && !$user->field_user_firstname->isEmpty()) {
+    if ($field_firstname = $user->get('field_user_firstname')->getValue()) {
+      $firstName = $field_firstname[0]['value'];
+    }
+  }
+  // Getting last name.
+  if ($user->get('field_user_surname') && !$user->field_user_surname->isEmpty()) {
+    if ($field_lastname = $user->get('field_user_surname')->getValue()) {
+      $lastName = $field_lastname[0]['value'];
+    }
+  }
+
+  // Only making swap if both first and last names are present.
+  if ($firstName && $lastName) {
+    $name = $firstName . ' ' . $lastName;
+  }
 }

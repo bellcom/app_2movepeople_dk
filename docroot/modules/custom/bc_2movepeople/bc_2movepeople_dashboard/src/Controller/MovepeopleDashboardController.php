@@ -218,6 +218,20 @@ class MovepeopleDashboardController extends ControllerBase {
 
   /**
    * User overview page callback implementation.
+   *
+   */
+  public function getUserOverviewTitle(AccountInterface $user){
+    $roles = $user->getRoles();
+    if (in_array('2mp_user', $roles)) {
+      return $user->label();
+    }
+    else {
+      return $this->t('User overview');
+    }
+  }
+
+  /**
+   * User overview page callback implementation.
    */
   public function getUserOverviewImplementation(AccountInterface $user) {
     $build = [];
@@ -225,6 +239,7 @@ class MovepeopleDashboardController extends ControllerBase {
 
     if (in_array('2mp_user', $roles)) {
       $build = $this->getUserOverview($user);
+      $build['#title'] = $user->label();
     }
     else {
       $build['content'] = $this->renderConnectedUsers($user);
@@ -232,9 +247,6 @@ class MovepeopleDashboardController extends ControllerBase {
 
     if (in_array('2mp_supervisor', $roles)) {
       $build['#title'] = $this->t('Managers');
-    }
-    else {
-      $build['#title'] = $this->t('Clients');
     }
 
     return $build;
@@ -250,8 +262,8 @@ class MovepeopleDashboardController extends ControllerBase {
       "#user" => $user->id(),
     ];
 
-    $entity_progression_ids = array_keys($this->getProgressionTargets($user->id(), 'progression'));
-    $entity_milestone_ids = array_keys($this->getProgressionTargets($user->id(), 'target_milestone'));
+    $entity_progression_ids = $this->getProgressionTargets($user->id(), 'progressions');
+    $entity_milestone_ids = $this->getProgressionTargets($user->id(), 'target_milestone');
     if (!empty($entity_progression_ids)) {
 
       // We need to know if there are any questions on categories to show
@@ -270,7 +282,7 @@ class MovepeopleDashboardController extends ControllerBase {
           '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id(), 'limit' => $this->fStr]),
         ];
         $controls['Progression.show_category'] = [
-          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id(), 'limit' => $this->pStr]),
+          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
         ];
       }
       else {
@@ -378,16 +390,11 @@ class MovepeopleDashboardController extends ControllerBase {
    */
   public static function renderMyConnectedUsers() {
     $user = \Drupal::currentUser();
-    $user->getAccount();
     $args = [$user->id()];
-    $view = Views::getView('2mp_connected_users');
 
-    if (!is_object($view)) {
-      return '';
-    }
-
+    $view = Views::getView('2mp_users_search');
     $view->setArguments($args);
-    $view->setDisplay('my_users_list');
+    $view->setDisplay('2mp_users_search_my_users_list');
     $view->preExecute();
     $view->execute();
 
@@ -463,6 +470,7 @@ class MovepeopleDashboardController extends ControllerBase {
     $query->condition('field_progression_user', $user_id);
     $query->condition('field_progression_type', $progression_types[$progression_type], 'IN');
     $entity_ids = $query->execute();
+
     return $entity_ids;
   }
 
@@ -516,13 +524,15 @@ class MovepeopleDashboardController extends ControllerBase {
     if ($dates) {
       foreach ($entity_ids as $key => $target_id) {
         $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($target_id);
-        $title = $nodedata->get('title')->value;
-        $table[$key] = array_fill(1, count($dates), 0);
-        $avg_rates = self::getTargetAveragePoints($target_id);
-        foreach ($avg_rates as $row) {
-          $table[$key][array_search($row->dates, $header)] = round((float) $row->avg_rates, 2);
+        if ($nodedata) {
+          $title = $nodedata->get('title')->value;
+          $table[$key] = array_fill(1, count($dates), 0);
+          $avg_rates = self::getTargetAveragePoints($target_id);
+          foreach ($avg_rates as $row) {
+            $table[$key][array_search($row->dates, $header)] = round((float) $row->avg_rates, 2);
+          }
+          $table[$key] = array_merge([$title], $table[$key]);
         }
-        $table[$key] = array_merge([$title], $table[$key]);
       }
     }
 

@@ -1,4 +1,4 @@
-{{ attach_library('bc_2movepeople_rate_progression/bc_2movepeople_rate_progression.charts') }}
+{{ attach_library('bc_2movepeople_rate_progression/bc_2movepeople_rate_progression.charts.total') }}
 
 
 <div class="dashboard-overview">
@@ -16,9 +16,9 @@
           <label class="btn btn-default">
             <input type="radio" name="chart_type" class="bar-graph-btn" autocomplete="off"> {{ 'Bar' | trans }}
           </label>
-{#          <label class="btn btn-default">#}
-{#            <input type="radio" name="chart_type" class="radar-graph-btn" autocomplete="off"> {{ 'Radar' | trans }}#}
-{#          </label>#}
+          <label class="btn btn-default">
+            <input type="radio" name="chart_type" class="radar-graph-btn" autocomplete="off"> {{ 'Radar' | trans }}
+          </label>
         </div>
       </div>
       <div id="progression_total_chart"></div>

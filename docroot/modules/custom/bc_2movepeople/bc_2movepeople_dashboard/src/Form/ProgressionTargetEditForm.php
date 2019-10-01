@@ -189,9 +189,11 @@ abstract class ProgressionTargetEditForm extends FormBase {
 
       $title = $form_state->getValue('title');
       $this->node->set("title", $title);
+      $progression_type = 'progression';
       if ($form_state->getValue('for_user_feedback')) {
         $progression_type = 'progression_feedback';
       }
+      $this->node->set('field_progression_type', $progression_type);
       $this->node->save();
 
       $goals_arr = $form_state->getValue('goals');

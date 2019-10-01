@@ -1,0 +1,105 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+(function ($) {
+  var charty;
+
+  charty = {
+    truncateString: function (string, length = 25) {
+      var ellipsis = '...';
+
+      if (string.length > length) {
+        return string.substring(0, length - ellipsis.length) + ellipsis;
+      }
+
+      return string;
+    },
+    convertDataToDatasets : function (data) {
+      var mutatedDatasets = [];
+
+      for (var dataset of data.values) {
+        var shiftedDataset = dataset.slice();
+        shiftedDataset.shift();
+
+        var mutatedDataset = {
+          label: false,
+          values: shiftedDataset
+        };
+
+        mutatedDatasets.push(mutatedDataset);
+      }
+
+      var mutatedData = {
+        labels: data.series,
+        datasets: mutatedDatasets,
+      };
+
+      return mutatedData;
+    },
+    drawChart: function (element, data, chart_type = 'line') {
+      var iteration = 1;
+      var colors = ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913'];
+      var canvas = document.createElement('CANVAS');
+      var container = document.getElementById(element);
+      canvas.style.height = '30vh';
+      container.innerHTML = '';
+      container.appendChild(canvas);
+
+      var ctx = canvas.getContext('2d');
+      var labels = [];
+      var datasets = [];
+      var options = {
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+        animation: {
+          duration: 0
+        },
+        hover: {
+          animationDuration: 0
+        },
+        responsiveAnimationDuration: 0,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      };
+
+      // Labels.
+      for (var label of data.labels) {
+        labels.push(charty.truncateString(label, 25));
+      }
+
+      // Datasets.
+      for (var dataset of data.datasets) {
+        datasets.push({
+          label: dataset.label,
+          data: dataset.values,
+          backgroundColor: colors[iteration],
+          borderColor: colors[iteration],
+          fill: false,
+          borderWidth: 2
+        });
+
+        iteration++;
+      }
+
+      new Chart(ctx, {
+        type: chart_type,
+        data: {
+          labels: labels,
+          datasets: datasets
+        },
+        options: options,
+      });
+    }
+  };
+
+  window.charty = charty;
+})(jQuery);

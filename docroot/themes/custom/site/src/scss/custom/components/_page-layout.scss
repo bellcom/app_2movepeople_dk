@@ -57,12 +57,12 @@ body {
       border-right-color: transparent;
       text-align: left;
       border-radius: 4px 4px 0px 0px;
-      
+
       display: inline-block;
-      white-space: nowrap; 
+      white-space: nowrap;
       width: 120px;
       overflow: hidden;
-      text-overflow: ellipsis; 
+      text-overflow: ellipsis;
     }
     &.active {
       a, a:hover, a:focus {
@@ -149,6 +149,10 @@ body {
   + .block {
     margin-top: $grid-gutter-width;
   }
+
+  img {
+    max-width: 90%;
+  }
 }
 .layout__sidebar__logo__image {}
 
@@ -201,10 +205,10 @@ h1.page-header {
         border-radius: 4px 0 0 4px;
 
         display: block;
-        white-space: initial; 
+        white-space: initial;
         width: initial;
         overflow: initial;
-        text-overflow: initial; 
+        text-overflow: initial;
       }
       &.active {
         a, a:hover, a:focus {
