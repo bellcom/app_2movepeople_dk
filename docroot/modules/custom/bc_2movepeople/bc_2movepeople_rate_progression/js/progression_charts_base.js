@@ -103,5 +103,3 @@
 
   window.charty = charty;
 })(jQuery);
-
-
