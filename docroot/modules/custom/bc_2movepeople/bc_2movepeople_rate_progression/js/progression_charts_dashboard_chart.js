@@ -107,11 +107,13 @@
   function updateProgressionChart(progression_id, chart_type = 'line') {
     var date_from = $('#date_from_' + progression_id).val();
     var date_to = $('#date_to_' + progression_id).val();
-    var chart_type = $("input[name='chart_type-" + progression_id + "']:checked").val();
 
     $.ajax({
       type: 'GET',
-      data: {from: date_from, to: date_to},
+      data: {
+        from: date_from,
+        to: date_to
+      },
       url: '/rates/' + progression_id + '/get',
       dataType: 'json',
       success: function (data) {
@@ -130,8 +132,4 @@
 
     loadGraph(header, panel, true);
   };
-
-
 })(jQuery);
-
-

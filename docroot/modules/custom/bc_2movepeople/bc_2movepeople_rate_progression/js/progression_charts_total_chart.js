@@ -80,11 +80,6 @@
 
       // On load.
       charty.drawChart('progression_total_chart', mutatedData, chart_type);
-
-      // Resize.
-      $(window).resize(function () {
-        charty.drawChart('progression_total_chart', mutatedData, chart_type);
-      });
     }
   };
 
