@@ -211,7 +211,7 @@ display:
           empty: true
           tokenize: false
           content:
-            value: 'Your search did not return any results.'
+            value: 'Din søgning gav ingen resultater.'
             format: rich_text
           plugin_id: text
       relationships: {  }

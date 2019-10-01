@@ -31,7 +31,7 @@ display:
       empty:
         area_text_custom:
           admin_label: ''
-          content: 'Der er ikke blevet oprettet forsideindhold endnu.'
+          content: 'Der er ikke oprettet noget indhold på forsiden endnu.<br>Læs <a href="https://www.drupal.org/docs/user_guide/en/index.html">manualen</a> for at komme i gang med at bygge din hjemmeside.'
           empty: true
           field: area_text_custom
           group_type: group

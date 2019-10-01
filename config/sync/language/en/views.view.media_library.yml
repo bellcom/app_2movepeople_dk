@@ -5,7 +5,7 @@ display:
     display_options:
       exposed_form:
         options:
-          submit_button: 'Apply Filters'
+          submit_button: 'Apply filters'
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
           sort_asc_label: Asc
@@ -63,3 +63,42 @@ display:
         description: 'Allows users to browse and administer media items'
   widget:
     display_title: Widget
+    display_options:
+      filters:
+        name:
+          expose:
+            label: Name
+      arguments:
+        bundle:
+          exception:
+            title: All
+      header:
+        display_link_grid:
+          label: Grid
+        display_link_table:
+          label: Table
+  widget_table:
+    display_title: 'Widget (table)'
+    display_options:
+      fields:
+        thumbnail__target_id:
+          label: Thumbnail
+        name:
+          label: Name
+        uid:
+          label: Author
+        changed:
+          label: Updated
+      filters:
+        name:
+          expose:
+            label: Name
+      arguments:
+        bundle:
+          exception:
+            title: All
+      header:
+        display_link_grid:
+          label: Grid
+        display_link_table:
+          label: Table

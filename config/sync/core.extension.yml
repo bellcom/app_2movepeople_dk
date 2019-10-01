@@ -74,7 +74,6 @@ module:
   path: 0
   quickedit: 0
   rdf: 0
-  sbsys_integration: 0
   schemata: 0
   schemata_json_schema: 0
   search_api: 0

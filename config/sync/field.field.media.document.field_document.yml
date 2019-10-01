@@ -13,7 +13,7 @@ id: media.document.field_document
 field_name: field_document
 entity_type: media
 bundle: document
-label: Document
+label: Dokument
 description: ''
 required: false
 translatable: false
