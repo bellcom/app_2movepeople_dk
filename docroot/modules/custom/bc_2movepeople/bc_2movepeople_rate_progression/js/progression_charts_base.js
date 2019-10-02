@@ -32,11 +32,18 @@
       }
 
       var mutatedData = {
-        labels: data.series,
+        labels: (typeof data.series === 'string') ? [data.series] : data.series, // Cast to array.
         datasets: mutatedDatasets,
       };
 
       return mutatedData;
+    },
+    isIterable: function (obj) {
+      if (obj == null) {
+        return false;
+      }
+
+      return typeof obj[Symbol.iterator] === 'function';
     },
     drawChart: function (element, data, chart_type = 'line') {
       var iteration = 1;
@@ -72,8 +79,13 @@
       };
 
       // Labels.
-      for (var label of data.labels) {
-        labels.push(charty.truncateString(label, 25));
+      if (charty.isIterable(data.labels)) {
+        for (var label of data.labels) {
+          labels.push(charty.truncateString(label, 25));
+        }
+      }
+      else {
+        labels.push(charty.truncateString(data.labels[1], 25));
       }
 
       // Datasets.

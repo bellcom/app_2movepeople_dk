@@ -86,6 +86,10 @@ img {
 
   .row--equal-height-columns {
 
+    .view-filters {
+      flex-basis: 100%;
+    }
+
     &,
     > .view-content {
       display: flex;
