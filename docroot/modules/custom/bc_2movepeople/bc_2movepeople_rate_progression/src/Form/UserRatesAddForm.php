@@ -2,6 +2,7 @@
 
 namespace Drupal\bc_2movepeople_rate_progression\Form;
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\RedirectCommand;
@@ -12,6 +13,7 @@ use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\bc_2movepeople_rate_progression\Progression\Target;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
+use Drupal\user\Entity\User;
 
 /**
  * Implements the ModalForm form controller.
@@ -26,6 +28,9 @@ use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
  */
 class UserRatesAddForm extends FormBase {
 
+  /**
+   * @var \Drupal\user\UserInterface
+   */
   protected $user;
 
   /**
@@ -215,6 +220,10 @@ class UserRatesAddForm extends FormBase {
         }
       }
     }
+
+    // Invalidating user cache.
+    $cacheTags = User::load($this->user->id())->getCacheTags();
+    Cache::invalidateTags($cacheTags);
   }
 
   /**
@@ -245,7 +254,7 @@ class UserRatesAddForm extends FormBase {
    */
   public function ajaxSubmitForm(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
-    $progression_targets_ids = MovepeopleDashboardController::getProgressionTargets($this->user->id(), 'progression');
+    $progression_targets_ids = MovepeopleDashboardController::getProgressionTargets($this->user->id(), 'progressions');
     $result = MovepeopleDashboardController::getProgressionsTable($progression_targets_ids);
 
     $build = array(

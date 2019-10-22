@@ -405,3 +405,30 @@ function bc_2movepeople_dashboard_user_format_name_alter(&$name, $account) {
     $name = $firstName . ' ' . $lastName;
   }
 }
+
+/**
+ * Implements template_preprocess_user().
+ *
+ * Adds rating to user display to users of role 2mp_user.
+ */
+function bc_2movepeople_dashboard_preprocess_user(&$variables) {
+  $user = $variables['user'];
+
+  // Only for 2mp_user role.
+  if (in_array('2mp_user', $user->getRoles())) {
+    $entity_progression_ids = MovepeopleDashboardController::getProgressionTargets($user->id(), 'progressions');
+    $progression_table = MovepeopleDashboardController::getProgressionsTable($entity_progression_ids);
+
+    $minRate = 0;
+
+    foreach ($progression_table['data'] as $progressionRates) {
+      if ($rate = end($progressionRates)) {
+        if (!$minRate || $minRate > $rate) {
+          $minRate = $rate;
+        }
+      }
+    }
+
+    $variables['last_min_rate'] = $minRate;
+  }
+}
