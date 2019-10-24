@@ -1,0 +1,8 @@
+name: '2Movepeople Meeting'
+description: '2Movepeople meeting functionality'
+type: module
+package: '2Movepeople'
+core: 8.x
+dependencies:
+  - bc_2movepeople
+  - bc_2movepeople_dashboard

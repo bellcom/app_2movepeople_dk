@@ -1,0 +1,296 @@
+bc_2movepeople_meeting.user.meetings:
+  path: '/dashboard/users/{user}/meetings'
+  defaults:
+    _title: 'Connected users'
+    _controller: '\Drupal\bc_2movepeople_meeting\Controller\MeetingController::meetingsOverviewContent'
+  requirements:
+    _permission: 'access user dashboard'
+    _user_is_logged_in: 'TRUE'
+
+bc_2movepeople_meeting.user.meetings.add:
+  path: '/dashboard/users/{user}/meetings/add'
+  options:
+    parameters:
+      user:
+        type: entity:user
+  defaults:
+    _title: 'Add new meeting'
+    _form: '\Drupal\bc_2movepeople_meeting\Form\MeetingAddForm'
+  requirements:
+    _permission: 'access user dashboard'
+
+bc_2movepeople_meeting.user.meetings.edit:
+  path: '/dashboard/users/{user}/meetings/{meeting}/edit'
+  options:
+    parameters:
+      user:
+        type: entity:user
+      meeting:
+        type: entity:node
+  defaults:
+    _title: 'Edit meeting'
+    _form: '\Drupal\bc_2movepeople_meeting\Form\MeetingEditForm'
+  requirements:
+    _permission: 'access user dashboard'
+
+#bc_2movepeople_dashboard.user.overview:
+#  path: '/dashboard/users/{user}/overview'
+#  defaults:
+#    _title_callback: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getUserOverviewTitle'
+#    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getUserOverviewImplementation'
+#  requirements:
+#    _permission: 'access user dashboard'
+#    _user_is_logged_in: 'TRUE'
+#
+#bc_2movepeople_dashboard.user.edit_managers:
+#  path: '/dashboard/users/{user}/edit-managers'
+#  options:
+#    parameters:
+#      user:
+#        type: entity:user
+#  defaults:
+#    _title: 'Edit user managers'
+#    _form: '\Drupal\bc_2movepeople_dashboard\Form\UserManagersEditForm'
+#    limit: NULL
+#  requirements:
+#    _permission: 'access user dashboard'
+#
+#bc_2movepeople_dashboard.user.cancel:
+#  path: '/dashboard/users/{user}/cancel'
+#  options:
+#    parameters:
+#      user:
+#        type: entity:user
+#  defaults:
+#    _title: 'Cancel user'
+#    _form: '\Drupal\bc_2movepeople_dashboard\Form\UserCancelForm'
+#  requirements:
+#    _permission: 'access user dashboard'
+#
+#bc_2movepeople_dashboard.user.edit:
+#  path: '/dashboard/users/{user}/edit'
+#  options:
+#    parameters:
+#      user:
+#        type: entity:user
+#  defaults:
+#    _title: 'Edit Account'
+#    _form: '\Drupal\bc_2movepeople_dashboard\Form\UserEditForm'
+#  requirements:
+#    _permission: 'access user dashboard'
+#
+#bc_2movepeople_dashboard.user.milestones:
+#  path: '/dashboard/users/{user}/milestones'
+#  defaults:
+#    _title: 'User milestones'
+#    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getMilestoneJsAccordionImplementation'
+#    limit: 'milestone'
+#  requirements:
+#    _permission: 'access user dashboard'
+#    _user_is_logged_in: 'TRUE'
+#
+#bc_2movepeople_dashboard.user.progressions.add:
+#  path: '/dashboard/users/{user}/progressions/add/{limit}'
+#  options:
+#    parameters:
+#      user:
+#        type: entity:user
+#  defaults:
+#    _title: 'Add new category'
+#    _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionAddForm'
+#    limit: NULL
+#  requirements:
+#    _permission: 'access user dashboard'
+#
+#bc_2movepeople_dashboard.user.progressions:
+#  path: '/dashboard/users/{user}/progressions/{limit}'
+#  defaults:
+#    _title: 'User progressions'
+#    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getJsAccordionImplementation'
+#    limit: NULL
+#  requirements:
+#    _permission: 'access user dashboard'
+#    _user_is_logged_in: 'TRUE'
+#
+#bc_2movepeople_dashboard.milestone.evaluations:
+#  path: '/dashboard/users/{user}/milestone/evaluations'
+#  defaults:
+#    _title: 'User progressions'
+#    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getMilestoneEvaluations'
+#    limit: NULL
+#  requirements:
+#    _permission: 'access user dashboard'
+#    _user_is_logged_in: 'TRUE'
+#
+#bc_2movepeople_dashboard.milestone.evaluations.pdf:
+#  path: '/dashboard/users/{user}/milestone/evaluations/pdf'
+#  defaults:
+#    _title: 'User progressions'
+#    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getMilestoneEvaluationsPdf'
+#    limit: NULL
+#  requirements:
+#    _permission: 'access user dashboard'
+#    _user_is_logged_in: 'TRUE'
+#
+#bc_2movepeople_dashboard.milestone.evaluations.sbsys:
+#  path: '/dashboard/users/{user}/milestone/evaluations/sbsys'
+#  defaults:
+#    _title: 'Send info to sbsys'
+#    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::sendMilestoneEvaluationsToSbsys'
+#    limit: NULL
+#  requirements:
+#    _permission: 'access user dashboard'
+#    _user_is_logged_in: 'TRUE'
+#
+#bc_2movepeople_dashboard.progressions.edit:
+#  path: '/dashboard/progressions/{node}/edit/{limit}'
+#  options:
+#    parameters:
+#      node:
+#        type: entity:node
+#  defaults:
+#    _title: 'Edit category'
+#    _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionTargetProgressionEditForm'
+#    limit: NULL
+#  requirements:
+#    _permission: 'access user dashboard'
+#
+#bc_2movepeople_dashboard.milestone.edit:
+#  path: '/dashboard/milestone/{node}/edit'
+#  options:
+#    parameters:
+#      node:
+#        type: entity:node
+#  defaults:
+#    _title: 'Edit milestone'
+#    _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionTargetMilestoneEditForm'
+#  requirements:
+#    _permission: 'access user dashboard'
+#
+#bc_2movepeople_dashboard.milestone.evaluate:
+#  path: '/dashboard/milestone/{node}/evaluate'
+#  options:
+#    parameters:
+#      node:
+#        type: entity:node
+#  defaults:
+#    _title: 'Evaluate milestone'
+#    _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionTargetMilestoneEvaluateForm'
+#  requirements:
+#    _permission: 'access user dashboard'
+#
+#bc_2movepeople_dashboard.progression.tasks.add:
+#  path: '/dashboard/progressions/{node}/tasks/add/{limit}'
+#  options:
+#    parameters:
+#      node:
+#        type: entity:node
+#  defaults:
+#    _title: 'Add new category question'
+#    _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionTaskEditForm'
+#    limit: NULL
+#  requirements:
+#    _permission: 'access user dashboard'
+#
+#bc_2movepeople_dashboard.user.milestones.add:
+#  path: '/dashboard/users/{user}/milestones/add'
+#  options:
+#    parameters:
+#      user:
+#        type: entity:user
+#  defaults:
+#    _title: 'Add new milestone'
+#    _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneAddForm'
+#  requirements:
+#    _permission: 'access user dashboard'
+#
+#bc_2movepeople_dashboard.milestone.tasks.add:
+#  path: '/dashboard/milestones/{node}/tasks/add'
+#  options:
+#    parameters:
+#      node:
+#        type: entity:node
+#  defaults:
+#    _title: 'Add new milestone task'
+#    _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskAddForm'
+#  requirements:
+#    _permission: 'access user dashboard'
+#
+#bc_2movepeople_dashboard.milestone.tasks.clone:
+#  path: '/dashboard/milestones/users/{user}/tasks/{node}/clone'
+#  options:
+#    parameters:
+#      user:
+#        type: entity:user
+#      node:
+#        type: entity:node
+#  defaults:
+#    _title: 'Copy question to category'
+#    _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskCloneForm'
+#  requirements:
+#    _permission: 'access user dashboard'
+#
+#bc_2movepeople_dashboard.user.tasks:
+#  path: '/dashboard/users/{user}/tasks'
+#  options:
+#    parameters:
+#      user:
+#        type: entity:user
+#  defaults:
+#    _title: "Scheduled tasks"
+#    _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getUserTasks'
+#  requirements:
+##    _permission: 'access content'
+#    _custom_access: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::access'
+#    _user_is_logged_in: 'TRUE'
+#
+#bc_2movepeople_dashboard.user.task.complete:
+#  path: '/dashboard/users/{user}/tasks/{node}/complete'
+#  options:
+#    parameters:
+#      user:
+#        type: entity:user
+#      node:
+#        type: entity:node
+#  defaults:
+#    _title: "Task complete"
+#    _form: '\Drupal\bc_2movepeople_dashboard\Form\UserTaskCompleteForm'
+#  requirements:
+#    _permission: 'access content'
+#    _user_is_logged_in: 'TRUE'
+#
+#bc_2movepeople_dashboard.admin.settings_form:
+#  path: '/admin/bc_2movepeople/dashboard/settings'
+#  defaults:
+#    _form: '\Drupal\bc_2movepeople_dashboard\Form\AdminSettingsForm'
+#    _title: '2Move People settings form'
+#  requirements:
+#    _permission: 'administer bc_2movepeople settings'
+#  options:
+#    _admin_route: TRUE
+#
+#bc_2movepeople_dashboard.admin.buttons_title:
+#  path: '/admin/bc_2movepeople/dashboard/button-settings'
+#  defaults:
+#    _form: '\Drupal\bc_2movepeople_dashboard\Form\AdminButtonsTitle'
+#    _title: '2Move People buttons settings '
+#  requirements:
+#    _permission: 'administer bc_2movepeople settings'
+#  options:
+#    _admin_route: TRUE
+#
+#bc_2movepeople_dashboard.users.create:
+#  path: '/dashboard/users/create'
+#  defaults:
+#    _form: '\Drupal\bc_2movepeople_dashboard\Form\NewUserCreateForm'
+#    _title: 'Create account'
+#  requirements:
+#    _permission: 'create connected users'
+#
+#bc_2movepeople_dashboard.save_to_tpl:
+#  path: '/dashboard/users/{user}/save-to-tpl'
+#  defaults:
+#    _form: '\Drupal\bc_2movepeople_dashboard\Form\SaveToTemplateForm'
+#    _title: 'Save category and questions to template'
+#  requirements:
+#    _permission: 'access category template'

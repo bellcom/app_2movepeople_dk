@@ -1,0 +1,2 @@
+meeting_invite_email_subject: 'Meeting invitation @start_date - @end_date'
+meeting_invite_email_body: "Hello @name\r\n\r\n@author invited you to a meeting @meeting_title.\r\nwhen: @start_date\r\nuntil: @end_date\r\n\r\nsee you soon!"

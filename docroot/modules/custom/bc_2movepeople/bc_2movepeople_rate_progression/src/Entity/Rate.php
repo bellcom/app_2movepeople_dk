@@ -24,7 +24,8 @@ use Drupal\Core\Entity\EntityTypeInterface;
  *     "uid" = "uid",
  *     "created" = "created",
  *     "rate_autor" = "rate_autor",
- *     "status" = "status"
+ *     "status" = "status",
+ *     "meeting_id" = "meeting_id"
  *   },
  *   list_cache_tags = { "config:rate" }
  * )
@@ -73,6 +74,10 @@ class Rate extends ContentEntityBase implements RateInterface {
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Goal rate'))
       ->setDefaultValue(TRUE);
+
+    $fields['meeting_id'] = BaseFieldDefinition::create('integer')
+      ->setLabel(t('Meeting id'))
+      ->setDefaultValue(NULL);
 
     return $fields;
   }

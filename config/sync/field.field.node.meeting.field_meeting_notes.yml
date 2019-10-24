@@ -1,0 +1,19 @@
+uuid: b47b344a-a225-4ae7-a73e-96654eed7767
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_meeting_notes
+    - node.type.meeting
+id: node.meeting.field_meeting_notes
+field_name: field_meeting_notes
+entity_type: node
+bundle: meeting
+label: Notes
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

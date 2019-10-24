@@ -1,0 +1,28 @@
+uuid: 3a50f4cf-8564-4f91-977c-e8b37e35730d
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_meeting_user
+    - node.type.meeting
+id: node.meeting.field_meeting_user
+field_name: field_meeting_user
+entity_type: node
+bundle: meeting
+label: User
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    include_anonymous: true
+    filter:
+      type: _none
+    target_bundles: null
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference

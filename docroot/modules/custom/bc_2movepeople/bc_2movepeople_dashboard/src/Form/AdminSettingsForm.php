@@ -26,7 +26,7 @@ class AdminSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'admin_settings_form';
+    return 'bc_2movepeople_dashboard_admin_settings_form';
   }
 
   /**

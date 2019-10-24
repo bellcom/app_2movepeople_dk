@@ -1,0 +1,127 @@
+<?php
+
+use Drupal\bc_2movepeople_rate_progression\Entity\Rate;
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+use Drupal\node\Entity\Node;
+
+/**
+ * Implements hook_theme().
+ */
+function bc_2movepeople_meeting_theme() {
+  return [
+    'bc_2movepeople_meeting_meetings_overview' => [
+      'template' => 'bc-2movepeople-meeting-meetings-overview',
+      'variables' => [
+        'title' => NULL,
+        'subtitle' => NULL,
+        'user' => NULL,
+        'meetings' => [],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function bc_2movepeople_meeting_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id == 'bc_2movepeople_dashboard_admin_settings_form') {
+    $config = \Drupal::config('bc_2movepeople_meeting.admin_settings');
+
+    // Complete email options.
+    $form['meeting_invite_email_options'] = array(
+      '#type' => 'details',
+      '#title' => t('Meeting invite email options'),
+      '#open' => TRUE,
+    );
+
+    $form['meeting_invite_email_options']['meeting_invite_email_subject'] = [
+      '#type' => 'textfield',
+      '#title' => t('Meeting invite email subject'),
+      '#maxlength' => 64,
+      '#size' => 64,
+      '#default_value' => $config->get('meeting_invite_email_subject'),
+    ];
+
+    $form['meeting_invite_email_options']['meeting_invite_email_body'] = [
+      '#type' => 'textarea',
+      '#title' => t('Meeting invite email body'),
+      '#default_value' => $config->get('meeting_invite_email_body'),
+      '#description' => '
+        @name = ' . t('The name of the user who will get this email') . '<br />
+        @author = ' . t('The name of the user who send the invite') . '<br />
+        @meeting_title  = ' . t('The title of the meeting') . '<br />
+        @meeting_place  = ' . t('The place of the meeting') . '<br />
+        @start_date  = ' . t('The start date of the meeting') . '<br />
+        @end_date  = ' . t('The end date of the meeting') . '<br />'
+    ];
+
+    $form['#submit'][] = 'bc_2movepeople_meeting_form_setting_submit';
+  }
+}
+
+/**
+ * Form submit handler.
+ *
+ * Saving values into config.
+ */
+function bc_2movepeople_meeting_form_setting_submit($form, FormStateInterface $form_state) {
+  $config = \Drupal::service('config.factory')->getEditable('bc_2movepeople_meeting.admin_settings');
+  $config->set('meeting_invite_email_subject', $form_state->getValue('meeting_invite_email_subject'))
+    ->set('meeting_invite_email_body', $form_state->getValue('meeting_invite_email_body'));
+
+  $config->save();
+}
+
+/**
+ * Implements template_preprocess_user().
+ */
+function bc_2movepeople_meeting_preprocess_node(&$variables) {
+  $node = $variables['node'];
+  $view_mode = $variables['elements']['#view_mode'];
+
+  if ($node->getType() == 'meeting' && $view_mode == 'teaser') {
+    $start_date = DrupalDateTime::createFromFormat(DateTimeItemInterface::DATETIME_STORAGE_FORMAT, $node->field_meeting_start_date->value, new \DateTimeZone('UTC'));
+    $variables['content']['#start_date'] = $start_date->format('d/m/Y H:i', ['timezone' => drupal_get_user_timezone()]);
+
+    $variables['content']['#answered_progression'] = NULL;
+    $variables['content']['#answered_feedback'] = NULL;
+
+    $user_id = $node->field_meeting_user->target_id;
+    if ($user_id) {
+      // Getting rates belonging to this user and this meeting.
+      $query = \Drupal::entityQuery('rate');
+      $query->condition('status', 1);
+      $query->condition('uid', $user_id);
+      $query->condition('rate_autor', $user_id);
+      $query->condition('meeting_id', $node->id());
+      $entity_ids = $query->execute();
+
+      if (!empty($entity_ids)) {
+        $rates = Rate::loadMultiple($entity_ids);
+        foreach ($rates as $rate) {
+          // Loading progression target belonging to that rate.
+          $progression_target_id = $rate->progression_target_id->value;
+          $progression_target = Node::load($progression_target_id);
+
+          // Setting the date values according to the progression type.
+          if ($progression_target->field_progression_type->value == 'progression') {
+            $variables['content']['#answered_progression'] = \Drupal::service('date.formatter')
+              ->format($rate->created->value, 'short');
+          }
+          elseif ($progression_target->field_progression_type->value == 'progression_feedback') {
+            $variables['content']['#answered_feedback'] = \Drupal::service('date.formatter')
+              ->format($rate->created->value, 'short');
+          }
+
+          // If all date values are already set, breaking the loop.
+          if (isset($variables['content']['#answered_progression']) && $variables['content']['#answered_feedback']) {
+            break;
+          }
+        }
+      }
+    }
+  }
+}

@@ -25,6 +25,9 @@ define('BC_2MOVEPEOPLE_DASHBOARD_BUTTONS', serialize([
     'feedback' => t('Dialogue rating'),
     'self_rate' => t('Rates'),
   ],
+  'Meetings' => [
+    'meetings' => t('Meetings'),
+  ],
 ]));
 
 use Drupal\Core\Entity\EntityInterface;

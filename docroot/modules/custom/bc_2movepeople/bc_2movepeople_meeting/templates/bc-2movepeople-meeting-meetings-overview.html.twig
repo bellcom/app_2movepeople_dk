@@ -1,0 +1,23 @@
+{#
+
+/**
+ * @file
+ * Template file for js_example module.
+ */
+#}
+
+<div id="form-system-messages"></div>
+
+<div class="dashboard-overview">
+  <h2 class="subtitle">{{ subtitle }}</h2>
+  <div class="dashboard-overview__control-buttons">
+    <a href="{{ path('bc_2movepeople_meeting.user.meetings.add', {'user': user}) }}"
+       class="btn btn-default use-ajax" data-dialog-type="modal" data-dialog-options='{"width":640}'
+       role="button">{{ 'Add new meeting'|trans }}</a>
+  </div>
+    <div class="dashboard-accordion panel-group" id="accordion-meetings" role="tablist" aria-multiselectable="true">
+      {{ meetings }}
+    </div>
+</div>
+
+{{ attach_library('bc_2movepeople_meeting/bc_2movepeople_meeting.open-first-accordion-tab') }}

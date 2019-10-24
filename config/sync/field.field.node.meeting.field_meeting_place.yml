@@ -1,0 +1,19 @@
+uuid: ea815a6c-6ea9-4146-9559-7e2a93a83058
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_meeting_place
+    - node.type.meeting
+id: node.meeting.field_meeting_place
+field_name: field_meeting_place
+entity_type: node
+bundle: meeting
+label: Place
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

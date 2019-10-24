@@ -276,6 +276,14 @@ class MovepeopleDashboardController extends ControllerBase {
           break;
         }
       }
+
+      // Meeting button.
+      if (\Drupal::currentUser()->hasPermission('access category template')) {
+        $controls['Meetings.meetings'] = [
+          '#url' => Url::fromRoute('bc_2movepeople_meeting.user.meetings', ['user' => $user->id()]),
+        ];
+      }
+
       $config = $this->config('bc_2movepeople.settings');
       if (!empty($config->get('rates_separately'))) {
         $controls['Progression.feedback'] = [
