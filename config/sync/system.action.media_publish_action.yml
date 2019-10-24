@@ -7,7 +7,7 @@ dependencies:
 _core:
   default_config_hash: Bis1eEetH6KGAgrwR3i4JT3gZfQjRg6RnXMCJdlkhGU
 id: media_publish_action
-label: 'Publish media'
+label: 'Udgiv medie'
 type: media
 plugin: 'entity:publish_action:media'
 configuration: {  }

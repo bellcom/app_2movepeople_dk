@@ -5,7 +5,7 @@ dependencies: {  }
 _core:
   default_config_hash: z3Rg1Ph33UolWA-a75r9XUbRP9zF9CAYiRHaH3ztqwY
 id: document
-label: Document
+label: Dokument
 description: 'A locally hosted document, such a PDF.'
 source: file
 queue_thumbnail_downloads: false

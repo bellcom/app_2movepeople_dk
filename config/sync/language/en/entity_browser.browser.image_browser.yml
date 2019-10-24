@@ -3,6 +3,6 @@ widgets:
     label: Library
   44d52e51-9627-43b5-a637-3b0462041d1c:
     label: Upload
-label: 'Image Browser'
+label: 'Image browser'
 display_configuration:
   link_text: 'Select Image(s)'

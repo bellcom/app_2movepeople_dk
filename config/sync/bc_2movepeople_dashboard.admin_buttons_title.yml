@@ -1,8 +1,9 @@
 Progression:
   feedback: Feedback
-  show_category: 'Vis kategori'
+  show_category: 'Vis spørgsmål'
   rate_category: Målinger
   save_to_template: 'Gem som skabelon'
+  create_categories: ''
 Milestone:
   overall_evaluation: 'Samlet evaluering'
   show_target_milestones: 'Vis mål'

@@ -66,8 +66,8 @@ display:
           tags:
             previous: '‹ forrige'
             next: 'næste ›'
-            first: '« first'
-            last: 'last »'
+            first: '« første'
+            last: 'sidste »'
           quantity: 9
       style:
         type: table

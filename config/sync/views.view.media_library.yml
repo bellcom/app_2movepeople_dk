@@ -291,7 +291,7 @@ display:
           exposed: true
           expose:
             operator_id: bundle_op
-            label: 'Media type'
+            label: 'Medie type'
             description: ''
             use_operator: false
             operator: bundle_op
@@ -306,7 +306,7 @@ display:
             reduce: false
           is_grouped: false
           group_info:
-            label: 'Media type'
+            label: 'Medie type'
             description: null
             identifier: bundle
             optional: true
@@ -664,7 +664,7 @@ display:
           exception:
             value: all
             title_enable: false
-            title: All
+            title: Alle
           title_enable: false
           title: ''
           default_argument_type: fixed
@@ -701,7 +701,7 @@ display:
           table: views
           field: display_link
           display_id: widget
-          label: Grid
+          label: Gitter
           plugin_id: display_link
           empty: true
         display_link_table:
@@ -920,7 +920,7 @@ display:
           exception:
             value: all
             title_enable: false
-            title: All
+            title: Alle
           title_enable: false
           title: ''
           default_argument_type: fixed
@@ -956,7 +956,7 @@ display:
           table: views
           field: display_link
           display_id: widget
-          label: Grid
+          label: Gitter
           plugin_id: display_link
           empty: true
         display_link_table:
