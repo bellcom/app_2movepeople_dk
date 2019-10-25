@@ -9,7 +9,7 @@ dependencies:
 id: navigationblock
 theme: site
 region: sidebar_left__desktop
-weight: -5
+weight: -4
 provider: null
 plugin: navigation_block
 settings:
