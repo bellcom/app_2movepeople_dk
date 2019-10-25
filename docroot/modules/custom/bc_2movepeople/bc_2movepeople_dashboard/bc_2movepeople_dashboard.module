@@ -432,6 +432,15 @@ function bc_2movepeople_dashboard_preprocess_user(&$variables) {
       }
     }
 
+    $config = \Drupal::config('bc_2movepeople_dashboard.AdminSettings');
+    $faq_node = NULL;
+    if (!empty($config->get('faq_node_nid'))) {
+      $faq_node = \Drupal::entityTypeManager()->getStorage('node')
+        ->load($config->get('faq_node_nid'));
+    }
+
     $variables['last_min_rate'] = $minRate;
+    $variables['last_min_rate_text'] = ($faq_node) ? Link::fromTextAndUrl(' ' . $minRate, $faq_node->toUrl())
+      ->toString() : $minRate;
   }
 }

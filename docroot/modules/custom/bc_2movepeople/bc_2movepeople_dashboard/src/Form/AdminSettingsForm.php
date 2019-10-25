@@ -195,6 +195,28 @@ class AdminSettingsForm extends ConfigFormBase {
       ];
     }
 
+    // FAQ options.
+    $form['faq_options'] = array(
+      '#type' => 'details',
+      '#title' => $this->t('FAQ options'),
+      '#open' => FALSE,
+    );
+
+    $faq_node = NULL;
+    if (!empty($config->get('faq_node_nid'))) {
+      $faq_node = \Drupal::entityTypeManager()->getStorage('node')
+        ->load($config->get('faq_node_nid'));
+    }
+    $form['faq_options']['faq_node_nid'] = [
+      '#type' => 'entity_autocomplete',
+      '#title' => $this->t('Node reference to FAQ node'),
+      '#target_type' => 'node',
+      '#selection_settings' => [
+        'target_bundles' => ['page'],
+      ],
+      '#default_value' => $faq_node,
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -225,7 +247,8 @@ class AdminSettingsForm extends ConfigFormBase {
       ->set('task_reminder_email_body', $form_state->getValue('task_reminder_email_body'))
       ->set('responsible_manager_email_subject', $form_state->getValue('responsible_manager_email_subject'))
       ->set('responsible_manager_email_body', $form_state->getValue('responsible_manager_email_body'))
-      ->set('milestone_evaluation_header_nid', $form_state->getValue('milestone_evaluation_header_nid'));
+      ->set('milestone_evaluation_header_nid', $form_state->getValue('milestone_evaluation_header_nid'))
+      ->set('faq_node_nid', $form_state->getValue('faq_node_nid'));
 
     $moduleHandler = \Drupal::service('module_handler');
     if ($moduleHandler->moduleExists('sbsys_integration')) {
