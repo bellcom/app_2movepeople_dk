@@ -3,6 +3,7 @@
 namespace Drupal\bc_2movepeople_rate_progression\Form;
 
 use Drupal\Core\Ajax\InvokeCommand;
+use Drupal\Core\Cache\Cache;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -10,6 +11,7 @@ use Drupal\node\NodeInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
 use Drupal\bc_2movepeople_rate_progression\Progression\Target;
+use Drupal\user\Entity\User;
 
 /**
  * Implements the ModalForm form controller.
@@ -200,6 +202,10 @@ class RateAddForm extends FormBase {
         }
       }
     }
+
+    // Invalidating user cache.
+    $user = User::load($this->node->get('field_progression_user')->getValue()[0]['target_id']);
+    Cache::invalidateTags($user->getCacheTags());
   }
 
   /**

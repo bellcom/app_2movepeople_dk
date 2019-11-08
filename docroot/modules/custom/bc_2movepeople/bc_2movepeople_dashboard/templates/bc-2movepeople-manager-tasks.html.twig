@@ -1,0 +1,31 @@
+<div class="dashboard-accordion panel-group panel panel-default" id="accordion" role="tablist" aria-multiselectable="true">
+  <div{{ attributes.addClass(classes) }}>
+    <div class="panel-heading" role="tab" id="accordion-heading-manager-tasks">
+      <a role="button" data-toggle="collapse" data-parent="#accordion"
+         href="#accordion-collapse-manager-tasks"
+         aria-expanded="false"
+         aria-controls="accordion-collapse-manager-tasks">
+        <span class="glyphicon glyphicon-triangle-custom" aria-hidden="true"></span>
+        {{ 'Manager tasks' | trans }}
+      </a>
+    </div>
+    <div id="accordion-collapse-manager-tasks"
+         class="panel-collapse collapse"
+         role="tabpanel" aria-labelledby="accordion-heading-manager-tasks">
+      <div class="panel-body">
+        <div>
+          <div{{ content_attributes.addClass('content') }}>
+            <div class="dashboard-overview dashboard-overview-task-rows">
+              {% if tasks %}
+                {{ tasks }}
+              {% else %}
+                {{ 'There is no current active tasks.' | trans }}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

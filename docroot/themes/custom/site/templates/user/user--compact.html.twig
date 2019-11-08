@@ -43,6 +43,23 @@
     <a href="{{ path('bc_2movepeople_dashboard.user.cancel', { 'user': user.id, 'destination': '/dashboard' }) }}" class="btn btn-default btn-sm use-ajax glyphicon-remove" data-dialog-type="modal" title="{{ 'Remove' | trans }}" data-toggle="tooltip" data-placement="top"></a>
     <!-- End - cancel -->
 
+    {% if last_min_rate %}
+      {% if last_min_rate > 3 %}
+        {# green color #}
+        {% set rate_class = "bg-success" %}
+      {% elseif last_min_rate == 3 %}
+        {# yellow color #}
+        {% set rate_class = "bg-warning" %}
+      {% else %}
+        {# red color #}
+        {% set rate_class = "bg-danger" %}
+      {% endif %}
+
+      <div class="{{ rate_class }}">
+        {{ last_min_rate_text}}
+      </div>
+    {% endif %}
+
   </div>
   <!-- End - controls -->
 

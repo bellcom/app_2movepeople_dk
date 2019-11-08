@@ -1,0 +1,5 @@
+bc_2movepeople_meeting.open-first-accordion-tab:
+  js:
+    js/open-first-accordion-tab.js: {}
+  dependencies:
+    - core/jquery

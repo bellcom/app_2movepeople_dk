@@ -204,7 +204,8 @@ class MovepeopleDashboardController extends ControllerBase {
     if (!$user->hasPermission('access user dashboard')) {
       return $this->redirect('bc_2movepeople_dashboard.user.tasks', ['user' => $user->id()]);
     }
-    $build['content'] = $this->renderMyConnectedUsers();
+    $build['content'][] = $this->getManagerTasks($user);
+    $build['content'][] = $this->renderMyConnectedUsers();
 
     if (in_array('2mp_supervisor', $user->getRoles())) {
       $build['#title'] = $this->t('Managers');
@@ -276,6 +277,14 @@ class MovepeopleDashboardController extends ControllerBase {
           break;
         }
       }
+
+      // Meeting button.
+      if (\Drupal::currentUser()->hasPermission('access category template')) {
+        $controls['Meetings.meetings'] = [
+          '#url' => Url::fromRoute('bc_2movepeople_meeting.user.meetings', ['user' => $user->id()]),
+        ];
+      }
+
       $config = $this->config('bc_2movepeople.settings');
       if (!empty($config->get('rates_separately'))) {
         $controls['Progression.feedback'] = [
@@ -630,6 +639,49 @@ class MovepeopleDashboardController extends ControllerBase {
       "#title" => t('Scheduled tasks for %name.', ['%name' => $user_name]),
       "#tasks" => $tasks,
       "#user" => $user->id(),
+    ];
+
+    return $build;
+  }
+
+  /**
+   * Return tasks for manager.
+   *
+   * @param \Drupal\Core\Session\AccountInterface $user
+   *   Manager user.
+   *
+   * @return array
+   *   User tasks render array.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  public function getManagerTasks(AccountInterface $user) {
+    $user_name = $user->getDisplayName();
+
+    $query = \Drupal::entityQuery('node');
+    $query->condition('status', 1);
+    $query->condition('type', 'goal');
+    $query->condition('field_responsible_manager', $user->id());
+    $query->condition('field_task_complete', FALSE);
+    $query->sort('field_due_date', 'DESC');
+    $goal_ids = $query->execute();
+
+    $view_builder = \Drupal::entityTypeManager()
+      ->getViewBuilder('node');
+
+    $goals = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($goal_ids);
+    $goals_rendered = [];
+
+    foreach ($goals as $goal) {
+      $goals_rendered[] = $view_builder
+        ->view($goal, 'teaser');
+    }
+
+    $build = [
+      "#theme" => 'bc_2movepeople_manager_tasks_overview',
+      "#user" => $user->id(),
+      "#tasks" => $goals_rendered,
     ];
 
     return $build;

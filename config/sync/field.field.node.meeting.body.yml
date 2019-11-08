@@ -1,0 +1,22 @@
+uuid: 8fe728b2-c029-4b82-9d4f-fa04854d3516
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.meeting
+  module:
+    - text
+id: node.meeting.body
+field_name: body
+entity_type: node
+bundle: meeting
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+field_type: text_with_summary

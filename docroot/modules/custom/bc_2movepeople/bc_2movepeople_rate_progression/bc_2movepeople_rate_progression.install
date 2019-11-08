@@ -1,5 +1,6 @@
 <?php
 use Drupal\Core\Database\Database;
+use Drupal\Core\Field\BaseFieldDefinition;
 
 function bc_2movepeople_rate_progression_schema() {
   $schema['bc_2movepeople_rate_progression'] = array(
@@ -44,6 +45,11 @@ function bc_2movepeople_rate_progression_schema() {
         'description' => 'Status of the rate',
         'type' => 'int',
       ),
+      'meeting_id' => array(
+        'description' => 'Meeting relation of the rate',
+        'type' => 'int',
+        'default' => NULL,
+      ),
     ),
     'primary key' => array('id'),
     'indexes' => array(
@@ -79,4 +85,30 @@ function bc_2movepeople_rate_progression_update_8003(&$sandbox) {
   );
   $schema = Database::getConnection()->schema();
   $schema->addField('bc_2movepeople_rate_progression', 'status', $spec);
+}
+
+/**
+ * Add meeting column to rate table.
+ */
+function bc_2movepeople_rate_progression_update_8004(&$sandbox) {
+  $spec = array(
+    'description' => 'Meeting relation of the rate',
+    'type' => 'int',
+    'default' => NULL,
+  );
+  $schema = Database::getConnection()->schema();
+  $schema->addField('bc_2movepeople_rate_progression', 'meeting_id', $spec);
+
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type = $definition_update_manager->getEntityType('rate');
+  $keys = $entity_type->getKeys();
+  $keys['meeting_id'] = 'meeting_id';
+    $entity_type->set('entity_keys', $keys);
+  $definition_update_manager->updateEntityType($entity_type);
+
+  $config = BaseFieldDefinition::create('integer')
+    ->setLabel(t('Meeting id'))
+    ->setDefaultValue(NULL);
+
+  $definition_update_manager->installFieldStorageDefinition('meeting_id', 'rate', 'rate', $config);
 }
