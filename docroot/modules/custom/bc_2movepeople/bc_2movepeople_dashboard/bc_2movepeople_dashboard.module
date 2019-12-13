@@ -263,6 +263,27 @@ function bc_2movepeople_dashboard_entity_update(EntityInterface $entity) {
         ]);
       }
       break;
+
+    case 'user':
+      $newUsers = $entity->get('field_connected_users')->referencedEntities();
+      $oldUsers = $entity->original->get('field_connected_users')->referencedEntities();
+      $users = array_merge($newUsers, $oldUsers);
+
+      // Keeping only unique users.
+      $updatedUsers = [];
+      foreach ($users as $user) {
+        $updatedUsers[$user->id()] = $user;
+      }
+
+      // Forcing users to be updated.
+      foreach ($updatedUsers as $user) {
+        // Adding original reference to avoid erorr during
+        // search_api_entity_update call.
+        $user->original = $user;
+        search_api_entity_update($user);
+      }
+
+      break;
   }
 }
 
