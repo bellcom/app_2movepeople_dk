@@ -9,7 +9,7 @@ id: node.meeting.field_meeting_notes
 field_name: field_meeting_notes
 entity_type: node
 bundle: meeting
-label: Notes
+label: Noter
 description: ''
 required: false
 translatable: false

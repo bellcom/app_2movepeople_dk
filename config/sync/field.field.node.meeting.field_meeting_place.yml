@@ -9,7 +9,7 @@ id: node.meeting.field_meeting_place
 field_name: field_meeting_place
 entity_type: node
 bundle: meeting
-label: Place
+label: Sted
 description: ''
 required: false
 translatable: false
