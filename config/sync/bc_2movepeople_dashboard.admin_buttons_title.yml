@@ -17,3 +17,5 @@ Navigation:
   self_rate: Målinger
   supervisor_create_user: 'Tilføj manager'
   manager_create_user: 'Tilføj bruger'
+Meetings:
+  meetings: Møder

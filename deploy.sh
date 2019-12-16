@@ -6,4 +6,4 @@ echo "DB dumped to $DB_DUMP_FILE"
 composer install
 $DRUSH cim -y
 $DRUSH updb -y
-$DRUSH language-import da sites/default/po/da.po
+$DRUSH language-import da ../translations/da.po

@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-08-15 09:34+0200\n"
-"PO-Revision-Date: 2019-08-15 09:34+0200\n"
+"POT-Creation-Date: 2019-12-16 14:56+0100\n"
+"PO-Revision-Date: 2019-12-16 14:56+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -270,6 +270,9 @@ msgstr "Personal contact form"
 msgid "Your message has been sent."
 msgstr "Din besked er blevet sendt."
 
+msgid "Delete message"
+msgstr "Slet besked"
+
 msgid "Apply"
 msgstr "Apply"
 
@@ -279,6 +282,12 @@ msgstr "‹ forrige"
 msgid "next ›"
 msgstr "næste ›"
 
+msgid "« first"
+msgstr "« første"
+
+msgid "last »"
+msgstr "sidste »"
+
 msgid "Subject"
 msgstr "Subject"
 
@@ -287,6 +296,9 @@ msgstr "Contact form"
 
 msgid "Created"
 msgstr "Created"
+
+msgid "simple"
+msgstr "simple"
 
 msgid "Plain text"
 msgstr "Plain text"
@@ -324,6 +336,9 @@ msgstr "Indlejret"
 msgid "Upload"
 msgstr "Upload"
 
+msgid "Document"
+msgstr "Dokument"
+
 msgid "Publishing status"
 msgstr "Publishing status"
 
@@ -357,8 +372,23 @@ msgstr "Search"
 msgid "Keywords"
 msgstr "Keywords"
 
+msgid "Your search did not return any results."
+msgstr "Din søgning gav ingen resultater."
+
 msgid "All"
 msgstr "Alle"
+
+msgid "Delete media"
+msgstr "Slet medie"
+
+msgid "Publish media"
+msgstr "Udgiv medie"
+
+msgid "Save media"
+msgstr "Gem medie"
+
+msgid "Unpublish media"
+msgstr "Afpublicér medie"
 
 msgid "Action"
 msgstr "Action"
@@ -1516,6 +1546,15 @@ msgstr "Nuværende adgangskode"
 
 msgid "The hashed password"
 msgstr "Adgangskoden (hash)"
+
+msgid ""
+"Required if you want to change the %mail or %pass below. <a "
+"href=\":request_new_url\" title=\"Send password reset instructions via "
+"email.\">Reset your password</a>."
+msgstr ""
+"Påkrævet, hvis du vil ændre %mail eller %pass nedenfor. <a "
+"href=\":request_new_url\" title=\"Send instruktioner om nulstilling af "
+"adgangskode via e-mail.\">Nulstil din adgangskode.</a>. "
 
 msgid "Email address"
 msgstr "E-mail adresse"
@@ -10081,6 +10120,9 @@ msgstr "Filen %file kunne ikke flyttes til %destination."
 msgid "Line"
 msgstr "Linie"
 
+msgid "Bar"
+msgstr "Søjlediagram"
+
 msgid "Dashboard Milestone"
 msgstr "Mål og delmål"
 
@@ -10142,6 +10184,9 @@ msgstr "Redigér konto"
 msgid "The Username %username already exists."
 msgstr "Brugernavnet %username eksisterer allerede."
 
+msgid "Media type"
+msgstr "Medie type"
+
 msgid "Published status"
 msgstr "Publishing status"
 
@@ -10156,6 +10201,9 @@ msgstr "Nyeste først"
 
 msgid "Add media"
 msgstr "Tilføj media"
+
+msgid "A locally hosted document, such as a PDF."
+msgstr "A locally hosted document, such a PDF."
 
 msgid ""
 "[user:display-name],\n"
@@ -10179,6 +10227,16 @@ msgstr ""
 "\r\n"
 "--  [site:name] team"
 
+msgid ""
+"No front page content has been created yet.<br/>Follow the <a "
+"target=\"_blank\" "
+"href=\"https://www.drupal.org/docs/user_guide/en/index.html\">User "
+"Guide</a> to start building your site."
+msgstr ""
+"Der er ikke oprettet noget indhold på forsiden endnu.<br>Læs <a "
+"href=\"https://www.drupal.org/docs/user_guide/en/index.html\">manualen</a> "
+"for at komme i gang med at bygge din hjemmeside."
+
 msgid "Scheduled tasks for %name."
 msgstr "Planlagte opgaver for %name."
 
@@ -10191,8 +10249,17 @@ msgstr "Planlagte opgaver"
 msgid "Apply filters"
 msgstr "Apply Filters"
 
+msgid "Grid"
+msgstr "Gitter"
+
 msgid "Send data to SBSYS"
 msgstr "Send data til SBSys"
+
+msgid "Add section"
+msgstr "Tilføj emne"
+
+msgid "The name of the term."
+msgstr "Navnet på emnet"
 
 msgid ""
 "Currently no measurements found. You need to create a category to "
@@ -10200,4 +10267,37 @@ msgid ""
 msgstr ""
 "Vi fandt ingen målinger. Førend du kan oprette målinger skal du "
 "oprette en kategori."
+
+msgid "Manager tasks"
+msgstr "Manager opgaver"
+
+msgid "Meetings"
+msgstr "Møder"
+
+msgid "Click on each section to expand or collapse the meetings"
+msgstr "Klik på hvert afsnit for at udvide eller skjule møderne"
+
+msgid "Add new meeting"
+msgstr "Opret nyt møde"
+
+msgid "Meeting title"
+msgstr "Mødetitel"
+
+msgid "Place"
+msgstr "Sted"
+
+msgid "Send invite to user"
+msgstr "Send invitation til bruger"
+
+msgid "Edit meeting"
+msgstr "Rediger møde"
+
+msgid "Notes"
+msgstr "Noter"
+
+msgid "Answered progression"
+msgstr "Besvarede spørgsmål"
+
+msgid "Answered feedback"
+msgstr "Besvarede feedback"
 
