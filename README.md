@@ -19,8 +19,23 @@ $ composer install
 $ cd docroot
 $ drush cim
 $ drush updb
-$ drush language-import da sites/default/po/da.po
+$ drush language-import da ../translations/da.po
 ```
+
+## Export translations
+Get latest db dump from production environment.
+Make sure that you have set up correct translation folder.
+
+Check in your `settings.php`
+```
+$settings['custom_translations_directory'] = '../translations';
+```
+Run export translation command:
+```
+drush language-export --langcodes=da --file=da.po
+```
+
+After export all changes should be reviewed and commited.
 
 ## Update path details
 
