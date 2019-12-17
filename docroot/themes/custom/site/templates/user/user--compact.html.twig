@@ -46,13 +46,13 @@
     {% if last_min_rate %}
       {% if last_min_rate > 3 %}
         {# green color #}
-        {% set rate_class = "bg-success" %}
+        {% set rate_class = "btn btn-sm btn-success" %}
       {% elseif last_min_rate == 3 %}
         {# yellow color #}
-        {% set rate_class = "bg-warning" %}
+        {% set rate_class = "btn btn-sm btn-warning" %}
       {% else %}
         {# red color #}
-        {% set rate_class = "bg-danger" %}
+        {% set rate_class = "btn btn-sm btn-danger" %}
       {% endif %}
 
       <div class="{{ rate_class }}">
