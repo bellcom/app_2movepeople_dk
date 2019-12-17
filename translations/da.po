@@ -3089,7 +3089,7 @@ msgid "To date"
 msgstr "Til dato"
 
 msgid "Save draft"
-msgstr "Gem som klade"
+msgstr "Gem som kladde"
 
 msgid "Save as PDF"
 msgstr "Gem som PDF"
