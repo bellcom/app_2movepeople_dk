@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-12-16 14:56+0100\n"
-"PO-Revision-Date: 2019-12-16 14:56+0100\n"
+"POT-Creation-Date: 2020-01-02 12:15+0100\n"
+"PO-Revision-Date: 2020-01-02 12:15+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -170,6 +170,9 @@ msgstr "Indstillinger for Synkronisering"
 
 msgid "Regional settings"
 msgstr "Regionale indstillinger"
+
+msgid "Languages"
+msgstr "Languages"
 
 msgid "Shortcuts"
 msgstr "Genveje"
@@ -2486,6 +2489,9 @@ msgstr "Lørdag"
 
 msgid "Default time zone"
 msgstr "Standardtidszone"
+
+msgid "Time zones"
+msgstr "Time zones"
 
 msgid "Profile picture for user @username"
 msgstr "Profilbillede for @username"
@@ -10255,11 +10261,29 @@ msgstr "Gitter"
 msgid "Send data to SBSYS"
 msgstr "Send data til SBSys"
 
+msgid "Relationship"
+msgstr "Relationship"
+
+msgid "edit"
+msgstr "edit"
+
 msgid "Add section"
 msgstr "Tilføj emne"
 
+msgid "Sticky"
+msgstr "Sticky"
+
 msgid "The name of the term."
 msgstr "Navnet på emnet"
+
+msgid "Wide"
+msgstr "Wide"
+
+msgid "Displaying @start - @end of @total"
+msgstr "Displaying @start - @end of @total"
+
+msgid "Narrow"
+msgstr "Narrow"
 
 msgid ""
 "Currently no measurements found. You need to create a category to "
@@ -10267,9 +10291,6 @@ msgid ""
 msgstr ""
 "Vi fandt ingen målinger. Førend du kan oprette målinger skal du "
 "oprette en kategori."
-
-msgid "Manager tasks"
-msgstr "Manager opgaver"
 
 msgid "Meetings"
 msgstr "Møder"
@@ -10295,9 +10316,63 @@ msgstr "Rediger møde"
 msgid "Notes"
 msgstr "Noter"
 
+msgid "Manager tasks"
+msgstr "Manager opgaver"
+
 msgid "Answered progression"
 msgstr "Besvarede spørgsmål"
 
 msgid "Answered feedback"
 msgstr "Besvarede feedback"
+
+msgid "< Previous Page"
+msgstr "< Forrige side"
+
+msgid "Next Page >"
+msgstr "Næste side >"
+
+msgid "Save Draft"
+msgstr "Gem kladde"
+
+msgid ""
+"Submission saved. You may return to this form later and it will "
+"restore the current values."
+msgstr ""
+"Formular gemt. Du kan vende tilbage senere og gendanne "
+"standardværdierne."
+
+msgid ""
+"You have already submitted this webform. <a href=\"#\">View your "
+"previous submission</a>."
+msgstr ""
+"Du har allerede indsendt denne formular. <a href=\"#\">Se din forrige "
+"indsendelse</a>."
+
+msgid ""
+"You have already submitted this webform. <a href=\"#\">View your "
+"previous submissions</a>."
+msgstr ""
+"Du har allerede indsendt denne formular. <a href=\"#\">Se dine forrige "
+"indsendelser</a>."
+
+msgid "Webform submissions"
+msgstr "Indsendte webforms"
+
+msgid "Completed"
+msgstr "Gennemført"
+
+msgid "Days"
+msgstr "Dage"
+
+msgid "Gender"
+msgstr "Køn"
+
+msgid "Titles"
+msgstr "Titler"
+
+msgid "Translations"
+msgstr "Oversættelser"
+
+msgid "Yes/No"
+msgstr "Ja/nej"
 
