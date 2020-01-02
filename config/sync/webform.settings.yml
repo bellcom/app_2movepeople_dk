@@ -8,7 +8,7 @@ settings:
   default_form_open_message: 'This form has not yet been opened to submissions.'
   default_form_close_message: 'Sorry… This form is closed to new submissions.'
   default_form_exception_message: 'Unable to display this webform. Please contact the site administrator.'
-  default_submit_button_label: Submit
+  default_submit_button_label: Gem
   default_reset_button_label: Reset
   default_form_submit_once: false
   default_form_confidential_message: 'This form is confidential. You must <a href="[site:login-url]/logout?destination=[current-page:url:relative]">Log out</a> to submit it.'
@@ -27,10 +27,10 @@ settings:
   default_wizard_prev_button_label: '< Forrige side'
   default_wizard_next_button_label: 'Næste side >'
   default_wizard_start_label: Start
-  default_wizard_confirmation_label: Complete
-  default_preview_next_button_label: Preview
+  default_wizard_confirmation_label: 'Markér som færdig'
+  default_preview_next_button_label: Gennemse
   default_preview_prev_button_label: '< Previous'
-  default_preview_label: Preview
+  default_preview_label: Gennemse
   default_preview_title: '[webform:title]: Preview'
   default_preview_message: 'Please review your submission. Your submission is not complete until you press the "Submit" button!'
   default_draft_button_label: 'Gem kladde'
