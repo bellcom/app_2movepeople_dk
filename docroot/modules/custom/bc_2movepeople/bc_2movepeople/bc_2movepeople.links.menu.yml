@@ -29,9 +29,3 @@ bc_2movepeople.settings.main:
   route_name: bc_2movepeople.main
   weight: -8
   menu_name: settings-menu
-
-bc_2movepeople.webform:
-  title: Analisys
-  route_name: entity.webform.collection
-  weight: -7
-  menu_name: settings-menu
