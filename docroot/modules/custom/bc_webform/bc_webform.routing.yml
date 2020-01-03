@@ -1,0 +1,7 @@
+bc_webform.collection:
+  path: '/analisys'
+  defaults:
+    _controller: '\Drupal\bc_webform\BcWebformList::render'
+    _title: 'Webforms'
+  requirements:
+    _custom_access: '\Drupal\webform\Access\WebformAccountAccess::checkOverviewAccess'

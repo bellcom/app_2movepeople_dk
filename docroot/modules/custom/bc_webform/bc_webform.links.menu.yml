@@ -1,0 +1,5 @@
+bc_webform.analisys:
+  title: Analisys
+  route_name: bc_webform.collection
+  weight: -7
+  menu_name: settings-menu
