@@ -3,7 +3,7 @@
 namespace Drupal\bc_webform;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
-use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Url;
 use Drupal\webform\WebformEntityListBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -45,4 +45,23 @@ class BcWebformList extends WebformEntityListBuilder implements ContainerInjecti
     ];
     return $build;
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildRow(EntityInterface $entity) {
+    $row = parent::buildRow($entity);
+    $bcWebformHandler = new BcWebformHandler($entity);
+    if (!$bcWebformHandler->matchOrganization(\Drupal::currentUser()->id())) {
+      return NULL;
+    }
+    $targetUsers = $bcWebformHandler->getTargetUsers();
+    $results = &$row['results'];
+    if (is_array($row['results'])) {
+      $results = &$row['results']['data']['#title'];
+    }
+    $results .= '/' . count($targetUsers);
+    return $row;
+  }
+
 }
