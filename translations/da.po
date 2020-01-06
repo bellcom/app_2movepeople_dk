@@ -370,7 +370,7 @@ msgstr ""
 "\"om os\"-side."
 
 msgid "Search"
-msgstr "Search"
+msgstr "Søg"
 
 msgid "Keywords"
 msgstr "Keywords"
