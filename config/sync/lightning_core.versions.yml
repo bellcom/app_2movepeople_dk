@@ -105,3 +105,4 @@ webform_ui: 5.6.0
 config_filter: 1.5.0
 config_ignore: 2.2.0
 webform_views: 5.0.0-alpha7
+bc_webform: 0.0.0
