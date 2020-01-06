@@ -9662,6 +9662,10 @@ div.custom-nav-divider {
   .modal-dialog #bc_2movepeople-dashboard-user-create-form input {
     margin-bottom: 20px; }
 
+#drupal-modal--content {
+  margin: 2em 0;
+  max-height: none !important; }
+
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -9693,7 +9697,8 @@ div.custom-nav-divider {
     font-size: 24px; }
 
 .modal-dialog .modal-body {
-  padding: 15px 35px 0 35px; }
+  padding: 15px 35px 0 35px;
+  overflow: auto !important; }
   .modal-dialog .modal-body .form-actions {
     display: none; }
   .modal-dialog .modal-body .form-group {
@@ -10533,14 +10538,6 @@ span.task.completed {
   color: white;
   margin: 5px;
   float: left; }
-  .path-dashboard .milestone-buttons a .glyphicon-refresh {
-    display: block;
-    position: absolute;
-    top: 16px;
-    font-size: 18px;
-    font-weight: bolder;
-    margin: 0 auto;
-    background-color: #7DC4EE; }
 
 .path-dashboard .milestone-buttons a span {
   padding-top: 0 !important; }
