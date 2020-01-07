@@ -11,7 +11,7 @@
         "behat/mink-goutte-driver": "~1.2",
         "jcalderonzumba/gastonjs": "~1.0.2",
         "drupal/coder": "8.*",
-        "mikey179/vfsStream": "~1.2",
+        "mikey179/vfsstream": "~1.2",
         "phpunit/phpunit": "~4.8",
         "symfony/css-selector": "~2.8",
         "behat/behat": "^3.0",
@@ -23,7 +23,7 @@
     "require": {
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "cweagans/composer-patches": "^1.6.0",
-        "acquia/lightning": "~4.0.0",
+        "acquia/lightning": "~4.1.1",
         "drupal/bootstrap": "^3.17",
         "drupal/admin_toolbar": "^1.25",
         "drupal/field_permissions": "^1.0@beta",
@@ -45,7 +45,8 @@
         "drupal/webform": "^5.6",
         "drupal/webform_analysis": "^1.0@beta",
         "drupal/config_ignore": "^2.2",
-        "drupal/webform_views": "^5.0@alpha"
+        "drupal/webform_views": "^5.0@alpha",
+        "drupal/pathauto": "^1.6"
     },
     "repositories": {
         "0": {

@@ -1,4 +1,5 @@
 label: 'Media library'
+description: 'Find and manage media.'
 display:
   default:
     display_title: Master
@@ -41,6 +42,9 @@ display:
             label: 'Media type'
           group_info:
             label: 'Media type'
+        langcode:
+          expose:
+            label: Language
       sorts:
         created:
           expose:
@@ -58,9 +62,21 @@ display:
   page:
     display_title: Page
     display_options:
-      menu:
-        title: Media
-        description: 'Allows users to browse and administer media items'
+      fields:
+        media_bulk_form:
+          action_title: Action
+        name:
+          separator: ', '
+        edit_media:
+          alter:
+            text: 'Edit {{ name }}'
+            alt: 'Edit {{ name }}'
+          text: Edit
+        delete_media:
+          alter:
+            text: 'Delete {{ name }}'
+            alt: 'Delete {{ name }}'
+          text: Delete
   widget:
     display_title: Widget
     display_options:
