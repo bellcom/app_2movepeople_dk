@@ -21,6 +21,12 @@
 }
 
 .view {
+  &.view-id-2mp_connected_users,
+  &.view-_mp-users-search {
+    .create-user-view-area {
+      margin: 1em 0;
+    }
+  }
 
   &.row {
 

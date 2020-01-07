@@ -9289,6 +9289,9 @@ header.navbar {
   text-overflow: ellipsis;
   line-height: normal; }
 
+.view.view-id-2mp_connected_users .create-user-view-area, .view.view-_mp-users-search .create-user-view-area {
+  margin: 1em 0; }
+
 .view.row .view-filters {
   padding-left: 15px;
   padding-right: 15px; }
