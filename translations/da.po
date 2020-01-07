@@ -10270,8 +10270,8 @@ msgstr ""
 msgid "The specified file %file could not be moved to %destination."
 msgstr "Filen %file kunne ikke flyttes til %destination."
 
-msgid "Line"
-msgstr "Linie"
+msgid "Line graph"
+msgstr "Liniediagram"
 
 msgid "Bar"
 msgstr "Søjlediagram"
