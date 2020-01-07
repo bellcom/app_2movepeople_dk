@@ -5,6 +5,7 @@ dependencies:
   config:
     - search_api.index.2mp_users
   module:
+    - bc_2movepeople_dashboard
     - search_api
     - user
 id: 2mp_users_search
@@ -191,6 +192,16 @@ display:
           tokenize: false
           content: "<div class=\"col-xs-12\">\r\n  Ingen resultater fundet.\r\n</div>"
           plugin_id: text_custom
+        bc_2movepeople_dashboard_create_button:
+          id: bc_2movepeople_dashboard_create_button
+          table: views
+          field: bc_2movepeople_dashboard_create_button
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          wrapper_classes: col-xs-12
+          plugin_id: bc_2movepeople_dashboard_create_button
       relationships: {  }
       arguments:
         connected_to_uid:

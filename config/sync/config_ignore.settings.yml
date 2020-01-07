@@ -1,6 +1,6 @@
 ignored_config_entities:
   - 'webform.webform.*'
-  - 'stage_file_proxy.settings'
+  - stage_file_proxy.settings
 _core:
   default_config_hash: UVH1aJ4b44UM-VdPVN7hNNuuVqfReJxwfVeDQH1Hvsk
 langcode: da
