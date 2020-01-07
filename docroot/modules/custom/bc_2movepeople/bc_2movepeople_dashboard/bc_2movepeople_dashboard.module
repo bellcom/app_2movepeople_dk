@@ -497,3 +497,23 @@ function bc_2movepeople_dashboard_preprocess_node(&$variables) {
   }
 
 }
+
+/**
+ * Implements hook_views_data().
+ */
+function bc_2movepeople_dashboard_views_data() {
+  $data['views']['table']['group'] = t('Global');
+  $data['views']['table']['join'] = [
+    // #global is a special flag which allows a table to appear all the time.
+    '#global' => [],
+  ];
+  $data['views']['bc_2movepeople_dashboard_create_button'] = [
+    'title' => t('Create user button'),
+    'help' => t('Add button, to create user depends on role.'),
+    'area' => [
+      'id' => 'bc_2movepeople_dashboard_create_button',
+    ],
+  ];
+
+  return $data;
+}

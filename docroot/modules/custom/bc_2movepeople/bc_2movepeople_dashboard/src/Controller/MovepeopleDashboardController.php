@@ -3,6 +3,7 @@
 namespace Drupal\bc_2movepeople_dashboard\Controller;
 
 use Drupal\Core\Mail\MailManagerInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\user\Entity\User;
 use Mpdf\Mpdf;
 use Drupal\Core\Mail\Plugin\Mail\PhpMail;
@@ -874,6 +875,54 @@ class MovepeopleDashboardController extends ControllerBase {
       'from' => $message['sender'] . ' <' . $message['from'] . '>',
     ];
     return $send_mail->mail($message);
+  }
+
+  /**
+   * Adds create button.
+   *
+   * @param array $buttons
+   *   Buttons array.
+   * @param UserInterface $user
+   *   User object.
+   *
+   * @return array
+   *   Render array with creat button.
+   */
+  public static function addCreateButton(array &$buttons = array(), UserInterface $user = NULL) {
+    if (empty($user)) {
+      $user = User::load(\Drupal::currentUser()->id());
+    }
+
+    if (!$user->hasPermission('create connected users')) {
+      return $buttons;
+    }
+    $user_roles = $user->getRoles();
+    $route_params = [];
+
+    // Allow supervisor create user for managers.
+    if (in_array('2mp_supervisor', \Drupal::currentUser()->getRoles())
+      && $user->id() != \Drupal::currentUser()->id()) {
+      $route_params['create-for'] = $user->id();
+    }
+
+    // Alter text of button.
+    $add_button_key = 'Navigation.create_user';
+    if (in_array('2mp_supervisor', $user_roles)) {
+      $add_button_key = 'Navigation.supervisor_create_user';
+    }
+    else if (in_array('2mp_manager', $user_roles)) {
+      $add_button_key = 'Navigation.manager_create_user';
+    }
+
+    $buttons[$add_button_key] = [
+      '#url' => Url::fromRoute('bc_2movepeople_dashboard.users.create', $route_params),
+      '#attributes' => [
+        'class' => ['use-ajax'],
+        'data-dialog-type' => 'modal'
+      ],
+    ];
+
+    return $buttons;
   }
 
   /**

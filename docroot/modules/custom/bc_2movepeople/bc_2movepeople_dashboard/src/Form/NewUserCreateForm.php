@@ -25,8 +25,16 @@ class NewUserCreateForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-
     $current_user = \Drupal::currentUser();
+
+    // Allow supervisor create user for managers.
+    $create_for = \Drupal::request()->query->get('create-for');
+    if (in_array('2mp_supervisor', $current_user->getRoles())
+      && !empty($create_for)
+      && $create_for_user = User::load($create_for)) {
+      $current_user = $create_for_user;
+    }
+    $form_state->set('current_user', $current_user);
 
     // Loading user templates.
     $conf_object = \Drupal::configFactory()->getEditable(SaveToTemplateForm::$configName);
@@ -156,7 +164,7 @@ class NewUserCreateForm extends FormBase {
 
     if (!$form_state->getErrors()) {
       $user = User::create();
-      $current_user = \Drupal::currentUser();
+      $current_user = $form_state->get('current_user');
 
       // Mandatory.
       $user->setEmail($form_state->getValue('email'));
