@@ -90,3 +90,10 @@ function site_preprocess_user(&$variables) {
   $variables['url'] = $user->toUrl();
   $variables['uid'] = $user->id();
 }
+
+/**
+ * Implements hook_bootstrap_colorize_text_alter().
+ */
+function site_bootstrap_colorize_text_alter(array &$texts) {
+  $texts['contains']['Søg'] = 'default';
+}
