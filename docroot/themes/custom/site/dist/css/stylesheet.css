@@ -2901,28 +2901,28 @@ fieldset[disabled] a.user__controls__item--masquerade {
 
 .btn-success {
   color: #fff;
-  background-color: #5cb85c;
-  border-color: #4cae4c; }
+  background-color: #c13c8d;
+  border-color: #ae367f; }
   .btn-success:focus, .btn-success.focus {
     color: #fff;
-    background-color: #449d44;
-    border-color: #255625; }
+    background-color: #9a3071;
+    border-color: #4c1838; }
   .btn-success:hover {
     color: #fff;
-    background-color: #449d44;
-    border-color: #398439; }
+    background-color: #9a3071;
+    border-color: #7f275d; }
   .btn-success:active, .btn-success.active,
   .open > .btn-success.dropdown-toggle {
     color: #fff;
-    background-color: #449d44;
-    border-color: #398439; }
+    background-color: #9a3071;
+    border-color: #7f275d; }
     .btn-success:active:hover, .btn-success:active:focus, .btn-success:active.focus, .btn-success.active:hover, .btn-success.active:focus, .btn-success.active.focus,
     .open > .btn-success.dropdown-toggle:hover,
     .open > .btn-success.dropdown-toggle:focus,
     .open > .btn-success.dropdown-toggle.focus {
       color: #fff;
-      background-color: #398439;
-      border-color: #255625; }
+      background-color: #7f275d;
+      border-color: #4c1838; }
   .btn-success:active, .btn-success.active,
   .open > .btn-success.dropdown-toggle {
     background-image: none; }
@@ -2930,10 +2930,10 @@ fieldset[disabled] a.user__controls__item--masquerade {
   fieldset[disabled] .btn-success:hover,
   fieldset[disabled] .btn-success:focus,
   fieldset[disabled] .btn-success.focus {
-    background-color: #5cb85c;
-    border-color: #4cae4c; }
+    background-color: #c13c8d;
+    border-color: #ae367f; }
   .btn-success .badge {
-    color: #5cb85c;
+    color: #c13c8d;
     background-color: #fff; }
 
 .btn-info {
@@ -4251,9 +4251,9 @@ a.label:hover, a.label:focus {
     background-color: #3071a9; }
 
 .label-success {
-  background-color: #5cb85c; }
+  background-color: #c13c8d; }
   .label-success[href]:hover, .label-success[href]:focus {
-    background-color: #449d44; }
+    background-color: #9a3071; }
 
 .label-info {
   background-color: #5bc0de; }
@@ -4489,7 +4489,7 @@ a.thumbnail.active {
   animation: progress-bar-stripes 2s linear infinite; }
 
 .progress-bar-success {
-  background-color: #5cb85c; }
+  background-color: #c13c8d; }
   .progress-striped .progress-bar-success {
     background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
     background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
@@ -8358,8 +8358,8 @@ input[type="submit"] {
     background-color: transparent; }
 
 .card-success {
-  background-color: #5cb85c;
-  border-color: #5cb85c; }
+  background-color: #c13c8d;
+  border-color: #c13c8d; }
   .card-success .card-header,
   .card-success .card-footer {
     background-color: transparent; }
@@ -8403,7 +8403,7 @@ input[type="submit"] {
 
 .card-outline-success {
   background-color: transparent;
-  border-color: #5cb85c; }
+  border-color: #c13c8d; }
 
 .card-outline-warning {
   background-color: transparent;
@@ -9712,13 +9712,7 @@ div.custom-nav-divider {
 .modal-dialog .modal-footer {
   border: none;
   text-align: left;
-  padding: 0 35px 20px 35px;
-  background-color: #FFF !important; }
-  .modal-dialog .modal-footer button.button {
-    font-size: 22px;
-    padding: 10px 20px;
-    background-color: #6dae22;
-    border-color: #588f19; }
+  padding: 0 35px 20px 35px; }
 
 .bc-2movepeople-rate-progression-user-rates-add-form {
   margin-left: -30px;
@@ -10070,7 +10064,8 @@ input[type="date"]::-webkit-clear-button {
 
 #progression_total_chart {
   width: 100%;
-  min-height: 450px; }
+  min-height: 450px;
+  margin-top: 30px; }
   #progression_total_chart div {
     overflow-x: hidden;
     overflow-y: hidden; }
@@ -10208,6 +10203,34 @@ span.input-group-addon {
   width: 170px; }
   .dashboard-overview form[class^="bc-2movepeople-dashboard-milestone-edit-form-"] .form-inline.form-item.form-type-date input, .dashboard-overview form[class^="bc-2movepeople-dashboard-milestone-edit-form-"] .custom-form-label-due-date > div input {
     width: 100%; }
+
+.bc-2movepeople-dashboard-progression-edit-form .custom-form-fields {
+  padding: 2px 15px 2px 15px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: normal;
+  -webkit-align-items: normal;
+      -ms-flex-align: normal;
+          align-items: normal; }
+  .bc-2movepeople-dashboard-progression-edit-form .custom-form-fields > div {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1; }
 
 .div-form input, .div-form select, .div-form textarea {
   margin-bottom: 10px; }
@@ -10560,7 +10583,7 @@ span.task.completed {
   position: absolute;
   left: -15px;
   display: block;
-  background-color: #5cb85c;
+  background-color: #c13c8d;
   border-radius: 5px;
   color: white;
   font-weight: bold;
