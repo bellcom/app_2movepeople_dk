@@ -19,19 +19,19 @@ msgid "Custom block type"
 msgstr "Brugerdefineret bloktype"
 
 msgid "Content type"
-msgstr "Content type"
+msgstr "Indholdstype"
 
 msgid "General"
 msgstr "Generelt"
 
 msgid "Content"
-msgstr "Content"
+msgstr "Indhold"
 
 msgid "Title"
-msgstr "Title"
+msgstr "Titel"
 
 msgid "Description"
-msgstr "Description"
+msgstr "Beskrivelse"
 
 msgid "Media"
 msgstr "Media"
@@ -42,14 +42,17 @@ msgstr "User"
 msgid "Taxonomy term"
 msgstr "Ord i ordforråd"
 
+msgid "People (administerusersbyrole)"
+msgstr "Personer"
+
 msgid "Master"
 msgstr "Master"
 
 msgid "Filter"
-msgstr "Filter"
+msgstr "Filtrér"
 
 msgid "Reset"
-msgstr "Reset"
+msgstr "Nulstil"
 
 msgid "Sort by"
 msgstr "Sort by"
@@ -61,16 +64,16 @@ msgid "Desc"
 msgstr "Desc"
 
 msgid "‹ Previous"
-msgstr "‹ Previous"
+msgstr "‹ Forrige"
 
 msgid "Next ›"
-msgstr "Next ›"
+msgstr "Næste ›"
 
 msgid "« First"
-msgstr "« First"
+msgstr "« Første"
 
 msgid "Last »"
-msgstr "Last »"
+msgstr "Sidste »"
 
 msgid "Items per page"
 msgstr "Items per page"
@@ -94,7 +97,7 @@ msgid "Active"
 msgstr "Active"
 
 msgid "Blocked"
-msgstr "Blocked"
+msgstr "Blokeret"
 
 msgid "Roles"
 msgstr "Roles"
@@ -109,10 +112,10 @@ msgid "Last access"
 msgstr "Last access"
 
 msgid "Operations"
-msgstr "Operations"
+msgstr "Handlinger"
 
 msgid "Name or email contains"
-msgstr "Name or email contains"
+msgstr "Navn eller email indeholder"
 
 msgid "Role"
 msgstr "Role"
@@ -121,7 +124,7 @@ msgid "Permission"
 msgstr "Permission"
 
 msgid "People"
-msgstr "People"
+msgstr "Personer"
 
 msgid "No people available."
 msgstr "No people available."
@@ -133,7 +136,7 @@ msgid "Page"
 msgstr "Page"
 
 msgid "List"
-msgstr "List"
+msgstr "Liste"
 
 msgid "Manage user accounts, roles, and permissions."
 msgstr "Manage user accounts, roles, and permissions."
@@ -204,6 +207,9 @@ msgstr "Hjælp"
 msgid "Dashboard settings"
 msgstr "Indstillinger for Dashboard"
 
+msgid "Find and manage media."
+msgstr ""
+
 msgid "Find and manage content."
 msgstr "Find og håndtér indhold."
 
@@ -216,14 +222,77 @@ msgid "Create and manage contact forms."
 msgstr "Opret og håndtér kontaktformularer."
 
 msgid ""
+"Create and manage fields, forms, and display settings for your "
+"content."
+msgstr ""
+"Opret og håndtér felter, form og visningsindstillinger for dit "
+"indhold"
+
+msgid "Various settings for altering the behavior of Lightning modules."
+msgstr "Indstillinger for lightning moduler"
+
+msgid "Configure how entity fields are compared."
+msgstr "Indstillinger for hvordan entitetsfelter sammenlignes"
+
+msgid "Manage entity browsers."
+msgstr "Håndter entitetsbrowsere"
+
+msgid ""
 "Select and configure text editors, and how content is filtered when "
 "displayed."
 msgstr ""
 "Vælg og konfigurér tekst-editors, og hvordan indhold filtreres når "
 "det vises."
 
+msgid "Manage text editor embed buttons."
+msgstr "Håndter embed knapper i text editors"
+
+msgid "Configure caching and bandwidth optimization."
+msgstr "Indstillinger for caching og optimering af båndbredde"
+
+msgid "Configure the display of error messages and database logging."
+msgstr "Indstillinger for fejlmeddelelser og database logning"
+
+msgid "Take the site offline for updates and other maintenance tasks."
+msgstr "Sæt siden i vedligeholdelsestilstand"
+
 msgid "Import and export your configuration."
 msgstr "Importér eller eksportér konfiguration"
+
+msgid "Configure the location of uploaded files and how they are accessed."
+msgstr "Indstillinger for uploadede filer og hvordan de tilgås"
+
+msgid "Configure Metatag defaults."
+msgstr "Indstillinger for Metatag standarder"
+
+msgid "Create and configure search indexes and servers."
+msgstr "Opret og konfigurer søgeindekser og servere"
+
+msgid "Configure the locale and timezone settings."
+msgstr "Indstillinger for sprog og landeindstillinger"
+
+msgid "Configure how dates and times are displayed."
+msgstr "Indstillinger for hvordan dato og tid vises"
+
+msgid ""
+"Configure the import of translation files, and add or customize "
+"interface translations."
+msgstr ""
+"Indstillinger for hvordan translation filer importeres og tilføj "
+"interface oversættelser"
+
+msgid "OpenAPI specifications downloads."
+msgstr "Downloads for OpenAPI specifikationer"
+
+msgid ""
+"Configure the site description, the number of items per feed, and "
+"whether feeds should be titles/teasers/full-text."
+msgstr ""
+"Indstillinger for beskrivelse af hjemmesiden, antallet af linjer i "
+"feeds og hvorvidt feeds skal bruge titler/teaser/full-text"
+
+msgid "Configure workflows."
+msgstr "Indstillinger for workflows"
 
 msgid "View events that have recently been logged."
 msgstr "Vis seneste hændelser."
@@ -234,8 +303,14 @@ msgstr "Vis 'adgang nægtet'-fejl (403)."
 msgid "View 'page not found' errors (404s)."
 msgstr "Vis 'side ikke fundet'-fejl (404)."
 
+msgid "2Movepeople configuration form."
+msgstr "Indstillinger for 2Movepeople"
+
 msgid "Varisous settings related with 2Movepeople Dashboard"
 msgstr "Diverser indstillinger relateret til 2Movepeople Dashboard"
+
+msgid "2Movepeople configuration."
+msgstr "Indstillinger for 2Movepeople"
 
 msgid "Back to site"
 msgstr "Tilbage til forsiden"
@@ -244,7 +319,7 @@ msgid "Manage"
 msgstr "Administration"
 
 msgid "Edit"
-msgstr "Redigér"
+msgstr "Edit"
 
 msgid "My account"
 msgstr "Min konto"
@@ -289,13 +364,16 @@ msgid "last »"
 msgstr "sidste »"
 
 msgid "Subject"
-msgstr "Subject"
+msgstr "Emne"
+
+msgid "Sender's name"
+msgstr "Afsenders navn"
 
 msgid "Contact form"
-msgstr "Contact form"
+msgstr "Kontaktformular"
 
 msgid "Created"
-msgstr "Created"
+msgstr "Oprettet"
 
 msgid "simple"
 msgstr "simple"
@@ -391,22 +469,22 @@ msgid "Unpublish media"
 msgstr "Afpublicér medie"
 
 msgid "Action"
-msgstr "Action"
+msgstr "Handling"
 
 msgid "Provider"
 msgstr "Provider"
 
 msgid "Author"
-msgstr "Author"
+msgstr "Forfatter"
 
 msgid "Published"
-msgstr "Published"
+msgstr "Publiceret"
 
 msgid "Unpublished"
 msgstr "Ikke udgivet"
 
 msgid "Updated"
-msgstr "Updated"
+msgstr "Opdateret"
 
 msgid "True"
 msgstr "True"
@@ -503,7 +581,7 @@ msgid "Site section links"
 msgstr "Links til sitets sektioner"
 
 msgid "Tools"
-msgstr "Tools"
+msgstr "Værktøjer"
 
 msgid "User tool links, often added by modules"
 msgstr "Bruger værktøjslinks, som typisk tilføjes af moduler"
@@ -829,16 +907,16 @@ msgid "Archive"
 msgstr "Arkiv"
 
 msgid "Custom block library"
-msgstr "Custom block library"
+msgstr "Custom blokke"
 
 msgid "Find and manage custom blocks."
 msgstr "Find og håndtér brugerdefinerede blokke."
 
 msgid "Block description"
-msgstr "Block description"
+msgstr "Blok beskrivelse"
 
 msgid "Block type"
-msgstr "Block type"
+msgstr "Blok type"
 
 msgid "Node"
 msgstr "Node"
@@ -850,7 +928,7 @@ msgid "Find and manage files."
 msgstr "Find og håndtér filer."
 
 msgid "Name"
-msgstr "Name"
+msgstr "navn"
 
 msgid "MIME type"
 msgstr "MIME type"
@@ -865,7 +943,7 @@ msgid "Upload date"
 msgstr "Upload-dato"
 
 msgid "Changed date"
-msgstr "Changed date"
+msgstr "Ændringsdato"
 
 msgid "Used in"
 msgstr "Brugt i"
@@ -909,7 +987,7 @@ msgid "Monthly archive"
 msgstr "Månedsarkiv"
 
 msgid "Block"
-msgstr "Block"
+msgstr "Blok"
 
 msgid "Find and manage content"
 msgstr "Find og håndtér indhold"
@@ -1004,10 +1082,10 @@ msgid "Footer menu"
 msgstr "Footer-menu"
 
 msgid "Primary admin actions"
-msgstr "Primary admin actions"
+msgstr "Primære administratorhandlinger"
 
 msgid "Tabs"
-msgstr "Tabs"
+msgstr "Faneblade"
 
 msgid "Status messages"
 msgstr "Statusmeddelelser"
@@ -1122,6 +1200,9 @@ msgid ""
 msgstr ""
 "Gør det muligt at knytte tekstformater til teksteditorbiblioteker som "
 "f.eks. WYSIWYGs eller værktøjslinjer."
+
+msgid "2Movepeople project common module"
+msgstr "2Movepeople modul"
 
 msgid "2Movepeople Dashboard"
 msgstr "2Movepeople Oversigt"
@@ -1663,7 +1744,7 @@ msgid "Weight for @title"
 msgstr "Vægt af @title"
 
 msgid "Delete"
-msgstr "Slet"
+msgstr "Delete"
 
 msgid "List additional actions"
 msgstr "Vis yderligere handlinger"
@@ -2815,6 +2896,9 @@ msgstr "Rich Text Editor, !label field"
 msgid "Add Link"
 msgstr "Tilføj link"
 
+msgid "Administer 2Movepeople settings"
+msgstr "Administrer 2Movepeople indstillinger"
+
 msgid "Category templates"
 msgstr "Kategori skabelon"
 
@@ -2859,11 +2943,47 @@ msgstr "aldrig"
 msgid "sort by @s"
 msgstr "sorter efter @s"
 
+msgid "Apply to selected items"
+msgstr "Udfør på valgte elementer"
+
 msgid "Select all rows in this table"
 msgstr "Vælg alle rækker i tabellen"
 
 msgid "Deselect all rows in this table"
 msgstr "Fravælg alle rækker i tabellen"
+
+msgid "2Movepeople configuration"
+msgstr "Indstillinger for 2Movepeople"
+
+msgid "The name of the user who will get this email"
+msgstr "Navnet på brugeren der vil modtage emailen"
+
+msgid "The name of the user that finished the task"
+msgstr "Navnet på brugeren der har afsluttet opgaven"
+
+msgid "The title of the task that is being complete"
+msgstr "Titlen på opgaven der er afsluttet"
+
+msgid "Task complete's email subject"
+msgstr "Emnefelt for afsluttet opgave email"
+
+msgid "Task complete's email body"
+msgstr "Body felt for afsluttet opgave email"
+
+msgid "Complete email options"
+msgstr "Indstillinger for \"afsluttet\" email"
+
+msgid "Task reminder due date"
+msgstr "Dag for påmindelse"
+
+msgid "Task reminder's email subject"
+msgstr "Emnefelt for email påmindelse"
+
+msgid "Task reminder's email body"
+msgstr "Bpdyfelt for email påmindelse"
+
+msgid "Reminder options"
+msgstr "Indstillinger for påmindelser"
 
 msgid "2Move People settings form"
 msgstr "2Movepeople indstillinger"
@@ -3137,6 +3257,15 @@ msgstr "Feedback"
 msgid "Enable milestones/tasks"
 msgstr "Aktivér mål/opgaver"
 
+msgid "User email is required"
+msgstr "Brugers email er påkrævet"
+
+msgid "New users default progression template"
+msgstr "Default template for nye brugere"
+
+msgid "2Movepeople Configuration form"
+msgstr "Indstillinger for 2Movepeople"
+
 msgid "The configuration options have been saved."
 msgstr "Indstillingerne er blevet gemt."
 
@@ -3148,6 +3277,24 @@ msgstr "Billede"
 
 msgid "Parent item"
 msgstr "Overordnet menupunkt"
+
+msgid "The name of the manager who will get this email"
+msgstr "Navnet på manager der vil modtage mail"
+
+msgid "The name of the user"
+msgstr "Navnet på brugeren"
+
+msgid "The name of the task assigned to manager"
+msgstr "Navnet på opgaven der er tildelt manager"
+
+msgid "Responsible manager's email subject"
+msgstr "Emnefelt for mail til manager"
+
+msgid "Responsible manager's email body"
+msgstr "Bodyfelt for mail til manager"
+
+msgid "Email options of responsible manager notification"
+msgstr "Indstillinger for notifikationer til ansvarlig manager"
 
 msgid "Node reference to PDF Milestone evaluation header"
 msgstr "Vælge siden med den tekst der skal vises i PDF header"
@@ -3534,7 +3681,7 @@ msgid "Day"
 msgstr "Dag"
 
 msgid "Table"
-msgstr "Table"
+msgstr "Tabel"
 
 msgid "Start date"
 msgstr "Startdato"
@@ -10135,6 +10282,15 @@ msgstr "Medarbejdere er blevet opdateret"
 msgid "Overall evaluation"
 msgstr "Samlet evaluering"
 
+msgid "Buttons title"
+msgstr "Titler på knapper"
+
+msgid "Definition of title on buttons"
+msgstr "Definer titler på knapper"
+
+msgid "2Move People buttons settings "
+msgstr "Indstillinger for knapper på 2Movepeople"
+
 msgid ""
 "To rate users you have to add Categories and question inside "
 "categories"
@@ -10169,8 +10325,26 @@ msgstr "Fornavn"
 msgid "Switch to this user"
 msgstr "Skift til denne bruger"
 
+msgid ""
+"Block placement is specific to each theme on your site. Changes will "
+"not be saved until you click <em>Save blocks</em> at the bottom of the "
+"page."
+msgstr ""
+"Placering af blokke er specifikt for alle temaer der er i brug på "
+"siden. Ændringer vil ikke blive gemt indtil der klikkes på <em>Gem "
+"blokke</em> i bunden af siden."
+
 msgid "Add new manager"
 msgstr "Tilføj ny medarbejder"
+
+msgid "Add new user (others)"
+msgstr "Tilføj ny bruger (Andre)"
+
+msgid "Add new employee (supervisor)"
+msgstr "Tilføj ny ansat (Supervisor)"
+
+msgid "Add new user (manager)"
+msgstr "Tilføj ny bruger (Manager)"
 
 msgid "Are you sure that you want to cancel the user?"
 msgstr "Er du sikker på at du vil slette denne bruger?"
@@ -10183,6 +10357,15 @@ msgstr "Redigér konto"
 
 msgid "The Username %username already exists."
 msgstr "Brugernavnet %username eksisterer allerede."
+
+msgid "Left sidebar - desktop"
+msgstr "Venstre sidepanel - stationær"
+
+msgid "Left sidebar - mobile - navigation"
+msgstr "Venstre sidepanel - mobil - navigation"
+
+msgid "Left sidebar - mobile"
+msgstr "Venstre sidepanel - mobil"
 
 msgid "Media type"
 msgstr "Medie type"
@@ -10237,6 +10420,46 @@ msgstr ""
 "href=\"https://www.drupal.org/docs/user_guide/en/index.html\">manualen</a> "
 "for at komme i gang med at bygge din hjemmeside."
 
+msgid "Media types"
+msgstr "Medietyper"
+
+msgid "Manage media types."
+msgstr "Håndtér media typer"
+
+msgid "Manage media settings."
+msgstr "Indstillinger for mediafunktioner"
+
+msgid "Configure whether to allow only read operations or all operations."
+msgstr ""
+"Indstillinger for on JSON API kun må bruge \"read\" eller alle "
+"operationer"
+
+msgid ""
+"You can place blocks for each theme on the <a href=\":blocks\">block "
+"layout</a> page."
+msgstr ""
+"Du kan placere blokke for hver tema ved at bruge <a "
+"href=\":blocks\">blok layout</a> siden."
+
+msgid "Page element display"
+msgstr "Indstillinger for visning af sideelementer"
+
+msgid "Use the logo supplied by the theme"
+msgstr "Brug logoet der tilhører temaet"
+
+msgid "Use the favicon supplied by the theme"
+msgstr "Brug favicon der tilhører temaet"
+
+msgid "Upload favicon image"
+msgstr "Upload favicon billede"
+
+msgid ""
+"Your shortcut icon, or favicon, is displayed in the address bar and "
+"bookmarks of most browsers."
+msgstr ""
+"Did genvejsbillede, eller favicon vises i adressebaren og i bogmærker "
+"i de fleste browsere."
+
 msgid "Scheduled tasks for %name."
 msgstr "Planlagte opgaver for %name."
 
@@ -10246,11 +10469,31 @@ msgstr "Der er p.t. ingen aktive opgaver."
 msgid "Scheduled tasks"
 msgstr "Planlagte opgaver"
 
+msgid "Manage 2Movepeople configuration settings."
+msgstr "Håndter Indstillinger for 2Movepeople"
+
+msgid "Create and configure Search API servers and indexes."
+msgstr "Opret og konfigurer search API og indekser"
+
 msgid "Apply filters"
-msgstr "Apply Filters"
+msgstr "Filtrér"
 
 msgid "Grid"
 msgstr "Gitter"
+
+msgid ""
+"Control default display settings for your site, across all themes. Use "
+"theme-specific settings to override these defaults."
+msgstr ""
+"Kontrollér standardindstillinger for siden, på tværs af alle "
+"temaer. Brug temaspecifikke indstillinger for at overskrive "
+"standarderne."
+
+msgid "Global Mail System configuration."
+msgstr "Generelle indstillinger for mailsystemet"
+
+msgid "Configure Swift Mailer transport and message settings."
+msgstr "Indstillinger for Swift Mailer"
 
 msgid "Send data to SBSYS"
 msgstr "Send data til SBSys"
@@ -10270,6 +10513,17 @@ msgstr ""
 
 msgid "Manager tasks"
 msgstr "Manager opgaver"
+
+msgid "Paragraph types"
+msgstr "Paragraph typer"
+
+msgid "Create and manage Paragraph types."
+msgstr "Opret og håndtér paragraph typer"
+
+msgid ""
+"Delete revisions of entities that are no longer used in Entity "
+"Reference Revisions fields."
+msgstr "Slet versioner af entiteter som ikke længere er i brug"
 
 msgid "Meetings"
 msgstr "Møder"
@@ -10295,9 +10549,68 @@ msgstr "Rediger møde"
 msgid "Notes"
 msgstr "Noter"
 
+msgid "Panelize this view mode"
+msgstr "Brug Panelizer på denne visning"
+
 msgid "Answered progression"
 msgstr "Besvarede spørgsmål"
 
 msgid "Answered feedback"
 msgstr "Besvarede feedback"
+
+msgid "2Movepeople meeting functionality"
+msgstr "Mødefunktionalitet for 2Movepeople"
+
+msgid "The name of the user who send the invite"
+msgstr "navnet på brugeren der har sendt invitationen"
+
+msgid "The title of the meeting"
+msgstr "Mødets titel"
+
+msgid "The place of the meeting"
+msgstr "Mødets placering"
+
+msgid "The start date of the meeting"
+msgstr "Mødets startdato"
+
+msgid "The end date of the meeting"
+msgstr "Mødets slutdato"
+
+msgid "Node reference to FAQ node"
+msgstr "Reference til den node der indeholder FAQ"
+
+msgid "FAQ options"
+msgstr "Indstillinger for FAQ"
+
+msgid "Meeting invite email subject"
+msgstr "Emnefelt for invitationsmail"
+
+msgid "Meeting invite email body"
+msgstr "Bodyfelt for mødeinvitation"
+
+msgid "Meeting invite email options"
+msgstr "Indstillinger for møde invitationer"
+
+msgid "Select all media"
+msgstr "Vælg alt medieindhold"
+
+msgid ""
+"Whether the mails should be sent as HTML. A module like <a "
+"href=\"https://www.drupal.org/project/swiftmailer\">Swiftmailer</a> is "
+"needed for this feature. This has only been tested with the "
+"Swiftmailer module, other modules might not work out of the box and "
+"will not use the provided default template."
+msgstr ""
+"Hvorvidt mails skal sendes som HTML. Et modul som f.eks <a "
+"href=\"https://www.drupal.org/project/swiftmailer\">Swiftmailer</a> "
+"skal installeres for at bruge denne funktion. Det er kun testet med "
+"Swiftmailer modulet, andre moduler vil ikke nødvendigvis virke efter "
+"hensigten \"out of the box\" og vil ikke bruge de samme "
+"standardskabeloner."
+
+msgid "Add media type"
+msgstr "Tilføj medietype"
+
+msgid "Add paragraph type"
+msgstr "Tilføj paragraph type"
 

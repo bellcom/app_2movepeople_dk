@@ -9,13 +9,12 @@ dependencies:
 _core:
   default_config_hash: 8eXHpZgzJ58fVmB7evA4TNESdXWjMOW9AFPYSxEimE4
 id: search
-label: Søg
+label: Search
 module: views
 description: ''
 tag: ''
 base_table: search_api_index_content
 base_field: search_api_id
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -38,9 +37,9 @@ display:
       exposed_form:
         type: input_required
         options:
-          submit_button: Søg
+          submit_button: Search
           reset_button: false
-          reset_button_label: Reset
+          reset_button_label: Nulstil
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
@@ -170,6 +169,8 @@ display:
               landing_page_reviewer: '0'
               workspace_creator: '0'
               workspace_reviewer: '0'
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -218,7 +219,7 @@ display:
       relationships: {  }
       arguments: {  }
       display_extenders: {  }
-      title: Søg
+      title: Search
     cache_metadata:
       max-age: -1
       contexts:

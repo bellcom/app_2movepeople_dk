@@ -7,13 +7,12 @@ dependencies:
 _core:
   default_config_hash: 52AEsiBm8wrIVEWduSrbVCux1g5EGGkaLP55gbdpufE
 id: administerusersbyrole_people
-label: 'People (administerusersbyrole)'
+label: Personer
 module: user
 description: 'Find and manage people - for admin or sub-admin'
 tag: default
 base_table: users_field_data
 base_field: uid
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -39,9 +38,9 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Filter
+          submit_button: Filtrér
           reset_button: true
-          reset_button_label: Reset
+          reset_button_label: Nulstil
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
@@ -54,10 +53,10 @@ display:
           id: 0
           total_pages: 0
           tags:
-            previous: '‹ Previous'
-            next: 'Next ›'
-            first: '« First'
-            last: 'Last »'
+            previous: '‹ Forrige'
+            next: 'Næste ›'
+            first: '« Første'
+            last: 'Sidste »'
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -298,7 +297,7 @@ display:
           settings:
             format: custom
             format_custom_true: Active
-            format_custom_false: Blocked
+            format_custom_false: Blokeret
           entity_type: user
           entity_field: status
         roles:
@@ -473,7 +472,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Operations
+          label: Handlinger
           exclude: false
           alter:
             alter_text: false
@@ -595,7 +594,7 @@ display:
           exposed: true
           expose:
             operator_id: combine_op
-            label: 'Name or email contains'
+            label: 'Navn eller email indeholder'
             description: ''
             use_operator: false
             operator: combine_op
@@ -608,6 +607,8 @@ display:
               anonymous: '0'
               administrator: '0'
             placeholder: ''
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -650,6 +651,8 @@ display:
               anonymous: '0'
               administrator: '0'
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -690,6 +693,8 @@ display:
               anonymous: '0'
               administrator: '0'
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -729,6 +734,8 @@ display:
               authenticated: authenticated
               anonymous: '0'
               administrator: '0'
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: true
           group_info:
             label: Status
@@ -746,7 +753,7 @@ display:
                 operator: '='
                 value: '1'
               2:
-                title: Blocked
+                title: Blokeret
                 operator: '='
                 value: '0'
           plugin_id: boolean
@@ -775,6 +782,8 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -819,6 +828,8 @@ display:
             placeholder: ''
             min_placeholder: ''
             max_placeholder: ''
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -849,7 +860,7 @@ display:
           plugin_id: date
           entity_type: user
           entity_field: created
-      title: People
+      title: Personer
       empty:
         area_text_custom:
           id: area_text_custom
@@ -897,14 +908,14 @@ display:
       show_admin_links: false
       menu:
         type: 'default tab'
-        title: List
+        title: Liste
         description: 'Find and manage people - for admin or sub-admin'
         menu_name: admin
         weight: -10
         context: ''
       tab_options:
         type: normal
-        title: People
+        title: Personer
         description: 'Manage user accounts, roles, and permissions.'
         menu_name: admin
         weight: 0

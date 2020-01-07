@@ -2,8 +2,9 @@ uuid: 87f154e5-5f9b-4199-bc79-4474107690b3
 langcode: da
 status: true
 dependencies:
-  content:
-    - 'file:file:71ea42c4-b88b-4738-a319-2f7e08a7eba9'
+  config:
+    - core.entity_view_mode.media.embedded
+    - entity_browser.browser.media_browser
   module:
     - entity_embed
     - image
@@ -23,4 +24,7 @@ type_settings:
   entity_browser: media_browser
   entity_browser_settings:
     display_review: false
-icon_uuid: 71ea42c4-b88b-4738-a319-2f7e08a7eba9
+icon:
+  data: ''
+  uri: 'public://star.png'
+icon_uuid: null

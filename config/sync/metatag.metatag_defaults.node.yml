@@ -5,7 +5,7 @@ dependencies: {  }
 _core:
   default_config_hash: uKgwQEQEWbnGjAqxKpZufzhnECt1acCS2-zF_mF6nFo
 id: node
-label: Content
+label: Indhold
 tags:
   title: '[node:title] | [site:name]'
   description: '[node:summary]'
