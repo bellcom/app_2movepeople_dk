@@ -9936,6 +9936,10 @@ input[type="date"]::-webkit-inner-spin-button {
 input[type="date"]::-webkit-clear-button {
   z-index: 1; }
 
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  input[type="date"].form-control {
+    line-height: normal; } }
+
 .who-am-i {
   display: -webkit-box;
   display: -webkit-flex;
