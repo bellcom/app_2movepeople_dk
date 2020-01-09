@@ -253,8 +253,9 @@ class CommonFormUtils {
 
       $form['goals']['header'] = [
         '#markup' => '<div class="custom-form-fields custom-form-label">'
-        . '<div class="custom-form-label">' . $title . '</div>'
-        . '<div class="custom-form-label">' . t('Actions') . '</div></div>',
+        . '<div class="custom-form-label"><h2><strong>' . $title . '</strong></h2></div>'
+        . '<br>'
+        . '<div class="custom-form-label"><strong>' . t('Actions') . '</strong></div></div>',
       ];
 
       $goal_id = $tid['target_id'];
@@ -280,9 +281,10 @@ class CommonFormUtils {
    *   Form element
    */
   private static function getTasksRow(array $form, array $goal, $parent_subgoal_id = 0) {
-
     $form['goals'][$goal['id']] = [
       '#type' => 'container',
+      '#prefix' => '<div class="row">',
+      '#suffix' => '</div>'
     ];
 
     $form['goals'][$goal['id']]['title'] = [
@@ -290,7 +292,7 @@ class CommonFormUtils {
       '#default_value' => $goal['title'],
       '#prefix' => '<div class="custom-form-fields" id="goal_row_' . $goal['id'] . '">'
       . ($parent_subgoal_id ? ''
-      . '<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>'
+      . '<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">'
       . '<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">' : '<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">'),
       '#suffix' => '</div>',
     ];
@@ -312,7 +314,7 @@ class CommonFormUtils {
         'progress' => ['type' => 'none'],
       ],
       '#prefix' => '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">',
-      '#suffix' => '</div></div>',
+      '#suffix' => '</div>',
     ];
     if (count($goal['subgoals']) > 0) {
       foreach ($goal['subgoals'] as $subgoal) {
