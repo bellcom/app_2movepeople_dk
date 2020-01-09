@@ -5,3 +5,11 @@ bc_webform.collection:
     _title: 'Webforms'
   requirements:
     _custom_access: '\Drupal\webform\Access\WebformAccountAccess::checkOverviewAccess'
+
+bc_webform.addUserTasks:
+  path: '/analisys/{webform_id}/add-task'
+  defaults:
+    _form: '\Drupal\bc_webform\Form\AddUserTasksForm'
+    _title: 'Add task to webform'
+  requirements:
+    _custom_access: '\Drupal\webform\Access\WebformAccountAccess::checkOverviewAccess'

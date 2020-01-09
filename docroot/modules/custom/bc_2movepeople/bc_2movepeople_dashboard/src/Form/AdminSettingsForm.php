@@ -32,8 +32,16 @@ class AdminSettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
+  public static function getConfigName() {
+    return 'bc_2movepeople_dashboard.AdminSettings';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->config('bc_2movepeople_dashboard.AdminSettings');
+    $config = $this->config(self::getConfigName());
+    $form_state->set('config', $config);
 
     // Complete email options.
     $form['complete_email_options'] = array(
@@ -239,7 +247,7 @@ class AdminSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
 
-    $config = $this->config('bc_2movepeople_dashboard.AdminSettings')
+    $config = $this->config(self::getConfigName())
       ->set('task_complete_email_subject', $form_state->getValue('task_complete_email_subject'))
       ->set('task_complete_email_body', $form_state->getValue('task_complete_email_body'))
       ->set('task_reminder_due_date', $form_state->getValue('task_reminder_due_date'))

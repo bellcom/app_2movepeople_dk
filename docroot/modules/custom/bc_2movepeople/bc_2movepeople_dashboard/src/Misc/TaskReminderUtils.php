@@ -35,6 +35,10 @@ class TaskReminderUtils {
         if (count($reminder_data) == 0 || $reminder_data['reminded_count'] < 1) {
           // Get objects.
           $user = is_null($user) ? User::load($uid) : $user;
+          $to = $user->get('mail')->value;
+          if (empty($to)) {
+            continue;
+          }
           $goal = Node::load($nid);
 
           // Prepare data.
@@ -43,8 +47,6 @@ class TaskReminderUtils {
           $body = str_replace("@name", $user->getDisplayName(), $body);
           $body = str_replace("@task_title", $goal->get('title')->value, $body);
           $body = str_replace("@due_date", $goal->get('field_due_date')->value, $body);
-
-          $to = $user->get('mail')->value;
 
           // Send email.
           MovepeopleDashboardController::sendMail([

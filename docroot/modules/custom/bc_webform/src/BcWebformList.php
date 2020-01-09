@@ -64,4 +64,16 @@ class BcWebformList extends WebformEntityListBuilder implements ContainerInjecti
     return $row;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getOperations(EntityInterface $entity) {
+    $operations = parent::getOperations($entity);
+    $operations['add_user_tasks'] = [
+      'title' => $this->t('Send user tasks'),
+      'url' => Url::fromRoute('bc_webform.addUserTasks',['webform_id' => $entity->id()]),
+    ];
+    return $operations;
+  }
+
 }

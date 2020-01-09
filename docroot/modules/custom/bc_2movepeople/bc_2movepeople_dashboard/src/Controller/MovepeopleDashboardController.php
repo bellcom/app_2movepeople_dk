@@ -867,14 +867,24 @@ class MovepeopleDashboardController extends ControllerBase {
    *   TRUE if the mail was successfully accepted for delivery, FALSE otherwise.
    */
   public static function sendMail(array $message) {
-    $send_mail = new PhpMail();
+    $mail_manager = \Drupal::service('plugin.manager.mail');
     $message['headers'] = [
       'content-type' => 'text/html; charset=UTF-8; format=flowed; delsp=yes',
       'MIME-Version' => '1.0',
       'reply-to' => $message['from'],
       'from' => $message['sender'] . ' <' . $message['from'] . '>',
     ];
-    return $send_mail->mail($message);
+    return $mail_manager->mail(
+      'bc_2movepeople_dashboard',
+      'default',
+      $message['to'],
+      \Drupal::languageManager()->getDefaultLanguage()->getId(), [
+        'subject' => $message['subject'],
+        'body' => $message['body'],
+        'headers' => $message['headers']
+      ],
+      $message['from']
+    );
   }
 
   /**
@@ -1119,8 +1129,7 @@ class MovepeopleDashboardController extends ControllerBase {
     }
 
     $url = Url::fromRoute('bc_2movepeople_dashboard.user.overview', ['user' => $user->id()]);
-    $response = new RedirectResponse($url->toString());
-    $response->send();
+    return new RedirectResponse($url->toString());
   }
 
 }

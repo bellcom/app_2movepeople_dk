@@ -218,6 +218,12 @@ function bc_2movepeople_dashboard_mail($key, &$message, $params) {
       }
 
       break;
+
+    default:
+      $message['subject'] = $params['subject'];
+      $message['body'][] = $params['body'];
+      $message['headers'] = $params['headers'];
+      break;
   }
 }
 
