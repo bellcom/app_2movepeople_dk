@@ -16,6 +16,7 @@ permissions:
   - 'access progression rates'
   - 'access user dashboard'
   - 'access user profiles'
+  - 'access webform overview'
   - 'cancel users with role 2mp_user'
   - 'create connected users'
   - 'create webform'
