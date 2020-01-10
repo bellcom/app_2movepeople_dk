@@ -18,7 +18,7 @@ _core:
 id: media_library
 label: 'Media library'
 module: views
-description: ''
+description: 'Find og håndtér media.'
 tag: ''
 base_table: media_field_data
 base_field: mid
