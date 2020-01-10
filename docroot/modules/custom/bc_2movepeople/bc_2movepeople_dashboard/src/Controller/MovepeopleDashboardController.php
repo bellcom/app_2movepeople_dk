@@ -3,6 +3,7 @@
 namespace Drupal\bc_2movepeople_dashboard\Controller;
 
 use Drupal\Core\Mail\MailManagerInterface;
+use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\user\Entity\User;
 use Mpdf\Mpdf;
@@ -880,7 +881,7 @@ class MovepeopleDashboardController extends ControllerBase {
       $message['to'],
       \Drupal::languageManager()->getDefaultLanguage()->getId(), [
         'subject' => $message['subject'],
-        'body' => $message['body'],
+        'body' => Markup::create($message['body']),
         'headers' => $message['headers']
       ],
       $message['from']
