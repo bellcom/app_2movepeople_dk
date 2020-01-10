@@ -55,13 +55,6 @@ function bc_webform_form_alter(array &$form, FormStateInterface $form_state) {
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
- */
-function bc_webform_form_bc_2movepeople_dashboard_admin_settings_form_alter(array &$form, FormStateInterface $form_state) {
-  bc_webform_2movepeople_dashboard_admin_settings($form, $form_state);
-}
-
-/**
  * Implements custom form alter.
  */
 function bc_webform_webform_submission_custom_alter(array &$form, FormStateInterface $form_state) {
