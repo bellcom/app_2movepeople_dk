@@ -48,7 +48,8 @@ function bc_webform_webform_access(WebformInterface $webform, $operation, Accoun
  * Implements hook_form_alter().
  */
 function bc_webform_form_alter(array &$form, FormStateInterface $form_state) {
-  if (strpos($form_state->getBuildInfo()['base_form_id'], 'webform_submission_') === 0) {
+  if (!empty($form_state->getBuildInfo()['base_form_id'])
+    && strpos($form_state->getBuildInfo()['base_form_id'], 'webform_submission_') === 0) {
     bc_webform_webform_submission_custom_alter($form, $form_state);
   }
 }
