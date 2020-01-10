@@ -10204,34 +10204,6 @@ span.input-group-addon {
   .dashboard-overview form[class^="bc-2movepeople-dashboard-milestone-edit-form-"] .form-inline.form-item.form-type-date input, .dashboard-overview form[class^="bc-2movepeople-dashboard-milestone-edit-form-"] .custom-form-label-due-date > div input {
     width: 100%; }
 
-.bc-2movepeople-dashboard-progression-edit-form .custom-form-fields {
-  padding: 2px 15px 2px 15px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: normal;
-  -webkit-align-items: normal;
-      -ms-flex-align: normal;
-          align-items: normal; }
-  .bc-2movepeople-dashboard-progression-edit-form .custom-form-fields > div {
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
-    -webkit-box-flex: 1;
-    -webkit-flex-grow: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1; }
-
 .div-form input, .div-form select, .div-form textarea {
   margin-bottom: 10px; }
 
