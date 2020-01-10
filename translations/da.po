@@ -211,7 +211,7 @@ msgid "Dashboard settings"
 msgstr "Indstillinger for Dashboard"
 
 msgid "Find and manage media."
-msgstr ""
+msgstr "Find og håndtér media."
 
 msgid "Find and manage content."
 msgstr "Find og håndtér indhold."
@@ -10270,8 +10270,8 @@ msgstr ""
 msgid "The specified file %file could not be moved to %destination."
 msgstr "Filen %file kunne ikke flyttes til %destination."
 
-msgid "Line graph"
-msgstr "Liniediagram"
+msgid "Line"
+msgstr "Linie"
 
 msgid "Bar"
 msgstr "Søjlediagram"
@@ -10688,4 +10688,7 @@ msgstr "Tilføj medietype"
 
 msgid "Add paragraph type"
 msgstr "Tilføj paragraph type"
+
+msgid "Line graph"
+msgstr "Liniediagram"
 
