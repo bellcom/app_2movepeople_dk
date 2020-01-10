@@ -25,7 +25,7 @@
         "cweagans/composer-patches": "^1.6.0",
         "acquia/lightning": "~4.1.1",
         "drupal/bootstrap": "^3.17",
-        "drupal/admin_toolbar": "^1.25",
+        "drupal/admin_toolbar": "^2.0",
         "drupal/field_permissions": "^1.0@beta",
         "drupal/flag": "^4.0@alpha",
         "drupal/administerusersbyrole": "^2.0",
