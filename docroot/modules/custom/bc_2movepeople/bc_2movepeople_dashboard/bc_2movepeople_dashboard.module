@@ -1,7 +1,7 @@
 <?php
 
 use Drupal\user\Entity\User;
-use Drupal\node\NodeInterface;
+use Drupal\bc_2movepeople_dashboard\Misc\Utils;
 
 /**
  * @file
@@ -282,15 +282,7 @@ function bc_2movepeople_dashboard_entity_update(EntityInterface $entity) {
  *   User id who will get notification.
  */
 function _bc_2movepeople_dashboard_send_task_notification(EntityInterface $entity, $user_id = '') {
-  // Get milestone of the goal.
-  $bundle = 'progression_target';
-  $query = \Drupal::entityQuery('node');
-  $query->condition('status', 1);
-  $query->condition('type', $bundle);
-  $query->condition('field_goal_ids', $entity->id(), 'CONTAINS');
-  $query->range(0, 1);
-  $milestone_id = $query->execute();
-  $milestone = Node::load(array_pop($milestone_id));
+  $milestone = Utils::getMilestoneByGoal($entity->id());
 
   // Get milestone user.
   $milestone_user = $milestone->get('field_progression_user')->referencedEntities()[0];

@@ -29,6 +29,22 @@ function bc_webform_webform_submission_presave(WebformSubmissionInterface $webfo
 }
 
 /**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function bc_webform_webform_submission_insert(WebformSubmissionInterface $webform_submission) {
+  $bc_webform_handler = new BcWebformHandler($webform_submission->getWebform());
+  $bc_webform_handler->completeUserTask($webform_submission);
+}
+/**
+ * Implements hook_ENTITY_TYPE_delete().
+ */
+function bc_webform_webform_delete(WebformInterface $webform) {
+  // Removing created webform submittions tasks.
+  $bc_webform_handler = new BcWebformHandler($webform);
+  $bc_webform_handler->cleanUp();
+}
+
+/**
  * Implements hook_ENTITY_TYPE_access().
  */
 function bc_webform_webform_access(WebformInterface $webform, $operation, AccountInterface $account) {
@@ -170,7 +186,7 @@ function bc_webform_webform_form_submit(array $form, FormStateInterface $form_st
   $webform->setThirdPartySetting('bc_webform', 'roles', array_filter($settings['roles']));
   $webform->setThirdPartySetting('bc_webform', 'organisation_tid', $settings['organisation_tid']);
 
-  if ($settings['anonymization'] && !bc_webform_has_anonymization($webform)) {
+  if (!empty($settings['anonymization']) && !bc_webform_has_anonymization($webform)) {
     /** @var \Drupal\webform\Plugin\WebformHandlerManagerInterface $handler_manager */
     $handler_manager = \Drupal::service('plugin.manager.webform.handler');
 

@@ -2,12 +2,14 @@
 
 namespace Drupal\bc_webform;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
-use Drupal\bc_2movepeople_dashboard\Form\AdminSettingsForm;
+use Drupal\bc_2movepeople_dashboard\Misc\Utils;
+use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 use Drupal\webform\WebformInterface;
+use Drupal\webform\WebformSubmissionInterface;
 
 /**
  * Handle bc webform functionality.
@@ -15,6 +17,7 @@ use Drupal\webform\WebformInterface;
 class BcWebformHandler {
 
   use StringTranslationTrait;
+  use MessengerTrait;
 
   /**
    * Webform entity.
@@ -111,7 +114,7 @@ class BcWebformHandler {
    */
   public function userWithoutTask() {
     $users_list = [];
-    $userTaskData = $this->webform->getThirdPartySetting('bc_webform', 'user_task_data', []);
+    $userTaskData = $this->getUserTasksData();
     foreach ($this->getTargetUsers()as $uid) {
       if ($this->userHasSubmittion($uid) || !empty($userTaskData[$uid])) {
         continue;
@@ -119,6 +122,26 @@ class BcWebformHandler {
       $users_list[] = $uid;
     }
     return $users_list;
+  }
+
+  /**
+   * Sets user task data array.
+   *
+   * @param $userTaskData
+   *
+   * @return WebformInterface
+   */
+  private function setUserTasksData($userTaskData) {
+    return $this->webform->setThirdPartySetting('bc_webform', 'user_task_data', $userTaskData);
+  }
+
+  /**
+   * Gets user task data.
+   *
+   * @return mixed
+   */
+  private function getUserTasksData() {
+    return $this->webform->getThirdPartySetting('bc_webform', 'user_task_data', []);
   }
 
   /**
@@ -130,8 +153,8 @@ class BcWebformHandler {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function updateTasksData($userTasksData) {
-    $oldUserTasksData = $this->webform->getThirdPartySetting('bc_webform', 'user_task_data', []);
-    $this->webform->setThirdPartySetting('bc_webform', 'user_task_data', $userTasksData + $oldUserTasksData);
+    $oldUserTasksData = $this->getUserTasksData();
+    $this->setUserTasksData($userTasksData + $oldUserTasksData);
     $this->webform->save();
   }
 
@@ -144,14 +167,14 @@ class BcWebformHandler {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function removeUserTasksData($user_id) {
-    $userTasksData = $this->webform->getThirdPartySetting('bc_webform', 'user_task_data', []);
+    $userTasksData = $this->getUserTasksData();
     unset($userTasksData[$user_id]);
-    $this->webform->setThirdPartySetting('bc_webform', 'user_task_data', $userTasksData);
+    $this->setUserTasksData($userTasksData);
     $this->webform->save();
   }
 
   /**
-   * Resets submittions for user(s).
+   * Resets submissions for user(s).
    *
    * @param int|null $uid
    *   User id to remove data for.
@@ -171,70 +194,108 @@ class BcWebformHandler {
   }
 
   /**
-   * Adding message to users tasks.
+   * Adds task to user.
    *
-   * @return array
-   *   Array with users who got assigned task.
+   * @param $uid
+   *   User id.
    *
+   * @return bool|int|string|null
    * @throws \Drupal\Core\Entity\EntityMalformedException
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function addUserTasks()
-  {
-    $users = $this->getTargetUsers();
-    $user_task_data = $this->webform->getThirdPartySetting('bc_webform', 'user_task_data', []);
-    $current_timestamp = time();
-    $priority_options = options_allowed_values(FieldStorageConfig::loadByName('node', 'field_priority'));
-    $status_options = options_allowed_values(FieldStorageConfig::loadByName('node', 'field_progression_status'));
-    $results = [];
-    foreach ($users as $uid) {
-      if (!empty($user_task_data[$uid])) {
-        continue;
-      }
-
-      $task = Node::create([
+  public function addUserTask($uid) {
+    $body = t('You have new webform to submit. <a href=":link">Submit response</a>', [
+      ':link' => $this->webform->toUrl('canonical', [
+        'query' => [
+          'destination' => Url::fromRoute('bc_2movepeople_dashboard.main')->toString()
+        ]
+      ])->toString()
+    ]);
+    $task = Node::create([
         'type' => 'goal',
         'status' => 1,
-        'title' => $this->webform->toUrl('canonical', ['absolute' => TRUE])->toString(),
-        'field_activity_title' => $this->t('Submit webform'),
+        'title' => $this->webform->get('title'),
+        'body' => ['value' => $body, 'format' => 'rich_text'],
+        'field_activity_title' => t('Submit webform'),
         'field_due_date' => date('Y-m-d', strtotime('now + 1 week')),
-        ]
-      );
+      ]
+    );
 
-      if ($task->save() == SAVED_NEW) {
-        $milestone_nids = MovepeopleDashboardController::getProgressionTargets($uid, 'target_milestone');
-        if (empty($milestone_nids)) {
-          $milestone = Node::create(array(
-            'status' => 1,
-            'type' => 'progression_target',
-            'title' => $this->t('Weforms'),
-            'field_purpose' => $this->t('Gathering feedback'),
-            'field_priority' => reset($priority_options),
-            'field_progression_status' => reset($status_options),
-            'field_progression_user' => $uid,
-            'field_progression_type' => 'target_milestone',
-          ));
-          $milestone->save();
-        }
-        else {
-          $milestone = Node::load(reset($milestone_nids));
-        }
+    if ($task->save() == SAVED_NEW) {
+      $milestone_nids = MovepeopleDashboardController::getProgressionTargets($uid, 'target_milestone');
+      if (empty($milestone_nids)) {
+        $milestone = Node::create(array(
+          'status' => 1,
+          'type' => 'progression_target',
+          'title' => t('Webforms milestone for :user', [':user' => $uid]),
+          'field_purpose' => t('Gathering feedback'),
+          'field_priority' => reset($priority_options),
+          'field_progression_status' => reset($status_options),
+          'field_progression_user' => $uid,
+          'field_progression_type' => 'target_milestone',
+        ));
+        $milestone->save();
+      }
+      else {
+        $milestone = Node::load(reset($milestone_nids));
+      }
 
+      $new_goal_ids = [];
+      foreach ($milestone->get('field_goal_ids')->getValue() as $tid) {
+        $new_goal_ids[] = $tid['target_id'];
+      }
+      $new_goal_ids[] = $task->id();
+      $milestone->set('field_goal_ids', $new_goal_ids);
+      $milestone->save();
+      _bc_2movepeople_dashboard_send_task_notification($task);
+      return $task->id();
+    }
+    return FALSE;
+  }
+
+  /**
+   * Completes user submit webform task.
+   *
+   * @param $uid
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function completeUserTask(WebformSubmissionInterface $webformSubmission) {
+    $userTasksData = $this->getUserTasksData();
+    $uid = $webformSubmission->getOwnerId();
+    if (empty($uid)
+      && $userSubmissions = $this->webform->getThirdPartySetting('bc_webform', 'user_submissions', [])) {
+      $uid = array_search($webformSubmission->getToken(), $userSubmissions);
+    }
+
+    if (!empty($userTasksData[$uid]) && $node = Node::load($userTasksData[$uid])) {
+      $node->set('field_task_complete', 1);
+      $node->save();
+      $this->messenger()->addStatus($this->t('Task "@name" has been completed.', ['@name' => $node->label()]));
+    }
+  }
+
+  /**
+   * Removes weform related data from db.
+   */
+  public function cleanUp() {
+    $userTasksData = $this->getUserTasksData();
+    foreach ($userTasksData as $taskId) {
+      Node::load($taskId)->delete();
+      $milestone = Utils::getMilestoneByGoal($taskId);
+      $goal_ids = $milestone->get('field_goal_ids')->referencedEntities();
+      if (empty($goal_ids)) {
+        $milestone->delete();
+      }
+      else {
         $new_goal_ids = [];
-        foreach ($milestone->get('field_goal_ids')->getValue() as $tid) {
-          $new_goal_ids[] = $tid['target_id'];
+        foreach ($goal_ids as $goal) {
+          $new_goal_ids[] = $goal->id();
         }
-        $new_goal_ids[] = $task->id();
         $milestone->set('field_goal_ids', $new_goal_ids);
         $milestone->save();
-
-        $user_task_data[$uid] = $current_timestamp;
-        $results[] = $uid;
       }
     }
-    $this->webform->setThirdPartySetting('bc_webform', 'user_task_data', $user_task_data);
-    $this->webform->save();
-    return $results;
   }
 
 }

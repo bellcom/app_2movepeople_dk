@@ -2,13 +2,11 @@
 
 namespace Drupal\bc_webform\Form;
 
-use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 use Drupal\bc_webform\BcWebformHandler;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 use Drupal\webform\WebformInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -123,49 +121,17 @@ class AddUserTasksForm extends FormBase {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public static function addUserTask($uid, WebformInterface $webform, array &$context) {
-    $task = Node::create([
-        'type' => 'goal',
-        'status' => 1,
-        'title' => $webform->get('title'),
-        'body' => $webform->toUrl('canonical', ['absolute' => TRUE])->toString(),
-        'field_activity_title' => t('Submit webform'),
-        'field_due_date' => date('Y-m-d', strtotime('now + 1 week')),
-      ]
-    );
-
-    if ($task->save() == SAVED_NEW) {
-      $milestone_nids = MovepeopleDashboardController::getProgressionTargets($uid, 'target_milestone');
-      if (empty($milestone_nids)) {
-        $milestone = Node::create(array(
-          'status' => 1,
-          'type' => 'progression_target',
-          'title' => t('Webforms milestone for :user', [':user' => $uid]),
-          'field_purpose' => t('Gathering feedback'),
-          'field_priority' => reset($priority_options),
-          'field_progression_status' => reset($status_options),
-          'field_progression_user' => $uid,
-          'field_progression_type' => 'target_milestone',
-        ));
-        $milestone->save();
-      }
-      else {
-        $milestone = Node::load(reset($milestone_nids));
-      }
-
-      $new_goal_ids = [];
-      foreach ($milestone->get('field_goal_ids')->getValue() as $tid) {
-        $new_goal_ids[] = $tid['target_id'];
-      }
-      $new_goal_ids[] = $task->id();
-      $milestone->set('field_goal_ids', $new_goal_ids);
-      $milestone->save();
-      _bc_2movepeople_dashboard_send_task_notification($task);
-      $context['results'][$webform->id()][$uid] = $task->id();
+    $bcWebofrmHandler = new BcWebformHandler($webform);
+    if ($task_id = $bcWebofrmHandler->addUserTask($uid)) {
+      $context['results'][$webform->id()][$uid] = $task_id;
     }
   }
 
   /**
    * Batch finish callback.
+   *
+   * @return RedirectResponse
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public static function batchComplete($success, $results, $operations) {
     $messenger = \Drupal::messenger();
