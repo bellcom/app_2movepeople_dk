@@ -417,6 +417,7 @@ class MovepeopleDashboardController extends ControllerBase {
    */
   public static function getGoal($nodeid, $progression_target = NULL) {
     $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($nodeid);
+    $view_builder = \Drupal::entityTypeManager()->getViewBuilder('node');
     $nodetitle = $nodedata->get('title')->value;
     $subnodes = $nodedata->get('field_subgoal')->getValue();
     $date = $nodedata->get('field_due_date')->value;
@@ -447,6 +448,7 @@ class MovepeopleDashboardController extends ControllerBase {
       'evaluation' => $evaluation,
       'subgoals' => $subgoals,
       'responsible_manager' => $responsible_manager,
+      'rendered' => $view_builder->view($nodedata, '2mp_user_teaser'),
     ];
     if (is_object($progression_target)) {
       $result['rates'] = bc_2movepeople_rate_progression_get_rates($progression_target->id(), $nodeid);

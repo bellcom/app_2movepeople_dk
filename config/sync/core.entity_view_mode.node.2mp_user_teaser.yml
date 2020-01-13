@@ -1,0 +1,14 @@
+uuid: bf143139-a7e4-429a-bd29-a1abb51e2cdb
+langcode: da
+status: true
+dependencies:
+  module:
+    - lightning_core
+    - node
+third_party_settings:
+  lightning_core:
+    description: ''
+id: node.2mp_user_teaser
+label: 2mp_user_teaser
+targetEntityType: node
+cache: true
