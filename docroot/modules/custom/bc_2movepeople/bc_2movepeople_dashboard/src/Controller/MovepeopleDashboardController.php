@@ -591,21 +591,20 @@ class MovepeopleDashboardController extends ControllerBase {
    * $target_id - progression target nid
    *
    * @param \Drupal\Core\Session\AccountInterface $user
+   *   User object.
+   *
+   * @param bool $raw_data
+   *   Using to get raw tasks data.
    *
    * @return array
    *   User tasks render array.
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function getUserTasks(AccountInterface $user) {
+  public function getUserTasks(AccountInterface $user, $raw_data = FALSE) {
     $user_name = $user->getDisplayName();
 
-    $query = \Drupal::entityQuery('node');
-    $query->condition('status', 1);
-    $query->condition('type', 'progression_target');
-    $query->condition('field_progression_type', 'target_milestone');
-    $query->condition('field_progression_user', $user->id());
-    $entity_ids = $query->execute();
+    $entity_ids = self::getProgressionTargets($user->id(), 'target_milestone');
     $progression_targets = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
 
     $hour = 0;
@@ -637,6 +636,9 @@ class MovepeopleDashboardController extends ControllerBase {
       }
     }
     ksort($tasks, SORT_NUMERIC);
+    if ($raw_data) {
+      return $tasks;
+    }
 
     $build = [
       "#theme" => 'bc_2movepeople_dashboard_user_tasks_overview',
@@ -682,7 +684,17 @@ class MovepeopleDashboardController extends ControllerBase {
         ->view($goal, 'teaser');
     }
 
-    $build = [
+    $build = [];
+    if ($tasks = $this->getUserTasks($user, TRUE)) {
+      $build['tasks'] = [
+        "#theme" => 'bc_2movepeople_dashboard_user_tasks_overview',
+        "#title" => t('Scheduled tasks for %name.', ['%name' => $user_name]),
+        "#tasks" => $tasks,
+        "#user" => $user->id(),
+      ];
+    }
+
+    $build['manager_tasks'] = [
       "#theme" => 'bc_2movepeople_manager_tasks_overview',
       "#user" => $user->id(),
       "#tasks" => $goals_rendered,
