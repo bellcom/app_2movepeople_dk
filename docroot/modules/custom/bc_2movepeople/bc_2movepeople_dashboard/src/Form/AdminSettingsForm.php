@@ -93,6 +93,30 @@ class AdminSettingsForm extends ConfigFormBase {
         @task_title  = ' . $this->t('The name of the task assigned to manager')
     ];
 
+    // Email options of user assigned task notification.
+    $form['task_notification_email_options'] = array(
+      '#type' => 'details',
+      '#title' => $this->t('Email options for assigned task notification'),
+      '#open' => TRUE,
+    );
+
+    $form['task_notification_email_options']['task_notification_email_subject'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Email subject'),
+      '#maxlength' => 64,
+      '#size' => 64,
+      '#default_value' => $config->get('task_notification_email_subject'),
+    ];
+
+    $form['task_notification_email_options']['task_notification_email_body'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Email body'),
+      '#default_value' => $config->get('task_notification_email_body'),
+      '#description' => '
+        @name = ' . $this->t('The name of the user who will get this email') . '<br />
+        @task_title  = ' . $this->t('The name of the task assigned to manager')
+    ];
+
     // Reminder options.
     $form['reminder_options'] = array(
       '#type' => 'details',
@@ -255,6 +279,8 @@ class AdminSettingsForm extends ConfigFormBase {
       ->set('task_reminder_email_body', $form_state->getValue('task_reminder_email_body'))
       ->set('responsible_manager_email_subject', $form_state->getValue('responsible_manager_email_subject'))
       ->set('responsible_manager_email_body', $form_state->getValue('responsible_manager_email_body'))
+      ->set('task_notification_email_subject', $form_state->getValue('task_notification_email_subject'))
+      ->set('task_notification_email_body', $form_state->getValue('task_notification_email_body'))
       ->set('milestone_evaluation_header_nid', $form_state->getValue('milestone_evaluation_header_nid'))
       ->set('faq_node_nid', $form_state->getValue('faq_node_nid'));
 

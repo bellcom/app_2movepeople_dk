@@ -202,7 +202,7 @@ class MilestoneTaskAddForm extends FormBase {
       $node->set($field_name, $new_goal_ids);
 
       $this->isSaved = $node->save();
-
+      _bc_2movepeople_dashboard_send_task_notification($new_node, $responsible_manager);
       $user = $this->parentNode->get('field_progression_user')->getValue();
 
       if (isset($this->return_url)) {

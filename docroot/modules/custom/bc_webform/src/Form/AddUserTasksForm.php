@@ -159,6 +159,7 @@ class AddUserTasksForm extends FormBase {
       $new_goal_ids[] = $task->id();
       $milestone->set('field_goal_ids', $new_goal_ids);
       $milestone->save();
+      _bc_2movepeople_dashboard_send_task_notification($task);
       $context['results'][$webform->id()][$uid] = $task->id();
     }
   }

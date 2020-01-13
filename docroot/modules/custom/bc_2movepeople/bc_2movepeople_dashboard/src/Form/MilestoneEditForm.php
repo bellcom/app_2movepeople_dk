@@ -136,7 +136,7 @@ class MilestoneEditForm extends FormBase {
         $goal_node->set("title", $goal['title']);
         $goal_node->set("field_activity_title", $goal['activity_title']);
         $goal_node->set("field_due_date", $goal['due_date']);
-        $goal_node->set("field_responsible_manager", $goal['responsible_manager']);
+        $goal_node->set("field_responsible_manager", ['target_id' => $goal['responsible_manager']]);
         $goal_node->save();
       }
       drupal_set_message($this->updatedMsg);
