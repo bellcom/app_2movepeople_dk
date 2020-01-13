@@ -20,6 +20,13 @@ class BcWebformHandler {
   use MessengerTrait;
 
   /**
+   * Config object.
+   *
+   * @var \Drupal\Core\Config\ImmutableConfig
+   */
+  public $bcConfig;
+
+  /**
    * Webform entity.
    *
    * @var \Drupal\webform\WebformInterface
@@ -28,6 +35,16 @@ class BcWebformHandler {
 
   public function __construct(WebformInterface $webform) {
     $this->webform = $webform;
+    $this->bcConfig = \Drupal::config(BC_WEBFORM_CONFIG);
+  }
+
+  /**
+   * Returns allowed roles to use webform.
+   *
+   * @return array|mixed|null
+   */
+  public function getAllowedRoles() {
+    return empty($this->bcConfig->get('roles')) ? [] : $this->bcConfig->get('roles');
   }
 
   /**
@@ -45,7 +62,7 @@ class BcWebformHandler {
       }
       $organisationTid = $values[0]['target_id'];
     }
-    $roles = $this->webform->getThirdPartySetting('bc_webform', 'roles', unserialize(BC_WEBFORM_ROLES));
+    $roles = $this->webform->getThirdPartySetting('bc_webform', 'roles', $this->getAllowedRoles());
     $user_ids = \Drupal::entityQuery('user')
       ->condition('status', 1)
       ->condition('roles', $roles, 'IN')
@@ -77,14 +94,14 @@ class BcWebformHandler {
   }
 
   /**
-   * Check if user alloed to submit form.
+   * Check if user allowed to submit form.
    *
    * @return bool
    */
   public function isAllowedSubmit($user_id) {
     /** @var \Drupal\user\UserInterface $user */
     $user = User::load($user_id);
-    $roles = $this->webform->getThirdPartySetting('bc_webform', 'roles', unserialize(BC_WEBFORM_ROLES));
+    $roles = $this->webform->getThirdPartySetting('bc_webform', 'roles', $this->getAllowedRoles());
     return array_intersect($roles,$user->getRoles());
   }
 
@@ -211,13 +228,17 @@ class BcWebformHandler {
         ]
       ])->toString()
     ]);
+    $daysToCompleteTask = $this->webform->getThirdPartySetting('bc_webform', 'days_to_complete_task');
+    if (empty($daysToCompleteTask)) {
+      $daysToCompleteTask = BC_WEBFORM_DAYS_TO_COMPLETE_TASK;
+    }
     $task = Node::create([
         'type' => 'goal',
         'status' => 1,
         'title' => $this->webform->get('title'),
         'body' => ['value' => $body, 'format' => 'rich_text'],
         'field_activity_title' => t('Submit webform'),
-        'field_due_date' => date('Y-m-d', strtotime('now + 1 week')),
+        'field_due_date' => date('Y-m-d', strtotime('now + ' . $daysToCompleteTask . ' days')),
       ]
     );
 

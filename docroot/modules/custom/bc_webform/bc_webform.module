@@ -12,10 +12,14 @@ use \Drupal\webform\WebformInterface;
 use \Drupal\webform\WebformSubmissionInterface;
 use \Drupal\taxonomy\Entity\Term;
 use \Drupal\Core\Form\FormStateInterface;
+use \Drupal\os2logging\Form\AdminSettingsForm;
 
 define('BC_WEBFORM_ROLES', serialize([
   '2mp_user' => '2mp_user',
   ]));
+
+define('BC_WEBFORM_CONFIG', 'bc_webform.settings');
+define('BC_WEBFORM_DAYS_TO_COMPLETE_TASK', 7);
 
 /**
  * Implements hook_ENTITY_TYPE_presave().
@@ -122,10 +126,11 @@ function bc_webform_form_webform_form_alter(array &$form, FormStateInterface $fo
   if (!in_array($form['#form_id'], ['webform_add_form', 'webform_settings_form'])) {
     return;
   }
-
+  $bc_webform_settings = \Drupal::config(BC_WEBFORM_CONFIG);
   /** @var WebformInterface $webform */
   $webform = $form_state->getFormObject()->getEntity();
-  $available_roles = \Drupal::entityTypeManager()->getStorage('user_role')->loadMultiple();
+  $available_roles_ids = empty($bc_webform_settings->get('roles')) ? [] : $bc_webform_settings->get('roles');
+  $available_roles = \Drupal::entityTypeManager()->getStorage('user_role')->loadMultiple($available_roles_ids);
   $roles = $webform->getThirdPartySetting('bc_webform', 'roles', unserialize(BC_WEBFORM_ROLES));
   $form['bc_webform'] = [
     '#type' => 'details',
@@ -164,6 +169,16 @@ function bc_webform_form_webform_form_alter(array &$form, FormStateInterface $fo
     '#default_value' => empty($user_organization_tid) ? NULL : $user_organization_tid,
   ];
 
+  $days_to_complete_task = $webform->getThirdPartySetting('bc_webform', 'days_to_complete_task');
+  if (empty($days_to_complete_task)) {
+    $days_to_complete_task = empty($bc_webform_settings->get('days_to_complete_task')) ? BC_WEBFORM_DAYS_TO_COMPLETE_TASK : $bc_webform_settings->get('days_to_complete_task');
+  }
+  $form['bc_webform']['days_to_complete_task'] = [
+    '#type' => 'number',
+    '#title' => t('Amount of days to complete webform submit task'),
+    '#default_value' => $days_to_complete_task,
+  ];
+
   if (!bc_webform_has_anonymization($webform)) {
     $form['bc_webform']['anonymization'] = [
       '#type' => 'checkbox',
@@ -185,6 +200,7 @@ function bc_webform_webform_form_submit(array $form, FormStateInterface $form_st
   $settings = &$form_state->getValue('bc_webform');
   $webform->setThirdPartySetting('bc_webform', 'roles', array_filter($settings['roles']));
   $webform->setThirdPartySetting('bc_webform', 'organisation_tid', $settings['organisation_tid']);
+  $webform->setThirdPartySetting('bc_webform', 'days_to_complete_task', $settings['days_to_complete_task']);
 
   if (!empty($settings['anonymization']) && !bc_webform_has_anonymization($webform)) {
     /** @var \Drupal\webform\Plugin\WebformHandlerManagerInterface $handler_manager */
@@ -224,4 +240,56 @@ function bc_webform_has_anonymization(WebformInterface $webform) {
   ) {
     return TRUE;
   }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Altering general 2movepeople settings.
+ */
+function bc_webform_form_bc_2movepeople_dashboard_admin_settings_form_alter(array &$form, FormStateInterface $form_state) {
+  $config = \Drupal::config(BC_WEBFORM_CONFIG);
+  $form['#submit'][] = 'bc_webform_2mp_dashboard_submit';
+
+  // Complete email options.
+  $form['bc_webform'] = array(
+    '#type' => 'details',
+    '#title' => t('BC Webforms settings'),
+    '#open' => TRUE,
+    '#tree' => TRUE,
+  );
+
+  $options = [];
+  $available_roles = \Drupal::entityTypeManager()->getStorage('user_role')->loadMultiple();
+  foreach ($available_roles as $role) {
+    if (strpos($role->id(), '2mp') === FALSE) {
+      continue;
+    }
+    $options[$role->id()] = $role->label();
+  }
+  $form['bc_webform']['roles'] = [
+    '#type' => 'checkboxes',
+    '#title' => t('Roles that allowed send submissions'),
+    '#options' => $options,
+    '#default_value' => empty($config->get('roles')) ? unserialize(BC_WEBFORM_ROLES) : $config->get('roles'),
+  ];
+  $form['bc_webform']['days_to_complete_task'] = [
+    '#type' => 'number',
+    '#title' => t('Amount of days to complete webform submit task'),
+    '#default_value' => empty($config->get('days_to_complete_task')) ? BC_WEBFORM_DAYS_TO_COMPLETE_TASK : $config->get('days_to_complete_task'),
+  ];
+}
+
+/**
+ * Custom form submission handler for 'bc_2movepeople_dashboard_admin_settings_form'.
+ *
+ * Saving general webform settings.
+ */
+function bc_webform_2mp_dashboard_submit(array $form, FormStateInterface $form_state) {
+  $config = \Drupal::service('config.factory')->getEditable(BC_WEBFORM_CONFIG);
+  $bc_webform = $form_state->getValue('bc_webform');
+  $config
+    ->set('roles', $bc_webform['roles'])
+    ->set('days_to_complete_task', $bc_webform['days_to_complete_task']);
+  $config->save();
 }
