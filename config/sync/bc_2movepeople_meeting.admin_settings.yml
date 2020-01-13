@@ -1,2 +1,2 @@
-meeting_invite_email_subject: 'Meeting invitation @start_date - @end_date'
-meeting_invite_email_body: "Hello @name\r\n\r\n@author invited you to a meeting @meeting_title.\r\nwhen: @start_date\r\nuntil: @end_date\r\n\r\nsee you soon!"
+meeting_invite_email_subject: 'Mødeinvitation @start_date - @end_date'
+meeting_invite_email_body: "Hej @name\r\n\r\n@author inviterede dig til et møde @meeting_title.\r\nhvornår: @start_date\r\nindtil: @end_date\r\n\r\nses snart!"
