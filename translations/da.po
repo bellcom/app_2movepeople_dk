@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-01-02 12:15+0100\n"
-"PO-Revision-Date: 2020-01-02 12:15+0100\n"
+"POT-Creation-Date: 2020-01-14 09:57+0100\n"
+"PO-Revision-Date: 2020-01-14 09:57+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -3201,6 +3201,9 @@ msgstr "Kan ikke tilføje feltet table.field: Feltet eksisterer allerede."
 
 msgid "Cancelled."
 msgstr "Opsagt"
+
+msgid "Edit"
+msgstr "Redigere"
 
 msgid "File added"
 msgstr "Fil tilføjet"
@@ -10535,20 +10538,6 @@ msgstr ""
 "Vi fandt ingen målinger. Førend du kan oprette målinger skal du "
 "oprette en kategori."
 
-msgid "Manager tasks"
-msgstr "Manager opgaver"
-
-msgid "Paragraph types"
-msgstr "Paragraph typer"
-
-msgid "Create and manage Paragraph types."
-msgstr "Opret og håndtér paragraph typer"
-
-msgid ""
-"Delete revisions of entities that are no longer used in Entity "
-"Reference Revisions fields."
-msgstr "Slet versioner af entiteter som ikke længere er i brug"
-
 msgid "Meetings"
 msgstr "Møder"
 
@@ -10570,11 +10559,52 @@ msgstr "Send invitation til bruger"
 msgid "Edit meeting"
 msgstr "Rediger møde"
 
+msgid "The name of the user who send the invite"
+msgstr "navnet på brugeren der har sendt invitationen"
+
+msgid "The title of the meeting"
+msgstr "Mødets titel"
+
+msgid "The place of the meeting"
+msgstr "Mødets placering"
+
+msgid "The start date of the meeting"
+msgstr "Mødets startdato"
+
+msgid "The end date of the meeting"
+msgstr "Mødets slutdato"
+
+msgid "Meeting invite email subject"
+msgstr "Emnefelt for invitationsmail"
+
+msgid "Meeting invite email body"
+msgstr "Bodyfelt for mødeinvitation"
+
+msgid "Meeting invite email options"
+msgstr "Indstillinger for møde invitationer"
+
 msgid "Notes"
 msgstr "Noter"
 
-msgid "Panelize this view mode"
-msgstr "Brug Panelizer på denne visning"
+msgid "Paragraph types"
+msgstr "Paragraph typer"
+
+msgid "Create and manage Paragraph types."
+msgstr "Opret og håndtér paragraph typer"
+
+msgid ""
+"Delete revisions of entities that are no longer used in Entity "
+"Reference Revisions fields."
+msgstr "Slet versioner af entiteter som ikke længere er i brug"
+
+msgid "Node reference to FAQ node"
+msgstr "Reference til den node der indeholder FAQ"
+
+msgid "FAQ options"
+msgstr "Indstillinger for FAQ"
+
+msgid "Manager tasks"
+msgstr "Manager opgaver"
 
 msgid "Answered progression"
 msgstr "Besvarede spørgsmål"
@@ -10612,6 +10642,9 @@ msgstr ""
 "Du har allerede indsendt denne formular. <a href=\"#\">Se dine forrige "
 "indsendelser</a>."
 
+msgid "Webform"
+msgstr "Webform"
+
 msgid "Webform submissions"
 msgstr "Indsendte webforms"
 
@@ -10633,38 +10666,89 @@ msgstr "Oversættelser"
 msgid "Yes/No"
 msgstr "Ja/nej"
 
+msgid "Filter by title, description, elements, user name, or role"
+msgstr "Filtrer efter titel, beskrivelse, elementer, brugernavn eller rolle"
+
+msgid "Filter webforms"
+msgstr "Filtrer webformer"
+
 msgid "2Movepeople meeting functionality"
 msgstr "Mødefunktionalitet for 2Movepeople"
 
-msgid "The name of the user who send the invite"
-msgstr "navnet på brugeren der har sendt invitationen"
+msgid "Maximum @max characters"
+msgstr "Maksimum @max bogstaver"
 
-msgid "The title of the meeting"
-msgstr "Mødets titel"
+msgid "Please add elements to this webform."
+msgstr "Tilføj elementer til denne webform."
 
-msgid "The place of the meeting"
-msgstr "Mødets placering"
+msgid "Save elements"
+msgstr "Gem elementer"
 
-msgid "The start date of the meeting"
-msgstr "Mødets startdato"
+msgid "Add element"
+msgstr "Tilføj element"
 
-msgid "The end date of the meeting"
-msgstr "Mødets slutdato"
+msgid "Add page"
+msgstr "Tilføj side"
 
-msgid "Node reference to FAQ node"
-msgstr "Reference til den node der indeholder FAQ"
+msgid "Add layout"
+msgstr "Tilføj layout"
 
-msgid "FAQ options"
-msgstr "Indstillinger for FAQ"
+msgid "Options elements"
+msgstr "Valgmuligheder elementer"
 
-msgid "Meeting invite email subject"
-msgstr "Emnefelt for invitationsmail"
+msgid "Advanced elements"
+msgstr "Avancerede elementer"
 
-msgid "Meeting invite email body"
-msgstr "Bodyfelt for mødeinvitation"
+msgid "Composite elements"
+msgstr "Sammensatte elementer"
 
-msgid "Meeting invite email options"
-msgstr "Indstillinger for møde invitationer"
+msgid "Date/time elements"
+msgstr "Dato/tid elementer"
+
+msgid "Basic elements"
+msgstr "Grundlæggende elementer"
+
+msgid "Other elements"
+msgstr "Andre elementer"
+
+msgid "Show preview"
+msgstr "Vis forhåndsvisning"
+
+msgid "Filter by element name"
+msgstr "Filtrer efter elementnavn"
+
+msgid "Select an element"
+msgstr "Vælg et element"
+
+msgid "Element settings"
+msgstr "Elementindstillinger"
+
+msgid "Element description/help/more"
+msgstr "Element beskrivelse/hjælp/mere"
+
+msgid "Form display"
+msgstr "Formvisning"
+
+msgid "Form validation"
+msgstr "Formularvalidering"
+
+msgid "Save + Add element"
+msgstr "Gem + Tilføj element"
+
+msgid "Add @label element"
+msgstr "Tilføj @label element"
+
+msgid "%title has been @action."
+msgstr "%title blev @action."
+
+msgid "Customize"
+msgstr "Tilpas"
+
+msgid "Webform %label elements saved."
+msgstr "Webformular %label elementer gemt."
+
+msgid "Panelize this view mode"
+msgstr "Brug Panelizer på denne visning"
 
 msgid "Select all media"
 msgstr "Vælg alt medieindhold"
@@ -10691,4 +10775,82 @@ msgstr "Tilføj paragraph type"
 
 msgid "Line graph"
 msgstr "Liniediagram"
+
+msgid "Send user tasks"
+msgstr "Send brugeropgaver"
+
+msgid "Roles that allowed send submissions"
+msgstr "Roller, der gjorde det muligt at sende indsendelser"
+
+msgid "Add submission anonymization"
+msgstr "Tilføj indsendelse anonymisering"
+
+msgid ""
+"You are going to add new task about submit webform @title for @count "
+"users."
+msgstr ""
+"Du vil tilføje en ny opgave om at indsende webformular @title til "
+"@ccunt users."
+
+msgid "Assign task"
+msgstr "Tildel opgave"
+
+msgid "Assigning tasks to submit webform @title"
+msgstr "Tildele opgaver til at indsende webform @title"
+
+msgid "Submit webform"
+msgstr "Indsend webformular"
+
+msgid "Webforms milestone for :user"
+msgstr "Webforms milepæl for :user"
+
+msgid "Gathering feedback"
+msgstr "Indsamling af feedback"
+
+msgid "@count users got assigned new task"
+msgstr "@count brugere fik tildelt en ny opgave"
+
+msgid "You have new webform to submit. <a href=\":link\">Submit response</a>"
+msgstr ""
+"Du har en ny webformular du skal indsende. <a href=\":link\">Indsend "
+"svar</a> "
+
+msgid "Task \"@name\" has been completed."
+msgstr "Opgaven \"@name\" er afsluttet"
+
+msgid "Remove configuration"
+msgstr "Fjern konfiguration"
+
+msgid "Delete all related submissions"
+msgstr "Slet alle relaterede indsendelser"
+
+msgid "Affect any fields or nodes which reference this webform"
+msgstr "Påvirke alle felter eller noder, der refererer til denne webform"
+
+msgid "Delete '@label' @entity-type?"
+msgstr "Slet '@label' @ entitetstype?"
+
+msgid "Email subject"
+msgstr "Email emne"
+
+msgid "Email options for assigned task notification"
+msgstr "E-mailindstillinger for tildelt opgavemeddelelse"
+
+msgid "You don't have access to send submission for this form."
+msgstr "Du har ikke adgang til at sende indsendelse af denne formular."
+
+msgid "Amount of days to complete webform submit task"
+msgstr "Mængde dage, der skal udfylde indsendelsen af webformular"
+
+msgid "Add task about webform submission"
+msgstr "Tilføj opgave om webformular indsendelse"
+
+msgid "Addition webform settings"
+msgstr "Tilføj indsendelse anonymisering"
+
+msgid "Webforms settings"
+msgstr "Webformsindstillinger"
+
+msgid "Hide preview"
+msgstr "Skjul forhåndsvisning"
 
