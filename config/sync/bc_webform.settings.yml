@@ -1,0 +1,5 @@
+roles:
+  2mp_user: 2mp_user
+  2mp_manager: 0
+  2mp_supervisor: 0
+days_to_complete_task: '7'
