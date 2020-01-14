@@ -150,7 +150,7 @@ function bc_webform_form_webform_form_alter(array &$form, FormStateInterface $fo
   $roles = $webform->getThirdPartySetting('bc_webform', 'roles', unserialize(BC_WEBFORM_ROLES));
   $form['bc_webform'] = [
     '#type' => 'details',
-    '#title' => t('Addition webform settings'),
+    '#title' => t('Additional webform settings'),
     '#weight' => 4,
     '#open' => TRUE,
     '#collapsible' => TRUE,
