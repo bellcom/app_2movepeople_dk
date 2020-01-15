@@ -300,6 +300,7 @@ function _bc_2movepeople_dashboard_send_task_notification(EntityInterface $entit
     $body = $config->get('task_notification_email_body');
     $body = str_replace("@name", $user->getDisplayName(), $body);
     $body = str_replace("@task_title", $entity->get('title')->value, $body);
+    $body = str_replace("@dashboard_url", Url::fromRoute('bc_2movepeople_dashboard.main')->toString(), $body);
   }
   else {
     // Send notification to responsible manager.

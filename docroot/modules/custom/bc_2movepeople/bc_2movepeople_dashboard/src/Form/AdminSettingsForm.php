@@ -114,7 +114,8 @@ class AdminSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('task_notification_email_body'),
       '#description' => '
         @name = ' . $this->t('The name of the user who will get this email') . '<br />
-        @task_title  = ' . $this->t('The name of the task assigned to manager')
+        @task_title = ' . $this->t('The name of the task assigned to manager') . '<br />
+        @dashboard_url = ' . $this->t('Dashboard URL'),
     ];
 
     // Reminder options.
