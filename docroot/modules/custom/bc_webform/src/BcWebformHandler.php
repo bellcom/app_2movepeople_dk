@@ -221,12 +221,13 @@ class BcWebformHandler {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function addUserTask($uid) {
-    $body = t('You have new webform to submit. <a href=":link">Submit response</a>', [
-      ':link' => $this->webform->toUrl('canonical', [
-        'query' => [
-          'destination' => Url::fromRoute('bc_2movepeople_dashboard.main')->toString()
-        ]
-      ])->toString()
+    $webform_url = $this->webform->toUrl('canonical', [
+      'query' => [
+        'destination' => Url::fromRoute('bc_2movepeople_dashboard.main')->toString()
+      ]
+    ])->toString();
+    $body = t('You have new webform to submit. <a href=":url">Submit response</a>', [
+      ':url' => $webform_url
     ]);
     $daysToCompleteTask = $this->webform->getThirdPartySetting('bc_webform', 'days_to_complete_task');
     if (empty($daysToCompleteTask)) {
@@ -239,6 +240,13 @@ class BcWebformHandler {
         'body' => ['value' => $body, 'format' => 'rich_text'],
         'field_activity_title' => t('Submit webform'),
         'field_due_date' => date('Y-m-d', strtotime('now + ' . $daysToCompleteTask . ' days')),
+        'field_task_show_complete_button' => FALSE,
+        'field_task_links' => [
+          [
+            'uri' => 'internal:/' . $webform_url,
+            'title' => $this->t('Submit response'),
+          ]
+        ],
       ]
     );
 

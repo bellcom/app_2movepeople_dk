@@ -2,6 +2,7 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Controller;
 
+use Drupal\Core\Link;
 use Drupal\Core\Mail\MailManagerInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountProxyInterface;
@@ -423,6 +424,21 @@ class MovepeopleDashboardController extends ControllerBase {
     $date = $nodedata->get('field_due_date')->value;
     $is_completed = $nodedata->get('field_task_complete')->value;
     $activity_title = $nodedata->get('field_activity_title')->value;
+    $show_complete_button = $nodedata->get('field_task_show_complete_button')->value;
+    $task_links_value = $nodedata->get('field_task_links')->getValue();
+    $task_links = [];
+    if (!empty($task_links_value)) {
+      foreach ($task_links_value as $value) {
+        $task_links[] = [
+          '#type' => 'link',
+          '#title' => $value['title'],
+          '#url' => Url::fromUri($value['uri']),
+          '#attributes' => [
+            'class' => 'btn btn-info link-btn',
+          ]
+        ];
+      }
+    }
     $evaluation = $nodedata->get('field_evaluation')->value;
     $type = (isset($date)) ? 'task' : 'goal';
     if (!empty($nodedata->field_responsible_manager->entity)) {
@@ -448,6 +464,8 @@ class MovepeopleDashboardController extends ControllerBase {
       'evaluation' => $evaluation,
       'subgoals' => $subgoals,
       'responsible_manager' => $responsible_manager,
+      'show_complete_button' => $show_complete_button,
+      'task_links' => $task_links,
       'rendered' => $view_builder->view($nodedata, '2mp_user_teaser'),
     ];
     if (is_object($progression_target)) {

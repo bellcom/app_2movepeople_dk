@@ -10,9 +10,12 @@ dependencies:
     - field.field.node.goal.field_responsible_manager
     - field.field.node.goal.field_subgoal
     - field.field.node.goal.field_task_complete
+    - field.field.node.goal.field_task_links
+    - field.field.node.goal.field_task_show_complete_button
     - node.type.goal
   module:
     - datetime
+    - link
     - text
     - user
 id: node.goal.default
@@ -96,6 +99,28 @@ content:
     third_party_settings: {  }
     type: boolean
     region: content
+  field_task_links:
+    weight: 115
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_task_show_complete_button:
+    weight: 114
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
   flag_status:
     weight: 10
     settings: {  }
@@ -108,3 +133,4 @@ content:
     region: content
 hidden:
   langcode: true
+  search_api_excerpt: true

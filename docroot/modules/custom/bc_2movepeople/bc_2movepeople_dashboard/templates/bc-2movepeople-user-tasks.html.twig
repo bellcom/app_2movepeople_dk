@@ -16,7 +16,12 @@
         {{ task.rendered  }}
       </div>
       <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 right-btn-box">
-        <a href="{{ path('bc_2movepeople_dashboard.user.task.complete', {'user': user, 'node': task.id}) }}" class="btn btn-info use-ajax link-btn" data-dialog-type="modal" data-dialog-options='{"width":640}' role="button">{{ 'Complete'|trans }}</a>
+        {% if (task.show_complete_button) %}
+          <a href="{{ path('bc_2movepeople_dashboard.user.task.complete', {'user': user, 'node': task.id}) }}" class="btn btn-info use-ajax link-btn" data-dialog-type="modal" data-dialog-options='{"width":640}' role="button">{{ 'Complete'|trans }}</a>
+        {% endif %}
+        {% for link in task.task_links %}
+          {{ link }}
+        {% endfor %}
       </div>
     </div>
     {% if task.subgoals is not null %}
