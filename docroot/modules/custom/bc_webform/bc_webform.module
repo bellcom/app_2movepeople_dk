@@ -107,6 +107,7 @@ function bc_webform_webform_submission_custom_alter(array &$form, FormStateInter
     ) {
     $messenger->addMessage(t("You don't have access to send submission for this form."), 'warning');
     $form['#disabled'] = TRUE;
+    return;
   }
 
   if ($bc_webform_handler->userHasSubmittion($webform_submission->getOwnerId())) {

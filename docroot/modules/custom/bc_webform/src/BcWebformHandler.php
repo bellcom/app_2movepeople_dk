@@ -117,7 +117,7 @@ class BcWebformHandler {
 
   public function userHasSubmittion($user_id) {
     if ($user_id == 0) {
-      return TRUE;
+      return FALSE;
     }
     $userSubmissions = $this->webform->getThirdPartySetting('bc_webform', 'user_submissions', []);
     return isset($userSubmissions[$user_id]);
