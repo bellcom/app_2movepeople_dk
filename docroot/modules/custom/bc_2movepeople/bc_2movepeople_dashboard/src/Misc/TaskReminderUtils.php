@@ -49,7 +49,7 @@ class TaskReminderUtils {
           $body = str_replace("@due_date", $goal->get('field_due_date')->value, $body);
 
           // Send email.
-          MovepeopleDashboardController::sendMail([
+          \Drupal::service('2movepeople_dashboard.mailer')->sendMail([
               'to' => $to,
               'from' => \Drupal::config('system.site')->get('mail'),
               'subject' => $subject,

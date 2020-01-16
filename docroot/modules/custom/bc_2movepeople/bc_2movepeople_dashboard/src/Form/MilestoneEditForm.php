@@ -196,7 +196,7 @@ class MilestoneEditForm extends FormBase {
           $body = str_replace("@user", \Drupal::currentUser()->getDisplayName(), $body);
           $body = str_replace("@task_title", $goal_node->get('title')->value, $body);
 
-          MovepeopleDashboardController::sendMail([
+          \Drupal::service('2movepeople_dashboard.mailer')->sendMail([
             'to' => $this->user->get('mail')->value,
             'from' => \Drupal::config('system.site')->get('mail'),
             'subject' => $subject,

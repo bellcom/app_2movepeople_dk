@@ -2,13 +2,10 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Controller;
 
-use Drupal\Core\Link;
-use Drupal\Core\Mail\MailManagerInterface;
+use Drupal\bc_2movepeople_dashboard\Bc2movepeopleDashboardMailerInterface;
 use Drupal\Core\Render\Markup;
-use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\user\Entity\User;
 use Mpdf\Mpdf;
-use Drupal\Core\Mail\Plugin\Mail\PhpMail;
 use Drupal\Core\Url;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Controller\ControllerBase;
@@ -31,9 +28,16 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class MovepeopleDashboardController extends ControllerBase {
 
   protected $database;
-  protected $mailManager;
   protected $fStr;
   protected $pStr;
+
+  /**
+   * Dashboard mailer service.
+   *
+   * @var Bc2movepeopleDashboardMailerInterface
+   */
+  protected $dashboardMailer;
+
 
   /**
    * {@inheritdoc}
@@ -41,18 +45,18 @@ class MovepeopleDashboardController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
         $container->get('database'),
-        $container->get('plugin.manager.mail')
+        $container->get('2movepeople_dashboard.mailer')
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(Connection $database, MailManagerInterface $mail_manager) {
+  public function __construct(Connection $database, Bc2movepeopleDashboardMailerInterface $dashboard_mailer) {
     $this->database = $database;
     $this->fStr = 'feedback';
     $this->pStr = 'progress';
-    $this->mailManager = $mail_manager;
+    $this->dashboardMailer = $dashboard_mailer;
   }
 
   /**
@@ -185,7 +189,7 @@ class MovepeopleDashboardController extends ControllerBase {
       $progression_targets[$progrdata->id()]['id'] = $progrdata->id();
       $progression_targets[$progrdata->id()]['title'] = $progrdata->get('title')->value;
 
-      $milestone_edit_form = new MilestoneEditForm($progrdata, $user);
+      $milestone_edit_form = new MilestoneEditForm($progrdata, $user, $this->dashboardMailer);
       $progression_targets[$progrdata->id()]['form'] = \Drupal::formBuilder()->getForm($milestone_edit_form);
     }
     $build = [
@@ -1122,7 +1126,6 @@ class MovepeopleDashboardController extends ControllerBase {
    * Output a PDF of user evaluations.
    */
   public function sendMilestoneEvaluationsToSbsys(AccountInterface $user) {
-    $config = $this->config('bc_2movepeople_dashboard.AdminSettings');
     $attachments = [];
 
     // Getting PDF file.
@@ -1142,21 +1145,7 @@ class MovepeopleDashboardController extends ControllerBase {
       'filename' => 'sbsys.xml',
       'filemime' => 'application/xml',
     ];
-
-    $to = $config->get('sbsys_email.to');
-    $subject = $config->get('sbsys_email.subject');
-    $message = $config->get('sbsys_email.message');
-
-    $mail = $this->mailManager->mail(
-      'bc_2movepeople_dashboard',
-      'sbsys',
-      $to,
-      \Drupal::languageManager()->getDefaultLanguage()->getId(), [
-        'subject' => $subject,
-        'body' => $message,
-        'attachments' => $attachments,
-      ]
-    );
+    $mail = $this->dashboardMailer->sendSbsysMail($attachments);
 
     if ($mail['result']) {
       drupal_set_message($this->t('Email has been sent to sbsys'));

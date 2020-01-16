@@ -246,7 +246,7 @@ function bc_2movepeople_dashboard_entity_update(EntityInterface $entity) {
       if ($original_manager_id == $manager_id || (empty($original_manager_id) && empty($manager_id))) {
         return;
       }
-      _bc_2movepeople_dashboard_send_task_notification($entity, $manager_id);
+      \Drupal::service('2movepeople_dashboard.mailer')->sendTaskNotification($entity, $manager_id);
       break;
 
     case 'user':
@@ -269,57 +269,6 @@ function bc_2movepeople_dashboard_entity_update(EntityInterface $entity) {
       }
 
       break;
-  }
-}
-
-/**
- * Sends notification to user about assigned task.
- *
- * @param EntityInterface $entity
- *   Task entity.
- *
- * @param string $manager_id
- *   User id who will get notification.
- */
-function _bc_2movepeople_dashboard_send_task_notification(EntityInterface $entity, $user_id = '') {
-  $milestone = Utils::getMilestoneByGoal($entity->id());
-
-  // Get milestone user.
-  $milestone_user = $milestone->get('field_progression_user')->referencedEntities()[0];
-
-  $config = \Drupal::config('bc_2movepeople_dashboard.AdminSettings');
-
-  if (empty($user_id)) {
-    // Empty value for responsible manager user means that task have been
-    // assigned to milestone owner.
-    // @see \Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskAddForm::buildForm()
-    // @see \Drupal\bc_2movepeople_dashboard\Form\CommonFormUtils::getGoalRow()
-    // for more info.
-    $user = $milestone_user;
-    $subject = $config->get('task_notification_email_subject');
-    $body = $config->get('task_notification_email_body');
-    $body = str_replace("@name", $user->getDisplayName(), $body);
-    $body = str_replace("@task_title", $entity->get('title')->value, $body);
-    $body = str_replace("@dashboard_url", Url::fromRoute('bc_2movepeople_dashboard.main')->toString(), $body);
-  }
-  else {
-    // Send notification to responsible manager.
-    $user = User::load($user_id);
-    $subject = $config->get('responsible_manager_email_subject');
-    $body = $config->get('responsible_manager_email_body');
-    $body = str_replace("@manager", $user->getDisplayName(), $body);
-    $body = str_replace("@user", $milestone_user->getDisplayName(), $body);
-    $body = str_replace("@task_title", $entity->get('title')->value, $body);
-  }
-
-  if ($to = $user->get('mail')->value) {
-    MovepeopleDashboardController::sendMail([
-      'to' => $to,
-      'from' => \Drupal::config('system.site')->get('mail'),
-      'subject' => $subject,
-      'body' => $body,
-      'sender' => t('System notify'),
-    ]);
   }
 }
 

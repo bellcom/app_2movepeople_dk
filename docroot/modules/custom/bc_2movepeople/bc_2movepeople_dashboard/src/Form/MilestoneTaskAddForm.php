@@ -2,6 +2,7 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Form;
 
+use Drupal\bc_2movepeople_dashboard\Bc2movepeopleDashboardMailerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
@@ -12,6 +13,7 @@ use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Form to add milestone tasks.
@@ -22,6 +24,29 @@ class MilestoneTaskAddForm extends FormBase {
 
   protected $parentNode;
   protected $isSaved;
+
+  /**
+   * Dashboard mailer service.
+   *
+   * @var Bc2movepeopleDashboardMailerInterface
+   */
+  protected $dashboardMailer;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('2movepeople_dashboard.mailer')
+    );
+  }
+
+  /**
+   * MeetingAddForm constructor object.
+   */
+  public function __construct(Bc2movepeopleDashboardMailerInterface $dashboard_mailer) {
+    $this->dashboardMailer = $dashboard_mailer;
+  }
 
   /**
    * Build MilestoneTaskAddForm render representing array.
@@ -202,7 +227,7 @@ class MilestoneTaskAddForm extends FormBase {
       $node->set($field_name, $new_goal_ids);
 
       $this->isSaved = $node->save();
-      _bc_2movepeople_dashboard_send_task_notification($new_node, $responsible_manager);
+      $this->dashboardMailer->sendTaskNotification($new_node, $responsible_manager);
       $user = $this->parentNode->get('field_progression_user')->getValue();
 
       if (isset($this->return_url)) {

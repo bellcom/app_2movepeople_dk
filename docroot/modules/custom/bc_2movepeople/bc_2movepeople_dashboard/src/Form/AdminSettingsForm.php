@@ -18,7 +18,7 @@ class AdminSettingsForm extends ConfigFormBase {
    */
   protected function getEditableConfigNames() {
     return [
-      'bc_2movepeople_dashboard.AdminSettings',
+      self::getConfigName(),
     ];
   }
 
