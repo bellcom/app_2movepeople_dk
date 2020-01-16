@@ -127,9 +127,20 @@ class Bc2MovepeopleDashboardMailer implements Bc2movepeopleDashboardMailerInterf
       // for more info.
       $user = $milestone_user;
       $subject = $config->get('task_notification_email_subject');
+      $task_body_value = $entity->get('body')->getValue();
+      $task_body = '';
+      if (!empty($task_body_value)) {
+        $task_body = [
+          '#type'=> 'processed_text',
+          '#text' => $task_body_value[0]['value'],
+          '#format' => $task_body_value[0]['format'],
+        ];
+        $task_body = \Drupal::service('renderer')->render($task_body);
+      }
       $body = $config->get('task_notification_email_body');
       $body = str_replace("@name", $user->getDisplayName(), $body);
       $body = str_replace("@task_title", $entity->get('title')->value, $body);
+      $body = str_replace("@task_body", $task_body, $body);
       $body = str_replace("@dashboard_url", Url::fromRoute('bc_2movepeople_dashboard.main')->toString(), $body);
     }
     else {

@@ -7,4 +7,4 @@ responsible_manager_email_subject: 'Opgave tildelt'
 responsible_manager_email_body: "Hej @manager<br><br>\r\n\r\nDu afregnes som ansvarlig manager af @task_title opgaven for @user\r\n\r\n<br><br>"
 milestone_evaluation_header_nid: '1779'
 task_notification_email_subject: 'Du er blevet tildelt opgaven'
-task_notification_email_body: "Hej @name<br><br>\r\n\r\nDu er blevet tildelt opgaven: @task_title"
+task_notification_email_body: "Hej @name<br><br>\r\n\r\nDu er blevet tildelt opgaven: @task_title<br>\r\n@task_body\r\n\r\n<a href=\"@dashboard_url\">Tjek ny oppgave på 2move app</a>"
