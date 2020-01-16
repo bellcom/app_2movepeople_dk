@@ -29,7 +29,11 @@ function bc_webform_webform_submission_presave(WebformSubmissionInterface $webfo
     return;
   }
   $bc_webform_handler = new BcWebformHandler($webform_submission->getWebform());
-  $bc_webform_handler->registerUserSubmission($webform_submission->getOwnerId(), $webform_submission->getToken());
+  $user_id = $webform_submission->getOwnerId();
+  if (empty($user_id) && $token_user_id = $bc_webform_handler->getUserIdFromToken()) {
+    $user_id = $token_user_id;
+  }
+  $bc_webform_handler->registerUserSubmission($user_id, $webform_submission->getToken());
 }
 
 /**
@@ -52,13 +56,20 @@ function bc_webform_webform_delete(WebformInterface $webform) {
  * Implements hook_ENTITY_TYPE_access().
  */
 function bc_webform_webform_access(WebformInterface $webform, $operation, AccountInterface $account) {
-  if (in_array($operation, ['submission_page']) || $account->id() <= 1) {
-    return AccessResult::neutral();
+  $bc_webform_handler = new BcWebformHandler($webform);
+  $user_id = $account->id();
+
+  if (empty($user_id) && $token_user_id = $bc_webform_handler->getUserIdFromToken()) {
+    $user_id = $token_user_id;
   }
 
-  $bc_webform_handler = new BcWebformHandler($webform);
-  if (!$bc_webform_handler->matchOrganization($account->id())) {
+  if ($user_id > 1 && !$bc_webform_handler->matchOrganization($user_id)) {
     return AccessResult::forbidden();
+  }
+
+  if (!empty($token_user_id) && $user_id === $token_user_id
+    && in_array($operation, ['submission_page', 'submission_create'])) {
+    return AccessResult::allowed();
   }
 
   return AccessResult::neutral();
@@ -102,15 +113,20 @@ function bc_webform_webform_submission_custom_alter(array &$form, FormStateInter
   $bc_webform_handler = new BcWebformHandler($webform_submission->getWebform());
   $messenger = \Drupal::service('messenger');
 
-  if (!$bc_webform_handler->isAllowedSubmit($webform_submission->getOwnerId())
-    || !$bc_webform_handler->matchOrganization($webform_submission->getOwnerId())
+  $user_id = $webform_submission->getOwnerId();
+  if (empty($user_id) && $token_user_id = $bc_webform_handler->getUserIdFromToken()) {
+    $user_id = $token_user_id;
+  }
+
+  if (!$bc_webform_handler->isAllowedSubmit($user_id)
+    || !$bc_webform_handler->matchOrganization($user_id)
     ) {
     $messenger->addMessage(t("You don't have access to send submission for this form."), 'warning');
     $form['#disabled'] = TRUE;
     return;
   }
 
-  if ($bc_webform_handler->userHasSubmittion($webform_submission->getOwnerId())) {
+  if ($bc_webform_handler->userHasSubmittion($user_id)) {
     $messenger = \Drupal::service('messenger');
     $messenger->addMessage('You already sent submission for this form.', 'warning');
     $form['#disabled'] = TRUE;

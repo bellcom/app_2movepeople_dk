@@ -3,11 +3,14 @@
 namespace Drupal\bc_webform;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 use Drupal\bc_2movepeople_dashboard\Misc\Utils;
+use Drupal\Component\Utility\Random;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
+use Drupal\user\UserInterface;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionInterface;
 
@@ -48,9 +51,22 @@ class BcWebformHandler {
   }
 
   /**
+   * Lookup user id by access token.
+   *
+   * @return int|NULL
+   */
+  public function getUserIdFromToken() {
+    $access_token = \Drupal::request()->query->get('access-token');
+    $user_id = array_search($access_token, $this->getAccessTokens());
+    return $user_id ?: NULL;
+  }
+
+  /**
    * Returns array with user ids that should submit webform.
    *
    * @return array|int
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function getTargetUsers() {
     $organisationTid = $this->webform->getThirdPartySetting('bc_webform', 'organisation_tid');
@@ -68,6 +84,21 @@ class BcWebformHandler {
       ->condition('roles', $roles, 'IN')
       ->condition('field_organisation', $organisationTid)
       ->execute();
+
+    // Check user token access and generate missin tokens.
+    $accessTokens = $this->getAccessTokens();
+    $userSubmissions = $this->getUserSubmissions();
+    $randomGenerator = new Random();
+    foreach ($user_ids as $uid) {
+      if (isset($userSubmissions[$uid]) || isset($accessTokens[$uid])) {
+        continue;
+      }
+      $accessTokens[$uid] = $randomGenerator->name(32);
+    }
+    if (array_diff($accessTokens, $this->getAccessTokens())) {
+      $this->setAccessTokens($accessTokens);
+    }
+
     return $user_ids;
   }
 
@@ -102,16 +133,16 @@ class BcWebformHandler {
     /** @var \Drupal\user\UserInterface $user */
     $user = User::load($user_id);
     $roles = $this->webform->getThirdPartySetting('bc_webform', 'roles', $this->getAllowedRoles());
-    return array_intersect($roles,$user->getRoles());
+    return $user ? array_intersect($roles,$user->getRoles()) : FALSE;
   }
 
   public function registerUserSubmission($user_id, $token) {
-    $userSubmissions = $this->webform->getThirdPartySetting('bc_webform', 'user_submissions', []);
+    $userSubmissions = $this->getUserSubmissions();
     if ($user_id == 0 || !empty($userSubmissions[$user_id])) {
       return;
     }
     $userSubmissions[$user_id] = $token;
-    $this->webform->setThirdPartySetting('bc_webform', 'user_submissions', $userSubmissions);
+    $this->setUserSubmissions($userSubmissions);
     $this->webform->save();
   }
 
@@ -119,7 +150,7 @@ class BcWebformHandler {
     if ($user_id == 0) {
       return FALSE;
     }
-    $userSubmissions = $this->webform->getThirdPartySetting('bc_webform', 'user_submissions', []);
+    $userSubmissions = $this->getUserSubmissions();
     return isset($userSubmissions[$user_id]);
   }
 
@@ -128,6 +159,8 @@ class BcWebformHandler {
    *
    * @return array
    *   Array with user ids.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function userWithoutTask() {
     $users_list = [];
@@ -147,9 +180,13 @@ class BcWebformHandler {
    * @param $userTaskData
    *
    * @return WebformInterface
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
   private function setUserTasksData($userTaskData) {
-    return $this->webform->setThirdPartySetting('bc_webform', 'user_task_data', $userTaskData);
+    $this->webform->setThirdPartySetting('bc_webform', 'user_task_data', $userTaskData);
+    $this->webform->save();
+    return $this->webform;
   }
 
   /**
@@ -159,6 +196,52 @@ class BcWebformHandler {
    */
   private function getUserTasksData() {
     return $this->webform->getThirdPartySetting('bc_webform', 'user_task_data', []);
+  }
+
+  /**
+   * Sets user access tokens array.
+   *
+   * @param $userTaskData
+   *
+   * @return WebformInterface
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  private function setAccessTokens($accessTokens) {
+    $this->webform->setThirdPartySetting('bc_webform', 'access_tokens', $accessTokens);
+    $this->webform->save();
+    return $this->webform;
+  }
+
+  /**
+   * Gets user access tokens array.
+   *
+   * @return mixed
+   */
+  private function getAccessTokens() {
+    return $this->webform->getThirdPartySetting('bc_webform', 'access_tokens', []);
+  }
+
+  /**
+   * Sets user access tokens array.
+   *
+   * @param $userTaskData
+   *
+   * @return WebformInterface
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  private function setUserSubmissions($userSubmission) {
+    $this->webform->setThirdPartySetting('bc_webform', 'user_submissions', $userSubmission);
+    $this->webform->save();
+    return $this->webform;
+  }
+
+  /**
+   * Gets user access tokens array.
+   *
+   * @return mixed
+   */
+  private function getUserSubmissions() {
+    return $this->webform->getThirdPartySetting('bc_webform', 'user_submissions', []);
   }
 
   /**
@@ -172,7 +255,6 @@ class BcWebformHandler {
   public function updateTasksData($userTasksData) {
     $oldUserTasksData = $this->getUserTasksData();
     $this->setUserTasksData($userTasksData + $oldUserTasksData);
-    $this->webform->save();
   }
 
   /**
@@ -187,7 +269,6 @@ class BcWebformHandler {
     $userTasksData = $this->getUserTasksData();
     unset($userTasksData[$user_id]);
     $this->setUserTasksData($userTasksData);
-    $this->webform->save();
   }
 
   /**
@@ -199,14 +280,14 @@ class BcWebformHandler {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function resetSubmissions($uid = NULL) {
-    $userSubmissions = $this->webform->getThirdPartySetting('bc_webform', 'user_submissions', []);
+    $userSubmissions = $this->getUserSubmissions();
     if (!empty($uid)) {
       unset($userSubmissions[$uid]);
     }
     else {
       $userSubmissions = [];
     }
-    $this->webform->setThirdPartySetting('bc_webform', 'user_submissions', $userSubmissions);
+    $this->setUserSubmissions($userSubmissions);
     $this->webform->save();
   }
 
@@ -221,13 +302,10 @@ class BcWebformHandler {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function addUserTask($uid) {
-    $webform_url = $this->webform->toUrl('canonical', [
-      'query' => [
-        'destination' => Url::fromRoute('bc_2movepeople_dashboard.main')->toString()
-      ]
-    ])->toString();
+    $access_tokens = $this->getAccessTokens();
+    $webform_url = $this->webform->toUrl('canonical');
     $body = t('You have new webform to submit. <a href=":url">Submit response</a>', [
-      ':url' => $webform_url
+      ':url' => $webform_url->setOption('query', ['access-token' => $access_tokens[$uid]])->toString(),
     ]);
     $daysToCompleteTask = $this->webform->getThirdPartySetting('bc_webform', 'days_to_complete_task');
     if (empty($daysToCompleteTask)) {
@@ -243,7 +321,9 @@ class BcWebformHandler {
         'field_task_show_complete_button' => FALSE,
         'field_task_links' => [
           [
-            'uri' => 'internal:/' . $webform_url,
+            'uri' => 'internal:' . $webform_url->setOption('query', [
+              'destination' => Url::fromRoute('bc_2movepeople_dashboard.main')->toString()
+            ])->toString(),
             'title' => $this->t('Submit response'),
           ]
         ],
@@ -293,7 +373,7 @@ class BcWebformHandler {
     $userTasksData = $this->getUserTasksData();
     $uid = $webformSubmission->getOwnerId();
     if (empty($uid)
-      && $userSubmissions = $this->webform->getThirdPartySetting('bc_webform', 'user_submissions', [])) {
+      && $userSubmissions = $this->getUserSubmissions()) {
       $uid = array_search($webformSubmission->getToken(), $userSubmissions);
     }
 
