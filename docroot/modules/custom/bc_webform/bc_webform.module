@@ -25,9 +25,11 @@ define('BC_WEBFORM_DAYS_TO_COMPLETE_TASK', 7);
  * Implements hook_ENTITY_TYPE_presave().
  */
 function bc_webform_webform_submission_presave(WebformSubmissionInterface $webform_submission) {
-  if (!bc_webform_has_anonymization($webform_submission->getWebform())) {
+  if (!bc_webform_has_anonymization($webform_submission->getWebform())
+    || $webform_submission->getOwner()->hasRole('anonymous')) {
     return;
   }
+
   $bc_webform_handler = new BcWebformHandler($webform_submission->getWebform());
   $user_id = $webform_submission->getOwnerId();
   if (empty($user_id) && $token_user_id = $bc_webform_handler->getUserIdFromToken()) {
@@ -107,9 +109,11 @@ function bc_webform_webform_help_info_alter(array &$help) {
 function bc_webform_webform_submission_custom_alter(array &$form, FormStateInterface $form_state) {
   /** @var WebformSubmissionInterface $webform_submission */
   $webform_submission = $form_state->getFormObject()->getEntity();
-  if (!bc_webform_has_anonymization($webform_submission->getWebform())) {
+  if (!bc_webform_has_anonymization($webform_submission->getWebform())
+    || $webform_submission->getOwner()->hasRole('anonymous')) {
     return;
   }
+
   $bc_webform_handler = new BcWebformHandler($webform_submission->getWebform());
   $messenger = \Drupal::service('messenger');
 
@@ -164,7 +168,6 @@ function bc_webform_form_webform_form_alter(array &$form, FormStateInterface $fo
   $webform = $form_state->getFormObject()->getEntity();
   $available_roles_ids = empty($bc_webform_settings->get('roles')) ? [] : $bc_webform_settings->get('roles');
   $available_roles = \Drupal::entityTypeManager()->getStorage('user_role')->loadMultiple($available_roles_ids);
-  $roles = $webform->getThirdPartySetting('bc_webform', 'roles', unserialize(BC_WEBFORM_ROLES));
   $form['bc_webform'] = [
     '#type' => 'details',
     '#title' => t('Additional webform settings'),
@@ -176,16 +179,19 @@ function bc_webform_form_webform_form_alter(array &$form, FormStateInterface $fo
 
   $options = [];
   foreach ($available_roles as $role) {
-    if (strpos($role->id(), '2mp') === FALSE) {
-      continue;
-    }
     $options[$role->id()] = $role->label();
   }
+
+  $access = $webform->getAccessRules();
   $form['bc_webform']['roles'] = [
     '#type' => 'checkboxes',
-    '#title' => t('Roles that allowed send submissions'),
+    '#title' => t('Roles that have the ability to submit submissions'),
     '#options' => $options,
-    '#default_value' => $roles,
+    '#default_value' => empty($webform->id()) ? $available_roles_ids : $access['create']['roles'],
+  ];
+  $form['bc_webform']['roles_info'] = [
+    '#type' => 'markup',
+    '#markup' => t('ATTENTION: For webforms with anonymous access it is not possible to track submission coverage.'),
   ];
 
   $user = $webform->getOwner();
@@ -212,13 +218,12 @@ function bc_webform_form_webform_form_alter(array &$form, FormStateInterface $fo
     '#default_value' => $days_to_complete_task,
   ];
 
-  if (!bc_webform_has_anonymization($webform)) {
-    $form['bc_webform']['anonymization'] = [
-      '#type' => 'checkbox',
-      '#title' => t('Add submission anonymization'),
-      '#default_value' => TRUE,
-    ];
-  }
+  $anonymization = bc_webform_has_anonymization($webform) ;
+  $form['bc_webform']['anonymization'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Submission anonymization'),
+    '#default_value' => isset($anonymization) ? $anonymization : TRUE,
+  ];
 
   $form['actions']['submit']['#submit'][] = 'bc_webform_webform_form_submit';
 }
@@ -229,13 +234,16 @@ function bc_webform_form_webform_form_alter(array &$form, FormStateInterface $fo
  * Saving general webform settings.
  */
 function bc_webform_webform_form_submit(array $form, FormStateInterface $form_state) {
+  /** @var WebformInterface $webform */
   $webform = $form_state->getFormObject()->getEntity();
   $settings = &$form_state->getValue('bc_webform');
-  $webform->setThirdPartySetting('bc_webform', 'roles', array_filter($settings['roles']));
+  $access_rules = $webform->getAccessRules();
+  $access_rules['create']['roles'] = $settings['roles'];
+  $webform->setAccessRules($access_rules);
   $webform->setThirdPartySetting('bc_webform', 'organisation_tid', $settings['organisation_tid']);
   $webform->setThirdPartySetting('bc_webform', 'days_to_complete_task', $settings['days_to_complete_task']);
 
-  if (!empty($settings['anonymization']) && !bc_webform_has_anonymization($webform)) {
+  if ($settings['anonymization'] && !bc_webform_has_anonymization($webform)) {
     /** @var \Drupal\webform\Plugin\WebformHandlerManagerInterface $handler_manager */
     $handler_manager = \Drupal::service('plugin.manager.webform.handler');
 
@@ -256,6 +264,9 @@ function bc_webform_webform_form_submit(array $form, FormStateInterface $form_st
     // Add webform handler which triggers Webform::save().
     $webform->addWebformHandler($handler);
   }
+  if (empty($settings['anonymization']) && bc_webform_has_anonymization($webform)) {
+    $webform->deleteWebformHandler($webform->getHandler('anonymous_submission'));
+  }
   $webform->save();
 }
 
@@ -264,7 +275,7 @@ function bc_webform_webform_form_submit(array $form, FormStateInterface $form_st
  *
  * @param WebformInterface $webform
  *
- * @return mixed
+ * @return bool
  */
 function bc_webform_has_anonymization(WebformInterface $webform) {
   $handlers = $webform->getHandlers();
@@ -273,6 +284,7 @@ function bc_webform_has_anonymization(WebformInterface $webform) {
   ) {
     return TRUE;
   }
+  return FALSE;
 }
 
 /**
@@ -295,14 +307,14 @@ function bc_webform_form_bc_2movepeople_dashboard_admin_settings_form_alter(arra
   $options = [];
   $available_roles = \Drupal::entityTypeManager()->getStorage('user_role')->loadMultiple();
   foreach ($available_roles as $role) {
-    if (strpos($role->id(), '2mp') === FALSE) {
+    if (strpos($role->id(), '2mp') === FALSE && $role->id() != 'anonymous') {
       continue;
     }
     $options[$role->id()] = $role->label();
   }
   $form['bc_webform']['roles'] = [
     '#type' => 'checkboxes',
-    '#title' => t('Roles that allowed send submissions'),
+    '#title' => t('Roles that have the ability to submit submissions'),
     '#options' => $options,
     '#default_value' => empty($config->get('roles')) ? unserialize(BC_WEBFORM_ROLES) : $config->get('roles'),
   ];

@@ -10779,8 +10779,8 @@ msgstr "Liniediagram"
 msgid "Send user tasks"
 msgstr "Send brugeropgaver"
 
-msgid "Roles that allowed send submissions"
-msgstr "Roller, der gjorde det muligt at sende indsendelser"
+msgid "Roles that have the ability to submit submissions"
+msgstr "Roller, der har en mulighed at sende indsendelser"
 
 msgid "Add submission anonymization"
 msgstr "Tilføj indsendelse anonymisering"
@@ -10810,9 +10810,9 @@ msgstr "Indsamling af feedback"
 msgid "@count users got assigned new task"
 msgstr "@count brugere fik tildelt en ny opgave"
 
-msgid "You have new webform to submit. <a href=\":link\">Submit response</a>"
+msgid "You have new webform to submit. <a href=\":url\">Submit response</a>"
 msgstr ""
-"Du har en ny webformular du skal indsende. <a href=\":link\">Indsend "
+"Du har en ny webformular du skal indsende. <a href=\":url\">Indsend "
 "svar</a> "
 
 msgid "Task \"@name\" has been completed."
@@ -10853,4 +10853,16 @@ msgstr "Webformsindstillinger"
 
 msgid "Hide preview"
 msgstr "Skjul forhåndsvisning"
+
+msgid "Manager"
+msgstr "Manager"
+
+msgid "Submit response"
+msgstr "Indsend svar"
+
+msgid "You already sent submission for this form."
+msgstr "Du har allerede sendt indsendelse af denne formular."
+
+msgid "ATTENTION: For webforms with anonymous access it is not possible to track submission coverage."
+msgstr "OBS: For webformularer med anonym adgang er det ikke muligt at spore indsendelsesdækning."
 

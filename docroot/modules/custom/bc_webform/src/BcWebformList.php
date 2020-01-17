@@ -6,6 +6,7 @@ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Url;
 use Drupal\webform\WebformEntityListBuilder;
+use Drupal\webform\WebformInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -56,12 +57,25 @@ class BcWebformList extends WebformEntityListBuilder implements ContainerInjecti
       return NULL;
     }
     $targetUsers = $bcWebformHandler->getTargetUsers();
-    $results = &$row['results'];
-    if (is_array($row['results'])) {
-      $results = &$row['results']['data']['#title'];
-    }
-    $results .= '/' . count($targetUsers);
+    $userSubmissions = $bcWebformHandler->getUserSubmissions();
+    $matchedSubmittions = array_intersect(array_keys($targetUsers), array_keys($userSubmissions));
+    array_splice( $row, 6, 0, [
+      'coverage' => count($matchedSubmittions) . '/' . count($targetUsers),
+    ]);
     return $row;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildHeader() {
+    $parentHeader = parent::buildHeader();
+    array_splice( $parentHeader, 6, 0, [
+      'coverage' => [
+        'data' => $this->t('Coverage'),
+      ],
+    ]);
+    return $parentHeader;
   }
 
   /**

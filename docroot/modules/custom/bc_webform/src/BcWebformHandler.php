@@ -78,7 +78,11 @@ class BcWebformHandler {
       }
       $organisationTid = $values[0]['target_id'];
     }
-    $roles = $this->webform->getThirdPartySetting('bc_webform', 'roles', $this->getAllowedRoles());
+    $access_rules = $this->webform->getAccessRules();
+    $roles = [];
+    if (!empty($access_rules['create']['roles'])) {
+      $roles = array_filter($access_rules['create']['roles']);
+    }
     $user_ids = \Drupal::entityQuery('user')
       ->condition('status', 1)
       ->condition('roles', $roles, 'IN')
@@ -132,8 +136,11 @@ class BcWebformHandler {
   public function isAllowedSubmit($user_id) {
     /** @var \Drupal\user\UserInterface $user */
     $user = User::load($user_id);
-    $roles = $this->webform->getThirdPartySetting('bc_webform', 'roles', $this->getAllowedRoles());
-    return $user ? array_intersect($roles,$user->getRoles()) : FALSE;
+    $access_rules = $this->webform->getAccessRules();
+    if (!empty($access_rules['create']['roles']) && array_intersect($access_rules['create']['roles'], $user->getRoles())) {
+      return TRUE;
+    }
+    return FALSE;
   }
 
   public function registerUserSubmission($user_id, $token) {
@@ -229,7 +236,7 @@ class BcWebformHandler {
    * @return WebformInterface
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  private function setUserSubmissions($userSubmission) {
+  public function setUserSubmissions($userSubmission) {
     $this->webform->setThirdPartySetting('bc_webform', 'user_submissions', $userSubmission);
     $this->webform->save();
     return $this->webform;
@@ -240,7 +247,7 @@ class BcWebformHandler {
    *
    * @return mixed
    */
-  private function getUserSubmissions() {
+  public function getUserSubmissions() {
     return $this->webform->getThirdPartySetting('bc_webform', 'user_submissions', []);
   }
 
@@ -378,9 +385,11 @@ class BcWebformHandler {
     }
 
     if (!empty($userTasksData[$uid]) && $node = Node::load($userTasksData[$uid])) {
-      $node->set('field_task_complete', 1);
-      $node->save();
-      $this->messenger()->addStatus($this->t('Task "@name" has been completed.', ['@name' => $node->label()]));
+      if ($node->field_task_complete->value == FALSE) {
+        $node->set('field_task_complete', 1);
+        $node->save();
+        $this->messenger()->addStatus($this->t('Task "@name" has been completed.', ['@name' => $node->label()]));
+      }
     }
   }
 
