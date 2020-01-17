@@ -218,7 +218,7 @@ function bc_webform_form_webform_form_alter(array &$form, FormStateInterface $fo
     '#default_value' => $days_to_complete_task,
   ];
 
-  $anonymization = bc_webform_has_anonymization($webform) ;
+  $anonymization = empty($webform->id()) ? TRUE : bc_webform_has_anonymization($webform);
   $form['bc_webform']['anonymization'] = [
     '#type' => 'checkbox',
     '#title' => t('Submission anonymization'),
