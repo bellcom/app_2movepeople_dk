@@ -46,7 +46,8 @@
         "drupal/webform_analysis": "^1.0@beta",
         "drupal/config_ignore": "^2.2",
         "drupal/webform_views": "^5.0@alpha",
-        "drupal/pathauto": "^1.6"
+        "drupal/pathauto": "^1.6",
+        "drupal/web_push_notification": "^1.0@alpha"
     },
     "repositories": {
         "0": {
