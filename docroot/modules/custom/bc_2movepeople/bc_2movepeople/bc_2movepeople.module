@@ -6,7 +6,7 @@
  */
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
-
+use Drupal\Core\Entity\EntityTypeInterface;
 /*
  * Implements hook_toolbar_alter()
  */
@@ -92,4 +92,14 @@ function _bc_2movepeople_hide_field(&$form, $field_names) {
     $form[$field_name]['#type'] = 'hidden';
     $form[$field_name]['#access'] = FALSE;
   }
+}
+
+/**
+ * Implements hook_entity_bundle_field_info().
+ */
+function bc_2movepeople_entity_base_field_info_alter(&$fields, \Drupal\Core\Entity\EntityTypeInterface $entity_type) {
+  if ($entity_type->id() != 'user') {
+    return;
+  }
+  $fields['name']->setLabel(t('Username'));
 }

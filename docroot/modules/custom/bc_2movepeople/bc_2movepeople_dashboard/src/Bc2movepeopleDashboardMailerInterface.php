@@ -20,4 +20,10 @@ interface Bc2movepeopleDashboardMailerInterface {
    */
   public function sendMail(array $message);
 
+  /**
+   * Returns default tokens.
+   *
+   * @return array
+   */
+  public function getDefaultTokens();
 }

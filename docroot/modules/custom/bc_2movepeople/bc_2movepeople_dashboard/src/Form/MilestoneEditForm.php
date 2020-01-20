@@ -16,6 +16,7 @@ use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 use Drupal\node\Entity\Node;
+use Drupal\user\Entity\User;
 
 /**
  * Form to edit milestones.
@@ -191,12 +192,15 @@ class MilestoneEditForm extends FormBase {
           $config = $this->config('bc_2movepeople_dashboard.AdminSettings');
           $subject = $config->get('task_complete_email_subject');
           $body = $config->get('task_complete_email_body');
-
+          $dashboardMailer = \Drupal::service('2movepeople_dashboard.mailer');
           $body = str_replace("@name", $this->user->get('name')->value, $body);
+          $dashboardMailer->replaceDefaultTokens($body, [
+            'recipient' => $this->user,
+          ]);
           $body = str_replace("@user", \Drupal::currentUser()->getDisplayName(), $body);
           $body = str_replace("@task_title", $goal_node->get('title')->value, $body);
 
-          \Drupal::service('2movepeople_dashboard.mailer')->sendMail([
+          $dashboardMailer->sendMail([
             'to' => $this->user->get('mail')->value,
             'from' => \Drupal::config('system.site')->get('mail'),
             'subject' => $subject,

@@ -8,12 +8,14 @@
 namespace Drupal\bc_2movepeople_dashboard\Form;
 
 use Drupal\bc_2movepeople_dashboard\Bc2movepeopleDashboardMailerInterface;
+use Drupal\bc_2movepeople_dashboard\Misc\Utils;
 use Drupal\Core\Form\FormBase;
 use Drupal\node\NodeInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
+use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -179,14 +181,15 @@ class UserTaskCompleteForm extends FormBase {
       $body = $config->get('task_complete_email_body');
       $subject = $config->get('task_complete_email_subject');
 
-      $body = str_replace("@name", \Drupal::currentUser()->getDisplayName(), $body);
-      $body = str_replace("@user", $this->user->get('name')->value, $body);
+      $body = str_replace("@user", Utils::getUserName($this->user), $body);
       $body = str_replace("@task_title", $this->node->get('title')->value, $body);
 
       foreach ($mp_admin_ids as $mp_id) {
-        $mp_admin = \Drupal\user\Entity\User::load($mp_id);
+        $mp_admin = User::load($mp_id);
         $to = $mp_admin->get('mail')->value;
-
+        $this->dashboardMailer->replaceDefaultTokens($body, [
+          'recipient' => $mp_admin,
+        ]);
         $this->dashboardMailer->sendMail([
             'to' => $to,
             'from' => \Drupal::config('system.site')->get('mail'),

@@ -3,6 +3,7 @@
 namespace Drupal\bc_2movepeople_dashboard\Form;
 
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
+use Drupal\bc_2movepeople_dashboard\Misc\Utils;
 use Drupal\Core\Url;
 use Drupal\user\Entity\User;
 use Drupal\Core\Session\AccountInterface;
@@ -352,24 +353,7 @@ class CommonFormUtils {
    *   User name or drupal name
    */
   public static function getUserName($user) {
-
-    $user_name = NULL;
-
-    if (empty($user->field_user_firstname->value) and empty($user->field_user_surname->value)) {
-      $user_name = $user->getDisplayName();
-    }
-    elseif (!empty($user->field_user_firstname->value) and !empty($user->field_user_surname->value)) {
-      $user_name = $user->field_user_firstname->value . ' ' . $user->field_user_surname->value;
-    }
-    else {
-      if (!empty($user->field_user_firstname->value)) {
-        $user_name = $user->field_user_firstname->value;
-      }
-      else {
-        $user_name = $user->field_user_surname->value;
-      }
-    }
-    return $user_name;
+    return Utils::getUserName($user);
   }
 
 }

@@ -12,6 +12,7 @@ use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Url;
@@ -141,7 +142,7 @@ class MeetingAddForm extends FormBase {
       $to_replace['subject'] = $config->get('meeting_invite_email_subject');
       $to_replace['body'] = $config->get('meeting_invite_email_body');
       foreach ($to_replace as &$text) {
-        $text = str_replace("@name", $this->user->getDisplayName(), $text);
+        $this->dashboardMailer->replaceDefaultTokens($text, ['recipient' => $this->user]);
         $text = str_replace("@author", \Drupal::currentUser()->getDisplayName(), $text);
         $text = str_replace("@meeting_title", $this->meeting->getTitle(), $text);
         $text = str_replace("@meeting_place", $place, $text);

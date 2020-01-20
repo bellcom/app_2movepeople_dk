@@ -45,11 +45,15 @@ class TaskReminderUtils {
           $subject = $config->get('task_reminder_email_subject');
           $body = $config->get('task_reminder_email_body');
           $body = str_replace("@name", $user->getDisplayName(), $body);
+          $dashboardMailer = \Drupal::service('2movepeople_dashboard.mailer');
+          $dashboardMailer->replaceDefaultTokens($body, [
+            'recipient' => $user,
+          ]);
           $body = str_replace("@task_title", $goal->get('title')->value, $body);
           $body = str_replace("@due_date", $goal->get('field_due_date')->value, $body);
 
           // Send email.
-          \Drupal::service('2movepeople_dashboard.mailer')->sendMail([
+          $dashboardMailer->sendMail([
               'to' => $to,
               'from' => \Drupal::config('system.site')->get('mail'),
               'subject' => $subject,

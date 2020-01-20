@@ -7,12 +7,14 @@ use Drupal\bc_2movepeople_dashboard\Misc\Utils;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Link;
 use Drupal\Core\Mail\MailManagerInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\Core\Url;
 use Drupal\user\Entity\User;
+use Drupal\user\UserInterface;
 
 /**
  * Class Bc2movePeopleDashboardMailer.
@@ -50,6 +52,37 @@ class Bc2MovepeopleDashboardMailer implements Bc2movepeopleDashboardMailerInterf
     $this->mailManager = $mail_manager;
     $this->languageManager = $language_manager;
     $this->stringTranslation = $string_translation;
+  }
+
+  /**
+   * Returns default tokens.
+   *
+   * @return array
+   */
+  public function getDefaultTokens() {
+    return [
+      '@recipient_full_name' => $this->t('Recipient full name'),
+      '@recipient_user_name' => $this->t('Recipient user name'),
+      '@recipient_password_reset_link' => $this->t('Recipient password reset link'),
+    ];
+  }
+
+  /**
+   * Replace token function.
+   *
+   * @param $string
+   * @param $tokensData
+   */
+  public function replaceDefaultTokens(&$string, $tokensData) {
+    if (!empty($tokensData['recipient'])
+      && $tokensData['recipient'] instanceof UserInterface) {
+      /** @var UserInterface $user */
+      $user = $tokensData['recipient'];
+      $reset_link = \Drupal::l($this->t('Reset password'),  Url::fromRoute('user.pass'));
+      $string = str_replace('@recipient_full_name', Utils::getUserName($user), $string);
+      $string = str_replace('@recipient_user_name', $user->getAccountName(), $string);
+      $string = str_replace('@recipient_password_reset_link', $reset_link, $string);
+    }
   }
 
   /**
@@ -138,7 +171,7 @@ class Bc2MovepeopleDashboardMailer implements Bc2movepeopleDashboardMailerInterf
         $task_body = \Drupal::service('renderer')->render($task_body);
       }
       $body = $config->get('task_notification_email_body');
-      $body = str_replace("@name", $user->getDisplayName(), $body);
+      $this->replaceDefaultTokens($body, ['recipient' => $user]);
       $body = str_replace("@task_title", $entity->get('title')->value, $body);
       $body = str_replace("@task_body", $task_body, $body);
       $body = str_replace("@dashboard_url", Url::fromRoute('bc_2movepeople_dashboard.main')->toString(), $body);

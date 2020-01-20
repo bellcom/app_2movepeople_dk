@@ -44,4 +44,34 @@ class Utils {
     return empty($result) ? NULL : Node::loadMultiple($result);
   }
 
+  /**
+   * Returns friendly user name.
+   *
+   * @param object $user
+   *   User.
+   *
+   * @return string
+   *   User name or drupal name
+   */
+  public static function getUserName($user) {
+
+    $user_name = NULL;
+
+    if (empty($user->field_user_firstname->value) and empty($user->field_user_surname->value)) {
+      $user_name = $user->getDisplayName();
+    }
+    elseif (!empty($user->field_user_firstname->value) and !empty($user->field_user_surname->value)) {
+      $user_name = $user->field_user_firstname->value . ' ' . $user->field_user_surname->value;
+    }
+    else {
+      if (!empty($user->field_user_firstname->value)) {
+        $user_name = $user->field_user_firstname->value;
+      }
+      else {
+        $user_name = $user->field_user_surname->value;
+      }
+    }
+    return $user_name;
+  }
+
 }
