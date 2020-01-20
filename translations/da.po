@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-01-14 09:57+0100\n"
-"PO-Revision-Date: 2020-01-14 09:57+0100\n"
+"POT-Creation-Date: 2020-01-20 11:18+0100\n"
+"PO-Revision-Date: 2020-01-20 11:18+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -322,7 +322,7 @@ msgid "Manage"
 msgstr "Administration"
 
 msgid "Edit"
-msgstr "Edit"
+msgstr "Redigere"
 
 msgid "My account"
 msgstr "Min konto"
@@ -3201,9 +3201,6 @@ msgstr "Kan ikke tilføje feltet table.field: Feltet eksisterer allerede."
 
 msgid "Cancelled."
 msgstr "Opsagt"
-
-msgid "Edit"
-msgstr "Redigere"
 
 msgid "File added"
 msgstr "Fil tilføjet"
@@ -10373,6 +10370,9 @@ msgstr "Venstre sidepanel - stationær"
 msgid "Left sidebar - mobile - navigation"
 msgstr "Venstre sidepanel - mobil - navigation"
 
+msgid "Manager"
+msgstr "Manager"
+
 msgid "Left sidebar - mobile"
 msgstr "Venstre sidepanel - mobil"
 
@@ -10717,6 +10717,9 @@ msgstr "Vis forhåndsvisning"
 msgid "Filter by element name"
 msgstr "Filtrer efter elementnavn"
 
+msgid "Provides a text field element with auto completion."
+msgstr "Giver et tekstfeltelement med automatisk færdiggørelse."
+
 msgid "Select an element"
 msgstr "Vælg et element"
 
@@ -10854,9 +10857,6 @@ msgstr "Webformsindstillinger"
 msgid "Hide preview"
 msgstr "Skjul forhåndsvisning"
 
-msgid "Manager"
-msgstr "Manager"
-
 msgid "Submit response"
 msgstr "Indsend svar"
 
@@ -10865,4 +10865,28 @@ msgstr "Du har allerede sendt indsendelse af denne formular."
 
 msgid "ATTENTION: For webforms with anonymous access it is not possible to track submission coverage."
 msgstr "OBS: For webformularer med anonym adgang er det ikke muligt at spore indsendelsesdækning."
+
+msgid "Recipient full name"
+msgstr "Modtagerens fulde navn"
+
+msgid "Recipient user name"
+msgstr "Modtagerbrugernavn"
+
+msgid "Recipient password reset link"
+msgstr "Modtagerens link til nulstilling af adgangskode"
+
+msgid "The name of user"
+msgstr "Navnet på brugeren"
+
+msgid "The name of the user that finished the task"
+msgstr "Navnet på den bruger, der afsluttede opgaven"
+
+msgid "The title of the task assigned to user"
+msgstr "Titlen på den opgave, der er tildelt brugeren"
+
+msgid "The body text of the task assigned to user"
+msgstr "Kropsteksten for den opgave, der er tildelt brugeren"
+
+msgid "Task due date"
+msgstr "Forfaldsdato for opgave"
 
