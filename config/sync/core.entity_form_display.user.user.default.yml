@@ -11,6 +11,7 @@ dependencies:
     - field.field.user.user.field_social_security_number
     - field.field.user.user.field_user_firstname
     - field.field.user.user.field_user_surname
+    - field.field.user.user.field_wpn
     - field.field.user.user.user_picture
     - image.style.thumbnail
   module:
@@ -98,6 +99,16 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_wpn:
+    weight: 14
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
   language:
     weight: 1
     region: content

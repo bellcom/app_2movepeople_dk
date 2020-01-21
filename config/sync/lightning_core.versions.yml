@@ -4,6 +4,7 @@ administerusersbyrole: 0.0.0
 bc_2movepeople: 0.0.0
 bc_2movepeople_dashboard: 0.0.0
 bc_2movepeople_rate_progression: 0.0.0
+bc_2movepeople_wpn: 0.0.0
 bc_webform: 0.0.0
 block: 0.0.0
 block_content: 0.0.0
@@ -105,6 +106,7 @@ video_embed_media: 0.0.0
 views: 0.0.0
 views_infinite_scroll: 0.0.0
 views_ui: 0.0.0
+web_push_notification: 1.0.0-alpha2
 webform: 5.6.0
 webform_analysis: 1.0.0-beta7
 webform_ui: 5.6.0

@@ -1,0 +1,17 @@
+public_key: BNk7fCgsdpNpyZm1StaUIwUk_ACGJVFGLbVsbGExyZvjX3XhO9uAO8Y6uCejIlp5jDUCA96K5UPLhr0OSlbDOgo
+private_key: D7y2Ivk8LVtsHC10bldW3Mue0vn2iOIiCHVq4BVx_Gs
+queue_batch_size: '100'
+body_length: '100'
+push_ttl: '10'
+pages: '<front>'
+pages_mode: show
+bundles:
+  goal: 0
+  landing_page: 0
+  meeting: 0
+  page: 0
+  progression_target: 0
+fields: {  }
+_core:
+  default_config_hash: Jc9IWrM9NkaE7P5pMYJ3S3g_SLB2qGxMAjw0I_TZL-E
+langcode: da
