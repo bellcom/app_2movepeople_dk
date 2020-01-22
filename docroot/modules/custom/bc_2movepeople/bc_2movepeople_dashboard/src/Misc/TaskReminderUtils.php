@@ -58,7 +58,8 @@ class TaskReminderUtils {
               'from' => \Drupal::config('system.site')->get('mail'),
               'subject' => $subject,
               'body' => $body,
-              'sender' => t('System notify')
+              'sender' => t('System notify'),
+              'wpn_to' => $user,
           ]);
 
           // Set and update reminder data.

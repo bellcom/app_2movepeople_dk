@@ -156,6 +156,7 @@ class MeetingAddForm extends FormBase {
         'subject' => $to_replace['subject'],
         'body' => $to_replace['body'],
         'sender' => $this->t('System notify'),
+        'wpn_to' => $this->user,
       ]);
     }
 

@@ -195,7 +195,8 @@ class UserTaskCompleteForm extends FormBase {
             'from' => \Drupal::config('system.site')->get('mail'),
             'subject' => $subject,
             'body' => $body,
-            'sender' => $this->t('System notify')
+            'sender' => $this->t('System notify'),
+            'wpn_to' => $mp_admin,
         ]);
       }
     } // SAVED_UPDATED

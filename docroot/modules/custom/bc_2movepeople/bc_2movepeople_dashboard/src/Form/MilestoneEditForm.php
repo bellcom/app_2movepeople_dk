@@ -206,6 +206,7 @@ class MilestoneEditForm extends FormBase {
             'subject' => $subject,
             'body' => $body,
             'sender' => $this->t('System notify'),
+            'wpn_to' => $this->user,
           ]);
         }
         drupal_set_message($this->updatedMsg);
