@@ -10890,3 +10890,9 @@ msgstr "Kropsteksten for den opgave, der er tildelt brugeren"
 msgid "Task due date"
 msgstr "Forfaldsdato for opgave"
 
+msgid "Task due date"
+msgstr "Forfaldsdato for opgave"
+
+msgid "Questionnaire"
+msgstr "Spørgeskema"
+

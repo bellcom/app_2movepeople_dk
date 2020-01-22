@@ -1,9 +1,0 @@
-name: '2MP Web Push Notification'
-description: '2Movepeople extension for Web Push Notification'
-type: module
-package: '2Movepeople'
-core: 8.x
-
-dependencies:
-  - bc_2movepeople_dashboard
-  - web_push_notification
