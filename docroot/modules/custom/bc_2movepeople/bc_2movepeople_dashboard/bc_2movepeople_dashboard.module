@@ -2,6 +2,8 @@
 
 use Drupal\user\Entity\User;
 use Drupal\bc_2movepeople_dashboard\Misc\Utils;
+use Drupal\web_push_notification\Entity\SubscriptionInterface;
+use Drupal\Core\Field\EntityReferenceFieldItemListInterface;
 
 /**
  * @file
@@ -501,4 +503,18 @@ function bc_2movepeople_dashboard_views_data() {
   ];
 
   return $data;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function bc_2movepeople_dashboard_wpn_subscription_insert(EntityInterface $entity) {
+  if ($entity instanceof SubscriptionInterface && !\Drupal::currentUser()->isAnonymous()) {
+    $user = User::load(\Drupal::currentUser());
+    if ($user->hasField('field_wpn')
+      && $user->get('field_wpn') instanceof EntityReferenceFieldItemListInterface) {
+      $user->get('field_wpn')->appendItem($entity);
+      $user->save();
+    }
+  }
 }

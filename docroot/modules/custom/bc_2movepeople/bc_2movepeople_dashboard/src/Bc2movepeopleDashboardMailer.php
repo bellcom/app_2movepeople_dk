@@ -8,6 +8,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Mail\MailManagerInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -15,6 +16,10 @@ use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\Core\Url;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
+use Drupal\views\Plugin\views\field\FieldPluginBase;
+use Drupal\web_push_notification\Entity\SubscriptionInterface;
+use Drupal\web_push_notification\NotificationItem;
+use Drupal\web_push_notification\WebPushSenderInterface;
 
 /**
  * Class Bc2movePeopleDashboardMailer.
@@ -22,6 +27,7 @@ use Drupal\user\UserInterface;
 class Bc2MovepeopleDashboardMailer implements Bc2movepeopleDashboardMailerInterface {
 
   use StringTranslationTrait;
+  use LoggerChannelTrait;
 
   /**
    * Config factory object.
@@ -45,13 +51,21 @@ class Bc2MovepeopleDashboardMailer implements Bc2movepeopleDashboardMailerInterf
   protected $mailManager;
 
   /**
+   * Web push notifications sender.
+   *
+   * @var \Drupal\web_push_notification\WebPushSenderInterface
+   */
+  protected $wpnSender;
+
+  /**
    * Constructs a new Bc2movePeopleDashboardMailer object.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, MailManagerInterface $mail_manager, LanguageManagerInterface $language_manager, TranslationInterface $string_translation) {
+  public function __construct(ConfigFactoryInterface $config_factory, MailManagerInterface $mail_manager, LanguageManagerInterface $language_manager, TranslationInterface $string_translation, WebPushSenderInterface $wpn_sender) {
     $this->configFactory = $config_factory;
     $this->mailManager = $mail_manager;
     $this->languageManager = $language_manager;
     $this->stringTranslation = $string_translation;
+    $this->wpnSender = $wpn_sender;
   }
 
   /**
@@ -100,6 +114,11 @@ class Bc2MovepeopleDashboardMailer implements Bc2movepeopleDashboardMailerInterf
       'reply-to' => $message['from'],
       'from' => $message['sender'] . ' <' . $message['from'] . '>',
     ];
+
+    if (!empty($message['wpn_to']) && $message['wpn_to'] instanceof UserInterface) {
+      $this->sendWpn($message['wpn_to'], $message);
+    }
+
     return $this->mailManager->mail(
       'bc_2movepeople_dashboard',
       'default',
@@ -111,6 +130,45 @@ class Bc2MovepeopleDashboardMailer implements Bc2movepeopleDashboardMailerInterf
     ],
       $message['from']
     );
+  }
+
+  /**
+   * Send wpn notification.
+   *
+   * @param UserInterface $user
+   *   User who get notifications.
+   *
+   * @param array $params
+   *   Notification params array.
+   */
+  public function sendWpn(UserInterface $user, $params) {
+    if (!function_exists('gmp_init')) {
+      $this->getLogger('bc_2movepeople_dashboard')->warning('Can not send web push notification, gmp extension is not enabled.');
+      return;
+    }
+
+    $notification = new NotificationItem();
+    /** @var SubscriptionInterface $subscription */
+    foreach ($user->get('field_wpn')->referencedEntities() as $subscription) {
+      $notification->ids[] = $subscription->id();
+    }
+    if (empty($notification->ids)) {
+      return;
+    }
+    $config = $this->configFactory->get('web_push_notification.settings');
+    $notification->title = $params['subject'];
+    $body = FieldPluginBase::trimText([
+      'max_length' => $config->get('body_length') ?: 100,
+      'word_boundary' => TRUE,
+      'ellipsis' => TRUE,
+      'html' => FALSE,
+    ], $params['body']);
+    $notification->body = $body;
+    if (!empty($params['wpn_url'])) {
+      $notification->url = $params['wpn_url'];
+    }
+
+    $this->wpnSender->send($notification);
   }
 
   /**
@@ -143,8 +201,11 @@ class Bc2MovepeopleDashboardMailer implements Bc2movepeopleDashboardMailerInterf
    *
    * @param string $user_id
    *   User id who will get notification.
+   *
+   * @param Url $access_url
+   *   Notification access URL.
    */
-  function sendTaskNotification(EntityInterface $entity, $user_id = '') {
+  function sendTaskNotification(EntityInterface $entity, $user_id = '', Url $access_url = NULL) {
     $milestone = Utils::getMilestoneByGoal($entity->id());
 
     // Get milestone user.
@@ -193,6 +254,8 @@ class Bc2MovepeopleDashboardMailer implements Bc2movepeopleDashboardMailerInterf
         'subject' => $subject,
         'body' => $body,
         'sender' => t('System notify'),
+        'wpn_to' => $user,
+        'wpn_url' => $access_url
       ]);
     }
   }

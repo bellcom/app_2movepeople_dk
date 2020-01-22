@@ -311,8 +311,9 @@ class BcWebformHandler {
   public function addUserTask($uid) {
     $access_tokens = $this->getAccessTokens();
     $webform_url = $this->webform->toUrl('canonical');
+    $webform_url_with_token = $webform_url->setOption('query', ['access-token' => $access_tokens[$uid]]);
     $body = t('You have new webform to submit. <a href=":url">Submit response</a>', [
-      ':url' => $webform_url->setOption('query', ['access-token' => $access_tokens[$uid]])->toString(),
+      ':url' => $webform_url_with_token->toString(),
     ]);
     $daysToCompleteTask = $this->webform->getThirdPartySetting('bc_webform', 'days_to_complete_task');
     if (empty($daysToCompleteTask)) {
@@ -363,7 +364,7 @@ class BcWebformHandler {
       $new_goal_ids[] = $task->id();
       $milestone->set('field_goal_ids', $new_goal_ids);
       $milestone->save();
-      \Drupal::service('2movepeople_dashboard.mailer')->sendTaskNotification($task);
+      \Drupal::service('2movepeople_dashboard.mailer')->sendTaskNotification($task, NULL, $webform_url_with_token);
       return $task->id();
     }
     return FALSE;

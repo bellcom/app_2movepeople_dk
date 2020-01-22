@@ -88,7 +88,7 @@ class AdminSettingsForm extends ConfigFormBase {
     ];
 
     $tokens = $this->dashboardMailer->getDefaultTokens() + [
-        '@user' => $this->t('The name of the user that finished the task.'),
+        '@user' => $this->t('The name of the user that finished the task'),
         '@task_title' => $this->t('The title of the task that is being complete'),
         '@dashboard_url' => $this->t('Dashboard URL')
       ];
@@ -119,7 +119,7 @@ class AdminSettingsForm extends ConfigFormBase {
     ];
 
     $tokens = $this->dashboardMailer->getDefaultTokens() + [
-        '@user' => $this->t('The name of user.'),
+        '@user' => $this->t('The name of user'),
         '@task_title' => $this->t('The name of the task assigned to manager'),
         '@dashboard_url' => $this->t('Dashboard URL')
       ];
@@ -150,7 +150,7 @@ class AdminSettingsForm extends ConfigFormBase {
     ];
 
     $tokens = $this->dashboardMailer->getDefaultTokens() + [
-      '@task_title' => $this->t('The name of the task assigned to user'),
+      '@task_title' => $this->t('The title of the task assigned to user'),
       '@task_body' => $this->t('The body text of the task assigned to user'),
       '@dashboard_url' => $this->t('Dashboard URL')
     ];
@@ -190,8 +190,8 @@ class AdminSettingsForm extends ConfigFormBase {
     ];
 
     $tokens = $this->dashboardMailer->getDefaultTokens() + [
-        '@task_title' => $this->t('The name of the task assigned to user'),
-        '@due_date' => $this->t('Task due date.'),
+        '@task_title' => $this->t('The title of the task assigned to user'),
+        '@due_date' => $this->t('Task due date'),
         '@dashboard_url' => $this->t('Dashboard URL')
       ];
     $description_lines = [];

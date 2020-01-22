@@ -1,8 +1,8 @@
 bc_webform.collection:
-  path: '/analisys'
+  path: '/questionnaire'
   defaults:
     _controller: '\Drupal\bc_webform\BcWebformList::render'
-    _title: 'Webforms'
+    _title: 'Questionnaire'
   requirements:
     _custom_access: '\Drupal\webform\Access\WebformAccountAccess::checkOverviewAccess'
 
