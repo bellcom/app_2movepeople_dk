@@ -6,4 +6,5 @@ core: 8.x
 dependencies:
   - bc_2movepeople
   - bc_2movepeople_rate_progression
+  - web_push_notification
 configure: bc_2movepeople_dashboard.admin.settings_form

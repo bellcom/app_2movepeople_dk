@@ -162,10 +162,12 @@ class Bc2MovepeopleDashboardMailer implements Bc2movepeopleDashboardMailerInterf
       'word_boundary' => TRUE,
       'ellipsis' => TRUE,
       'html' => FALSE,
-    ], $params['body']);
+    ], strip_tags($params['body'])
+    );
     $notification->body = $body;
-    if (!empty($params['wpn_url'])) {
-      $notification->url = $params['wpn_url'];
+    $notification->url = Url::fromRoute('<front>')->setAbsolute()->toString();
+    if (!empty($params['wpn_url']) && $params['wpn_url'] instanceof Url) {
+      $notification->url = $params['wpn_url']->setAbsolute()->toString();
     }
 
     $this->wpnSender->send($notification);
