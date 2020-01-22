@@ -899,36 +899,6 @@ class MovepeopleDashboardController extends ControllerBase {
   }
 
   /**
-   * Simply send mail function.
-   *
-   * @param array $message
-   *   Email message array.
-   *
-   * @return bool
-   *   TRUE if the mail was successfully accepted for delivery, FALSE otherwise.
-   */
-  public static function sendMail(array $message) {
-    $mail_manager = \Drupal::service('plugin.manager.mail');
-    $message['headers'] = [
-      'content-type' => 'text/html; charset=UTF-8; format=flowed; delsp=yes',
-      'MIME-Version' => '1.0',
-      'reply-to' => $message['from'],
-      'from' => $message['sender'] . ' <' . $message['from'] . '>',
-    ];
-    return $mail_manager->mail(
-      'bc_2movepeople_dashboard',
-      'default',
-      $message['to'],
-      \Drupal::languageManager()->getDefaultLanguage()->getId(), [
-        'subject' => $message['subject'],
-        'body' => Markup::create($message['body']),
-        'headers' => $message['headers']
-      ],
-      $message['from']
-    );
-  }
-
-  /**
    * Adds create button.
    *
    * @param array $buttons
