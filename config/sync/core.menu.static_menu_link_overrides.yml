@@ -1,4 +1,28 @@
-definitions: {  }
+definitions:
+  bc_2movepeople__settings__account:
+    weight: -48
+    menu_name: settings-menu
+    parent: ''
+    enabled: true
+    expanded: false
+  bc_2movepeople__settings__logout:
+    weight: -47
+    menu_name: settings-menu
+    parent: ''
+    expanded: false
+    enabled: true
+  bc_2movepeople__settings__main:
+    weight: -49
+    menu_name: settings-menu
+    parent: ''
+    expanded: false
+    enabled: true
+  bc_webform__questionnaire:
+    weight: -50
+    menu_name: settings-menu
+    parent: ''
+    expanded: false
+    enabled: true
 _core:
   default_config_hash: jdY7AU0tU-QsjmiOw3W8vwpYMb-By--_MSFgbqKUTYM
 langcode: da
