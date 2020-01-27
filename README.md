@@ -12,15 +12,16 @@ $ zcat < db-dump.sql.gz | drush sqlc
 
 ## Deployment steps
 ```
-# Update codebase.
-$ git pull
-$ composer install
-# Update db and translation.
-$ cd docroot
-$ drush cim
-$ drush updb
-$ drush language-import da ../translations/da.po
+git pull
+sh scripts/deploy.sh
 ```
+Script includes following steps:
+- dumping current db to `./tmp` directory
+- composer install
+- drush cr
+- drush updb
+- drush cim
+
 
 ## Export translations
 Get latest db dump from production environment.
@@ -34,6 +35,16 @@ Run export translation command:
 ```
 drush language-export --langcodes=da --file=da.po
 ```
+## Update translations
+
+```
+git pull
+sh scripts/translations-update.sh
+```
+Script includes following steps:
+- dumping current translations to `./translation-dumps` directory
+- import current version of translation file
+
 
 After export all changes should be reviewed and commited.
 
