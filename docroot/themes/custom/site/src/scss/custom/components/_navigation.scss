@@ -9,6 +9,7 @@
 
 #block-secondarynavigation,
 #block-settingsmenu,
+#block-managermenu,
 #block-navigationblock {
 
   .nav > li > a {
@@ -33,7 +34,7 @@
   -webkit-font-smoothing: antialiased;
   display: inline-block;
   text-decoration: inherit;
-  
+
   &.ci-user::before {
     content: '\e008';
     font-family: 'Glyphicons Halflings';
@@ -54,7 +55,7 @@ div.custom-nav-divider {
   position: relative;
   padding-bottom: 26px;
   margin-bottom: 35px;
-  
+
   i {
     position: absolute;
     bottom: -25px;

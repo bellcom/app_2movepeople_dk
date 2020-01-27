@@ -9582,6 +9582,7 @@ a.btn-progress {
 
 #block-secondarynavigation .nav > li > a,
 #block-settingsmenu .nav > li > a,
+#block-managermenu .nav > li > a,
 #block-navigationblock .nav > li > a {
   font-weight: bold;
   font-size: 15px;
@@ -9591,6 +9592,8 @@ a.btn-progress {
 #block-secondarynavigation .nav > li > a:focus,
 #block-settingsmenu .nav > li > a:hover,
 #block-settingsmenu .nav > li > a:focus,
+#block-managermenu .nav > li > a:hover,
+#block-managermenu .nav > li > a:focus,
 #block-navigationblock .nav > li > a:hover,
 #block-navigationblock .nav > li > a:focus {
   text-decoration: none;
