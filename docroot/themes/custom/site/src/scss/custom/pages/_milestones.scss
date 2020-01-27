@@ -52,7 +52,7 @@
   .dashboard-accordion .panel-heading a:hover,
   .dashboard-accordion .panel-heading a:visited,
   .dashboard-accordion .panel-heading a:active {
-    margin-top: 4px;
+    margin-top: 0;
   }
 
   .row.custom-form-fields.dashboard-milestone__control-buttons:last-of-type .col-lg-12.col-md-12.col-sm-12.col-xs-12 {
@@ -62,8 +62,8 @@
   .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 {
     clear: both;
     position: absolute;
-    top: 7px;
-    right: 246px;
+    top: 3px;
+    right: 230px;
     width: 0;
     height: 0 !important;
   }
@@ -94,8 +94,10 @@
   }
 
   .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 a {
-    padding: 5px 15px !important;
+    margin-bottom: 0;
+    padding: 10px 15px !important;
     font-size: 18px;
+    transition: none;
   }
 
   .row.custom-form-fields.dashboard-milestone__control-buttons .col-lg-12.col-md-12.col-sm-12.col-xs-12 a span {
