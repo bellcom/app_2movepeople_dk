@@ -25,6 +25,17 @@ $dashboard-padding: 22px;
   background-color: $body-bg-secondary;
   color: $text-dashboard-color;
 
+  .dashboard-accordion {
+
+    .panel-heading {
+      background-color: $body-bg;
+
+      a {
+        padding: $panel-heading-padding;
+      }
+    }
+  }
+
   h2.subtitle {
     font-size: 1.5em;
     color: $color-font-h2;
