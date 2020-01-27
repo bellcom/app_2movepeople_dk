@@ -21,6 +21,7 @@ permissions:
   - 'cancel users with role 2mp_manager'
   - 'cancel users with role 2mp_user'
   - 'create connected users'
+  - 'create supervisor users'
   - 'create webform'
   - 'delete any webform'
   - 'delete own webform'

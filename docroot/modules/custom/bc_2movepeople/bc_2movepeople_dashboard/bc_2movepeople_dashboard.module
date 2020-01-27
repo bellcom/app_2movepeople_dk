@@ -4,6 +4,7 @@ use Drupal\user\Entity\User;
 use Drupal\bc_2movepeople_dashboard\Misc\Utils;
 use Drupal\web_push_notification\Entity\SubscriptionInterface;
 use Drupal\Core\Field\EntityReferenceFieldItemListInterface;
+use Drupal\user\UserInterface;
 
 /**
  * @file

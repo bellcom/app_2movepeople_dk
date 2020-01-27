@@ -261,6 +261,14 @@ bc_2movepeople_dashboard.users.create:
   requirements:
     _permission: 'create connected users'
 
+bc_2movepeople_dashboard.supervisor.create:
+  path: '/dashboard/supervisor/create'
+  defaults:
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\NewSupervisorCreateForm'
+    _title: 'Create supervisor'
+  requirements:
+    _permission: 'create supervisor users'
+
 bc_2movepeople_dashboard.save_to_tpl:
   path: '/dashboard/users/{user}/save-to-tpl'
   defaults:

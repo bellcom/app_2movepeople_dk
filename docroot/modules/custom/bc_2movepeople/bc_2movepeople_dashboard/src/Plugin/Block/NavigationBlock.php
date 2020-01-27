@@ -66,6 +66,16 @@ class NavigationBlock extends BlockBase {
       ];
     }
 
+    if ($user->hasPermission('create supervisor users')) {
+      $buttons['Navigation.supervisor_create_user'] = [
+        '#url' => Url::fromRoute('bc_2movepeople_dashboard.supervisor.create'),
+        '#attributes' => [
+          'class' => ['use-ajax'],
+          'data-dialog-type' => 'modal'
+        ],
+      ];
+    }
+
     MovepeopleDashboardController::addCreateButton($buttons);
 
     if (!empty($buttons)) {
