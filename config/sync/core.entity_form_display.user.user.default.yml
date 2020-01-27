@@ -99,16 +99,6 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_wpn:
-    weight: 14
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
   language:
     weight: 1
     region: content
@@ -128,4 +118,5 @@ content:
     region: content
     third_party_settings: {  }
 hidden:
+  field_wpn: true
   langcode: true

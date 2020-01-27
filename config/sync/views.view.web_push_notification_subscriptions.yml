@@ -41,7 +41,7 @@ display:
         options:
           submit_button: Apply
           reset_button: false
-          reset_button_label: Reset
+          reset_button_label: Nulstil
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
@@ -56,8 +56,8 @@ display:
           tags:
             previous: ‹‹
             next: ››
-            first: '« First'
-            last: 'Last »'
+            first: '« Første'
+            last: 'Sidste »'
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -204,7 +204,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Created
+          label: Oprettet
           exclude: false
           alter:
             alter_text: false
