@@ -1,4 +1,4 @@
-uuid: ccc68bab-96d0-4e23-82de-ca2472954405
+uuid: 5b7baa58-2319-4c33-8132-b41219cf903e
 langcode: da
 status: true
 dependencies:
@@ -7,9 +7,9 @@ dependencies:
 third_party_settings:
   lightning_core:
     description: ''
-id: 2mp_supervisor
-label: '2MP Supervisor'
-weight: 8
+id: 2mp_admin
+label: '2MP Admin'
+weight: 9
 is_admin: null
 permissions:
   - 'access category template'
@@ -17,6 +17,7 @@ permissions:
   - 'access user dashboard'
   - 'access user profiles'
   - 'access webform overview'
+  - 'administer bc_2movepeople settings'
   - 'cancel users with role 2mp_manager'
   - 'cancel users with role 2mp_user'
   - 'create connected users'
