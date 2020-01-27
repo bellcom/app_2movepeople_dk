@@ -9220,6 +9220,9 @@ img {
     -webkit-box-shadow: none;
     box-shadow: none; }
 
+.panel-default {
+  border: 0; }
+
 .flexbox .row--equal-height-columns .view-filters {
   -webkit-flex-basis: 100%;
       -ms-flex-preferred-size: 100%;
@@ -10263,27 +10266,31 @@ span.input-group-addon {
 .dashboard-accordion {
   margin-top: 10px; }
   .dashboard-accordion .panel-heading {
-    padding: 0;
-    border-color: red !important; }
+    padding: 0; }
     .dashboard-accordion .panel-heading a {
       font-size: 18px;
-      font-weight: 600;
+      font-weight: bold;
       display: block;
       padding: 10px 15px; }
     .dashboard-accordion .panel-heading a:link, .dashboard-accordion .panel-heading a:hover, .dashboard-accordion .panel-heading a:visited, .dashboard-accordion .panel-heading a:active {
       text-decoration: none;
       color: #576d8b; }
+    .dashboard-accordion .panel-heading span.glyphicon-triangle-custom:before {
+      display: inline-block;
+      width: 20px;
+      font-size: 22px;
+      font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; }
     .dashboard-accordion .panel-heading a[aria-expanded="false"] span.glyphicon-triangle-custom:before {
-      content: "\e250"; }
+      content: "+"; }
     .dashboard-accordion .panel-heading a[aria-expanded="true"] span.glyphicon-triangle-custom:before {
-      content: "\e252"; }
+      content: "-"; }
   .dashboard-accordion .panel-body {
     border-top: none !important; }
     .dashboard-accordion .panel-body div.div-goals {
       padding: 0 24px;
       margin-top: 10px; }
   .dashboard-accordion .panel-default {
-    border-color: #c13c8d; }
+    border: 0; }
   .dashboard-accordion .btn, .dashboard-accordion .user__controls__item--masquerade {
     margin-bottom: 10px; }
   .dashboard-accordion .left-btn-box, .dashboard-accordion .right-btn-box {
@@ -10310,6 +10317,8 @@ span.input-group-addon {
       padding: 5px 20px;
       color: white;
       margin: 5px; }
+  .dashboard-accordion .field--item + .field--item {
+    margin-top: 15px; }
 
 @media (min-width: 768px) {
   .dashboard-accordion .left-btn-box, .dashboard-accordion .right-btn-box {
