@@ -21,21 +21,14 @@
 }
 
 select.form-select {
-  border:solid 2px $btn-default-bg !important;
   min-width: 100px;
 }
 span.input-group-addon {
-  border-top: solid 2px $btn-default-bg;
-  border-right: solid 2px $btn-default-bg;
-  border-bottom: solid 2px $btn-default-bg;
   background-color: #FFF;
 }
 
 .form-item {
   .control-label {
-    color: $form-text-color;
-    font-size: 1.125em;
-    font-weight: normal;
   }
   input, select, textarea {
     font-size: 1.125em;
