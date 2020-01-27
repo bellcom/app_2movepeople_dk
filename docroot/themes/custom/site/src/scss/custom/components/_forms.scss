@@ -10,6 +10,17 @@
 // Styling
 // --------------------------------------------------
 
+.control-label,
+.custom-form-label-title,
+.custom-form-label-activity-title,
+.custom-form-label-due-date,
+.custom-form-label-responsible-manager,
+.custom-form-label-complete-btn {
+  font-size: 16px;
+  color: $form-text-color;
+  font-weight: bold;
+}
+
 input[type="date"] {
   position: relative;
 }
