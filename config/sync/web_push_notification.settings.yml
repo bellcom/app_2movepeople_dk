@@ -3,7 +3,7 @@ private_key: D7y2Ivk8LVtsHC10bldW3Mue0vn2iOIiCHVq4BVx_Gs
 queue_batch_size: '100'
 body_length: '100'
 push_ttl: '10'
-pages: '<front>'
+pages: "<front>\r\n/dashboard/*"
 pages_mode: show
 bundles:
   goal: 0
