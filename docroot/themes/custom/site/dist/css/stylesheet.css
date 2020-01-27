@@ -9220,6 +9220,10 @@ img {
     -webkit-box-shadow: none;
     box-shadow: none; }
 
+.panel {
+  -webkit-box-shadow: none;
+          box-shadow: none; }
+
 .panel-default {
   border: 0; }
 
