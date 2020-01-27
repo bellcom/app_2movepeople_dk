@@ -17,6 +17,11 @@
 .dashboard-accordion {
   margin-top: 10px;
 
+  .dashboard-overview {
+    padding: 0;
+    background-color: transparent;
+  }
+
   .panel-heading {
     padding: 0;
 
@@ -101,7 +106,7 @@
   .field--item {
 
     + .field--item {
-      margin-top: 15px;
+      margin-top: 10px;
     }
   }
 }

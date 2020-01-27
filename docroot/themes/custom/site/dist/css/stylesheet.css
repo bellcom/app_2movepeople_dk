@@ -10010,6 +10010,10 @@ input[type="date"]::-webkit-clear-button {
   padding: 22px;
   background-color: #fff;
   color: #72859f; }
+  .dashboard-overview .dashboard-accordion .panel-heading {
+    background-color: #F2F5F7; }
+    .dashboard-overview .dashboard-accordion .panel-heading a {
+      padding: 10px 15px; }
   .dashboard-overview h2.subtitle, .dashboard-overview .subtitle.heading-h2 {
     font-size: 1.5em;
     color: #4b4d4f;
@@ -10265,6 +10269,9 @@ span.input-group-addon {
 
 .dashboard-accordion {
   margin-top: 10px; }
+  .dashboard-accordion .dashboard-overview {
+    padding: 0;
+    background-color: transparent; }
   .dashboard-accordion .panel-heading {
     padding: 0; }
     .dashboard-accordion .panel-heading a {
@@ -10318,7 +10325,7 @@ span.input-group-addon {
       color: white;
       margin: 5px; }
   .dashboard-accordion .field--item + .field--item {
-    margin-top: 15px; }
+    margin-top: 10px; }
 
 @media (min-width: 768px) {
   .dashboard-accordion .left-btn-box, .dashboard-accordion .right-btn-box {
@@ -10479,9 +10486,6 @@ span.task.completed {
 
 .path-dashboard .custom-form-fields.div-form {
   padding-right: 0 !important; }
-
-.path-dashboard .panel-body {
-  padding: 15px 5px !important; }
 
 .path-dashboard .panel-group .panel {
   padding-bottom: 2px; }
