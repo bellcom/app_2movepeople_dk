@@ -39,9 +39,7 @@
     <a href="{{ path('bc_2movepeople_dashboard.user.edit', {'user': user.id, 'destination': '/dashboard'}) }}" class="btn btn-default btn-sm use-ajax glyphicon-edit" data-dialog-type="modal" title="{{'Edit' | trans }}" data-toggle="tooltip" data-placement="top"></a>
     <!-- End - edit -->
 
-    <!-- Begin - cancel -->
-    <a href="{{ path('bc_2movepeople_dashboard.user.cancel', { 'user': user.id, 'destination': '/dashboard' }) }}" class="btn btn-default btn-sm use-ajax glyphicon-remove" data-dialog-type="modal" title="{{ 'Remove' | trans }}" data-toggle="tooltip" data-placement="top"></a>
-    <!-- End - cancel -->
+    <a href="{{ path('bc_2movepeople_dashboard.user.cancel', { 'user': user.id, 'destination': '/dashboard' }) }}" class="btn btn-default btn-sm use-ajax glyphicon-remove {% if has_connected_users %}disabled{% endif %}" data-dialog-type="modal" title="{{ 'Remove' | trans }}" data-toggle="tooltip" data-placement="top"></a>
 
     {% if last_min_rate %}
       {% if last_min_rate > 3 %}

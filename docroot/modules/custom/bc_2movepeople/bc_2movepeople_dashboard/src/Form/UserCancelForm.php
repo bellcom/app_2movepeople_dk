@@ -23,10 +23,19 @@ class UserCancelForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state, UserInterface $user = NULL) {
     $form_state->set('user', $user);
 
-    $form['description'] = [
-      '#type' => 'item',
-      '#markup' => $this->t('Are you sure that you want to cancel the user?'),
-    ];
+    if ($user->field_connected_users->isEmpty()) {
+      $form['#disabled'] = TRUE;
+      $form['warning'] = [
+        '#type' => 'item',
+        '#markup' => $this->t('You can not delete user that has connected users.'),
+      ];
+    }
+    else {
+      $form['description'] = [
+        '#type' => 'item',
+        '#markup' => $this->t('Are you sure that you want to cancel the user?'),
+      ];
+    }
 
     $form['actions']['#type'] = 'actions';
     $form['actions']['submit'] = [

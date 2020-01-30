@@ -459,6 +459,11 @@ function bc_2movepeople_dashboard_preprocess_user(&$variables) {
     $variables['last_min_rate_text'] = ($faq_node) ? Link::fromTextAndUrl(' ' . $minRate, $faq_node->toUrl())
       ->toString() : $minRate;
   }
+
+  $variables['has_connected_users'] = TRUE;
+  if ($user->field_connected_users->isEmpty()) {
+    $variables['has_connected_users'] = FALSE;
+  }
 }
 
 /**
