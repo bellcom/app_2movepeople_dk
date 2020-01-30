@@ -2,6 +2,7 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Form;
 
+use Drupal\bc_2movepeople_dashboard\Misc\Utils;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Form\FormBase;
@@ -31,7 +32,7 @@ class UserManagersEditForm extends FormBase {
       '#weight' => -100,
     ];
 
-    $managers = $this->getManagers();
+    $managers = $this->getManagers($user);
     $options = [];
     if (!empty($managers)) {
       foreach ($managers as $user_manager) {
@@ -128,11 +129,11 @@ class UserManagersEditForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $values = $form_state->getValues();
     $user = $form_state->get('user');
-    $managers = $this->getManagers();
+    $managers = $this->getManagers($user);
 
     if (!empty($values['managers']) && !empty($managers)) {
       $managers = $values['managers'];
-      foreach ($this->getManagers() as $manager) {
+      foreach ($this->getManagers($user) as $manager) {
         $connected_users_values = $manager->field_connected_users->getValue();
         // Remove current user from field_connected_users values.
         if (empty($managers[$manager->id()])) {
@@ -170,11 +171,13 @@ class UserManagersEditForm extends FormBase {
    * @return array
    *   Array of user entities.
    */
-  private static function getManagers() {
+  private static function getManagers(UserInterface $user = NULL) {
+    $organization_tids = Utils::getUserOrganizations($user);
     // Get all managers of target user.
     $managers_ids = \Drupal::entityQuery('user')
       ->condition('status', 1)
       ->condition('roles', '2mp_manager')
+      ->condition('field_organisation', $organization_tids, 'IN')
       ->execute();
     return User::loadMultiple($managers_ids);
   }
