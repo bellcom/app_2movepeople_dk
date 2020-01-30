@@ -8,6 +8,7 @@
 namespace Drupal\bc_2movepeople_dashboard\Misc;
 
 use Drupal\node\Entity\Node;
+use Drupal\user\UserInterface;
 
 /**
  * General utils wrapper.
@@ -72,6 +73,23 @@ class Utils {
       }
     }
     return $user_name;
+  }
+
+  /**
+   * Gets user organizations.
+   *
+   * @param UserInterface $user
+   *
+   * @return array
+   */
+  public static function getUserOrganizations(UserInterface $user) {
+    $user_organization_tids = [];
+    foreach ($user->get('field_organisation') as $item) {
+      if ($value = $item->getValue()) {
+        $user_organization_tids[] = $value['target_id'];
+      }
+    }
+    return $user_organization_tids;
   }
 
 }
