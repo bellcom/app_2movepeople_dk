@@ -33,6 +33,11 @@ class Bc2movepeopleAccess {
     $result = AccessResult::allowedIfHasPermission($account, 'access user dashboard');
     $isConnected = self::isConnected($account, $checkedUser);
     $matchOrganization = self::matchOrganization($account, $checkedUser);
+    // If user are connected to current user it is major condition
+    // to get access.
+    if ($result->andIf($isConnected)->isAllowed()) {
+      return AccessResult::allowed();
+    }
     return $result->andIf($isConnected)->andIf($matchOrganization);
   }
 
