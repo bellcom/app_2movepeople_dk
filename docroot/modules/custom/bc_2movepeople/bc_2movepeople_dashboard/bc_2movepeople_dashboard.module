@@ -460,6 +460,7 @@ function bc_2movepeople_dashboard_preprocess_user(&$variables) {
       ->toString() : $minRate;
   }
 
+  $variables['destination'] = \Drupal::service('path.current')->getPath();
   $variables['has_connected_users'] = TRUE;
   if ($user->field_connected_users->isEmpty()) {
     $variables['has_connected_users'] = FALSE;

@@ -2,12 +2,15 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Form;
 
+use Drupal\bc_2movepeople_dashboard\Misc\Utils;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Url;
 use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 
 /**
@@ -68,6 +71,22 @@ class UserEditForm extends FormBase {
       '#type' => 'email',
       '#required' => $email_required,
       '#default_value' => $user->get('mail')->value,
+    ];
+
+    $organisation_tids = Utils::getUserOrganizations(User::load(\Drupal::currentUser()->id()));
+    $terms = Term::loadMultiple($organisation_tids);
+    $options = [];
+    foreach ($terms as $term) {
+      $options[$term->id()] = $term->label();
+    }
+
+    $form['organisations'] = [
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Organisations'),
+      '#options' => $options,
+      '#default_value' => Utils::getUserOrganizations($user),
+      '#required' => TRUE,
+      '#size' => 10,
     ];
 
     $form['actions'] = [
@@ -139,6 +158,34 @@ class UserEditForm extends FormBase {
       $user->set('field_social_security_number', $form_state->getValue('social_security_number'));
       $user->set('field_user_firstname', $form_state->getValue('firstname'));
       $user->set('field_user_surname', $form_state->getValue('surname'));
+
+      $field_organisation = $user->field_organisation;
+      $current_user_organisation_tids = Utils::getUserOrganizations(User::load(\Drupal::currentUser()->id()));
+      $organisation_tids = array_filter($form_state->getValue('organisations'));
+      $new_field_organisation = [];
+      // Remove unchecked organisations.
+      foreach($field_organisation as $delta => $item) {
+        $value = $item->getValue();
+        $tid = $value['target_id'];
+        // Skip if current user don't allowed to edit organisation.
+        if (array_search($tid, $current_user_organisation_tids) === FALSE) {
+          $new_field_organisation[] = ['target_id' => $tid];
+          continue;
+        }
+
+        // Skip if user has organisation as checked.
+        if ($key = array_search($tid, $organisation_tids)) {
+          unset($organisation_tids[$key]);
+          $new_field_organisation[] = ['target_id' => $tid];
+        }
+      }
+
+      // Add new organisations.
+      foreach ($organisation_tids as $tid) {
+        $new_field_organisation[] = ['target_id' => $tid];
+      }
+
+      $user->field_organisation = $new_field_organisation;
 
       // Update user account.
       $user->save();

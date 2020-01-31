@@ -23,7 +23,7 @@ class UserCancelForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state, UserInterface $user = NULL) {
     $form_state->set('user', $user);
 
-    if ($user->field_connected_users->isEmpty()) {
+    if (!$user->field_connected_users->isEmpty()) {
       $form['#disabled'] = TRUE;
       $form['warning'] = [
         '#type' => 'item',

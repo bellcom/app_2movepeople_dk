@@ -31,15 +31,15 @@
       {# End - masquerade #}
     {% endif %}
 
-    <!-- Begin - managers -->
-    <a href="{{ path('bc_2movepeople_dashboard.user.edit_managers', {'user': user.id, 'destination': '/dashboard'}) }}" class="btn btn-default btn-sm use-ajax glyphicon-user" data-dialog-type="modal" data-dialog-options='{"width":500}' title="{{'Managers' | trans }}" data-toggle="tooltip" data-placement="top"></a>
-    <!-- End - managers -->
+    {% if user.hasRole('2mp_user') %}
+    <a href="{{ path('bc_2movepeople_dashboard.user.edit_managers', {'user': user.id, 'destination': destination}) }}" class="btn btn-default btn-sm use-ajax glyphicon-user" data-dialog-type="modal" data-dialog-options='{"width":500}' title="{{'Managers' | trans }}" data-toggle="tooltip" data-placement="top"></a>
+    {% endif %}
 
     <!-- Begin - edit -->
-    <a href="{{ path('bc_2movepeople_dashboard.user.edit', {'user': user.id, 'destination': '/dashboard'}) }}" class="btn btn-default btn-sm use-ajax glyphicon-edit" data-dialog-type="modal" title="{{'Edit' | trans }}" data-toggle="tooltip" data-placement="top"></a>
+    <a href="{{ path('bc_2movepeople_dashboard.user.edit', {'user': user.id, 'destination': destination}) }}" class="btn btn-default btn-sm use-ajax glyphicon-edit" data-dialog-type="modal" title="{{'Edit' | trans }}" data-toggle="tooltip" data-placement="top"></a>
     <!-- End - edit -->
 
-    <a href="{{ path('bc_2movepeople_dashboard.user.cancel', { 'user': user.id, 'destination': '/dashboard' }) }}" class="btn btn-default btn-sm use-ajax glyphicon-remove {% if has_connected_users %}disabled{% endif %}" data-dialog-type="modal" title="{{ 'Remove' | trans }}" data-toggle="tooltip" data-placement="top"></a>
+    <a href="{{ path('bc_2movepeople_dashboard.user.cancel', { 'user': user.id, 'destination': destination }) }}" class="btn btn-default btn-sm use-ajax glyphicon-remove {% if has_connected_users %}disabled{% endif %}" data-dialog-type="modal" title="{{ 'Remove' | trans }}" data-toggle="tooltip" data-placement="top"></a>
 
     {% if last_min_rate %}
       {% if last_min_rate > 3 %}

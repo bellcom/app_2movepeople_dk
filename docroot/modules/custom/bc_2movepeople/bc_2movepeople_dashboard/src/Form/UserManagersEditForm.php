@@ -20,6 +20,16 @@ class UserManagersEditForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, UserInterface $user = NULL) {
+    if (!$user->hasRole('2mp_user')) {
+      $form['warning'] = [
+        '#type' => 'item',
+        '#markup' => $this->t('User @username is not 2MP User. Edit managers action available only for 2MP Users.', [
+          '@username' => CommonFormUtils::getUserName($user),
+        ]),
+      ];
+      return $form;
+    }
+
     $form_state->set('user', $user);
 
     $this->return_url = \Drupal::request()->query->get('return_url');
@@ -32,7 +42,7 @@ class UserManagersEditForm extends FormBase {
       '#weight' => -100,
     ];
 
-    $managers = $this->getManagers($user);
+    $managers = $this->getManagers();
     $options = [];
     if (!empty($managers)) {
       foreach ($managers as $user_manager) {
@@ -129,11 +139,11 @@ class UserManagersEditForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $values = $form_state->getValues();
     $user = $form_state->get('user');
-    $managers = $this->getManagers($user);
+    $managers = $this->getManagers();
 
     if (!empty($values['managers']) && !empty($managers)) {
       $managers = $values['managers'];
-      foreach ($this->getManagers($user) as $manager) {
+      foreach ($this->getManagers() as $manager) {
         $connected_users_values = $manager->field_connected_users->getValue();
         // Remove current user from field_connected_users values.
         if (empty($managers[$manager->id()])) {
@@ -172,6 +182,10 @@ class UserManagersEditForm extends FormBase {
    *   Array of user entities.
    */
   private static function getManagers(UserInterface $user = NULL) {
+    if (empty($user)) {
+      $user = User::load(\Drupal::currentUser()->id());
+    }
+
     $organization_tids = Utils::getUserOrganizations($user);
     // Get all managers of target user.
     $managers_ids = \Drupal::entityQuery('user')

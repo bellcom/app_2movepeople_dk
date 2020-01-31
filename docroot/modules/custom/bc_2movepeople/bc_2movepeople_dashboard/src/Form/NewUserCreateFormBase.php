@@ -2,12 +2,14 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Form;
 
+use Drupal\bc_2movepeople_dashboard\Misc\Utils;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Url;
 use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\taxonomy\Entity\Term;
 use Drupal\user\Entity\User;
 
 /**
@@ -72,6 +74,21 @@ abstract class NewUserCreateFormBase extends FormBase {
       '#type' => 'email',
       '#title' => $this->t('Email'),
       '#required' => $email_required,
+    ];
+
+    $organisation_tids = Utils::getUserOrganizations(User::load($current_user->id()));
+    $terms = Term::loadMultiple($organisation_tids);
+    $options = [];
+    foreach ($terms as $term) {
+      $options[$term->id()] = $term->label();
+    }
+
+    $form['organisations'] = [
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Organisations'),
+      '#options' => $options,
+      '#required' => TRUE,
+      '#size' => 10,
     ];
 
     $form['password'] = [
@@ -157,9 +174,13 @@ abstract class NewUserCreateFormBase extends FormBase {
       $user->set('field_user_firstname', $form_state->getValue('firstname'));
       $user->set('field_user_surname', $form_state->getValue('surname'));
 
-      // Set current user organisations to new user.
-      $current_user_obj = User::load($current_user->id());
-      $organisations = $current_user_obj->get('field_organisation')->getValue();
+      $organisation_tids = $form_state->getValue('organisations');
+      $organisations = [];
+      if (!empty($organisation_tids)) {
+        foreach ($organisation_tids as $tid) {
+          $organisations[] = ['target_id' => $tid];
+        }
+      }
       $user->set('field_organisation', $organisations);
 
       $new_user_role = $this->getNewUserRole($current_user->getRoles());
