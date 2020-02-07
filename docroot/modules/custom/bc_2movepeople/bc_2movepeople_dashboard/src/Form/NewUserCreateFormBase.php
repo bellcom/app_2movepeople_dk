@@ -6,6 +6,7 @@ use Drupal\bc_2movepeople_dashboard\Misc\Utils;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\Url;
 use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Ajax\HtmlCommand;
@@ -91,15 +92,39 @@ abstract class NewUserCreateFormBase extends FormBase {
       '#size' => 10,
     ];
 
+    $form['register_actions'] = [
+      '#type' => 'radios',
+      '#options' => [
+        'notify_with_login_url' => $this->t('Notify user by email with one-time login link'),
+        'set_password' => $this->t('Set user password'),
+      ],
+      '#default_value' => $email_required ? 'notify_with_login_url' : 'set_password',
+      'notify_with_login_url' => [
+        '#states' => [
+          'disabled' => [
+            'input[name=email]' => ['empty' => TRUE],
+          ],
+        ],
+      ],
+    ];
+
+    $password_states = [
+      'visible' => [
+        'input[name=register_actions]' => ['value' => 'set_password'],
+      ],
+    ];
     $form['password'] = [
       '#type' => 'password',
       '#title' => $this->t('Password'),
       '#size' => 10,
+      '#states' => $password_states,
     ];
+
     $form['password_confirm'] = [
       '#type' => 'password',
       '#title' => $this->t('Confirm Password'),
       '#size' => 10,
+      '#states' => $password_states,
     ];
 
     // Disable caching on this form.
@@ -166,7 +191,9 @@ abstract class NewUserCreateFormBase extends FormBase {
       // Mandatory.
       $user->setEmail($form_state->getValue('email'));
       $user->setUsername($form_state->getValue('username'));
-      $user->setPassword($form_state->getValue('password'));
+      if ($form_state->getValue('register_actions') == 'set_password') {
+        $user->setPassword($form_state->getValue('password'));
+      }
       $user->enforceIsNew();
 
       // Optional.
@@ -196,6 +223,18 @@ abstract class NewUserCreateFormBase extends FormBase {
         drupal_set_message($this->wrong_msg, 'error');
       }
       else {
+        // Notify user with welcome email.
+        if ($form_state->getValue('register_actions') == 'notify_with_login_url') {
+          if (_user_mail_notify('register_admin_created', $user)) {
+            $this->messenger()->addStatus($this->t('A welcome message with further instructions has been emailed to the new user <a href=":url">%name</a>.', [
+              ':url' => $user->toUrl()->toString(),
+              '%name' => $user->getAccountName(),
+            ]));
+          }
+          else {
+            $this->messenger()->addWarning($this->t('A welcome message was not sent. Contact administrator to check email settings.'));
+          }
+        }
         // If user saved, update current user.
         $current_user = User::load($current_user->id());
         $current_user->field_connected_users[] = $user;
@@ -244,10 +283,12 @@ abstract class NewUserCreateFormBase extends FormBase {
     }
 
     // Check Password.
-    $password = CommonFormUtils::cleanInput($form_state->getValue('password'));
-    $password_confirm = CommonFormUtils::cleanInput($form_state->getValue('password_confirm'));
-    if (strlen($password) < 2 || $password != $password_confirm) {
-      $form_state->setErrorByName('password', $this->t('The passwords do not match.'));
+    if ($form_state->getValue('register_actions') == 'set_password') {
+      $password = CommonFormUtils::cleanInput($form_state->getValue('password'));
+      $password_confirm = CommonFormUtils::cleanInput($form_state->getValue('password_confirm'));
+      if (strlen($password) < 2 || $password != $password_confirm) {
+        $form_state->setErrorByName('password', $this->t('The passwords do not match.'));
+      }
     }
   }
 
