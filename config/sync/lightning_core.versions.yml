@@ -71,6 +71,7 @@ menu_ui: 0.0.0
 metatag: 0.0.0
 migrate: 0.0.0
 monolog: 1.3.0
+nocurrent_pass: 1.0.0
 node: 0.0.0
 openapi: 0.0.0
 options: 0.0.0

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dc19448d63e9a317fc616f1d34b6239e",
+    "content-hash": "e64ddbec6ea415df8faccca11364fad2",
     "packages": [
         {
             "name": "acquia/lightning",
@@ -185,7 +185,7 @@
             "version": "3.4.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery/jquery-dist.git",
+                "url": "git@github.com:jquery/jquery-dist.git",
                 "reference": "15bc73803f76bc53b654b9fdbbbc096f56d7c03d"
             },
             "dist": {
@@ -5645,6 +5645,65 @@
             }
         },
         {
+            "name": "drupal/nocurrent_pass",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/nocurrent_pass.git",
+                "reference": "8.x-1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/nocurrent_pass-8.x-1.0.zip",
+                "reference": "8.x-1.0",
+                "shasum": "9ca1380a0d540f2e54333f740074d82c222c2502"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0",
+                    "datestamp": "1471977539",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "DarrellDuane",
+                    "homepage": "https://www.drupal.org/user/142816"
+                },
+                {
+                    "name": "david.czinege",
+                    "homepage": "https://www.drupal.org/user/2795337"
+                },
+                {
+                    "name": "earthday47",
+                    "homepage": "https://www.drupal.org/user/605842"
+                },
+                {
+                    "name": "shkiper",
+                    "homepage": "https://www.drupal.org/user/2261152"
+                }
+            ],
+            "description": "Make the \"current password\" requirement on the user edit form optional.",
+            "homepage": "https://www.drupal.org/project/nocurrent_pass",
+            "support": {
+                "source": "https://git.drupalcode.org/project/nocurrent_pass"
+            }
+        },
+        {
             "name": "drupal/openapi",
             "version": "1.0.0-beta6",
             "source": {
@@ -7242,6 +7301,9 @@
                         "status": "not-covered",
                         "message": "Project has not opted into security advisory coverage!"
                     }
+                },
+                "patches_applied": {
+                    "3107658 - web_push_notification": "https://www.drupal.org/files/issues/2020-01-22/3107658-4.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
