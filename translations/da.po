@@ -3003,7 +3003,7 @@ msgid "The name of the user who will get this email"
 msgstr "Navnet på brugeren der vil modtage emailen"
 
 msgid "The name of the user that finished the task"
-msgstr "Navnet på brugeren der har afsluttet opgaven"
+msgstr "Navnet på den bruger, der afsluttede opgaven"
 
 msgid "The title of the task that is being complete"
 msgstr "Titlen på opgaven der er afsluttet"
@@ -11108,6 +11108,19 @@ msgstr "Tilpas"
 msgid "Webform %label elements saved."
 msgstr "Webformular %label elementer gemt."
 
+msgid "@total submission"
+msgid_plural "@total submissions"
+msgstr[0] "@total indsendelse"
+msgstr[1] " @total indsendelser"
+
+msgid "submission"
+msgid_plural "submissions"
+msgstr[0] "indsendelse"
+msgstr[1] "indsendelser"
+
+msgid "Submission title"
+msgstr "Indsendelsestitel"
+
 msgid "Panelize this view mode"
 msgstr "Brug Panelizer på denne visning"
 
@@ -11133,9 +11146,6 @@ msgstr "Tilføj medietype"
 
 msgid "Add paragraph type"
 msgstr "Tilføj paragraph type"
-
-msgid "Layout builder style"
-msgstr "Styling for layout byggere"
 
 msgid "Layout builder styles"
 msgstr "Styling for layout byggere"
@@ -11250,6 +11260,9 @@ msgstr ""
 "udsendes. For at læse mere om hvordan modulet virker, kan du kigge "
 "på følgende dokumentation: <a href=\":documentation\">Swiftmailer "
 "dokumentation</a>."
+
+msgid "Organisations"
+msgstr "Organisationer"
 
 msgid ""
 "Delete orphaned composite entities revisions that are no longer "
@@ -11705,3 +11718,5 @@ msgstr "Redigér eget felt"
 msgid "View own field"
 msgstr "Vis eget felt"
 
+msgid "Progression"
+msgstr ""
