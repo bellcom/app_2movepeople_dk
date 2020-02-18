@@ -3886,7 +3886,7 @@ msgid "Display title"
 msgstr "Display titel"
 
 msgid "Navigation"
-msgstr "Navigation"
+msgstr "Navigering"
 
 msgid "Color"
 msgstr "Farve"
@@ -11719,4 +11719,5 @@ msgid "View own field"
 msgstr "Vis eget felt"
 
 msgid "Progression"
-msgstr ""
+msgstr "Fremskridt"
+
