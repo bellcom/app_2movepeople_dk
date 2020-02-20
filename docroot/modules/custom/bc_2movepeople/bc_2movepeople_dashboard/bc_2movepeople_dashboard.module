@@ -521,7 +521,7 @@ function bc_2movepeople_dashboard_views_data() {
  */
 function bc_2movepeople_dashboard_wpn_subscription_insert(EntityInterface $entity) {
   if ($entity instanceof SubscriptionInterface && !\Drupal::currentUser()->isAnonymous()) {
-    $user = User::load(\Drupal::currentUser());
+    $user = User::load(\Drupal::currentUser()->id());
     if ($user->hasField('field_wpn')
       && $user->get('field_wpn') instanceof EntityReferenceFieldItemListInterface) {
       $user->get('field_wpn')->appendItem($entity);
