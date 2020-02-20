@@ -35,6 +35,7 @@ class BcWebformList extends WebformEntityListBuilder implements ContainerInjecti
    */
   public function render() {
     $build = parent::render();
+    unset($build['info']);
     $build['add_webform'] = [
       '#title' => $this->t('Add webform'),
       '#type' => 'link',
