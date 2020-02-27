@@ -13,8 +13,7 @@ bc_2movepeople_dashboard.user.overview:
     _title_callback: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getUserOverviewTitle'
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getUserOverviewImplementation'
   requirements:
-    _permission: 'access user dashboard'
-    _user_is_logged_in: 'TRUE'
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
 bc_2movepeople_dashboard.user.edit_managers:
   path: '/dashboard/users/{user}/edit-managers'
@@ -27,7 +26,7 @@ bc_2movepeople_dashboard.user.edit_managers:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\UserManagersEditForm'
     limit: NULL
   requirements:
-    _permission: 'access user dashboard'
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
 bc_2movepeople_dashboard.user.cancel:
   path: '/dashboard/users/{user}/cancel'
@@ -39,7 +38,7 @@ bc_2movepeople_dashboard.user.cancel:
     _title: 'Cancel user'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\UserCancelForm'
   requirements:
-    _permission: 'access user dashboard'
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
 bc_2movepeople_dashboard.user.edit:
   path: '/dashboard/users/{user}/edit'
@@ -51,7 +50,7 @@ bc_2movepeople_dashboard.user.edit:
     _title: 'Edit Account'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\UserEditForm'
   requirements:
-    _permission: 'access user dashboard'
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
 bc_2movepeople_dashboard.user.milestones:
   path: '/dashboard/users/{user}/milestones'
@@ -60,8 +59,7 @@ bc_2movepeople_dashboard.user.milestones:
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getMilestoneJsAccordionImplementation'
     limit: 'milestone'
   requirements:
-    _permission: 'access user dashboard'
-    _user_is_logged_in: 'TRUE'
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
 bc_2movepeople_dashboard.user.progressions.add:
   path: '/dashboard/users/{user}/progressions/add/{limit}'
@@ -74,7 +72,7 @@ bc_2movepeople_dashboard.user.progressions.add:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionAddForm'
     limit: NULL
   requirements:
-    _permission: 'access user dashboard'
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
 bc_2movepeople_dashboard.user.progressions:
   path: '/dashboard/users/{user}/progressions/{limit}'
@@ -83,8 +81,7 @@ bc_2movepeople_dashboard.user.progressions:
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getJsAccordionImplementation'
     limit: NULL
   requirements:
-    _permission: 'access user dashboard'
-    _user_is_logged_in: 'TRUE'
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
 bc_2movepeople_dashboard.milestone.evaluations:
   path: '/dashboard/users/{user}/milestone/evaluations'
@@ -93,8 +90,7 @@ bc_2movepeople_dashboard.milestone.evaluations:
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getMilestoneEvaluations'
     limit: NULL
   requirements:
-    _permission: 'access user dashboard'
-    _user_is_logged_in: 'TRUE'
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
 bc_2movepeople_dashboard.milestone.evaluations.pdf:
   path: '/dashboard/users/{user}/milestone/evaluations/pdf'
@@ -103,8 +99,7 @@ bc_2movepeople_dashboard.milestone.evaluations.pdf:
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getMilestoneEvaluationsPdf'
     limit: NULL
   requirements:
-    _permission: 'access user dashboard'
-    _user_is_logged_in: 'TRUE'
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
 bc_2movepeople_dashboard.milestone.evaluations.sbsys:
   path: '/dashboard/users/{user}/milestone/evaluations/sbsys'
@@ -113,8 +108,7 @@ bc_2movepeople_dashboard.milestone.evaluations.sbsys:
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::sendMilestoneEvaluationsToSbsys'
     limit: NULL
   requirements:
-    _permission: 'access user dashboard'
-    _user_is_logged_in: 'TRUE'
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
 bc_2movepeople_dashboard.progressions.edit:
   path: '/dashboard/progressions/{node}/edit/{limit}'
@@ -127,7 +121,7 @@ bc_2movepeople_dashboard.progressions.edit:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionTargetProgressionEditForm'
     limit: NULL
   requirements:
-    _permission: 'access user dashboard'
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
 bc_2movepeople_dashboard.milestone.edit:
   path: '/dashboard/milestone/{node}/edit'
@@ -139,7 +133,7 @@ bc_2movepeople_dashboard.milestone.edit:
     _title: 'Edit milestone'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionTargetMilestoneEditForm'
   requirements:
-    _permission: 'access user dashboard'
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
 bc_2movepeople_dashboard.milestone.evaluate:
   path: '/dashboard/milestone/{node}/evaluate'
@@ -151,7 +145,7 @@ bc_2movepeople_dashboard.milestone.evaluate:
     _title: 'Evaluate milestone'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionTargetMilestoneEvaluateForm'
   requirements:
-    _permission: 'access user dashboard'
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
 bc_2movepeople_dashboard.progression.tasks.add:
   path: '/dashboard/progressions/{node}/tasks/add/{limit}'
@@ -164,7 +158,7 @@ bc_2movepeople_dashboard.progression.tasks.add:
     _form: '\Drupal\bc_2movepeople_dashboard\Form\ProgressionTaskEditForm'
     limit: NULL
   requirements:
-    _permission: 'access user dashboard'
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
 bc_2movepeople_dashboard.user.milestones.add:
   path: '/dashboard/users/{user}/milestones/add'
@@ -176,7 +170,7 @@ bc_2movepeople_dashboard.user.milestones.add:
     _title: 'Add new milestone'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneAddForm'
   requirements:
-    _permission: 'access user dashboard'
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
 bc_2movepeople_dashboard.milestone.tasks.add:
   path: '/dashboard/milestones/{node}/tasks/add'
@@ -188,7 +182,7 @@ bc_2movepeople_dashboard.milestone.tasks.add:
     _title: 'Add new milestone task'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskAddForm'
   requirements:
-    _permission: 'access user dashboard'
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
 bc_2movepeople_dashboard.milestone.tasks.clone:
   path: '/dashboard/milestones/users/{user}/tasks/{node}/clone'
@@ -202,7 +196,7 @@ bc_2movepeople_dashboard.milestone.tasks.clone:
     _title: 'Copy question to category'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskCloneForm'
   requirements:
-    _permission: 'access user dashboard'
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
 bc_2movepeople_dashboard.user.tasks:
   path: '/dashboard/users/{user}/tasks'
@@ -260,6 +254,14 @@ bc_2movepeople_dashboard.users.create:
     _title: 'Create account'
   requirements:
     _permission: 'create connected users'
+
+bc_2movepeople_dashboard.supervisor.create:
+  path: '/dashboard/supervisor/create'
+  defaults:
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\NewSupervisorCreateForm'
+    _title: 'Create supervisor'
+  requirements:
+    _permission: 'create supervisor users'
 
 bc_2movepeople_dashboard.save_to_tpl:
   path: '/dashboard/users/{user}/save-to-tpl'

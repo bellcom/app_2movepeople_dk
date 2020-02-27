@@ -2,6 +2,7 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Form;
 
+use Drupal\bc_2movepeople_dashboard\Misc\Utils;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Form\FormBase;
@@ -19,6 +20,16 @@ class UserManagersEditForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, UserInterface $user = NULL) {
+    if (!$user->hasRole('2mp_user')) {
+      $form['warning'] = [
+        '#type' => 'item',
+        '#markup' => $this->t('User @username is not 2MP User. Edit managers action available only for 2MP Users.', [
+          '@username' => CommonFormUtils::getUserName($user),
+        ]),
+      ];
+      return $form;
+    }
+
     $form_state->set('user', $user);
 
     $this->return_url = \Drupal::request()->query->get('return_url');
@@ -170,11 +181,17 @@ class UserManagersEditForm extends FormBase {
    * @return array
    *   Array of user entities.
    */
-  private static function getManagers() {
+  private static function getManagers(UserInterface $user = NULL) {
+    if (empty($user)) {
+      $user = User::load(\Drupal::currentUser()->id());
+    }
+
+    $organization_tids = Utils::getUserOrganizations($user);
     // Get all managers of target user.
     $managers_ids = \Drupal::entityQuery('user')
       ->condition('status', 1)
       ->condition('roles', '2mp_manager')
+      ->condition('field_organisation', $organization_tids, 'IN')
       ->execute();
     return User::loadMultiple($managers_ids);
   }

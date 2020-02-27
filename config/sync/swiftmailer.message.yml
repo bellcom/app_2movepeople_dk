@@ -1,4 +1,4 @@
-format: text/plain
+format: text/html
 filter_format: plain_text
 respect_format: true
 convert_mode: false

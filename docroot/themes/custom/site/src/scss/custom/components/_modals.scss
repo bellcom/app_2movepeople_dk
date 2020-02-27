@@ -21,6 +21,11 @@
   }
 }
 
+#drupal-modal--content {
+  margin: 2em 0;
+  max-height: none !important;
+}
+
 // Modal background background
 .modal-backdrop {
   position: fixed;
@@ -41,7 +46,7 @@
     background-color: $color-blue !important;
     padding: 15px 35px;
     position: relative;
-    
+
     .close {
       color: #FFF;
       padding: 5px 10px;
@@ -50,7 +55,7 @@
       top: 50%;
       transform: translateY(-50%);
     }
-   
+
     .modal-title {
       color: #FFF !important;
       font-size: 24px;
@@ -58,6 +63,7 @@
   }
   .modal-body {
     padding: 15px 35px 0 35px;
+    overflow: auto !important;
     .form-actions {
       display: none;
     }
@@ -72,14 +78,6 @@
     border: none;
     text-align: left;
     padding: 0 35px 20px 35px;
-    background-color: #FFF !important;
-    
-    button.button {
-      font-size: 22px;
-      padding: 10px 20px;
-      background-color: #6dae22;
-      border-color: #588f19;
-    }
   }
 }
 
@@ -161,7 +159,7 @@
 // --------------------------------------------------
 
 // Mobile - and up
-@include media-breakpoint-up(xs) { 
+@include media-breakpoint-up(xs) {
 }
 
 // Mobile - only
@@ -177,9 +175,9 @@
       min-width: 700px;
     }
   }
-  
+
   .modal-body__progression-tabs {
-    width:700px; 
+    width:700px;
     min-height:300px;
     max-height: 600px;
     overflow-y: auto;

@@ -1,0 +1,15 @@
+bc_webform.collection:
+  path: '/questionnaire'
+  defaults:
+    _controller: '\Drupal\bc_webform\BcWebformList::render'
+    _title: 'Questionnaire'
+  requirements:
+    _custom_access: '\Drupal\webform\Access\WebformAccountAccess::checkOverviewAccess'
+
+bc_webform.addUserTasks:
+  path: '/analisys/{webform_id}/add-task'
+  defaults:
+    _form: '\Drupal\bc_webform\Form\AddUserTasksForm'
+    _title: 'Add task about webform submission'
+  requirements:
+    _custom_access: '\Drupal\webform\Access\WebformAccountAccess::checkOverviewAccess'

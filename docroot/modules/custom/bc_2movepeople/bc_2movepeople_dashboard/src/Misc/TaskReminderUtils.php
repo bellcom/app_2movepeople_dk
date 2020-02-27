@@ -35,24 +35,31 @@ class TaskReminderUtils {
         if (count($reminder_data) == 0 || $reminder_data['reminded_count'] < 1) {
           // Get objects.
           $user = is_null($user) ? User::load($uid) : $user;
+          $to = $user->get('mail')->value;
+          if (empty($to)) {
+            continue;
+          }
           $goal = Node::load($nid);
 
           // Prepare data.
           $subject = $config->get('task_reminder_email_subject');
           $body = $config->get('task_reminder_email_body');
           $body = str_replace("@name", $user->getDisplayName(), $body);
+          $dashboardMailer = \Drupal::service('2movepeople_dashboard.mailer');
+          $dashboardMailer->replaceDefaultTokens($body, [
+            'recipient' => $user,
+          ]);
           $body = str_replace("@task_title", $goal->get('title')->value, $body);
           $body = str_replace("@due_date", $goal->get('field_due_date')->value, $body);
 
-          $to = $user->get('mail')->value;
-
           // Send email.
-          MovepeopleDashboardController::sendMail([
+          $dashboardMailer->sendMail([
               'to' => $to,
               'from' => \Drupal::config('system.site')->get('mail'),
               'subject' => $subject,
               'body' => $body,
-              'sender' => t('System notify')
+              'sender' => t('System notify'),
+              'wpn_to' => $user,
           ]);
 
           // Set and update reminder data.

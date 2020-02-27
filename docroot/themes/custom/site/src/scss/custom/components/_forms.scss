@@ -10,6 +10,17 @@
 // Styling
 // --------------------------------------------------
 
+.control-label,
+.custom-form-label-title,
+.custom-form-label-activity-title,
+.custom-form-label-due-date,
+.custom-form-label-responsible-manager,
+.custom-form-label-complete-btn {
+  font-size: 16px;
+  color: $form-text-color;
+  font-weight: bold;
+}
+
 input[type="date"] {
   position: relative;
 }
@@ -42,4 +53,12 @@ input[type="date"]::-webkit-inner-spin-button {
 /* adjust clear button */
 input[type="date"]::-webkit-clear-button {
   z-index: 1;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  input[type="date"] {
+    &.form-control {
+      line-height: normal;
+    }
+  }
 }

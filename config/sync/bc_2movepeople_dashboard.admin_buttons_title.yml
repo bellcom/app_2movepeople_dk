@@ -15,7 +15,7 @@ Navigation:
     create_user: 'Tilføj ny bruger (manager)'
   feedback: Feedback
   self_rate: Målinger
-  supervisor_create_user: 'Tilføj manager'
-  manager_create_user: 'Tilføj bruger'
+  supervisor_create_user: 'Tilføj supervisor'
+  manager_create_user: 'Tilføj manager'
 Meetings:
   meetings: Møder

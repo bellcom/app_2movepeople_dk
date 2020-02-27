@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\node\Entity\Node;
+
 function bc_2movepeople_dashboard_schema() {
   $schema['bc_2movepeople_dashboard_task_reminder'] = array(
     'description' => 'This table stores reminded tasks',
@@ -27,7 +29,29 @@ function bc_2movepeople_dashboard_schema() {
         'unsigned' => TRUE,
       ),
     ),
-    'primary key' => array('nid')
+    'primary key' => array('nid'),
   );
   return $schema;
+}
+
+/**
+ * Add default value for field 'field_task_show_complete_button'.
+ */
+function bc_2movepeople_dashboard_update_8001() {
+  $node_goal_definition = \Drupal::service('entity_field.manager')->getFieldDefinitions('node', 'goal');
+  if (empty($node_goal_definition['field_task_show_complete_button'])
+    || empty($node_goal_definition['field_task_links'])) {
+    return;
+  }
+
+  $query = \Drupal::entityQuery('node');
+  $query->condition('status', 1);
+  $query->condition('type', 'goal');
+  $query->notExists('field_task_links');
+  $query->notExists('field_task_show_complete_button');
+  $nids = $query->execute();
+  /** @var \Drupal\node\NodeInterface $node */
+  foreach (Node::loadMultiple($nids) as $node) {
+    $node->set('field_task_show_complete_button', ['value' => 1])->save();
+  }
 }

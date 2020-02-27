@@ -11,6 +11,8 @@ dependencies:
     - field.field.node.goal.field_responsible_manager
     - field.field.node.goal.field_subgoal
     - field.field.node.goal.field_task_complete
+    - field.field.node.goal.field_task_links
+    - field.field.node.goal.field_task_show_complete_button
     - node.type.goal
   module:
     - text
@@ -40,5 +42,8 @@ hidden:
   field_responsible_manager: true
   field_subgoal: true
   field_task_complete: true
+  field_task_links: true
+  field_task_show_complete_button: true
   langcode: true
   links: true
+  search_api_excerpt: true

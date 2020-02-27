@@ -66,25 +66,17 @@ class NavigationBlock extends BlockBase {
       ];
     }
 
-    if ($user->hasPermission('create connected users')) {
-
-      // Alter text of button.
-      $add_button_key = 'Navigation.create_user';
-      if (in_array('2mp_supervisor', $user_roles)) {
-        $add_button_key = 'Navigation.supervisor_create_user';
-      }
-      else if (in_array('2mp_manager', $user_roles)) {
-        $add_button_key = 'Navigation.manager_create_user';
-      }
-
-      $buttons[$add_button_key] = [
-        '#url' => Url::fromRoute('bc_2movepeople_dashboard.users.create'),
+    if ($user->hasPermission('create supervisor users')) {
+      $buttons['Navigation.supervisor_create_user'] = [
+        '#url' => Url::fromRoute('bc_2movepeople_dashboard.supervisor.create'),
         '#attributes' => [
           'class' => ['use-ajax'],
           'data-dialog-type' => 'modal'
         ],
       ];
     }
+
+    MovepeopleDashboardController::addCreateButton($buttons);
 
     if (!empty($buttons)) {
       $build['buttons'] = MovepeopleDashboardController::getControlButtons($buttons, ['class' => ['text-center']]);

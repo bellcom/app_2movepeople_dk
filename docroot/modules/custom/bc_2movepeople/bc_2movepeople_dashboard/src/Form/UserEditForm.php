@@ -2,12 +2,15 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Form;
 
+use Drupal\bc_2movepeople_dashboard\Misc\Utils;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Url;
 use Drupal\Core\Ajax\RedirectCommand;
 use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 
 /**
@@ -70,6 +73,59 @@ class UserEditForm extends FormBase {
       '#default_value' => $user->get('mail')->value,
     ];
 
+
+    $organisation_tids = Utils::getUserOrganizations(User::load(\Drupal::currentUser()->id()));
+    $terms = Term::loadMultiple($organisation_tids);
+    $options = [];
+    foreach ($terms as $term) {
+      $options[$term->id()] = $term->label();
+    }
+
+    $form['organisations'] = [
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Organisations'),
+      '#options' => $options,
+      '#default_value' => Utils::getUserOrganizations($user),
+      '#required' => TRUE,
+      '#size' => 10,
+    ];
+
+    $form['edit_actions'] = [
+      '#type' => 'radios',
+      '#options' => [
+        'no_actions' => $this->t('No actions'),
+        'send_login_url' => $this->t('Send user email with one-time login link'),
+        'reset_password' => $this->t('Reset user password'),
+      ],
+      '#default_value' => 'no_actions',
+      'send_login_url' => [
+        '#states' => [
+          'disabled' => [
+            'input[name=email]' => ['empty' => TRUE],
+          ],
+        ],
+      ],
+    ];
+
+    $password_states = [
+      'visible' => [
+        'input[name=edit_actions]' => ['value' => 'reset_password'],
+      ],
+    ];
+    $form['password'] = [
+      '#type' => 'password',
+      '#title' => $this->t('Password'),
+      '#size' => 10,
+      '#states' => $password_states,
+    ];
+
+    $form['password_confirm'] = [
+      '#type' => 'password',
+      '#title' => $this->t('Confirm Password'),
+      '#size' => 10,
+      '#states' => $password_states,
+    ];
+
     $form['actions'] = [
       '#type' => 'actions',
     ];
@@ -103,21 +159,19 @@ class UserEditForm extends FormBase {
   public function ajaxSubmitForm(array $form, FormStateInterface $form_state) {
     $ajax_response = new AjaxResponse();
 
-    $message = [
-      '#theme' => 'status_messages',
-      '#message_list' => drupal_get_messages(),
-    ];
-
     // Success.
     if (!$form_state->hasAnyErrors()) {
       $url = Url::fromRoute('bc_2movepeople_dashboard.main');
-
       // Reload page.
       $ajax_response->addCommand(new RedirectCommand($url->toString()));
     }
 
     // Errors.
     else {
+      $message = [
+        '#theme' => 'status_messages',
+        '#message_list' => drupal_get_messages(),
+      ];
       $ajax_response->addCommand(new HtmlCommand('#form-system-messages', $message));
     }
 
@@ -139,6 +193,55 @@ class UserEditForm extends FormBase {
       $user->set('field_social_security_number', $form_state->getValue('social_security_number'));
       $user->set('field_user_firstname', $form_state->getValue('firstname'));
       $user->set('field_user_surname', $form_state->getValue('surname'));
+
+      switch ($form_state->getValue('edit_actions')) {
+        case 'reset_password':
+          $user->setPassword($form_state->getValue('password'));
+          break;
+
+        case 'send_login_url':
+          $mail = _user_mail_notify('password_reset', $user);
+          if (!empty($mail)) {
+            $message = $this->t('Password reset instructions mailed to %name at %email.', [
+              '%name' => $user->getAccountName(),
+              '%email' => $user->getEmail(),
+            ]);
+            $this->logger('user')->notice($message);
+            $this->messenger()->addStatus($message);
+          }
+          else {
+            $this->messenger()->addWarning($this->t('Password reset message was not sent. Contact administrator to check email settings.'));
+          }
+          break;
+      }
+
+      $field_organisation = $user->field_organisation;
+      $current_user_organisation_tids = Utils::getUserOrganizations(User::load(\Drupal::currentUser()->id()));
+      $organisation_tids = array_filter($form_state->getValue('organisations'));
+      $new_field_organisation = [];
+      // Remove unchecked organisations.
+      foreach($field_organisation as $delta => $item) {
+        $value = $item->getValue();
+        $tid = $value['target_id'];
+        // Skip if current user don't allowed to edit organisation.
+        if (array_search($tid, $current_user_organisation_tids) === FALSE) {
+          $new_field_organisation[] = ['target_id' => $tid];
+          continue;
+        }
+
+        // Skip if user has organisation as checked.
+        if ($key = array_search($tid, $organisation_tids)) {
+          unset($organisation_tids[$key]);
+          $new_field_organisation[] = ['target_id' => $tid];
+        }
+      }
+
+      // Add new organisations.
+      foreach ($organisation_tids as $tid) {
+        $new_field_organisation[] = ['target_id' => $tid];
+      }
+
+      $user->field_organisation = $new_field_organisation;
 
       // Update user account.
       $user->save();
@@ -188,6 +291,15 @@ class UserEditForm extends FormBase {
     if ($user->get('mail')->value !== $email) {
       if (!empty(user_load_by_mail($email))) {
         $form_state->setErrorByName('email', $this->t('The Email address %mail already exists.', ['%mail' => $email]));
+      }
+    }
+
+    // Check Password.
+    if ($form_state->getValue('edit_actions') == 'reset_password') {
+      $password = CommonFormUtils::cleanInput($form_state->getValue('password'));
+      $password_confirm = CommonFormUtils::cleanInput($form_state->getValue('password_confirm'));
+      if (strlen($password) < 2 || $password != $password_confirm) {
+        $form_state->setErrorByName('password', $this->t('The passwords do not match.'));
       }
     }
   }

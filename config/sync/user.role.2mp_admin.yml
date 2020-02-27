@@ -1,0 +1,41 @@
+uuid: 5b7baa58-2319-4c33-8132-b41219cf903e
+langcode: da
+status: true
+dependencies:
+  module:
+    - lightning_core
+third_party_settings:
+  lightning_core:
+    description: ''
+id: 2mp_admin
+label: '2MP Admin'
+weight: 9
+is_admin: null
+permissions:
+  - 'access category template'
+  - 'access progression rates'
+  - 'access user dashboard'
+  - 'access user profiles'
+  - 'access webform overview'
+  - 'administer bc_2movepeople settings'
+  - 'cancel users with role 2mp_manager'
+  - 'cancel users with role 2mp_user'
+  - 'create connected users'
+  - 'create supervisor users'
+  - 'create webform'
+  - 'delete any webform'
+  - 'delete own webform'
+  - 'edit any webform'
+  - 'edit field_addiction'
+  - 'edit field_connected_users'
+  - 'edit field_diagnose'
+  - 'edit field_organisation'
+  - 'edit own webform'
+  - 'edit users with role 2mp_manager'
+  - 'edit users with role 2mp_user'
+  - 'edit webform source'
+  - 'view any webform submission'
+  - 'view field_addiction'
+  - 'view field_connected_users'
+  - 'view field_diagnose'
+  - 'view field_organisation'

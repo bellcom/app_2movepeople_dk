@@ -1,0 +1,8 @@
+name: 'Custom Webform module'
+description: 'Customization for Webform module functionality'
+type: module
+package: 'Bellcom'
+core: 8.x
+dependencies:
+  - webform
+  - bc_2movepeople_dashboard

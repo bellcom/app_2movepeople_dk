@@ -10,10 +10,13 @@ dependencies:
     - field.field.node.goal.field_responsible_manager
     - field.field.node.goal.field_subgoal
     - field.field.node.goal.field_task_complete
+    - field.field.node.goal.field_task_links
+    - field.field.node.goal.field_task_show_complete_button
     - node.type.goal
   module:
     - content_moderation
     - datetime
+    - link
     - path
     - text
 id: node.goal.default
@@ -86,6 +89,21 @@ content:
     settings:
       display_label: true
     third_party_settings: {  }
+  field_task_links:
+    weight: 123
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  field_task_show_complete_button:
+    weight: 122
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
   langcode:
     type: language_select
     weight: 2

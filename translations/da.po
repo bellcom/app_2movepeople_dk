@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-12-16 14:56+0100\n"
-"PO-Revision-Date: 2019-12-16 14:56+0100\n"
+"POT-Creation-Date: 2020-01-20 11:18+0100\n"
+"PO-Revision-Date: 2020-01-20 11:18+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -94,13 +94,13 @@ msgid "Status"
 msgstr "Status"
 
 msgid "Active"
-msgstr "Active"
+msgstr "Aktiv"
 
 msgid "Blocked"
 msgstr "Blokeret"
 
 msgid "Roles"
-msgstr "Roles"
+msgstr "Roller"
 
 msgid ", "
 msgstr ", "
@@ -121,7 +121,7 @@ msgid "Role"
 msgstr "Role"
 
 msgid "Permission"
-msgstr "Permission"
+msgstr "Tilladelse"
 
 msgid "People"
 msgstr "Personer"
@@ -174,6 +174,12 @@ msgstr "Indstillinger for Synkronisering"
 msgid "Regional settings"
 msgstr "Regionale indstillinger"
 
+msgid "Languages"
+msgstr "Languages"
+
+msgid "Basic site settings"
+msgstr "Generelle sideindstillinger"
+
 msgid "Shortcuts"
 msgstr "Genveje"
 
@@ -182,6 +188,9 @@ msgstr "Arbejdsgang"
 
 msgid "Text formats and editors"
 msgstr "Tekstformater og editors"
+
+msgid "Entity browsers"
+msgstr "Entitetsvælgere"
 
 msgid "Account settings"
 msgstr "Kontoindstillinger"
@@ -208,7 +217,7 @@ msgid "Dashboard settings"
 msgstr "Indstillinger for Dashboard"
 
 msgid "Find and manage media."
-msgstr ""
+msgstr "Find og håndtér media."
 
 msgid "Find and manage content."
 msgstr "Find og håndtér indhold."
@@ -319,7 +328,7 @@ msgid "Manage"
 msgstr "Administration"
 
 msgid "Edit"
-msgstr "Edit"
+msgstr "Redigér"
 
 msgid "My account"
 msgstr "Min konto"
@@ -445,10 +454,10 @@ msgstr ""
 "\"om os\"-side."
 
 msgid "Search"
-msgstr "Search"
+msgstr "Søg"
 
 msgid "Keywords"
-msgstr "Keywords"
+msgstr "Nøgleord"
 
 msgid "Your search did not return any results."
 msgstr "Din søgning gav ingen resultater."
@@ -966,7 +975,7 @@ msgid "Entity"
 msgstr "Entity"
 
 msgid "Entity type"
-msgstr "Entity type"
+msgstr "Entitets type"
 
 msgid "Registering module"
 msgstr "Registrerer modul"
@@ -1091,7 +1100,7 @@ msgid "Status messages"
 msgstr "Statusmeddelelser"
 
 msgid "Page title"
-msgstr "Page title"
+msgstr "Sidetitel"
 
 msgid "Powered by Drupal"
 msgstr "Drives af Drupal"
@@ -1378,6 +1387,13 @@ msgid_plural "@count days"
 msgstr[0] "1 dag"
 msgstr[1] "@count dage"
 
+msgid ""
+"The maximum time a page can be cached by browsers and proxies. This is "
+"used as the value for max-age in Cache-Control headers."
+msgstr ""
+"Den maksimale tid en side can være cachet af browsere eller proxyer. "
+"Dette bruges som værdi til at kontrollere hvornår caches udløber."
+
 msgid "Open"
 msgstr "Åben"
 
@@ -1643,6 +1659,11 @@ msgstr "E-mail adresse"
 msgid "Password"
 msgstr "Kodeord"
 
+msgid ""
+"Several special characters are allowed, including space, period (.), "
+"hyphen (-), apostrophe ('), underscore (_), and the @ sign."
+msgstr "Specialtegn er tilladt, såsom (.) (-), ('), (_) og @"
+
 msgid "Confirm password"
 msgstr "Bekræft adgangskode"
 
@@ -1739,6 +1760,17 @@ msgstr "Deaktiveret"
 
 msgid "PHP Mbstring Extension"
 msgstr "PHP mbstring-udvidelse"
+
+msgid ""
+"Here you can find a short overview of your site's parameters as well "
+"as any problems detected with your installation. It may be useful to "
+"copy and paste this information into support requests filed on "
+"Drupal.org's support forums and project issue queues. Before filing a "
+"support request, ensure that your web server meets the <a "
+"href=\":system-requirements\">system requirements.</a>"
+msgstr ""
+"Her kan du finde en oversigt over din sides indstillinger såvel som "
+"eventuelle problemer der er opdaget i din løsning."
 
 msgid "Weight for @title"
 msgstr "Vægt af @title"
@@ -2568,6 +2600,9 @@ msgstr "Lørdag"
 msgid "Default time zone"
 msgstr "Standardtidszone"
 
+msgid "Time zones"
+msgstr "Time zones"
+
 msgid "Profile picture for user @username"
 msgstr "Profilbillede for @username"
 
@@ -2828,6 +2863,15 @@ msgstr "Dato"
 msgid "Complete"
 msgstr "Markér som færdig"
 
+msgid ""
+"An existing local file system path for storing private files. It "
+"should be writable by Drupal and not accessible over the web. This "
+"must be changed in settings.php"
+msgstr ""
+"En eksisterende systemsti hvor private filer vil blive gemt. Stien "
+"skal være skrivbar for Drupal, og være utilgængelig fra "
+"internettet. Dette ændres i settings.php"
+
 msgid "Never"
 msgstr "Aldrig"
 
@@ -2959,7 +3003,7 @@ msgid "The name of the user who will get this email"
 msgstr "Navnet på brugeren der vil modtage emailen"
 
 msgid "The name of the user that finished the task"
-msgstr "Navnet på brugeren der har afsluttet opgaven"
+msgstr "Navnet på den bruger, der afsluttede opgaven"
 
 msgid "The title of the task that is being complete"
 msgstr "Titlen på opgaven der er afsluttet"
@@ -3030,6 +3074,14 @@ msgstr "Importér alle"
 msgid "Synchronize"
 msgstr "Synkronisér"
 
+msgid ""
+"Compare the configuration uploaded to your sync directory with the "
+"active configuration before completing the import."
+msgstr ""
+"Sammenlign den konfiguration der er uploadet til din "
+"synkroniseringsmappe med den aktive konfiguration før du gennemfører "
+"importen."
+
 msgid "File removed"
 msgstr "Fil fjernet"
 
@@ -3062,6 +3114,9 @@ msgstr "Visning af entitets-view"
 
 msgid "Base field override"
 msgstr "Tilsidesættelse af basisfelt"
+
+msgid "Embed button"
+msgstr "Embed knap"
 
 msgid "Field"
 msgstr "Felt"
@@ -3263,6 +3318,9 @@ msgstr "Brugers email er påkrævet"
 msgid "New users default progression template"
 msgstr "Default template for nye brugere"
 
+msgid "Available functionality"
+msgstr "Tilgængelig funktionalitet"
+
 msgid "2Movepeople Configuration form"
 msgstr "Indstillinger for 2Movepeople"
 
@@ -3272,11 +3330,143 @@ msgstr "Indstillingerne er blevet gemt."
 msgid "Advanced"
 msgstr "Avanceret"
 
+msgid "Basic tags"
+msgstr "Simple metatags"
+
 msgid "Image"
 msgstr "Billede"
 
+msgid ""
+"An image associated with this page, for use as a thumbnail in social "
+"networks and other services."
+msgstr "Billede der er tilknyttet til siden som thumbnail."
+
 msgid "Parent item"
 msgstr "Overordnet menupunkt"
+
+msgid ""
+"The text to display in the title bar of a visitor's web browser when "
+"they view this page. This meta tag may also be used as the title of "
+"the page when a visitor bookmarks or favorites this page, or as the "
+"page title in a search engine result. It is common to append "
+"'[site:name]' to the end of this, so the site's name is automatically "
+"added. It is recommended that the title is no greater than 55 - 65 "
+"characters long, including spaces."
+msgstr "Teksten der vises i titelbaren på en besøgendes webbrowser."
+
+msgid ""
+"A brief and concise summary of the page's content, preferably 150 "
+"characters or less. The description meta tag may be used by search "
+"engines to display a snippet about the page in search results."
+msgstr ""
+"En kort beskrivelse af sidens indhold, på 150 tegn eller mindre. "
+"Metatagget på beskrivelsen kan bruges af søgemaskiner til at vise en "
+"snippet omkring siden i søgeresultater."
+
+msgid ""
+"A brief and concise summary of the page's content, preferably 150 "
+"characters or less. Where as the description meta tag may be used by "
+"search engines to display a snippet about the page in search results, "
+"the abstract tag may be used to archive a summary about the page. This "
+"meta tag is <em>no longer</em> supported by major search engines."
+msgstr ""
+"En kort beskrivelse af sidens indhold, på 150 tegn eller mindre. "
+"Metatagget på beskrivelsen kan bruges af søgemaskiner til at vise en "
+"snippet omkring siden i søgeresultater."
+
+msgid ""
+"A comma-separated list of keywords about the page. This meta tag is "
+"<em>no longer</em> supported by most search engines."
+msgstr "En kommasepereret liste over nøgleord omkring siden."
+
+msgid "A location's formal name."
+msgstr "Et steds formelle navn."
+
+msgid ""
+"Geo-spatial information in 'latitude, longitude' format, e.g. "
+"'50.167958, -97.133185'; <a "
+"href='http://en.wikipedia.org/wiki/ICBM'>see Wikipedia for "
+"details</a>."
+msgstr ""
+"GPS information i breddegrad, længdegrad format. F.eks '50.167958, "
+"-97.133185'"
+
+msgid ""
+"A location's two-letter international country code, with an optional "
+"two-letter region, e.g. 'US-NH' for New Hampshire in the USA."
+msgstr ""
+"Et steds tocifrede internationale landekode med sekunder tocifret "
+"regionskode. F.eks US-NH for New Hampshire i USA."
+
+msgid ""
+"Geo-spatial information in 'latitude, longitude' format, e.g. "
+"'50.167958, -97.133185'; <a "
+"href='https://en.wikipedia.org/wiki/ICBM_address'>see Wikipedia for "
+"details</a>."
+msgstr ""
+"GPS information i breddegrad, længdegrad format. F.eks '50.167958, "
+"-97.133185'"
+
+msgid ""
+"A link to the preferred page location or URL of the content of this "
+"page, to help eliminate duplicate content penalties from search "
+"engines."
+msgstr ""
+"Et link til den foretrukne side eller URL af indholdet på siden. "
+"Dette er til for at modvirke det straffe søgemaskiner giver for "
+"dubletindhold."
+
+msgid ""
+"Used to define this page's language code. May be the two letter "
+"language code, e.g. \"de\" for German, or the two letter code with a "
+"dash and the two letter ISO country code, e.g. \"de-AT\" for German in "
+"Austria. Still used by Bing."
+msgstr ""
+"Bruges til at definere sidens landekode. Her kan den tocifrede "
+"landekode f.eks \"de\" for tysk bruges."
+
+msgid "A brief URL, often created by a URL shortening service."
+msgstr "En kort URL, ofte oprettet af URL forkortere."
+
+msgid ""
+"A comma-separated list of keywords about the page. This meta tag is "
+"used as an indicator in <a href=':google_news'>Google News</a>."
+msgstr "En kommasepereret liste over nøgleord omkring siden."
+
+msgid ""
+"Highlight standout journalism on the web, especially for breaking "
+"news; used as an indicator in <a href=':google_news'>Google News</a>. "
+"Warning: Don't abuse it, to be used a maximum of 7 times per calendar "
+"week!"
+msgstr ""
+"Bruges til at fremhæve nyheder, specifikt for \"breaking news\". "
+"Misbrug ikke dette tag, må kun bruges 7 gange pr. kalenderuge."
+
+msgid ""
+"Used to indicate the URL that broke the story, and can link to either "
+"an internal URL or an external source. If the full URL is not known it "
+"is acceptable to use a partial URL or just the domain name."
+msgstr ""
+"Bruges til at definere en URL som bruges som original kilde på en "
+"artikel."
+
+msgid ""
+"Indicate to search engines and other page scrapers whether or not "
+"links should be followed. See <a "
+"href='http://w3c.github.io/webappsec/specs/referrer-policy/'>the W3C "
+"specifications</a> for further details."
+msgstr ""
+"Definerer hvorvidt søgemaskiner og sideskrabere skal følge links på "
+"siden."
+
+msgid ""
+"Details about intellectual property, such as copyright or trademarks; "
+"does not automatically protect the site's content or intellectual "
+"property."
+msgstr "Detaljer omkring rettigheder, som f.eks copyright og trademarks."
+
+msgid "Meta tags that might not be needed by many sites."
+msgstr "Metatags som ikke nødvendigvis bliver brugt mange steder."
 
 msgid "The name of the manager who will get this email"
 msgstr "Navnet på manager der vil modtage mail"
@@ -3696,7 +3886,7 @@ msgid "Display title"
 msgstr "Display titel"
 
 msgid "Navigation"
-msgstr "Navigation"
+msgstr "Navigering"
 
 msgid "Color"
 msgstr "Farve"
@@ -10273,6 +10463,52 @@ msgstr "Søjlediagram"
 msgid "Dashboard Milestone"
 msgstr "Mål og delmål"
 
+msgid ""
+"A brief and concise summary of the page's content, preferably 320 "
+"characters or less. The description meta tag may be used by search "
+"engines to display a snippet about the page in search results."
+msgstr ""
+"En kort beskrivelse af sidens indhold, på 320 tegn eller mindre. "
+"Metatagget på beskrivelsen kan bruges af søgemaskiner til at vise en "
+"snippet omkring siden i søgeresultater."
+
+msgid ""
+"Geo-spatial information in 'latitude, longitude' format, e.g. "
+"'50.167958, -97.133185'; <a "
+"href='https://en.wikipedia.org/wiki/Geographic_coordinate_system'>see "
+"Wikipedia for details</a>."
+msgstr ""
+"GPS information i breddegrad, længdegrad format. F.eks '50.167958, "
+"-97.133185'"
+
+msgid ""
+"<a href='https://www.metatags.org/meta_http_equiv_set_cookie'>Sets a "
+"cookie</a> on the visitor's browser. Can be in either NAME=VALUE "
+"format, or a more verbose format including the path and expiration "
+"date; see the link for full details on the syntax."
+msgstr ""
+"<a href='https://www.metatags.org/meta_http_equiv_set_cookie'>Sætter "
+"en cookie</a> i en besøgendes browser."
+
+msgid ""
+"The Database Logging module logs system events in the Drupal database. "
+"Monitor your site or debug site problems on this page."
+msgstr ""
+"Database :ogging-modulet logger systembegivenheder i Drupals database. "
+"Se håndbogens afsnit om <a href=\":dblog\">Database "
+"Logging-modulet</a> for mere information."
+
+msgid ""
+"The email address to be used as the 'from' address for all account "
+"notifications listed below. If <em>'Visitors, but administrator "
+"approval is required'</em> is selected above, a notification email "
+"will also be sent to this address for any new registrations. Leave "
+"empty to use the default system email address <em>(%site-email).</em>"
+msgstr ""
+"Denne email bruges i alle \"fra\" felter for de nedenstående "
+"notifikationer. Hvis feltet er tomt vil systemets standardemail "
+"bruges."
+
 msgid "Edit user managers"
 msgstr "Ret brugeradministratorer"
 
@@ -10310,6 +10546,11 @@ msgstr "Færdig opgave"
 msgid "Rates"
 msgstr "Målinger"
 
+msgid "Use custom display settings for the following @display_context modes"
+msgstr ""
+"Brug brugerdefinerede indstillinger for følgende @display_context "
+"modes"
+
 msgid "Update graph"
 msgstr "Opdatér graf"
 
@@ -10333,6 +10574,33 @@ msgstr ""
 "Placering af blokke er specifikt for alle temaer der er i brug på "
 "siden. Ændringer vil ikke blive gemt indtil der klikkes på <em>Gem "
 "blokke</em> i bunden af siden."
+
+msgid ""
+"Specify the format of the syslog entry. Available variables are: "
+"<dl><dt><code>!base_url</code></dt><dd>Base URL of the "
+"site.</dd><dt><code>!timestamp</code></dt><dd>Unix timestamp of the "
+"log entry.</dd><dt><code>!type</code></dt><dd>The category to which "
+"this message belongs.</dd><dt><code>!ip</code></dt><dd>IP address of "
+"the user triggering the "
+"message.</dd><dt><code>!request_uri</code></dt><dd>The requested "
+"URI.</dd><dt><code>!referer</code></dt><dd>HTTP Referer if "
+"available.</dd><dt><code>!uid</code></dt><dd>User "
+"ID.</dd><dt><code>!link</code></dt><dd>A link to associate with the "
+"message.</dd><dt><code>!message</code></dt><dd>The message to store in "
+"the log.</dd></dl>"
+msgstr ""
+"Specificér formatet på syslog linjer. Følgende variabler er "
+"tilgængelige: dl><dt><code>!base_url</code></dt><dd>Base URL of the "
+"site.</dd><dt><code>!timestamp</code></dt><dd>Unix timestamp of the "
+"log entry.</dd><dt><code>!type</code></dt><dd>The category to which "
+"this message belongs.</dd><dt><code>!ip</code></dt><dd>IP address of "
+"the user triggering the "
+"message.</dd><dt><code>!request_uri</code></dt><dd>The requested "
+"URI.</dd><dt><code>!referer</code></dt><dd>HTTP Referer if "
+"available.</dd><dt><code>!uid</code></dt><dd>User "
+"ID.</dd><dt><code>!link</code></dt><dd>A link to associate with the "
+"message.</dd><dt><code>!message</code></dt><dd>The message to store in "
+"the log.</dd></dl> "
 
 msgid "Add new manager"
 msgstr "Tilføj ny medarbejder"
@@ -10434,6 +10702,52 @@ msgstr ""
 "Indstillinger for on JSON API kun må bruge \"read\" eller alle "
 "operationer"
 
+msgid "Configure Lightning Layout settings."
+msgstr "Indstillinger for layout i Lightning"
+
+msgid "Configure Lightning Media settings."
+msgstr "Indstillinger for media i Lightning."
+
+msgid "Configure Lightning Roles settings."
+msgstr "Indstillinger for roller i Lightning."
+
+msgid "Configure Lightning Scheduler settings."
+msgstr "Indstillinger for scheduler i Lightning"
+
+msgid ""
+"Geo-spatial information in 'latitude; longitude' format, e.g. "
+"'50.167958; -97.133185'; <a "
+"href='https://en.wikipedia.org/wiki/Geographic_coordinate_system'>see "
+"Wikipedia for details</a>."
+msgstr ""
+"GPS information i breddegrad, længdegrad format. F.eks '50.167958, "
+"-97.133185'"
+
+msgid ""
+"This meta tag communicates with Google. There are currently two "
+"directives supported: 'nositelinkssearchbox' to not to show the "
+"sitelinks search box, and 'notranslate' to ask Google not to offer a "
+"translation of the page. Both options may be added, just separate them "
+"with a comma. See <a "
+"href='https://support.google.com/webmasters/answer/79812?hl=en'>meta "
+"tags that Google understands</a> for further details."
+msgstr ""
+"Metatag som kommunikerer med Google, der er lige nu to understøttede "
+"brugsmetode: 'nositelinkssearchbox' som beder google om ikke at vise "
+"sidelink i søgefeltet og  'notranslate' som beder Google om ikke at "
+"oversætte siden."
+
+msgid ""
+"Temporary files are not referenced, but are in the file system and "
+"therefore may show up in administrative lists. "
+"<strong>Warning:</strong> If enabled, temporary files will be "
+"permanently deleted and may not be recoverable."
+msgstr ""
+"Midlertidige filer bliver ikke refereret til, men er i filsystemet og "
+"kan derfor blive vist i administrative lister over filer. <strong> "
+"Advarsel </strong> Hvis dette er aktiveret vil midlertidige filer "
+"blive slettet permanent og kan ikke gendannes."
+
 msgid ""
 "You can place blocks for each theme on the <a href=\":blocks\">block "
 "layout</a> page."
@@ -10504,6 +10818,37 @@ msgstr "Tilføj emne"
 msgid "The name of the term."
 msgstr "Navnet på emnet"
 
+msgid "Browser and proxy cache maximum age"
+msgstr "Maksimal alder på browser og proxy cache"
+
+msgid "This is used as the value for max-age in Cache-Control headers."
+msgstr "Dette bruges som værdi til at kontrollere hvornår caches udløber."
+
+msgid ""
+"To run cron from outside the site, go to <a href=\":cron\" "
+"class=\"system-cron-settings__link\">@cron</a>"
+msgstr ""
+"For at køre cron eksternt, gå til <a href=\":cron\" "
+"class=\"system-cron-settings__link\">@cron</a> "
+
+msgid "Detailed cron logging"
+msgstr "Detaljeret logning af cron"
+
+msgid "Run times of individual cron jobs will be written to watchdog"
+msgstr ""
+"Tidspunkter for individuelle cronjobs vil blive skrevet ned i watchdog "
+"loggen"
+
+msgid ""
+"Visitors will only see the maintenance mode message. Only users with "
+"the \"@permission-label\" <a href=\":permissions-url\">permission</a> "
+"will be able to access the site. Authorized users can log in directly "
+"via the <a href=\":user-login\">user login</a> page."
+msgstr ""
+"Normale besøgende vil kun se vedligeholdelsesbeskeden. Adminbrugere "
+"vil kunne tilgå siden som normalt. Brugere med login vil kunne logge "
+"ind ved at bruge \"/user\" siden."
+
 msgid ""
 "Currently no measurements found. You need to create a category to "
 "create measurements."
@@ -10511,19 +10856,27 @@ msgstr ""
 "Vi fandt ingen målinger. Førend du kan oprette målinger skal du "
 "oprette en kategori."
 
-msgid "Manager tasks"
-msgstr "Manager opgaver"
-
-msgid "Paragraph types"
-msgstr "Paragraph typer"
-
-msgid "Create and manage Paragraph types."
-msgstr "Opret og håndtér paragraph typer"
-
 msgid ""
-"Delete revisions of entities that are no longer used in Entity "
-"Reference Revisions fields."
-msgstr "Slet versioner af entiteter som ikke længere er i brug"
+"Below is a list of indexes grouped by the server they are associated "
+"with. A server is the definition of the actual indexing, querying and "
+"storage engine (for example, an Apache Solr server, the database, "
+"…). An index defines the indexed content (for example, all content "
+"and all comments on \"Article\" posts)."
+msgstr ""
+"Herunder finder du en liste over indekser, grupperet efter hvilken "
+"server de er koblet til. En server er den \"motor\" som står for den "
+"aktuelle indeksering, lagring og forespørgsler som sker i sammenhæng "
+"med en søgning. Et indeks er selve kartoteket som indeholder alt det "
+"indhold som søgemaskinen har indekseret."
+
+msgid "Add index"
+msgstr "Tilføj indeks"
+
+msgid "Delete orphaned composite entities"
+msgstr "Slet ubrugte versioner af entiteter"
+
+msgid "Paragraphs settings"
+msgstr "Indstillinger for paragraphs"
 
 msgid "Meetings"
 msgstr "Møder"
@@ -10543,23 +10896,20 @@ msgstr "Sted"
 msgid "Send invite to user"
 msgstr "Send invitation til bruger"
 
+msgid "Administer Paragraphs settings"
+msgstr "Indstillinger for paragraphs"
+
 msgid "Edit meeting"
 msgstr "Rediger møde"
 
-msgid "Notes"
-msgstr "Noter"
+msgid "Manage view modes"
+msgstr "Håndter visninger"
 
-msgid "Panelize this view mode"
-msgstr "Brug Panelizer på denne visning"
+msgid "Allow each @entity to have its display customized"
+msgstr "Tillad at alle @entity har brugerdefinerede displays"
 
-msgid "Answered progression"
-msgstr "Besvarede spørgsmål"
-
-msgid "Answered feedback"
-msgstr "Besvarede feedback"
-
-msgid "2Movepeople meeting functionality"
-msgstr "Mødefunktionalitet for 2Movepeople"
+msgid "Allow users to select which display to use"
+msgstr "Tillad brugere at vælge hvilken visning der skal bruges"
 
 msgid "The name of the user who send the invite"
 msgstr "navnet på brugeren der har sendt invitationen"
@@ -10591,6 +10941,189 @@ msgstr "Bodyfelt for mødeinvitation"
 msgid "Meeting invite email options"
 msgstr "Indstillinger for møde invitationer"
 
+msgid "Notes"
+msgstr "Noter"
+
+msgid "Paragraph types"
+msgstr "Paragraph typer"
+
+msgid "Create and manage Paragraph types."
+msgstr "Opret og håndtér paragraph typer"
+
+msgid ""
+"Delete revisions of entities that are no longer used in Entity "
+"Reference Revisions fields."
+msgstr "Slet versioner af entiteter som ikke længere er i brug"
+
+msgid "Node reference to FAQ node"
+msgstr "Reference til den node der indeholder FAQ"
+
+msgid "FAQ options"
+msgstr "Indstillinger for FAQ"
+
+msgid "Manager tasks"
+msgstr "Manager opgaver"
+
+msgid "Answered progression"
+msgstr "Besvarede spørgsmål"
+
+msgid "Answered feedback"
+msgstr "Besvarede feedback"
+
+msgid "< Previous Page"
+msgstr "< Forrige side"
+
+msgid "Next Page >"
+msgstr "Næste side >"
+
+msgid "Save Draft"
+msgstr "Gem kladde"
+
+msgid ""
+"Submission saved. You may return to this form later and it will "
+"restore the current values."
+msgstr ""
+"Formular gemt. Du kan vende tilbage senere og gendanne "
+"standardværdierne."
+
+msgid ""
+"You have already submitted this webform. <a href=\"#\">View your "
+"previous submission</a>."
+msgstr ""
+"Du har allerede indsendt denne formular. <a href=\"#\">Se din forrige "
+"indsendelse</a>."
+
+msgid ""
+"You have already submitted this webform. <a href=\"#\">View your "
+"previous submissions</a>."
+msgstr ""
+"Du har allerede indsendt denne formular. <a href=\"#\">Se dine forrige "
+"indsendelser</a>."
+
+msgid "Webform"
+msgstr "Webform"
+
+msgid "Webform submissions"
+msgstr "Indsendte webforms"
+
+msgid "Completed"
+msgstr "Gennemført"
+
+msgid "Days"
+msgstr "Dage"
+
+msgid "Gender"
+msgstr "Køn"
+
+msgid "Titles"
+msgstr "Titler"
+
+msgid "Translations"
+msgstr "Oversættelser"
+
+msgid "Yes/No"
+msgstr "Ja/nej"
+
+msgid "Filter by title, description, elements, user name, or role"
+msgstr "Filtrer efter titel, beskrivelse, elementer, brugernavn eller rolle"
+
+msgid "Filter webforms"
+msgstr "Filtrer webformer"
+
+msgid "2Movepeople meeting functionality"
+msgstr "Mødefunktionalitet for 2Movepeople"
+
+msgid "Maximum @max characters"
+msgstr "Maksimum @max bogstaver"
+
+msgid "Please add elements to this webform."
+msgstr "Tilføj elementer til denne webform."
+
+msgid "Save elements"
+msgstr "Gem elementer"
+
+msgid "Add element"
+msgstr "Tilføj element"
+
+msgid "Add page"
+msgstr "Tilføj side"
+
+msgid "Add layout"
+msgstr "Tilføj layout"
+
+msgid "Options elements"
+msgstr "Valgmuligheder elementer"
+
+msgid "Advanced elements"
+msgstr "Avancerede elementer"
+
+msgid "Composite elements"
+msgstr "Sammensatte elementer"
+
+msgid "Date/time elements"
+msgstr "Dato/tid elementer"
+
+msgid "Basic elements"
+msgstr "Grundlæggende elementer"
+
+msgid "Other elements"
+msgstr "Andre elementer"
+
+msgid "Show preview"
+msgstr "Vis forhåndsvisning"
+
+msgid "Filter by element name"
+msgstr "Filtrer efter elementnavn"
+
+msgid "Provides a text field element with auto completion."
+msgstr "Giver et tekstfeltelement med automatisk færdiggørelse."
+
+msgid "Select an element"
+msgstr "Vælg et element"
+
+msgid "Element settings"
+msgstr "Elementindstillinger"
+
+msgid "Element description/help/more"
+msgstr "Element beskrivelse/hjælp/mere"
+
+msgid "Form display"
+msgstr "Formvisning"
+
+msgid "Form validation"
+msgstr "Formularvalidering"
+
+msgid "Save + Add element"
+msgstr "Gem + Tilføj element"
+
+msgid "Add @label element"
+msgstr "Tilføj @label element"
+
+msgid "%title has been @action."
+msgstr "%title blev @action."
+
+msgid "Customize"
+msgstr "Tilpas"
+
+msgid "Webform %label elements saved."
+msgstr "Webformular %label elementer gemt."
+
+msgid "@total submission"
+msgid_plural "@total submissions"
+msgstr[0] "@total indsendelse"
+msgstr[1] " @total indsendelser"
+
+msgid "submission"
+msgid_plural "submissions"
+msgstr[0] "indsendelse"
+msgstr[1] "indsendelser"
+
+msgid "Submission title"
+msgstr "Indsendelsestitel"
+
+msgid "Panelize this view mode"
+msgstr "Brug Panelizer på denne visning"
+
 msgid "Select all media"
 msgstr "Vælg alt medieindhold"
 
@@ -10613,4 +11146,578 @@ msgstr "Tilføj medietype"
 
 msgid "Add paragraph type"
 msgstr "Tilføj paragraph type"
+
+msgid "Layout builder styles"
+msgstr "Styling for layout byggere"
+
+msgid "Manage layout builder styles."
+msgstr "Administrér layout builder styling."
+
+msgid "Use Layout Builder"
+msgstr "Brug layout byggeren"
+
+msgid "Allow each @entity to have its layout customized."
+msgstr "Tillad at alle @entity har brugerdefinerede layouts"
+
+msgid ""
+"Select the standard plugin for formatting an email before sending it. "
+"This plugin implements <a href=\":interface\">@interface</a> and in "
+"special the <a href=\":format\">@format</a> function."
+msgstr ""
+"Vælg det standard plugin der skal bruges til at formattere på emails "
+"før de afsendes. Dette plugin vil implementere <a "
+"href=\":interface\">@interface</a> go mere specifikt <a "
+"href=\":format\">@format</a> funktionen."
+
+msgid "Sender"
+msgstr "Afsender"
+
+msgid ""
+"Select the standard plugin for sending an email after formatting it. "
+"This plugin implements <a href=\":interface\">@interface</a> and in "
+"special the <a href=\":mail\">@mail</a> function."
+msgstr ""
+"Vælg det standard plugin der skal bruges til at sende emails efter de "
+"er blevet formatteret. Dette plugin implementerer <a "
+"href=\":interface\">@interface</a> og mere specifikt <a "
+"href=\":mail\">@mail</a> funktionen."
+
+msgid "Theme to render the emails"
+msgstr "Tema der skal bruges til at rendere emails"
+
+msgid ""
+"Select the theme that will be used to render emails which are "
+"configured for this. This can be either the current theme, the default "
+"theme, the domain theme or any active theme."
+msgstr ""
+"Vælg temaet der bruges til at rendere emails som er konfigureret til "
+"dette. Det kan enten være det nuværende tema, standard temaet, "
+"domænets tema eller ethvert aktivt tema."
+
+msgid "Default Mail System"
+msgstr "Standard mail system"
+
+msgid "Formatter plugin"
+msgstr "Formatteringsplugin"
+
+msgid "Sender plugin"
+msgstr "Afsenderplugin"
+
+msgid "Module-specific configuration"
+msgstr "Modul specifikke indstillinger"
+
+msgid ""
+"This page allows you to configure settings which determines how e-mail "
+"messages are sent."
+msgstr ""
+"Denne side giver dig mulighed for at bestemme hvordan email beskeder "
+"sendes ud fra systemet."
+
+msgid "PHP transport options"
+msgstr "Indstillinger for PHP baseret transport"
+
+msgid ""
+"This transport type will send all e-mails using the built-in\n"
+"      "
+"mail functionality of PHP. This transport type can not be\n"
+"      "
+"configured here. Please refer to the @documentation if you\n"
+"      "
+"would like to read more about how the built-in mail functionality\n"
+"   "
+"   in PHP can be configured."
+msgstr ""
+"Denne transporttype vil gøre brug af den indbyggede mail "
+"funktionalitet i PHP til at sende emails. Denne type kan ikke "
+"konfigureres her. I @documentation kan du læse mere on hvordan PHP "
+"kan konfigureres."
+
+msgid ""
+"Not sure which transport type to choose? The @documentation gives you "
+"a good overview of the various transport types."
+msgstr ""
+"Hvis du er i tvivl om hvilken transporttype du skal bruge giver "
+"@documentation et overblik over de forskellige typer."
+
+msgid "Transport types"
+msgstr "Transport typer"
+
+msgid "Which transport type should Drupal use to send e-mails?"
+msgstr "Hvilken transport type skal Drupal bruge til at sende emails?"
+
+msgid ""
+"The Swift Mailer module is designed to replace the default mail system "
+"that is shipped with Drupal. The initial configuration of this is done "
+"through the <a href=\":mailsystem_settings\">Mail System module</a>. "
+"Swift Mailer allows you to choose how e-mails should be sent. To read "
+"more about how this module works, please have a look at the <a "
+"href=\":documentation\">Swift Mailer documentation</a>."
+msgstr ""
+"Swiftmailer modulet er designet til at erstatte det modul som Drupal "
+"har installeret som standard. Indstillingerne for dette gøres gennem "
+"<a href=\":mailsystem_settings\">Indstillinger for mailudsendelse</a> "
+"Swiftmailer giver dig mulighed for at vælge hvordan nye mails "
+"udsendes. For at læse mere om hvordan modulet virker, kan du kigge "
+"på følgende dokumentation: <a href=\":documentation\">Swiftmailer "
+"dokumentation</a>."
+
+msgid "Organisations"
+msgstr "Organisationer"
+
+msgid ""
+"Delete orphaned composite entities revisions that are no longer "
+"referenced. If there are no revisions left, the entity will be deleted "
+"as long as it is not used."
+msgstr ""
+"Slet ubrugte revisioner af entiteter. Hvis der ikke er nogen "
+"revisioner tilbage vil entiteten blive slettet så snart den ikke er i "
+"brug."
+
+msgid "Select the entity types to check for orphans"
+msgstr "Vælg entitetstype der skal undersøges for ubrugte revisioner"
+
+msgid "Delete orphaned composite revisions"
+msgstr "Slet ubrugte versioner af entiteter"
+
+msgid ""
+"The layout plugins that are enabled to display the revision "
+"comparison."
+msgstr "Layout plugins der er kan bruges til at vise revisionsammenligninger."
+
+msgid ""
+"Visual layout, displays revision comparison using the entity type view "
+"mode."
+msgstr ""
+"Visuelt layout, sammenligninger af displayrevisioner ved brug af "
+"visningsmetoden valgt til entiteten."
+
+msgid "Field based layout, displays revision comparison side by side."
+msgstr "Feltbaseret layout, viser sammenligninger side om side."
+
+msgid "Field based layout, displays revision comparison line by line."
+msgstr "Feltbaseret layout, viser sammenligninger pr. linje."
+
+msgid "Simple exclusion"
+msgstr "Simpel ekskludering"
+
+msgid "Linear restrictions"
+msgstr "Lineær begrænsning"
+
+msgid "Diff radio behavior"
+msgstr "Radioknap opførsel"
+
+msgid ""
+"<em>Simple exclusion</em> means that users will not be able to select "
+"the same revision, <em>Linear restrictions</em> means that users can "
+"only select older or newer revisions of the current selections."
+msgstr ""
+"<em>Simpel eksludering</em> betyder at brugere ikke vil have mulighed "
+"for at vælge den samme revision, <em>Lineær begrænsning</em> "
+"betyder at brugere kun kan vælge nyere eller ældre revisioner i "
+"forhold til det nuværende valg."
+
+msgid ""
+"This governs the number of unchanged <em>leading context "
+"\"lines\"</em> to preserve."
+msgstr ""
+"Dette bestemmer antallet af uændrede <em>leading context "
+"\"linjer\"</em> der skal bevares."
+
+msgid ""
+"This governs the number of unchanged <em>trailing context "
+"\"lines\"</em> to preserve."
+msgstr ""
+"Dette bestemmer antallet af uændrede <em>trailing context "
+"\"linjer\"</em> der skal bevares."
+
+msgid "Send user tasks"
+msgstr "Send brugeropgaver"
+
+msgid "Roles that have the ability to submit submissions"
+msgstr "Roller, der har en mulighed at sende indsendelser"
+
+msgid "Add submission anonymization"
+msgstr "Tilføj indsendelse anonymisering"
+
+msgid ""
+"You are going to add new task about submit webform @title for @count "
+"users."
+msgstr ""
+"Du vil tilføje en ny opgave om at indsende webformular @title til "
+"@count users."
+
+msgid "Assign task"
+msgstr "Tildel opgave"
+
+msgid "Assigning tasks to submit webform @title"
+msgstr "Tildele opgaver til at indsende webform @title"
+
+msgid "Submit webform"
+msgstr "Indsend webformular"
+
+msgid "Webforms milestone for :user"
+msgstr "Webforms milepæl for :user"
+
+msgid "Gathering feedback"
+msgstr "Indsamling af feedback"
+
+msgid "@count users got assigned new task"
+msgstr "@count brugere fik tildelt en ny opgave"
+
+msgid "You have new webform to submit. <a href=\":url\">Submit response</a>"
+msgstr ""
+"Du har en ny webformular du skal indsende. <a href=\":url\">Indsend "
+"svar</a> "
+
+msgid "Task \"@name\" has been completed."
+msgstr "Opgaven \"@name\" er afsluttet"
+
+msgid "Remove configuration"
+msgstr "Fjern konfiguration"
+
+msgid "Delete all related submissions"
+msgstr "Slet alle relaterede indsendelser"
+
+msgid "Affect any fields or nodes which reference this webform"
+msgstr "Påvirke alle felter eller noder, der refererer til denne webform"
+
+msgid "Delete '@label' @entity-type?"
+msgstr "Slet '@label' @ entitetstype?"
+
+msgid "Email subject"
+msgstr "Email emne"
+
+msgid "Email options for assigned task notification"
+msgstr "E-mailindstillinger for tildelt opgavemeddelelse"
+
+msgid "You don't have access to send submission for this form."
+msgstr "Du har ikke adgang til at sende indsendelse af denne formular."
+
+msgid "Amount of days to complete webform submit task"
+msgstr "Mængde dage, der skal udfylde indsendelsen af webformular"
+
+msgid "Add task about webform submission"
+msgstr "Tilføj opgave om webformular indsendelse"
+
+msgid "Additional webform settings"
+msgstr "Yderligere webformularindstillinger"
+
+msgid "Webforms settings"
+msgstr "Webformsindstillinger"
+
+msgid "Hide preview"
+msgstr "Skjul forhåndsvisning"
+
+msgid "Submit response"
+msgstr "Indsend svar"
+
+msgid "You already sent submission for this form."
+msgstr "Du har allerede sendt indsendelse af denne formular."
+
+msgid "ATTENTION: For webforms with anonymous access it is not possible to track submission coverage."
+msgstr "OBS: For webformularer med anonym adgang er det ikke muligt at spore indsendelsesdækning."
+
+msgid "Recipient full name"
+msgstr "Modtagerens fulde navn"
+
+msgid "Recipient user name"
+msgstr "Modtagerbrugernavn"
+
+msgid "Recipient password reset link"
+msgstr "Modtagerens link til nulstilling af adgangskode"
+
+msgid "The name of user"
+msgstr "Navnet på brugeren"
+
+msgid "The name of the user that finished the task"
+msgstr "Navnet på den bruger, der afsluttede opgaven"
+
+msgid "The title of the task assigned to user"
+msgstr "Titlen på den opgave, der er tildelt brugeren"
+
+msgid "The body text of the task assigned to user"
+msgstr "Kropsteksten for den opgave, der er tildelt brugeren"
+
+msgid "Task due date"
+msgstr "Forfaldsdato for opgave"
+
+msgid "Task due date"
+msgstr "Forfaldsdato for opgave"
+
+msgid "Questionnaire"
+msgstr "Spørgeskema"
+
+msgid "Field based layout settings"
+msgstr "Indstillinger for feltbaserede layouts"
+
+msgid ""
+"Use Default to display the comparison as %default theme, or Admin as "
+"%admin theme."
+msgstr ""
+"Brug Default for at vise sammenligningen som %default theme eller "
+"Administration for at bruge %admin tema."
+
+msgid "Visual layout settings"
+msgstr "Indstillinger for visuelt layout"
+
+msgid ""
+"Configurations for the revision comparison functionality and diff "
+"layout plugins."
+msgstr ""
+"Indstillinger for sammenligning af revisioner og plugins til at se "
+"forskelle i layouts."
+
+msgid "Add Entity browser"
+msgstr "Tilføj entitetsbrowser"
+
+msgid "Add layout builder style"
+msgstr "Tilføj layout builder styling"
+
+msgid "Show unpublished Paragraphs"
+msgstr "Vis afpublicerede paragraphs"
+
+msgid ""
+"Allow users with \"View unpublished paragraphs\" permission to see "
+"unpublished Paragraphs."
+msgstr ""
+"Giver brugere med rettigheden \"View unpublished paragraphs\" mulighed "
+"for at se afpublicerede paragraph indhold."
+
+msgid ""
+"Text formats define how text is filtered for output and how HTML tags "
+"and other text is displayed, replaced, or removed. <strong>Improper "
+"text format configuration is a security risk.</strong> Learn more on "
+"the <a href=\":filter_help\">Filter module help page</a>."
+msgstr ""
+"Tekstformater definerer hvordan tekst vises, samt hvordan f.eks HTML "
+"tags vises, erstattes eller fjernes <strong>Forkerte indstillinger for "
+"tekstformater er en sikkerhedsrisiko.</strong> Du kan lære mere på "
+"<a href=\":filter_help\">Hjælpsiden til filter modulet</a>."
+
+msgid "Icon for the @label button."
+msgstr "Ikon til @label knappen."
+
+msgid "Embed buttons"
+msgstr "Embed knapper"
+
+msgid "Add embed button"
+msgstr "Tilføj embed knap"
+
+msgid ""
+"A local file system path where temporary files will be stored. This "
+"directory should not be accessible over the web. This must be changed "
+"in settings.php."
+msgstr ""
+"En lokal systemsti hvor midlertidige filer gemmes. Denne sti skal ikke "
+"være tilgængelig fra internettet."
+
+msgid "Enable advanced UI"
+msgstr "Aktiver advancerede indstillinger"
+
+msgid ""
+"If checked, users creating new media items in the media library will "
+"see a summary of their selected media items, and they will be able "
+"insert their selection directly into the media field or text editor."
+msgstr ""
+"Hvis dette er valgt vil brugere der opretter nyt mediaindhold i "
+"mediebiblioteket se en opsummering af deres valgte medieindhold og vil "
+"have muligheden for at sætte deres valg direkte ind i et mediefelt "
+"eller en teksteditor."
+
+msgid ""
+"Displaying media assets from third-party services, such as YouTube or "
+"Twitter, can be risky. This is because many of these services return "
+"arbitrary HTML to represent those assets, and that HTML may contain "
+"executable JavaScript code. If handled improperly, this can increase "
+"the risk of your site being compromised."
+msgstr ""
+"Visning af medieindhold fra tredjeparts services, som f.eks YouTube "
+"eller Twitter kan have en hvis risiko. Det er fordi mange af disse "
+"services sender arbitrær HTML som representerer deres indhold. Denne "
+"HTML kan indholde eksekverbar JavaScript kode. Hvis det ikke "
+"håndteres korrekt kan det forværre risikoen for at din side bliver "
+"hacket."
+
+msgid ""
+"In order to mitigate the risks, third-party assets are displayed in an "
+"iFrame, which effectively sandboxes any executable code running inside "
+"it. For even more security, the iFrame can be served from an alternate "
+"domain (that also points to your Drupal site), which you can configure "
+"on this page. This helps safeguard cookies and other sensitive "
+"information."
+msgstr ""
+"For at mitigere denne risiko bliver tredjeparts indhold vist i en "
+"iFrame, som i bund og grund isolerer enhver eksekverbar kode som kunne "
+"blive sendt med. Der er desuden mulighed for at få iFramen til at "
+"blive vist fra et seperat domæne (Som også peger på din Drupal "
+"side). Dette kan konfigureres på denne side. Det vil hjælpe med at "
+"sikre cookies og følsomme data."
+
+msgid "iFrame domain"
+msgstr "Iframe domæne"
+
+msgid ""
+"Enter a different domain from which to serve oEmbed content, including "
+"the <em>http://</em> or <em>https://</em> prefix. This domain needs to "
+"point back to this site, or existing oEmbed content may not display "
+"correctly, or at all."
+msgstr ""
+"Indtast et forskelligt domæne der skal sendes oEmbed indhold, "
+"inklusiv <em>http://</em> eller <em>https://</em> præfix.\r\n"
+"Dette "
+"domæne skal pege tilbage på denne side, ellers risikerer du at "
+"indhold ikke vises korrekt, eller overhovedet ikke vises."
+
+msgid "Standalone media URL"
+msgstr "Seperat medie URL"
+
+msgid "Allow users to access @media-entities at /media/{id}."
+msgstr "Giver brugere mulighed for at tilgå @media-entities på /media/{id}."
+
+msgid ""
+"Configure global meta tag default values below. Meta tags may be left "
+"as the default."
+msgstr ""
+"Konfigurer globale metatags herunde. Metatags kan gost stå som "
+"standard."
+
+msgid ""
+"Meta tag patterns are passed down from one level to the next unless "
+"they are overridden. To view a summary of the individual meta tags and "
+"the pattern for a specific configuration, click on its name below."
+msgstr ""
+"Mønstre i metatags bliver nedarvet fra et niveau til det næste med "
+"mindre de bliver overskrevet. For at vise en opsummering af de enkelte "
+"metatags og deres mønstre kan du klikke på navnet herunder."
+
+msgid ""
+"If the top-level configuration is not specific enough, additional "
+"default meta tag configurations can be added for a specific entity "
+"type or entity bundle, e.g. for a specific content type."
+msgstr ""
+"Hvis det øverste niveau af konfigurationen ikke er specifik nok, kan "
+"der tilføjes yderligere indstillinger for de specifikke "
+"entitetstyper. Det samme gælder for entitetsbundles og indholdstyper."
+
+msgid ""
+"Meta tags can be further refined on a per-entity basis, e.g. for "
+"individual nodes, by adding the \"Metatag\" field to that entity type "
+"through its normal field settings pages."
+msgstr ""
+"Metatags kan desuden forfines yderligere på en per-entitetsbasis ved "
+"at tilføje \"Metatag\" feltet til den, via typens feltindstillinger."
+
+msgid ""
+"Specify the format of the syslog entry. Available variables are: "
+"<dl><dt><code>!base_url</code></dt><dd>Base URL of the "
+"site.</dd><dt><code>!timestamp</code></dt><dd>Unix timestamp of the "
+"log entry.</dd><dt><code>!type</code></dt><dd>The category to which "
+"this message belongs.</dd><dt><code>!ip</code></dt><dd>IP address of "
+"the user triggering the "
+"message.</dd><dt><code>!request_uri</code></dt><dd>The requested "
+"URI.</dd><dt><code>!referer</code></dt><dd>HTTP Referer if "
+"available.</dd><dt><code>!severity</code></dt><dd>The severity level "
+"of the event; ranges from 0 (Emergency) to 7 "
+"(Debug).</dd><dt><code>!uid</code></dt><dd>User "
+"ID.</dd><dt><code>!link</code></dt><dd>A link to associate with the "
+"message.</dd><dt><code>!message</code></dt><dd>The message to store in "
+"the log.</dd></dl>"
+msgstr ""
+"Specificér formatet på syslog linjer. Følgende variabler er "
+"tilgængelige: <dl><dt><code>!base_url</code></dt><dd>Base URL of the "
+"site.</dd><dt><code>!timestamp</code></dt><dd>Unix timestamp of the "
+"log entry.</dd><dt><code>!type</code></dt><dd>The category to which "
+"this message belongs.</dd><dt><code>!ip</code></dt><dd>IP address of "
+"the user triggering the "
+"message.</dd><dt><code>!request_uri</code></dt><dd>The requested "
+"URI.</dd><dt><code>!referer</code></dt><dd>HTTP Referer if "
+"available.</dd><dt><code>!severity</code></dt><dd>The severity level "
+"of the event; ranges from 0 (Emergency) to 7 "
+"(Debug).</dd><dt><code>!uid</code></dt><dd>User "
+"ID.</dd><dt><code>!link</code></dt><dd>A link to associate with the "
+"message.</dd><dt><code>!message</code></dt><dd>The message to store in "
+"the log.</dd></dl>"
+
+msgid "Label / Description"
+msgstr "Titel / Beskrivelse"
+
+msgid "All meta tags in the \"@group\" group."
+msgstr "Alle metatags i gruppen \"@group\""
+
+msgid ""
+"Used to control whether a browser caches a specific page locally. Not "
+"commonly used. Should be used in conjunction with the Pragma meta tag."
+msgstr ""
+"Definerer hvorvidt en browser cacher en side lokalt eller ej. "
+"Sjældent brugt."
+
+msgid ""
+"Control when the browser's internal cache of the current page should "
+"expire. The date must to be an <a "
+"href='http://www.csgnetwork.com/timerfc1123calc.html'>RFC-1123</a>-compliant "
+"date string that is represented in Greenwich Mean Time (GMT), e.g. "
+"'Thu, 01 Sep 2016 00:12:56 GMT'. Set to '0' to stop the page being "
+"cached entirely."
+msgstr ""
+"Bestemmer hvornår browserens interne cache udløber. Datoer skal "
+"være en <a "
+"href='http://www.csgnetwork.com/timerfc1123calc.html'>RFC-1123</a> "
+"datostreng."
+
+msgid "Used for paginated content by providing URL with rel='next' link."
+msgstr ""
+"Bruges på indhold med flere siders indhold ved at give en URL med "
+"rel='next' link."
+
+msgid ""
+"Used to control whether a browser caches a specific page locally. Not "
+"commonly used. Should be used in conjunction with the Cache-Control "
+"meta tag."
+msgstr ""
+"Definerer hvorvidt en browser cacher en side lokalt eller ej. "
+"Sjældent brugt."
+
+msgid "Used for paginated content by providing URL with rel='prev' link."
+msgstr ""
+"Bruges på indhold med flere siders indhold ved at give en URL med "
+"rel='prev' link."
+
+msgid ""
+"Used to rate content for audience appropriateness. This tag has little "
+"known influence on search engine rankings, but can be used by "
+"browsers, browser extentions, and apps. The <a "
+"href='https://www.metatags.org/meta_name_rating'>most common "
+"options</a> are general, mature, restricted, 14 years, safe for kids. "
+"If you follow the <a "
+"href='http://www.rtalabel.org/index.php?content=howto'>RTA "
+"Documentation</a> you should enter RTA-5042-1996-1400-1577-RTA"
+msgstr ""
+"Bruges til at definere om indhold er passende, baseret på "
+"aldersgrupper."
+
+msgid ""
+"The number of seconds to wait before refreshing the page. May also "
+"force redirect to another page using the format '5; "
+"url=http://example.com/', which would be triggered after five seconds."
+msgstr ""
+"Definerer antallet af sekunder der skal gå før siden opdateres. Kan "
+"også bruges til at gennemtvinge en omdirigering efter X antal "
+"sekunder."
+
+msgid ""
+"Tell search engines when to index the page again. Very few search "
+"engines support this tag, it is more useful to use an <a "
+"href='https://www.drupal.org/project/xmlsitemap'>XML Sitemap</a> file."
+msgstr ""
+"Definerer hvornår en søgemaskine skal genindeksere siden. Det er kun "
+"få søgemaskiner som understøtter denne."
+
+msgid "Edit own field"
+msgstr "Redigér eget felt"
+
+msgid "View own field"
+msgstr "Vis eget felt"
+
+msgid "Progression"
+msgstr "Fremskridt"
 

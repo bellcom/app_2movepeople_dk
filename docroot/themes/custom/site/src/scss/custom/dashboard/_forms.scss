@@ -21,21 +21,14 @@
 }
 
 select.form-select {
-  border:solid 2px $btn-default-bg !important;
   min-width: 100px;
 }
 span.input-group-addon {
-  border-top: solid 2px $btn-default-bg;
-  border-right: solid 2px $btn-default-bg;
-  border-bottom: solid 2px $btn-default-bg;
   background-color: #FFF;
 }
 
 .form-item {
   .control-label {
-    color: $form-text-color;
-    font-size: 1.125em;
-    font-weight: normal;
   }
   input, select, textarea {
     font-size: 1.125em;
@@ -104,6 +97,20 @@ span.input-group-addon {
   }
 }
 
+//.bc-2movepeople-dashboard-progression-edit-form {
+//  .custom-form-fields {
+//    padding: 2px 15px 2px 15px;
+//    display: flex;
+//    flex-wrap: wrap;
+//    flex-direction: column;
+//    align-items: normal;
+//
+//    > div {
+//      flex: 1;
+//      flex-grow: 1;
+//    }
+//  }
+//}
 
 // --------------------------------------------------
 // Variants

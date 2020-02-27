@@ -7,13 +7,16 @@
 
 namespace Drupal\bc_2movepeople_meeting\Form;
 
+use Drupal\bc_2movepeople_dashboard\Bc2movepeopleDashboardMailerInterface;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class MeetingAddForm extends FormBase {
 
@@ -30,6 +33,29 @@ class MeetingAddForm extends FormBase {
    * @var Drupal\node\NodeInterface
    */
   private $meeting;
+
+  /**
+   * Dashboard mailer service.
+   *
+   * @var Bc2movepeopleDashboardMailerInterface
+   */
+  protected $dashboardMailer;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('2movepeople_dashboard.mailer')
+    );
+  }
+
+  /**
+   * MeetingAddForm constructor object.
+   */
+  public function __construct(Bc2movepeopleDashboardMailerInterface $dashboard_mailer) {
+    $this->dashboardMailer = $dashboard_mailer;
+  }
 
   /**
    * {@inheritdoc}
@@ -116,7 +142,7 @@ class MeetingAddForm extends FormBase {
       $to_replace['subject'] = $config->get('meeting_invite_email_subject');
       $to_replace['body'] = $config->get('meeting_invite_email_body');
       foreach ($to_replace as &$text) {
-        $text = str_replace("@name", $this->user->getDisplayName(), $text);
+        $this->dashboardMailer->replaceDefaultTokens($text, ['recipient' => $this->user]);
         $text = str_replace("@author", \Drupal::currentUser()->getDisplayName(), $text);
         $text = str_replace("@meeting_title", $this->meeting->getTitle(), $text);
         $text = str_replace("@meeting_place", $place, $text);
@@ -124,12 +150,13 @@ class MeetingAddForm extends FormBase {
         $text = str_replace("@end_date", \Drupal::service('date.formatter')->format($end_date->getTimestamp(), 'short'), $text);
       }
 
-      MovepeopleDashboardController::sendMail([
+      $this->dashboardMailer->sendMail([
         'to' => $this->user->get('mail')->value,
         'from' => \Drupal::config('system.site')->get('mail'),
         'subject' => $to_replace['subject'],
         'body' => $to_replace['body'],
         'sender' => $this->t('System notify'),
+        'wpn_to' => $this->user,
       ]);
     }
 

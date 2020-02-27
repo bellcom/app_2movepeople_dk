@@ -11,6 +11,7 @@ dependencies:
     - field.field.user.user.field_social_security_number
     - field.field.user.user.field_user_firstname
     - field.field.user.user.field_user_surname
+    - field.field.user.user.field_wpn
     - field.field.user.user.user_picture
     - image.style.thumbnail
   module:
@@ -117,4 +118,5 @@ content:
     region: content
     third_party_settings: {  }
 hidden:
+  field_wpn: true
   langcode: true

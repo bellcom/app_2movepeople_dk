@@ -9,3 +9,7 @@ access user dashboard:
 create connected users:
   title: 'Create connected user'
   description: 'Ability to create connected to users connected to current.'
+
+create supervisor users:
+  title: 'Create supervisor user'
+  description: 'Ability to create supervisor'

@@ -2,9 +2,12 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Form;
 
+use Drupal\bc_2movepeople_dashboard\Bc2movepeopleDashboardMailerInterface;
+use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class AdminSettingsForm.
@@ -18,8 +21,34 @@ class AdminSettingsForm extends ConfigFormBase {
    */
   protected function getEditableConfigNames() {
     return [
-      'bc_2movepeople_dashboard.AdminSettings',
+      self::getConfigName(),
     ];
+  }
+
+  /**
+   * Dashboard mailer service.
+   *
+   * @var Bc2movepeopleDashboardMailerInterface
+   */
+  protected $dashboardMailer;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+
+    return new static(
+      $container->get('config.factory'),
+      $container->get('2movepeople_dashboard.mailer')
+    );
+  }
+
+  /**
+   * MeetingAddForm constructor object.
+   */
+  public function __construct(ConfigFactory $config_factory ,Bc2movepeopleDashboardMailerInterface $dashboard_mailer) {
+    parent::__construct($config_factory);
+    $this->dashboardMailer = $dashboard_mailer;
   }
 
   /**
@@ -32,8 +61,16 @@ class AdminSettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
+  public static function getConfigName() {
+    return 'bc_2movepeople_dashboard.AdminSettings';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->config('bc_2movepeople_dashboard.AdminSettings');
+    $config = $this->config(self::getConfigName());
+    $form_state->set('config', $config);
 
     // Complete email options.
     $form['complete_email_options'] = array(
@@ -50,14 +87,20 @@ class AdminSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('task_complete_email_subject'),
     ];
 
+    $tokens = $this->dashboardMailer->getDefaultTokens() + [
+        '@user' => $this->t('The name of the user that finished the task'),
+        '@task_title' => $this->t('The title of the task that is being complete'),
+        '@dashboard_url' => $this->t('Dashboard URL')
+      ];
+    $description_lines = [];
+    foreach ($tokens as $key => $desctiption) {
+      $description_lines[] = $key . ' = ' . $desctiption;
+    }
     $form['complete_email_options']['task_complete_email_body'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Task complete\'s email body'),
       '#default_value' => $config->get('task_complete_email_body'),
-      '#description' => '
-        @name = ' . $this->t('The name of the user who will get this email') . '<br />
-        @user = ' . $this->t('The name of the user that finished the task') . '<br />
-        @task_title  = ' . $this->t('The title of the task that is being complete')
+      '#description' => implode('<br>', $description_lines),
     ];
 
     // Email options of responsible manager notification.
@@ -75,14 +118,51 @@ class AdminSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('responsible_manager_email_subject'),
     ];
 
+    $tokens = $this->dashboardMailer->getDefaultTokens() + [
+        '@user' => $this->t('The name of user'),
+        '@task_title' => $this->t('The name of the task assigned to manager'),
+        '@dashboard_url' => $this->t('Dashboard URL')
+      ];
+    $description_lines = [];
+    foreach ($tokens as $key => $desctiption) {
+      $description_lines[] = $key . ' = ' . $desctiption;
+    }
     $form['responsible_manager_email_options']['responsible_manager_email_body'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Responsible manager\'s email body'),
       '#default_value' => $config->get('responsible_manager_email_body'),
-      '#description' => '
-        @manager = ' . $this->t('The name of the manager who will get this email') . '<br />
-        @user = ' . $this->t('The name of the user') . '<br />
-        @task_title  = ' . $this->t('The name of the task assigned to manager')
+      '#description' => implode('<br>', $description_lines),
+    ];
+
+    // Email options of user assigned task notification.
+    $form['task_notification_email_options'] = array(
+      '#type' => 'details',
+      '#title' => $this->t('Email options for assigned task notification'),
+      '#open' => TRUE,
+    );
+
+    $form['task_notification_email_options']['task_notification_email_subject'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Email subject'),
+      '#maxlength' => 64,
+      '#size' => 64,
+      '#default_value' => $config->get('task_notification_email_subject'),
+    ];
+
+    $tokens = $this->dashboardMailer->getDefaultTokens() + [
+      '@task_title' => $this->t('The title of the task assigned to user'),
+      '@task_body' => $this->t('The body text of the task assigned to user'),
+      '@dashboard_url' => $this->t('Dashboard URL')
+    ];
+    $description_lines = [];
+    foreach ($tokens as $key => $desctiption) {
+      $description_lines[] = $key . ' = ' . $desctiption;
+    }
+    $form['task_notification_email_options']['task_notification_email_body'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Email body'),
+      '#default_value' => $config->get('task_notification_email_body'),
+      '#description' => implode('<br>', $description_lines),
     ];
 
     // Reminder options.
@@ -109,14 +189,20 @@ class AdminSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('task_reminder_email_subject'),
     ];
 
+    $tokens = $this->dashboardMailer->getDefaultTokens() + [
+        '@task_title' => $this->t('The title of the task assigned to user'),
+        '@due_date' => $this->t('Task due date'),
+        '@dashboard_url' => $this->t('Dashboard URL')
+      ];
+    $description_lines = [];
+    foreach ($tokens as $key => $desctiption) {
+      $description_lines[] = $key . ' = ' . $desctiption;
+    }
     $form['reminder_options']['task_reminder_email_body'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Task reminder\'s email body'),
       '#default_value' => $config->get('task_reminder_email_body'),
-      '#description' => '
-        @name = ' . $this->t('The name of the user who will get this email') . '<br />
-        @task_title  = The titles of the tasks ...........' . '<br />
-        @due_date  = Task due date.'
+      '#description' => implode('<br>', $description_lines)
     ];
 
     // Milestone evaluation options.
@@ -239,7 +325,7 @@ class AdminSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
 
-    $config = $this->config('bc_2movepeople_dashboard.AdminSettings')
+    $config = $this->config(self::getConfigName())
       ->set('task_complete_email_subject', $form_state->getValue('task_complete_email_subject'))
       ->set('task_complete_email_body', $form_state->getValue('task_complete_email_body'))
       ->set('task_reminder_due_date', $form_state->getValue('task_reminder_due_date'))
@@ -247,6 +333,8 @@ class AdminSettingsForm extends ConfigFormBase {
       ->set('task_reminder_email_body', $form_state->getValue('task_reminder_email_body'))
       ->set('responsible_manager_email_subject', $form_state->getValue('responsible_manager_email_subject'))
       ->set('responsible_manager_email_body', $form_state->getValue('responsible_manager_email_body'))
+      ->set('task_notification_email_subject', $form_state->getValue('task_notification_email_subject'))
+      ->set('task_notification_email_body', $form_state->getValue('task_notification_email_body'))
       ->set('milestone_evaluation_header_nid', $form_state->getValue('milestone_evaluation_header_nid'))
       ->set('faq_node_nid', $form_state->getValue('faq_node_nid'));
 

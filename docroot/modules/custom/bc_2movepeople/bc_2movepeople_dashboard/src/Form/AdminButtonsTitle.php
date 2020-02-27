@@ -39,7 +39,7 @@ class AdminButtonsTitle extends ConfigFormBase {
       $form[$section] = [
         '#type' => 'details',
         '#open' => TRUE,
-        '#title' => $section,
+        '#title' => $this->t($section),
       ];
       foreach ($buttons as $key => $button) {
         $form[$section][$key] = [

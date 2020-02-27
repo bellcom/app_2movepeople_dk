@@ -12,6 +12,7 @@ dependencies:
     - field.field.user.user.field_social_security_number
     - field.field.user.user.field_user_firstname
     - field.field.user.user.field_user_surname
+    - field.field.user.user.field_wpn
     - field.field.user.user.user_picture
     - image.style.user_picture_compact
   module:
@@ -66,6 +67,8 @@ hidden:
   field_diagnose: true
   field_organisation: true
   field_social_security_number: true
+  field_wpn: true
   langcode: true
   member_for: true
   name: true
+  search_api_excerpt: true

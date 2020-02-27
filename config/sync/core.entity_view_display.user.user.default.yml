@@ -11,6 +11,7 @@ dependencies:
     - field.field.user.user.field_social_security_number
     - field.field.user.user.field_user_firstname
     - field.field.user.user.field_user_surname
+    - field.field.user.user.field_wpn
     - field.field.user.user.user_picture
     - image.style.who_am_i
   module:
@@ -30,7 +31,7 @@ mode: default
 content:
   field_age:
     type: number_integer
-    weight: 3
+    weight: 4
     region: content
     label: inline
     settings:
@@ -39,7 +40,7 @@ content:
     third_party_settings: {  }
   field_user_firstname:
     type: string
-    weight: 1
+    weight: 2
     region: content
     label: inline
     settings:
@@ -47,7 +48,7 @@ content:
     third_party_settings: {  }
   field_user_surname:
     type: string
-    weight: 2
+    weight: 3
     region: content
     label: inline
     settings:
@@ -57,6 +58,14 @@ content:
     weight: 3
     region: content
     settings: {  }
+    third_party_settings: {  }
+  name:
+    type: string
+    weight: 1
+    region: content
+    label: inline
+    settings:
+      link_to_entity: false
     third_party_settings: {  }
   user_picture:
     type: image
@@ -73,6 +82,7 @@ hidden:
   field_diagnose: true
   field_organisation: true
   field_social_security_number: true
+  field_wpn: true
   langcode: true
   member_for: true
-  name: true
+  search_api_excerpt: true

@@ -2,10 +2,10 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Controller;
 
-use Drupal\Core\Mail\MailManagerInterface;
+use Drupal\bc_2movepeople_dashboard\Bc2movepeopleDashboardMailerInterface;
+use Drupal\Core\Render\Markup;
 use Drupal\user\Entity\User;
 use Mpdf\Mpdf;
-use Drupal\Core\Mail\Plugin\Mail\PhpMail;
 use Drupal\Core\Url;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Controller\ControllerBase;
@@ -28,9 +28,16 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class MovepeopleDashboardController extends ControllerBase {
 
   protected $database;
-  protected $mailManager;
   protected $fStr;
   protected $pStr;
+
+  /**
+   * Dashboard mailer service.
+   *
+   * @var Bc2movepeopleDashboardMailerInterface
+   */
+  protected $dashboardMailer;
+
 
   /**
    * {@inheritdoc}
@@ -38,18 +45,18 @@ class MovepeopleDashboardController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
         $container->get('database'),
-        $container->get('plugin.manager.mail')
+        $container->get('2movepeople_dashboard.mailer')
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(Connection $database, MailManagerInterface $mail_manager) {
+  public function __construct(Connection $database, Bc2movepeopleDashboardMailerInterface $dashboard_mailer) {
     $this->database = $database;
     $this->fStr = 'feedback';
     $this->pStr = 'progress';
-    $this->mailManager = $mail_manager;
+    $this->dashboardMailer = $dashboard_mailer;
   }
 
   /**
@@ -182,7 +189,7 @@ class MovepeopleDashboardController extends ControllerBase {
       $progression_targets[$progrdata->id()]['id'] = $progrdata->id();
       $progression_targets[$progrdata->id()]['title'] = $progrdata->get('title')->value;
 
-      $milestone_edit_form = new MilestoneEditForm($progrdata, $user);
+      $milestone_edit_form = new MilestoneEditForm($progrdata, $user, $this->dashboardMailer);
       $progression_targets[$progrdata->id()]['form'] = \Drupal::formBuilder()->getForm($milestone_edit_form);
     }
     $build = [
@@ -415,11 +422,27 @@ class MovepeopleDashboardController extends ControllerBase {
    */
   public static function getGoal($nodeid, $progression_target = NULL) {
     $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($nodeid);
+    $view_builder = \Drupal::entityTypeManager()->getViewBuilder('node');
     $nodetitle = $nodedata->get('title')->value;
     $subnodes = $nodedata->get('field_subgoal')->getValue();
     $date = $nodedata->get('field_due_date')->value;
     $is_completed = $nodedata->get('field_task_complete')->value;
     $activity_title = $nodedata->get('field_activity_title')->value;
+    $show_complete_button = $nodedata->get('field_task_show_complete_button')->value;
+    $task_links_value = $nodedata->get('field_task_links')->getValue();
+    $task_links = [];
+    if (!empty($task_links_value)) {
+      foreach ($task_links_value as $value) {
+        $task_links[] = [
+          '#type' => 'link',
+          '#title' => $value['title'],
+          '#url' => Url::fromUri($value['uri']),
+          '#attributes' => [
+            'class' => 'btn btn-info link-btn',
+          ]
+        ];
+      }
+    }
     $evaluation = $nodedata->get('field_evaluation')->value;
     $type = (isset($date)) ? 'task' : 'goal';
     if (!empty($nodedata->field_responsible_manager->entity)) {
@@ -445,6 +468,9 @@ class MovepeopleDashboardController extends ControllerBase {
       'evaluation' => $evaluation,
       'subgoals' => $subgoals,
       'responsible_manager' => $responsible_manager,
+      'show_complete_button' => $show_complete_button,
+      'task_links' => $task_links,
+      'rendered' => $view_builder->view($nodedata, '2mp_user_teaser'),
     ];
     if (is_object($progression_target)) {
       $result['rates'] = bc_2movepeople_rate_progression_get_rates($progression_target->id(), $nodeid);
@@ -517,14 +543,18 @@ class MovepeopleDashboardController extends ControllerBase {
     $dates = [];
     $table = [];
 
-    $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
-    $query->condition('progression_target_id', $entity_ids, 'IN');
-    $query->addExpression("FROM_UNIXTIME(created,  '%d.%m')", 'dates');
-    $query->addExpression("MAX(created)", 'created');
-    $query->GroupBy('dates');
-    $query->orderBy('created', 'ASC');
+    $result = [];
+    if (!empty($entity_ids)) {
+      $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
+      $query->condition('progression_target_id', $entity_ids, 'IN');
+      $query->addExpression("FROM_UNIXTIME(created,  '%d.%m')", 'dates');
+      $query->addExpression("MAX(created)", 'created');
+      $query->GroupBy('dates');
+      $query->orderBy('created', 'ASC');
 
-    $result = $query->execute()->fetchAll();
+      $result = $query->execute()->fetchAll();
+    }
+
     foreach ($result as $row) {
       $dates[] = $row->dates;
     }
@@ -587,21 +617,20 @@ class MovepeopleDashboardController extends ControllerBase {
    * $target_id - progression target nid
    *
    * @param \Drupal\Core\Session\AccountInterface $user
+   *   User object.
+   *
+   * @param bool $raw_data
+   *   Using to get raw tasks data.
    *
    * @return array
    *   User tasks render array.
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function getUserTasks(AccountInterface $user) {
+  public function getUserTasks(AccountInterface $user, $raw_data = FALSE) {
     $user_name = $user->getDisplayName();
 
-    $query = \Drupal::entityQuery('node');
-    $query->condition('status', 1);
-    $query->condition('type', 'progression_target');
-    $query->condition('field_progression_type', 'target_milestone');
-    $query->condition('field_progression_user', $user->id());
-    $entity_ids = $query->execute();
+    $entity_ids = self::getProgressionTargets($user->id(), 'target_milestone');
     $progression_targets = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
 
     $hour = 0;
@@ -633,6 +662,9 @@ class MovepeopleDashboardController extends ControllerBase {
       }
     }
     ksort($tasks, SORT_NUMERIC);
+    if ($raw_data) {
+      return $tasks;
+    }
 
     $build = [
       "#theme" => 'bc_2movepeople_dashboard_user_tasks_overview',
@@ -678,7 +710,17 @@ class MovepeopleDashboardController extends ControllerBase {
         ->view($goal, 'teaser');
     }
 
-    $build = [
+    $build = [];
+    if ($tasks = $this->getUserTasks($user, TRUE)) {
+      $build['tasks'] = [
+        "#theme" => 'bc_2movepeople_dashboard_user_tasks_overview',
+        "#title" => t('Scheduled tasks for %name.', ['%name' => $user_name]),
+        "#tasks" => $tasks,
+        "#user" => $user->id(),
+      ];
+    }
+
+    $build['manager_tasks'] = [
       "#theme" => 'bc_2movepeople_manager_tasks_overview',
       "#user" => $user->id(),
       "#tasks" => $goals_rendered,
@@ -857,23 +899,51 @@ class MovepeopleDashboardController extends ControllerBase {
   }
 
   /**
-   * Simply send mail function.
+   * Adds create button.
    *
-   * @param array $message
-   *   Email message array.
+   * @param array $buttons
+   *   Buttons array.
+   * @param UserInterface $user
+   *   User object.
    *
-   * @return bool
-   *   TRUE if the mail was successfully accepted for delivery, FALSE otherwise.
+   * @return array
+   *   Render array with creat button.
    */
-  public static function sendMail(array $message) {
-    $send_mail = new PhpMail();
-    $message['headers'] = [
-      'content-type' => 'text/html; charset=UTF-8; format=flowed; delsp=yes',
-      'MIME-Version' => '1.0',
-      'reply-to' => $message['from'],
-      'from' => $message['sender'] . ' <' . $message['from'] . '>',
+  public static function addCreateButton(array &$buttons = array(), UserInterface $user = NULL) {
+    if (empty($user)) {
+      $user = User::load(\Drupal::currentUser()->id());
+    }
+
+    if (!$user->hasPermission('create connected users')) {
+      return $buttons;
+    }
+    $user_roles = $user->getRoles();
+    $route_params = [];
+
+    // Allow supervisor create user for managers.
+    if (in_array('2mp_supervisor', \Drupal::currentUser()->getRoles())
+      && $user->id() != \Drupal::currentUser()->id()) {
+      $route_params['create-for'] = $user->id();
+    }
+
+    // Alter text of button.
+    $add_button_key = 'Navigation.create_user';
+    if (in_array('2mp_supervisor', $user_roles)) {
+      $add_button_key = 'Navigation.manager_create_user';
+    }
+    else if (in_array('2mp_manager', $user_roles)) {
+      $add_button_key = 'Navigation.create_user';
+    }
+
+    $buttons[$add_button_key] = [
+      '#url' => Url::fromRoute('bc_2movepeople_dashboard.users.create', $route_params),
+      '#attributes' => [
+        'class' => ['use-ajax'],
+        'data-dialog-type' => 'modal'
+      ],
     ];
-    return $send_mail->mail($message);
+
+    return $buttons;
   }
 
   /**
@@ -1026,7 +1096,6 @@ class MovepeopleDashboardController extends ControllerBase {
    * Output a PDF of user evaluations.
    */
   public function sendMilestoneEvaluationsToSbsys(AccountInterface $user) {
-    $config = $this->config('bc_2movepeople_dashboard.AdminSettings');
     $attachments = [];
 
     // Getting PDF file.
@@ -1046,21 +1115,7 @@ class MovepeopleDashboardController extends ControllerBase {
       'filename' => 'sbsys.xml',
       'filemime' => 'application/xml',
     ];
-
-    $to = $config->get('sbsys_email.to');
-    $subject = $config->get('sbsys_email.subject');
-    $message = $config->get('sbsys_email.message');
-
-    $mail = $this->mailManager->mail(
-      'bc_2movepeople_dashboard',
-      'sbsys',
-      $to,
-      \Drupal::languageManager()->getDefaultLanguage()->getId(), [
-        'subject' => $subject,
-        'body' => $message,
-        'attachments' => $attachments,
-      ]
-    );
+    $mail = $this->dashboardMailer->sendSbsysMail($attachments);
 
     if ($mail['result']) {
       drupal_set_message($this->t('Email has been sent to sbsys'));
@@ -1070,8 +1125,7 @@ class MovepeopleDashboardController extends ControllerBase {
     }
 
     $url = Url::fromRoute('bc_2movepeople_dashboard.user.overview', ['user' => $user->id()]);
-    $response = new RedirectResponse($url->toString());
-    $response->send();
+    return new RedirectResponse($url->toString());
   }
 
 }

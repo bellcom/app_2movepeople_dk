@@ -78,6 +78,14 @@ function site_form_user_login_form_alter(&$form, FormStateInterface $form_state,
   if (isset($form['name']['#attributes']['autofocus'])) {
     unset($form['name']['#attributes']['autofocus']);
   }
+
+  $buttons = MovepeopleDashboardController::addCreateButton();
+  if (!empty($buttons)) {
+    $buttons[key($buttons)]['#attributes']['class'][] = 'btn-secondary';
+    $form['create-user-button'] = MovepeopleDashboardController::getControlButtons($buttons);
+    $form['create-user-button']['#prefix'] = '<br/><br/>';
+    $form['create-user-button']['#weight'] = 100;
+  }
 }
 
 /**
@@ -89,4 +97,11 @@ function site_preprocess_user(&$variables) {
 
   $variables['url'] = $user->toUrl();
   $variables['uid'] = $user->id();
+}
+
+/**
+ * Implements hook_bootstrap_colorize_text_alter().
+ */
+function site_bootstrap_colorize_text_alter(array &$texts) {
+  $texts['contains']['Søg'] = 'default';
 }

@@ -25,7 +25,7 @@
         "cweagans/composer-patches": "^1.6.0",
         "acquia/lightning": "~4.1.1",
         "drupal/bootstrap": "^3.17",
-        "drupal/admin_toolbar": "^1.25",
+        "drupal/admin_toolbar": "^2.0",
         "drupal/field_permissions": "^1.0@beta",
         "drupal/flag": "^4.0@alpha",
         "drupal/administerusersbyrole": "^2.0",
@@ -41,7 +41,14 @@
         "drupal/workbench_moderation": "^1.5",
         "drupal/swiftmailer": "^1.0@beta",
         "drupal/paragraphs": "^1.9",
-        "drupal/pathauto": "^1.6"
+        "drupal/stage_file_proxy": "1.0-rc1",
+        "drupal/webform": "^5.6",
+        "drupal/webform_analysis": "^1.0@beta",
+        "drupal/config_ignore": "^2.2",
+        "drupal/webform_views": "^5.0@alpha",
+        "drupal/pathauto": "^1.6",
+        "drupal/web_push_notification": "^1.0@alpha",
+        "drupal/nocurrent_pass": "^1.0"
     },
     "repositories": {
         "0": {
@@ -90,6 +97,9 @@
         "patches": {
             "drupal/core": {
                 "2449895 - Imported PO files have no public URL but have a link at admin/content/files": "https://www.drupal.org/files/issues/locale-po-files-public-url-exception-2449895-11.patch"
+            },
+            "drupal/web_push_notification": {
+                "3107658 - web_push_notification": "https://www.drupal.org/files/issues/2020-01-22/3107658-4.patch"
             }
         },
         "installer-types": [

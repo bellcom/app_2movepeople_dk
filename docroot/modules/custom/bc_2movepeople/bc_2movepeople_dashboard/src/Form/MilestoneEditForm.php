@@ -16,6 +16,7 @@ use Drupal\Core\Ajax\RemoveCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 use Drupal\node\Entity\Node;
+use Drupal\user\Entity\User;
 
 /**
  * Form to edit milestones.
@@ -136,7 +137,7 @@ class MilestoneEditForm extends FormBase {
         $goal_node->set("title", $goal['title']);
         $goal_node->set("field_activity_title", $goal['activity_title']);
         $goal_node->set("field_due_date", $goal['due_date']);
-        $goal_node->set("field_responsible_manager", $goal['responsible_manager']);
+        $goal_node->set("field_responsible_manager", ['target_id' => $goal['responsible_manager']]);
         $goal_node->save();
       }
       drupal_set_message($this->updatedMsg);
@@ -191,17 +192,21 @@ class MilestoneEditForm extends FormBase {
           $config = $this->config('bc_2movepeople_dashboard.AdminSettings');
           $subject = $config->get('task_complete_email_subject');
           $body = $config->get('task_complete_email_body');
-
+          $dashboardMailer = \Drupal::service('2movepeople_dashboard.mailer');
           $body = str_replace("@name", $this->user->get('name')->value, $body);
+          $dashboardMailer->replaceDefaultTokens($body, [
+            'recipient' => $this->user,
+          ]);
           $body = str_replace("@user", \Drupal::currentUser()->getDisplayName(), $body);
           $body = str_replace("@task_title", $goal_node->get('title')->value, $body);
 
-          MovepeopleDashboardController::sendMail([
+          $dashboardMailer->sendMail([
             'to' => $this->user->get('mail')->value,
             'from' => \Drupal::config('system.site')->get('mail'),
             'subject' => $subject,
             'body' => $body,
             'sender' => $this->t('System notify'),
+            'wpn_to' => $this->user,
           ]);
         }
         drupal_set_message($this->updatedMsg);

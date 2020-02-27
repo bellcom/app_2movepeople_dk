@@ -1,0 +1,14 @@
+uuid: 5ba35058-1222-4ddc-a61e-120d5db965a8
+langcode: da
+status: true
+dependencies:
+  enforced:
+    module:
+      - webform
+_core:
+  default_config_hash: Mb_L3vE-0IBZH5s2rjpk2LNn0QHClQP9AARQdCmVLt4
+id: translations
+label: Oversættelser
+category: Sprog
+likert: false
+options: ''

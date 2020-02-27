@@ -3,6 +3,7 @@
 namespace Drupal\bc_2movepeople_dashboard\Form;
 
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
+use Drupal\bc_2movepeople_dashboard\Misc\Utils;
 use Drupal\Core\Url;
 use Drupal\user\Entity\User;
 use Drupal\Core\Session\AccountInterface;
@@ -253,8 +254,9 @@ class CommonFormUtils {
 
       $form['goals']['header'] = [
         '#markup' => '<div class="custom-form-fields custom-form-label">'
-        . '<div class="custom-form-label">' . $title . '</div>'
-        . '<div class="custom-form-label">' . t('Actions') . '</div></div>',
+        . '<div class="custom-form-label"><h2><strong>' . $title . '</strong></h2></div>'
+        . '<br>'
+        . '<div class="custom-form-label"><strong>' . t('Actions') . '</strong></div></div>',
       ];
 
       $goal_id = $tid['target_id'];
@@ -280,7 +282,6 @@ class CommonFormUtils {
    *   Form element
    */
   private static function getTasksRow(array $form, array $goal, $parent_subgoal_id = 0) {
-
     $form['goals'][$goal['id']] = [
       '#type' => 'container',
     ];
@@ -288,9 +289,9 @@ class CommonFormUtils {
     $form['goals'][$goal['id']]['title'] = [
       '#type' => 'textfield',
       '#default_value' => $goal['title'],
-      '#prefix' => '<div class="custom-form-fields" id="goal_row_' . $goal['id'] . '">'
+      '#prefix' => '<div class="row"><div class="custom-form-fields" id="goal_row_' . $goal['id'] . '">'
       . ($parent_subgoal_id ? ''
-      . '<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>'
+      . '<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">'
       . '<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">' : '<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">'),
       '#suffix' => '</div>',
     ];
@@ -350,24 +351,7 @@ class CommonFormUtils {
    *   User name or drupal name
    */
   public static function getUserName($user) {
-
-    $user_name = NULL;
-
-    if (empty($user->field_user_firstname->value) and empty($user->field_user_surname->value)) {
-      $user_name = $user->getDisplayName();
-    }
-    elseif (!empty($user->field_user_firstname->value) and !empty($user->field_user_surname->value)) {
-      $user_name = $user->field_user_firstname->value . ' ' . $user->field_user_surname->value;
-    }
-    else {
-      if (!empty($user->field_user_firstname->value)) {
-        $user_name = $user->field_user_firstname->value;
-      }
-      else {
-        $user_name = $user->field_user_surname->value;
-      }
-    }
-    return $user_name;
+    return Utils::getUserName($user);
   }
 
 }

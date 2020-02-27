@@ -18,7 +18,7 @@ _core:
 id: media_library
 label: 'Media library'
 module: views
-description: ''
+description: 'Find og håndtér media.'
 tag: ''
 base_table: media_field_data
 base_field: mid
@@ -346,7 +346,7 @@ display:
             description: ''
             required: false
             reduce: false
-            label: Language
+            label: Sprog
             operator_limit_selection: false
             operator: langcode_op
             identifier: langcode
@@ -670,7 +670,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: Edit
+          text: Redigere
           output_url_as_text: false
           absolute: false
           entity_type: media

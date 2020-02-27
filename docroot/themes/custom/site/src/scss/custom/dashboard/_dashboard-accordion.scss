@@ -16,27 +16,47 @@
 
 .dashboard-accordion {
   margin-top: 10px;
+
+  .dashboard-overview {
+    padding: 0;
+    background-color: transparent;
+  }
+
   .panel-heading {
     padding: 0;
-    border-color: red !important;
+
     a {
       font-size: 18px;
-      font-weight: 600;
-      display: block ;
+      font-weight: bold;
+      display: block;
       padding: $panel-heading-padding;
     }
+
     a:link, a:hover, a:visited, a:active {
       text-decoration: none;
       color: $form-text-color;
     }
+
+    span.glyphicon-triangle-custom:before {
+      display: inline-block;
+
+      width: 20px;
+
+      font-size: 22px;
+      font-family: $font-family-base;
+    }
+
     a[aria-expanded="false"] {
+
       span.glyphicon-triangle-custom:before {
-        content: "\e250";
+        content: "+";
       }
     }
+
     a[aria-expanded="true"] {
+
       span.glyphicon-triangle-custom:before {
-        content: "\e252";
+        content: "-";
       }
     }
   }
@@ -47,9 +67,11 @@
       margin-top: 10px;
     }
   }
+
   .panel-default {
-    border-color: $btn-default-bg;
+    border: 0;
   }
+
   .btn {
     margin-bottom: $form-control-margin-bottom;
   }
@@ -72,12 +94,20 @@
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
+      align-items: center;
       & a.btn#btn-evaluering{
         color: white;
         padding: 5px 20px;
         color: white;
         margin: 5px;
       }
+    }
+  }
+
+  .field--item {
+
+    + .field--item {
+      margin-top: 10px;
     }
   }
 }

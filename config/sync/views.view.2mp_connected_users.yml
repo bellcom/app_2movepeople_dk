@@ -7,6 +7,7 @@ dependencies:
     - field.storage.user.field_user_firstname
     - field.storage.user.field_user_surname
   module:
+    - bc_2movepeople_dashboard
     - user
 id: 2mp_connected_users
 label: '2MP Connected users'
@@ -637,6 +638,16 @@ display:
           tokenize: false
           content: "<div class=\"col-xs-12\">\r\n  Vi fandt ingen resultater.\r\n</div>"
           plugin_id: text_custom
+        bc_2movepeople_dashboard_create_button:
+          id: bc_2movepeople_dashboard_create_button
+          table: views
+          field: bc_2movepeople_dashboard_create_button
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          wrapper_classes: col-xs-12
+          plugin_id: bc_2movepeople_dashboard_create_button
     cache_metadata:
       max-age: -1
       contexts:

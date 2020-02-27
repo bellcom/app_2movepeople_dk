@@ -45,17 +45,22 @@ function bc_2movepeople_meeting_form_alter(&$form, FormStateInterface $form_stat
       '#default_value' => $config->get('meeting_invite_email_subject'),
     ];
 
+    $tokens = \Drupal::service('2movepeople_dashboard.mailer')->getDefaultTokens() + [
+        '@author' => t('The name of the user who send the invite'),
+        '@meeting_title' => t('The title of the meeting'),
+        '@meeting_place' => t('The place of the meeting'),
+        '@start_date' => t('The start date of the meeting'),
+        '@end_date' => t('The end date of the meeting'),
+      ];
+    $description_lines = [];
+    foreach ($tokens as $key => $desctiption) {
+      $description_lines[] = $key . ' = ' . $desctiption;
+    }
     $form['meeting_invite_email_options']['meeting_invite_email_body'] = [
       '#type' => 'textarea',
       '#title' => t('Meeting invite email body'),
       '#default_value' => $config->get('meeting_invite_email_body'),
-      '#description' => '
-        @name = ' . t('The name of the user who will get this email') . '<br />
-        @author = ' . t('The name of the user who send the invite') . '<br />
-        @meeting_title  = ' . t('The title of the meeting') . '<br />
-        @meeting_place  = ' . t('The place of the meeting') . '<br />
-        @start_date  = ' . t('The start date of the meeting') . '<br />
-        @end_date  = ' . t('The end date of the meeting') . '<br />'
+      '#description' => implode('<br>', $description_lines),
     ];
 
     $form['#submit'][] = 'bc_2movepeople_meeting_form_setting_submit';

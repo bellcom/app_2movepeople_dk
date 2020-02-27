@@ -1,5 +1,8 @@
 services:
   route_subscriber:
     class: Drupal\bc_2movepeople_dashboard\Routing\RouteSubscriber
-    tags: 
+    tags:
       - { name: event_subscriber }
+  2movepeople_dashboard.mailer:
+    class: Drupal\bc_2movepeople_dashboard\Bc2movepeopleDashboardMailer
+    arguments: ['@config.factory', '@plugin.manager.mail', '@language_manager', '@string_translation', '@web_push_notification.sender']
