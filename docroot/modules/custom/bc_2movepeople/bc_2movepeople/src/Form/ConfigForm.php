@@ -23,7 +23,7 @@ class ConfigForm extends ConfigFormBase {
    */
   protected function getEditableConfigNames() {
     return [
-      'bc_2movepeople.settings',
+      self::getConfigName(),
     ];
   }
 
@@ -32,6 +32,13 @@ class ConfigForm extends ConfigFormBase {
    */
   public function getFormId() {
     return 'bc_2movepeople_config_form';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getConfigName() {
+    return 'bc_2movepeople.settings';
   }
 
   /**
@@ -51,13 +58,13 @@ class ConfigForm extends ConfigFormBase {
       '#title' => $this->t('Enable milestones/tasks'),
       '#default_value' => $config->get('enable_milestones'),
     ];
-    
+
     $form['functionality']['email_required'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('User email is required'),
       '#default_value' => $config->get('email_required'),
     ];
-    
+
     $form['functionality']['rates_separately'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Show feedback rates and progressions rates separately'),
