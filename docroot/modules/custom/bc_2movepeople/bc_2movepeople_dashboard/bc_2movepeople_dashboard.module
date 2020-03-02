@@ -479,16 +479,8 @@ function bc_2movepeople_dashboard_preprocess_node(&$variables) {
   $view_mode = $variables['view_mode'];
 
   if ($node->getType() == 'goal' && $view_mode == 'teaser') {
-    // Find progression target of a goal.
-    $query = \Drupal::entityQuery('node');
-    $query->condition('status', 1);
-    $query->condition('type', 'progression_target');
-    $query->condition('field_goal_ids', $node->id(), 'IN');
-    $entity_ids = $query->execute();
-    if (!empty($entity_ids)) {
-      $progression_target_id = reset($entity_ids);
-      $progression_target = Node::load($progression_target_id);
-
+    $progression_target = Utils::getMilestoneByGoal($node->id());
+    if (!empty($progression_target)) {
       // Adding progression user.
       $variables['progression_user'] = $progression_target->field_progression_user->target_id;
     }

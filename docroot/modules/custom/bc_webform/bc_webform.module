@@ -26,7 +26,11 @@ define('BC_WEBFORM_DAYS_TO_COMPLETE_TASK', 7);
  */
 function bc_webform_webform_submission_presave(WebformSubmissionInterface $webform_submission) {
   if (!bc_webform_has_anonymization($webform_submission->getWebform())
-    || $webform_submission->getOwner()->hasRole('anonymous')) {
+    || (
+      $webform_submission->getOwner()->hasRole('anonymous')
+      && in_array('anonymous', $webform_submission->getWebform()->getThirdPartySetting('bc_webform', 'roles'))
+    )
+  ) {
     return;
   }
 
@@ -110,7 +114,11 @@ function bc_webform_webform_submission_custom_alter(array &$form, FormStateInter
   /** @var WebformSubmissionInterface $webform_submission */
   $webform_submission = $form_state->getFormObject()->getEntity();
   if (!bc_webform_has_anonymization($webform_submission->getWebform())
-    || $webform_submission->getOwner()->hasRole('anonymous')) {
+    || (
+      $webform_submission->getOwner()->hasRole('anonymous')
+      && in_array('anonymous', $webform_submission->getWebform()->getThirdPartySetting('bc_webform', 'roles'))
+      )
+  ) {
     return;
   }
 
@@ -132,7 +140,7 @@ function bc_webform_webform_submission_custom_alter(array &$form, FormStateInter
 
   if ($bc_webform_handler->userHasSubmittion($user_id)) {
     $messenger = \Drupal::service('messenger');
-    $messenger->addMessage('You already sent submission for this form.', 'warning');
+    $messenger->addMessage(t('You already sent submission for this form.'), 'warning');
     $form['#disabled'] = TRUE;
   }
 }
