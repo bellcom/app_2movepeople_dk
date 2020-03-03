@@ -1,6 +1,8 @@
 ignored_config_entities:
   - 'webform.webform.*'
   - stage_file_proxy.settings
+  - 'bc_2movepeople*'
+  - 'sbsys_integration*'
 _core:
   default_config_hash: UVH1aJ4b44UM-VdPVN7hNNuuVqfReJxwfVeDQH1Hvsk
 langcode: da
