@@ -10,6 +10,7 @@ block: 0.0.0
 block_content: 0.0.0
 breakpoint: 0.0.0
 ckeditor: 0.0.0
+color: 8.8.1
 config: 0.0.0
 config_filter: 1.5.0
 config_ignore: 2.2.0

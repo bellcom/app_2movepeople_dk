@@ -3,6 +3,7 @@ ignored_config_entities:
   - stage_file_proxy.settings
   - 'bc_2movepeople*'
   - 'sbsys_integration*'
+  - color.theme.site
 _core:
   default_config_hash: UVH1aJ4b44UM-VdPVN7hNNuuVqfReJxwfVeDQH1Hvsk
 langcode: da
