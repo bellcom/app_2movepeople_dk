@@ -2,6 +2,7 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Controller;
 
+use Drupal\bc_2movepeople\Form\ConfigForm;
 use Drupal\bc_2movepeople_dashboard\Bc2movepeopleDashboardMailerInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\user\Entity\User;
@@ -1027,11 +1028,14 @@ class MovepeopleDashboardController extends ControllerBase {
    *   A renderable array.
    */
   public static function getMilestoneEvaluations(AccountInterface $user) {
+    $moduleHandler = \Drupal::service('module_handler');
+
     $build = [
       '#theme' => 'bc_2movepeople_milestone_evaluations',
       '#title' => t('Milestone evaluations'),
       '#user' => $user->id(),
       '#milestones_data' => self::getMilestoneEvaluationsData($user),
+      '#sbsys_enabled' => $moduleHandler->moduleExists('sbsys_integration') && ConfigForm::sbsysEnabled(),
     ];
 
     return $build;

@@ -251,36 +251,6 @@ class AdminSettingsForm extends ConfigFormBase {
       ];
     }
 
-    // SBSYS Email settings.
-    $moduleHandler = \Drupal::service('module_handler');
-    if ($moduleHandler->moduleExists('sbsys_integration')) {
-      $form['sbsys_email'] = array(
-        '#type' => 'details',
-        '#title' => $this->t('SBSYS Email settings'),
-        '#tree' => TRUE,
-        '#open' => FALSE,
-      );
-
-      $form['sbsys_email']['to'] = [
-        '#type' => 'textfield',
-        '#title' => $this->t('To'),
-        '#description' => $this->t('Email address to send sbsysemail'),
-        '#default_value' => $config->get('sbsys_email.to'),
-      ];
-
-      $form['sbsys_email']['subject'] = [
-        '#type' => 'textfield',
-        '#title' => $this->t('Subject'),
-        '#default_value' => $config->get('sbsys_email.subject'),
-      ];
-
-      $form['sbsys_email']['message'] = [
-        '#type' => 'textarea',
-        '#title' => $this->t('Message'),
-        '#default_value' => $config->get('sbsys_email.message'),
-      ];
-    }
-
     // FAQ options.
     $form['faq_options'] = array(
       '#type' => 'details',
@@ -337,11 +307,6 @@ class AdminSettingsForm extends ConfigFormBase {
       ->set('task_notification_email_body', $form_state->getValue('task_notification_email_body'))
       ->set('milestone_evaluation_header_nid', $form_state->getValue('milestone_evaluation_header_nid'))
       ->set('faq_node_nid', $form_state->getValue('faq_node_nid'));
-
-    $moduleHandler = \Drupal::service('module_handler');
-    if ($moduleHandler->moduleExists('sbsys_integration')) {
-      $config->set('sbsys_email', $form_state->getValue('sbsys_email'));
-    }
 
     $config->save();
   }
