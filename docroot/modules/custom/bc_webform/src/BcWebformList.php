@@ -22,11 +22,12 @@ class BcWebformList extends WebformEntityListBuilder implements ContainerInjecti
   public static function create(ContainerInterface $container) {
     $entity_type = $container->get('entity.manager')->getDefinition('webform');
     return new static(
-      $container->get('entity.manager')->getDefinition('webform'),
+      $entity_type,
       $container->get('entity_type.manager')->getStorage($entity_type->id()),
       $container->get('request_stack'),
       $container->get('current_user'),
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
+      $container->get('config.factory')
     );
   }
 
