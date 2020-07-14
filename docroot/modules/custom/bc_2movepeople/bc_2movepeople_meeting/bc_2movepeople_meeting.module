@@ -51,10 +51,11 @@ function bc_2movepeople_meeting_form_alter(&$form, FormStateInterface $form_stat
         '@meeting_place' => t('The place of the meeting'),
         '@start_date' => t('The start date of the meeting'),
         '@end_date' => t('The end date of the meeting'),
+        '@meeting_link' => t('Link to the meeting'),
       ];
     $description_lines = [];
-    foreach ($tokens as $key => $desctiption) {
-      $description_lines[] = $key . ' = ' . $desctiption;
+    foreach ($tokens as $key => $description) {
+      $description_lines[] = $key . ' = ' . $description;
     }
     $form['meeting_invite_email_options']['meeting_invite_email_body'] = [
       '#type' => 'textarea',

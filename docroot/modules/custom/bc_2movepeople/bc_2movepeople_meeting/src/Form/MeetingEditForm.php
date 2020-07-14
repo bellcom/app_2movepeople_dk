@@ -66,6 +66,14 @@ class MeetingEditForm extends FormBase {
       '#required' => TRUE,
     ];
 
+    // Meeting video link.
+    $form['video_link'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Video link'),
+      '#description' => $this->t('URL to video link, e.g. https://youtu.be/...'),
+      '#pattern' => 'https?:\/\/.*',
+    ];
+
     $form['notes'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Notes'),
@@ -134,6 +142,9 @@ class MeetingEditForm extends FormBase {
     if ($notes = $meeting->field_meeting_notes->value) {
       $form['notes']['#default_value'] = $notes;
     }
+    if ($video_link = $meeting->field_meeting_video_link->value) {
+      $form['video_link']['#default_value'] = $video_link;
+    }
 
     return $form;
   }
@@ -147,6 +158,7 @@ class MeetingEditForm extends FormBase {
     $place = $form_state->getValue('place');
     $start_date = $form_state->getValue('start_date');
     $end_date = $form_state->getValue('end_date');
+    $video_link = $form_state->getValue('video_link');
     $notes = $form_state->getValue('notes');
 
     // Updating meeting node.
@@ -155,6 +167,7 @@ class MeetingEditForm extends FormBase {
     $this->meeting->field_meeting_start_date = ($start_date) ? $start_date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT, ['timezone' => DateTimeItemInterface::STORAGE_TIMEZONE]) : NULL;
     $this->meeting->field_meeting_end_date = ($end_date) ? $end_date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT, ['timezone' => DateTimeItemInterface::STORAGE_TIMEZONE]) : NULL;
     $this->meeting->field_meeting_notes = $notes;
+    $this->meeting->field_meeting_video_link = $video_link;
     $this->meeting->save();
 
     $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_meeting.user.meetings', ['user' => $this->user->id()]));
