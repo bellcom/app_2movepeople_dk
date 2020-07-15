@@ -10328,7 +10328,7 @@ span.input-group-addon {
     overflow-y: hidden; }
   .dashboard-accordion .dashboard-accordion__action-btn {
     text-align: center; }
-  .dashboard-accordion#accordion-milestones .panel-heading {
+  .dashboard-accordion-milestones .panel-heading {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -10344,7 +10344,7 @@ span.input-group-addon {
     -webkit-align-items: center;
         -ms-flex-align: center;
             align-items: center; }
-    .dashboard-accordion#accordion-milestones .panel-heading a.btn#btn-evaluering, .dashboard-accordion#accordion-milestones .panel-heading a#btn-evaluering.user__controls__item--masquerade {
+    .dashboard-accordion-milestones .panel-heading a.btn#btn-evaluering, .dashboard-accordion-milestones .panel-heading a#btn-evaluering.user__controls__item--masquerade {
       color: white;
       padding: 5px 20px;
       color: white;
@@ -10359,7 +10359,7 @@ span.input-group-addon {
     text-align: center; }
   .dashboard-accordion .btn, .dashboard-accordion .user__controls__item--masquerade {
     margin-bottom: 10px; }
-  .dashboard-accordion#accordion-milestones .panel-heading {
+  .dashboard-accordion-milestones .panel-heading {
     -webkit-box-pack: justify;
     -webkit-justify-content: space-between;
         -ms-flex-pack: justify;

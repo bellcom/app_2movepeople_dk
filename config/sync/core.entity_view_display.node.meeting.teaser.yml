@@ -10,9 +10,11 @@ dependencies:
     - field.field.node.meeting.field_meeting_place
     - field.field.node.meeting.field_meeting_start_date
     - field.field.node.meeting.field_meeting_user
+    - field.field.node.meeting.field_meeting_video_link
     - node.type.meeting
   module:
     - datetime
+    - link
     - panelizer
     - text
     - user
@@ -46,7 +48,7 @@ content:
     third_party_settings: {  }
   field_meeting_notes:
     type: basic_string
-    weight: 4
+    weight: 5
     region: content
     label: above
     settings: {  }
@@ -68,7 +70,20 @@ content:
       timezone_override: ''
       format_type: short
     third_party_settings: {  }
+  field_meeting_video_link:
+    type: link
+    weight: 4
+    region: content
+    label: above
+    settings:
+      trim_length: 80
+      target: _blank
+      url_only: false
+      url_plain: false
+      rel: '0'
+    third_party_settings: {  }
 hidden:
   field_meeting_user: true
   langcode: true
   links: true
+  search_api_excerpt: true

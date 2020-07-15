@@ -10,6 +10,8 @@ namespace Drupal\bc_2movepeople\Form;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\bc_2movepeople_dashboard\Form\SaveToTemplateForm;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
 
 /**
  * Class ConfigForm.
@@ -23,7 +25,7 @@ class ConfigForm extends ConfigFormBase {
    */
   protected function getEditableConfigNames() {
     return [
-      'bc_2movepeople.settings',
+      self::getConfigName(),
     ];
   }
 
@@ -32,6 +34,13 @@ class ConfigForm extends ConfigFormBase {
    */
   public function getFormId() {
     return 'bc_2movepeople_config_form';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getConfigName() {
+    return 'bc_2movepeople.settings';
   }
 
   /**
@@ -51,13 +60,13 @@ class ConfigForm extends ConfigFormBase {
       '#title' => $this->t('Enable milestones/tasks'),
       '#default_value' => $config->get('enable_milestones'),
     ];
-    
+
     $form['functionality']['email_required'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('User email is required'),
       '#default_value' => $config->get('email_required'),
     ];
-    
+
     $form['functionality']['rates_separately'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Show feedback rates and progressions rates separately'),
@@ -104,6 +113,42 @@ class ConfigForm extends ConfigFormBase {
       ]
     ];
 
+    // SBSYS Email settings.
+    $moduleHandler = \Drupal::service('module_handler');
+    if ($moduleHandler->moduleExists('sbsys_integration')) {
+      $form['functionality']['sbsys_integration_enabled'] = [
+        '#type' => 'checkbox',
+        '#title' => t('Enable SBSYS Integration'),
+        '#description' => t('See SBSYS Integration @settings_link', ['@settings_link' => Link::fromTextAndUrl(t('settings form'), Url::fromRoute('sbsys_integration.sbsys_settings_form'))->toString()]),
+        '#default_value' => self::sbsysEnabled(),
+      ];
+
+      $form['sbsys_email'] = array(
+        '#type' => 'details',
+        '#title' => $this->t('SBSYS Email settings'),
+        '#tree' => TRUE,
+        '#open' => self::sbsysEnabled(),
+      );
+
+      $form['sbsys_email']['to'] = [
+        '#type' => 'email',
+        '#title' => $this->t('To'),
+        '#description' => $this->t('Email address to send sbsysemail'),
+        '#default_value' => $config->get('sbsys_email.to'),
+      ];
+
+      $form['sbsys_email']['subject'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Subject'),
+        '#default_value' => $config->get('sbsys_email.subject'),
+      ];
+
+      $form['sbsys_email']['message'] = [
+        '#type' => 'textarea',
+        '#title' => $this->t('Message'),
+        '#default_value' => $config->get('sbsys_email.message'),
+      ];
+    }
     return parent::buildForm($form, $form_state);
   }
 
@@ -111,15 +156,32 @@ class ConfigForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->config('bc_2movepeople.settings')
-      ->set('enable_milestones', $form_state->getValue('enable_milestones'))
+    $config = $this->config('bc_2movepeople.settings');
+    $config->set('enable_milestones', $form_state->getValue('enable_milestones'))
       ->set('email_required', $form_state->getValue('email_required'))
       ->set('rates_separately', $form_state->getValue('rates_separately'))
       ->set('default_progression_template', $form_state->getValue('default_progression_template'))
       ->set('user_cancel_method', $form_state->getValue('user_cancel_method'))
-      ->save();
+    ;
+
+    $moduleHandler = \Drupal::service('module_handler');
+    if ($moduleHandler->moduleExists('sbsys_integration')) {
+      $config->set('sbsys_integration_enabled', $form_state->getValue('sbsys_integration_enabled'));
+      $config->set('sbsys_email', $form_state->getValue('sbsys_email'));
+    }
+
+    $config->save();
 
     parent::submitForm($form, $form_state);
   }
 
+  /**
+   * Get function for sbsys_integration module state.
+   *
+   * @return bool
+   */
+  public static function sbsysEnabled() {
+    $config = \Drupal::service('config.factory')->get(self::getConfigName());
+    return empty($config->get('sbsys_integration_enabled')) ? FALSE : TRUE;
+  }
 }

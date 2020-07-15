@@ -2,12 +2,12 @@
 
 namespace Drupal\bc_2movepeople_dashboard;
 
+use Drupal\bc_2movepeople\Form\ConfigForm;
 use Drupal\bc_2movepeople_dashboard\Form\AdminSettingsForm;
 use Drupal\bc_2movepeople_dashboard\Misc\Utils;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\Core\Link;
 use Drupal\Core\Logger\LoggerChannelTrait;
 use Drupal\Core\Mail\MailManagerInterface;
 use Drupal\Core\Render\Markup;
@@ -179,7 +179,7 @@ class Bc2MovepeopleDashboardMailer implements Bc2movepeopleDashboardMailerInterf
    * Output a PDF of user evaluations.
    */
   public function sendSbsysMail(array $attachments) {
-    $config = $this->configFactory->get(AdminSettingsForm::getConfigName());
+    $config = $this->configFactory->get(ConfigForm::getConfigName());
     $to = $config->get('sbsys_email.to');
     $subject = $config->get('sbsys_email.subject');
     $body = $config->get('sbsys_email.message');

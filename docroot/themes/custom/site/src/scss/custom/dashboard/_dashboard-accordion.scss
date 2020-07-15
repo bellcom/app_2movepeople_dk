@@ -89,7 +89,7 @@
   .dashboard-accordion__action-btn {
     text-align: center;
   }
-  &#accordion-milestones{
+  &-milestones {
     & .panel-heading{
       display: flex;
       justify-content: center;
@@ -143,7 +143,7 @@
     .btn {
       margin-bottom: $form-control-margin-bottom;
     }
-    &#accordion-milestones{
+    &-milestones {
       & .panel-heading{
         justify-content: space-between;
       }

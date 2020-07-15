@@ -81,13 +81,13 @@ class EntityValuesDataProvider extends XmlDataProviderBase {
     $bundles = $this->entityBundleInfo->getAllBundleInfo();
 
     if (empty($form_state->getValue([self::getPluginId(), 'entity_type']))) {
-      $entity_type = $this->configuration['entity_type'];;
+      $entity_type = isset($this->configuration['entity_type']) ? $this->configuration['entity_type'] : NULL;
     }
     if ($entity_type == 'user') {
       $entity_bundle = 'user';
     }
     else {
-      $entity_bundle = $this->configuration['entity_bundle'];
+      $entity_bundle = isset($this->configuration['entity_bundle']) ? $this->configuration['entity_bundle'] : NULL;
     }
     $definitions = ['' => t('None')];
     foreach ($this->entityTypeManager->getDefinitions() as $definition) {
