@@ -1,6 +1,0 @@
-settings:
-  allowed_values:
-    -
-      label: Aktiv
-    -
-      label: 'Ikke aktiv'

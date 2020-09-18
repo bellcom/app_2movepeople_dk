@@ -1,8 +1,0 @@
-uuid: 9be93572-cf58-4e34-b2f9-648aa7795c12
-langcode: da
-status: true
-dependencies: {  }
-id: manager-menu
-label: 'Manager menu'
-description: ''
-locked: false
