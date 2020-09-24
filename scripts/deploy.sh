@@ -8,5 +8,4 @@ echo "DB dumped to $DB_DUMP_FILE"
 composer install
 $DRUSH_EXEC cr
 $DRUSH_EXEC updb -y
-$DRUSH_EXEC cim -y
 
