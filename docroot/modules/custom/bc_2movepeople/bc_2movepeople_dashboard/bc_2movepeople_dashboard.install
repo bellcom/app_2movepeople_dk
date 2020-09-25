@@ -55,3 +55,10 @@ function bc_2movepeople_dashboard_update_8001() {
     $node->set('field_task_show_complete_button', ['value' => 1])->save();
   }
 }
+
+/**
+ * Install web_push_notification module.
+ */
+function bc_2movepeople_dashboard_update_8801() {
+  \Drupal::service('module_installer')->install(['web_push_notification']);
+}
