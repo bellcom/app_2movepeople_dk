@@ -234,7 +234,8 @@
 
     switch (chart_type) {
       case 'line': {
-        radarCtx.classList.add('hidden');
+        // Manually updated by stan@bellcom.dk - 02/03/2020
+        //radarCtx.classList.add('hidden');
         ctx.classList.remove('hidden');
 
         chart = new google.visualization.LineChart(ctx);
@@ -243,7 +244,8 @@
         break;
       }
       case 'bar': {
-        radarCtx.classList.add('hidden');
+        // Manually updated by stan@bellcom.dk - 02/03/2020
+        //radarCtx.classList.add('hidden');
         ctx.classList.remove('hidden');
 
         chart = new google.visualization.ColumnChart(ctx);
