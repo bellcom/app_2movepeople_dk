@@ -11721,3 +11721,12 @@ msgstr "Vis eget felt"
 msgid "Progression"
 msgstr "Fremskridt"
 
+msgid "URL to video link, e.g. https://youtu.be/..."
+msgstr "URL til videolink, f.eks. https://youtu.be/..."
+
+msgid "Video link"
+msgstr "Link til mødet"
+
+msgid "Link to the meeting"
+msgstr "Link til mødet"
+

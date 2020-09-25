@@ -1,5 +1,0 @@
-label: 'Publishing status'
-description: 'A boolean indicating whether the node is published.'
-settings:
-  on_label: 'On'
-  off_label: 'Off'

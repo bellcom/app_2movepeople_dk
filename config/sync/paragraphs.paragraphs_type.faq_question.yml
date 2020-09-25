@@ -1,9 +1,0 @@
-uuid: 98a34929-dc4d-4890-9039-395b92980955
-langcode: da
-status: true
-dependencies: {  }
-id: faq_question
-label: 'FAQ question'
-icon_uuid: null
-description: ''
-behavior_plugins: {  }

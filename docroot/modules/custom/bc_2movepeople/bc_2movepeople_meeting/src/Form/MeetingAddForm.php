@@ -87,6 +87,14 @@ class MeetingAddForm extends FormBase {
       '#required' => TRUE,
     ];
 
+    // Meeting video link.
+    $form['video_link'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Video link'),
+      '#description' => $this->t('URL to video link, e.g. https://youtu.be/...'),
+      '#pattern' => 'https?:\/\/.*',
+    ];
+
     $form['send_user_invite'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Send invite to user'),
@@ -120,6 +128,7 @@ class MeetingAddForm extends FormBase {
     $place = $form_state->getValue('place');
     $start_date = $form_state->getValue('start_date');
     $end_date = $form_state->getValue('end_date');
+    $video_link = $form_state->getValue('video_link');
     $send_user_invite = $form_state->getValue('send_user_invite');
 
     // Creating meeting node.
@@ -130,7 +139,8 @@ class MeetingAddForm extends FormBase {
       'field_meeting_place' => $place,
       'field_meeting_start_date' => ($start_date) ? $start_date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT, ['timezone' => 'UTC']) : NULL,
       'field_meeting_end_date' => ($end_date) ? $end_date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT, ['timezone' => 'UTC']) : NULL,
-      'field_meeting_user' => ['target_id' => $this->user->id()]
+      'field_meeting_user' => ['target_id' => $this->user->id()],
+      'field_meeting_video_link' => $video_link,
     ));
     $this->meeting->save();
 
@@ -148,6 +158,7 @@ class MeetingAddForm extends FormBase {
         $text = str_replace("@meeting_place", $place, $text);
         $text = str_replace("@start_date", \Drupal::service('date.formatter')->format($start_date->getTimestamp(), 'short'), $text);
         $text = str_replace("@end_date", \Drupal::service('date.formatter')->format($end_date->getTimestamp(), 'short'), $text);
+        $text = str_replace("@meeting_link", $video_link, $text);
       }
 
       $this->dashboardMailer->sendMail([

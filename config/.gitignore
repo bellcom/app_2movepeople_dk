@@ -1,5 +1,3 @@
-webform.webform.*
-stage_file_proxy.settings*
-bc_2movepeople*
-sbsys_integration*
-color.theme.site*
+sync/*
+!.gitkeep
+
