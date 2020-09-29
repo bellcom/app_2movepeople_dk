@@ -320,10 +320,13 @@ function bc_2movepeople_dashboard_system_breadcrumb_alter(&$breadcrumb, $route_m
     $limit = $route_match->getParameter('limit');
 
     $breadcrumb->addLink(Link::createFromRoute(t('User overview'), 'bc_2movepeople_dashboard.user.overview', ['user' => $user_id]));
-    $breadcrumb->addLink(Link::createFromRoute(t('User progressions'), 'bc_2movepeople_dashboard.user.progressions', [
-      'user' => $user_id,
-      'limit' => $limit,
-    ]));
+    $breadcrumb->addLink(Link::createFromRoute(
+      MovepeopleDashboardController::getJsAccordionImplementationTitle(NULL, $limit),
+      'bc_2movepeople_dashboard.user.progressions', [
+        'user' => $user_id,
+        'limit' => $limit,
+      ]
+    ));
   }
 
   // Milestone edit.

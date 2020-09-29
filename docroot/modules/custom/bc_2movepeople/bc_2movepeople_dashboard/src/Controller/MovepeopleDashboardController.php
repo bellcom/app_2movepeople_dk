@@ -29,8 +29,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class MovepeopleDashboardController extends ControllerBase {
 
   protected $database;
-  protected $fStr;
-  protected $pStr;
+  protected static $fStr = 'feedback';
+  protected static $pStr = 'progress';
 
   /**
    * Dashboard mailer service.
@@ -55,8 +55,6 @@ class MovepeopleDashboardController extends ControllerBase {
    */
   public function __construct(Connection $database, Bc2movepeopleDashboardMailerInterface $dashboard_mailer) {
     $this->database = $database;
-    $this->fStr = 'feedback';
-    $this->pStr = 'progress';
     $this->dashboardMailer = $dashboard_mailer;
   }
 
@@ -123,10 +121,10 @@ class MovepeopleDashboardController extends ControllerBase {
   /**
    * Categories accordion title callback.
    */
-  public function getJsAccordionImplementationTitle(AccountInterface $user, $limit = NULL) {
-    $title = $this->t('Kategorier');
-    if ($limit == $this->fStr) {
-      $title = $this->t('Feedback');
+  public static function getJsAccordionImplementationTitle(AccountInterface $user = NULL, $limit = NULL) {
+    $title = t('Kategorier');
+    if ($limit == self::$fStr) {
+      $title = t('Feedback');
     }
     return $title;
   }
@@ -158,10 +156,10 @@ class MovepeopleDashboardController extends ControllerBase {
     $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
     foreach ($nodes as $progrdata) {
       if (!empty($config->get('rates_separately'))) {
-        if ($progrdata->get('field_progression_type')->value == 'progression_feedback' && $this->pStr == $limit) {
+        if ($progrdata->get('field_progression_type')->value == 'progression_feedback' && self::$pStr == $limit) {
           continue;
         }
-        if ($progrdata->get('field_progression_type')->value <> 'progression_feedback' && $this->fStr == $limit) {
+        if ($progrdata->get('field_progression_type')->value <> 'progression_feedback' && self::$fStr == $limit) {
           continue;
         }
       }
@@ -308,7 +306,7 @@ class MovepeopleDashboardController extends ControllerBase {
       $config = $this->config('bc_2movepeople.settings');
       if (!empty($config->get('rates_separately'))) {
         $controls['Progression.feedback'] = [
-          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id(), 'limit' => $this->fStr]),
+          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id(), 'limit' => self::$fStr]),
         ];
         $controls['Progression.show_category'] = [
           '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
