@@ -2,6 +2,20 @@
 
 
 <div class="dashboard-overview">
+  {% if table_milestone %}
+    {{ table_milestone.controls }}
+    <div class="clearfix"></div>
+    {% if table_milestone.data %}
+      {{ table_milestone.data }}
+    {% endif %}
+    <div style="margin-top:50px">&nbsp;</div>
+  {% endif %}
+  {% if table_progression.empty %}
+    <strong>
+      {{ table_progression.empty }}
+    </strong>
+  {% endif %}
+
   {{ table_progression.controls }}
   {{ table_progression.message }}
   <div class="dashboard-divider clearfix"></div>
@@ -25,18 +39,4 @@
 {#      <canvas id="radarChart" class="hidden" width="400" height="400"></canvas>#}
     </div>
   {% endif %}
-  {% if table_milestone %}
-  <div style="margin-top:50px">&nbsp;</div>
-  {{ table_milestone.controls }}
-    <div class="clearfix"></div>
-    {% if table_milestone.data %}
-      {{ table_milestone.data }}
-    {% endif %}
-  {% endif %}
-  {% if table_progression.empty %}
-    <strong>
-      {{ table_progression.empty }}
-    </strong>
-  {% endif %}
-
 </div>
