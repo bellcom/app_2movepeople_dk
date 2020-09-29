@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Trapping CTRL-C
+trap ctrl_c INT
+trap ctrl_c SIGINT
+trap ctrl_c SIGTERM
+
+SSH_CRED=2move
+DB_NAME=app_test_2movepeople_dk
+DRUSH="drush"
+
+ssh $SSH_CRED 'cd /var/www/app.test.2movepeople.dk/public_html && drush sql-dump | gzip -9 > ~/app_test_2movepeople_dk.sql.gz'
+scp $SSH_CRED:$DB_NAME* ./
+
+#scp $SSH_CRED:/var/lib/mysql_backup/$DB_NAME* ./
+fin exec "${DRUSH} sql-drop -y"
+fin exec "zcat < ${DB_NAME}.sql.gz | ${DRUSH} sqlc"
+#fin exec "zcat < ${DB_NAME}-cache-structure.sql.gz | ${DRUSH} sqlc"
