@@ -121,6 +121,18 @@ class MovepeopleDashboardController extends ControllerBase {
   }
 
   /**
+   * Categories accordion title callback.
+   */
+  public function getJsAccordionImplementationTitle(AccountInterface $user, $limit = NULL) {
+    $title = $this->t('Kategorier');
+    if ($limit == $this->fStr) {
+      $title = $this->t('Feedback');
+    }
+    return $title;
+  }
+
+
+  /**
    * Accordion page implementation.
    *
    * We're allowing a twig template to define our content in this case,
@@ -168,7 +180,7 @@ class MovepeopleDashboardController extends ControllerBase {
 
     $build = [
       '#theme' => 'bc_2movepeople_dashboard',
-      "#title" => 'Dashboard',
+      "#title" => $this->getJsAccordionImplementationTitle($user, $limit),
       "#subtitle" => $title,
       "#user" => $user->id(),
       '#progression_targets' => $progression_targets,

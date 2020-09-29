@@ -77,7 +77,7 @@ bc_2movepeople_dashboard.user.progressions.add:
 bc_2movepeople_dashboard.user.progressions:
   path: '/dashboard/users/{user}/progressions/{limit}'
   defaults:
-    _title: 'User progressions'
+    _title_callback: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getJsAccordionImplementationTitle'
     _controller: '\Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController::getJsAccordionImplementation'
     limit: NULL
   requirements:

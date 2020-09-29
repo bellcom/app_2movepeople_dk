@@ -28,13 +28,13 @@ class MilestoneAddForm extends FormBase {
 
     $priority_options = options_allowed_values(FieldStorageConfig::loadByName('node', 'field_priority'));
     $status_options = options_allowed_values(FieldStorageConfig::loadByName('node', 'field_progression_status'));
-    
+
     $form['title'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Milestone'),
+      '#title' => $this->t('Mål'),
       '#required' => TRUE,
     ];
-    
+
     $form['purpose'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Purpose'),
@@ -43,7 +43,7 @@ class MilestoneAddForm extends FormBase {
       '#required' => TRUE,
       '#suffix' => '<br/>'
     ];
-    
+
     $form['priority'] = [
       '#type' => 'select',
       '#title' => $this->t('Priority'),
@@ -58,11 +58,11 @@ class MilestoneAddForm extends FormBase {
       '#empty_option' => $this->t('-Select status-'),
       '#required' => TRUE,
     ];
-    
+
     $form['actions']['#type'] = 'actions';
     $form['actions']['submit'] = [
       '#type' => 'submit',
-      '#name' => 'submit',  
+      '#name' => 'submit',
       '#value' => $this->t('Save'),
       '#button_type' => 'primary'
     ];
@@ -76,7 +76,7 @@ class MilestoneAddForm extends FormBase {
   public function getFormId() {
     return 'bc_2movepeople-dashboard-milestone-add-form';
   }
-  
+
   /**
    * {@inheritdoc}
    */
@@ -92,10 +92,10 @@ class MilestoneAddForm extends FormBase {
       'field_progression_user' => $this->user->id(),
       'field_progression_type' => 'target_milestone',
     ));
-    
+
     if ($node->save() == SAVED_NEW) {
       $form_state->setRedirectUrl(Url::fromRoute('bc_2movepeople_dashboard.user.milestones', ['user' => $this->user->id()]));
     }
   }
-       
+
 }

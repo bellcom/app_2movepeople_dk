@@ -67,16 +67,16 @@ class MilestoneEditForm extends FormBase {
     $form = CommonFormUtils::goalsContainer($form, $this->node, $this->user);
     $form['add_mt'] = [
       '#type' => 'link',
-      '#title' => '',
+      '#title' => $this->t('Tilføj delmål'),
       '#name' => 'add_task_btn',
       '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.tasks.add', ['node' => $this->node->id()]),
       '#prefix' => '<div class="row custom-form-fields dashboard-milestone__control-buttons"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">',
       '#suffix' => '</div></div>',
       '#attributes' => [
-        'class' => ['use-ajax', 'btn', 'btn-default', 'link-btn', 'glyphicon', 'glyphicon-plus'],
+        'class' => ['use-ajax', 'btn', 'btn-default', 'link-btn'],
         'data-dialog-type' => 'modal',
         'data-toggle' => 'tooltip',
-		'title' => $this->t('Add new task'),
+        'title' => $this->t('Tilføj delmål'),
       ],
     ];
 
