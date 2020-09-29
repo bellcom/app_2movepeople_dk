@@ -24,6 +24,7 @@
           </a>
 
           <div class="milestone-buttons">
+            <a href="{{ path('bc_2movepeople_dashboard.milestone.tasks.add', {'node': milestone_target.id}) }}" class="use-ajax btn btn-default" data-dialog-type="modal">{{ 'Tilføj delmål'|trans }}</a>
             <a href="{{ path('bc_2movepeople_dashboard.milestone.edit', {'node': milestone_target.id}) }}" class="use-ajax btn btn-default btn-milestones-top" data-dialog-type="modal" data-toggle="tooltip" title="{{ 'Ret mål'|trans }}"><span class="glyphicon glyphicon-edit"></span></a>
             <a href="{{ path('bc_2movepeople_dashboard.milestone.evaluate', {'node': milestone_target.id})}}" class="use-ajax btn btn-default btn-milestones-top" data-dialog-type="modal" >{{ 'Evaluering'|trans }}</a>
           </div>
