@@ -298,6 +298,7 @@ function bc_2movepeople_dashboard_system_breadcrumb_alter(&$breadcrumb, $route_m
   // User progressions, User milestones.
   if ($route_match->getRouteName() == 'bc_2movepeople_dashboard.user.progressions'
     || $route_match->getRouteName() == 'bc_2movepeople_dashboard.user.milestones'
+    || $route_match->getRouteName() == 'bc_2movepeople_meeting.user.meetings'
   ) {
 
     if ($route_match->getParameter('limit') != NULL) {
@@ -305,7 +306,7 @@ function bc_2movepeople_dashboard_system_breadcrumb_alter(&$breadcrumb, $route_m
     }
 
     $user = $route_match->getParameter('user');
-    $breadcrumb->addLink(Link::createFromRoute(t('User overview'), 'bc_2movepeople_dashboard.user.overview', ['user' => $user->id()]));
+    $breadcrumb->addLink(Link::createFromRoute(MovepeopleDashboardController::getUserOverviewTitle($user), 'bc_2movepeople_dashboard.user.overview', ['user' => $user->id()]));
   }
 
   // Progression edit.
@@ -316,10 +317,9 @@ function bc_2movepeople_dashboard_system_breadcrumb_alter(&$breadcrumb, $route_m
 
     $progression = $route_match->getParameter('node');
     $user_id = $progression->field_progression_user->target_id;
-
     $limit = $route_match->getParameter('limit');
 
-    $breadcrumb->addLink(Link::createFromRoute(t('User overview'), 'bc_2movepeople_dashboard.user.overview', ['user' => $user_id]));
+    $breadcrumb->addLink(Link::createFromRoute(MovepeopleDashboardController::getUserOverviewTitle(User::load($user_id)), 'bc_2movepeople_dashboard.user.overview', ['user' => $user_id]));
     $breadcrumb->addLink(Link::createFromRoute(
       MovepeopleDashboardController::getJsAccordionImplementationTitle(NULL, $limit),
       'bc_2movepeople_dashboard.user.progressions', [
@@ -487,6 +487,18 @@ function bc_2movepeople_dashboard_preprocess_node(&$variables) {
     }
   }
 
+}
+
+/**
+ * Implements template_preprocess_breadcrumb().
+ */
+function bc_2movepeople_dashboard_preprocess_breadcrumb(&$variables) {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if (strpos($route_name, 'bc_2movepeople_dashboard') === 0
+    || strpos($route_name, 'bc_2movepeople_meeting') === 0
+  ) {
+    array_shift($variables['breadcrumb']);
+  }
 }
 
 /**

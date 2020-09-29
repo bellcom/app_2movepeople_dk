@@ -239,13 +239,13 @@ class MovepeopleDashboardController extends ControllerBase {
    * User overview page callback implementation.
    *
    */
-  public function getUserOverviewTitle(AccountInterface $user){
+  public static function getUserOverviewTitle(AccountInterface $user){
     $roles = $user->getRoles();
     if (in_array('2mp_user', $roles)) {
       return $user->label();
     }
     else {
-      return $this->t('User overview');
+      return t('User overview');
     }
   }
 
