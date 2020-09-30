@@ -2,6 +2,7 @@
 
 namespace Drupal\bc_2movepeople_rate_progression\Form;
 
+use Drupal\bc_2movepeople\Form\TextSettings;
 use Drupal\bc_2movepeople_meeting\Controller\MeetingController;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormBase;
@@ -33,6 +34,13 @@ class UserRatesAddForm extends FormBase {
    * @var \Drupal\user\UserInterface
    */
   protected $user;
+
+  /**
+   * Page title callback.
+   */
+  public function getTitle() {
+    return TextSettings::get('bc_2movepeople_rate_progresion.user_rates_add_title');
+  }
 
   /**
    * {@inheritdoc}
