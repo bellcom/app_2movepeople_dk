@@ -15,3 +15,13 @@ bc_2movepeople.config:
     _permission: 'administer bc_2movepeople settings'
   options:
     _admin_route: TRUE
+
+bc_2movepeople.text_settings:
+  path: '/admin/config/bc_2movepeople/text_settings'
+  defaults:
+    _form: '\Drupal\bc_2movepeople\Form\TextSettings'
+    _title: 'Text settings'
+  requirements:
+    _permission: 'administer bc_2movepeople settings'
+  options:
+    _admin_route: TRUE

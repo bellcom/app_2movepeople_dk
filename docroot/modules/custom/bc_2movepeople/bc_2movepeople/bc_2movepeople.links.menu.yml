@@ -12,6 +12,13 @@ bc_2movepeople.config:
   weight: -10
   parent: bc_2movepeople.main
 
+bc_2movepeople.text_settings:
+  title: Text settings
+  description: 'Defines text on user interface'
+  route_name: bc_2movepeople.text_settings
+  weight: -9
+  parent: bc_2movepeople.main
+
 bc_2movepeople.settings.account:
   title: 'Account'
   weight: -10

@@ -1,6 +1,8 @@
 <?php
+
 use Drupal\Core\Database\Database;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\bc_2movepeople\Form\TextSettings;
 
 function bc_2movepeople_rate_progression_schema() {
   $schema['bc_2movepeople_rate_progression'] = array(
@@ -111,4 +113,16 @@ function bc_2movepeople_rate_progression_update_8004(&$sandbox) {
     ->setDefaultValue(NULL);
 
   $definition_update_manager->installFieldStorageDefinition('meeting_id', 'rate', 'rate', $config);
+}
+
+/**
+ * Add default text and titles.
+ */
+function bc_2movepeople_rate_progression_update_8901(&$sandbox) {
+  $config = \Drupal::service('config.factory')->getEditable(TextSettings::$config_name);
+  $config->set('bc_2movepeople_rate_progresion.self_rates_add_title', t('Self rates add'))
+    ->set('bc_2movepeople_rate_progresion.user_rates_add_title', t("User's rates add"))
+    ->set('bc_2movepeople_rate_progresion.rates_add_title', t('Goal rate add'))
+  ;
+  $config->save();
 }

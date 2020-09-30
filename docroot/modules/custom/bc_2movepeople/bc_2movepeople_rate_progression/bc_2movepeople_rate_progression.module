@@ -5,6 +5,9 @@
  * Contains bc_2movepeople_rate_progression.module..
  */
 
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\bc_2movepeople\Form\TextSettings;
+
 function bc_2movepeople_rate_progression_get_rates($progression_target_id, $goal_id, $status = 1) {
   $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
   $query->fields('rates', array('rate'))
@@ -22,3 +25,27 @@ function bc_2movepeople_rate_progression_get_rates($progression_target_id, $goal
   return array_reverse($rate_arr);
 }
 
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function bc_2movepeople_rate_progression_form_bc_2movepeople_text_settings_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $config = \Drupal::config(TextSettings::$config_name);
+  $form['bc_2movepeople_rate_progresion'] = [
+    '#type' => 'details',
+    '#open' => TRUE,
+    '#title' => t('Progression rate'),
+  ];
+  $texts = [
+    'self_rates_add_title' => t('Self rates add form title'),
+    'user_rates_add_title' => t('User rates add form title'),
+    'rates_add_title' => t('Rates add form title'),
+  ];
+  foreach ($texts as $key => $label) {
+    $form['bc_2movepeople_rate_progresion'][$key] = [
+      '#type' => 'textfield',
+      '#title' => $label,
+      '#default_value' => $config->get('bc_2movepeople_rate_progresion.' . $key),
+    ];
+
+  }
+}

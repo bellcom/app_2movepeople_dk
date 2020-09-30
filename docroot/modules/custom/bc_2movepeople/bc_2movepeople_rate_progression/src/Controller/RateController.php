@@ -2,6 +2,7 @@
 
 namespace Drupal\bc_2movepeople_rate_progression\Controller;
 
+use Drupal\bc_2movepeople\Form\TextSettings;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Drupal\bc_2movepeople_rate_progression\Progression\Target;
@@ -92,6 +93,13 @@ class RateController extends ControllerBase {
     $user = \Drupal::currentUser();
     $form = \Drupal::formBuilder()->getForm('Drupal\bc_2movepeople_rate_progression\Form\UserRatesAddForm', $user->getAccount(), 'feedback');
     return $form;
+  }
+
+  /**
+   * Self rating page title callback.
+   */
+  public function selfRateTitle() {
+    return TextSettings::get('bc_2movepeople_rate_progresion.self_rates_add_title');
   }
 
   /**

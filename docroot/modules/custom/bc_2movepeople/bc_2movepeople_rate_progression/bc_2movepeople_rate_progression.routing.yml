@@ -5,7 +5,7 @@ bc_2movepeople_rate_progression.rates_add:
       progression_target_id:
         type: entity:node
   defaults:
-    _title: 'Goal rate add'
+    _title_callback: '\Drupal\bc_2movepeople_rate_progression\Form\UserRatesAddForm:getTitle'
     _form: '\Drupal\bc_2movepeople_rate_progression\Form\RateAddForm'
     node: null
   requirements:
@@ -27,7 +27,7 @@ bc_2movepeople_rate_progression.user_rates_add:
       user:
         type: entity:user
   defaults:
-    _title: User's rates add
+    _title_callback: '\Drupal\bc_2movepeople_rate_progression\Form\UserRatesAddForm:getTitle'
     _form: '\Drupal\bc_2movepeople_rate_progression\Form\UserRatesAddForm'
   requirements:
     _permission: 'access progression rates'
@@ -36,7 +36,7 @@ bc_2movepeople_rate_progression.user_rates_add:
 bc_2movepeople_rate_progression.self_rates_add:
   path: '/rates/add'
   defaults:
-    _title: Self rates add
+    _title_callback: '\Drupal\bc_2movepeople_rate_progression\Controller\RateController::selfRateTitle'
     _controller: '\Drupal\bc_2movepeople_rate_progression\Controller\RateController::selfRate'
   requirements:
     _user_is_logged_in: 'TRUE'

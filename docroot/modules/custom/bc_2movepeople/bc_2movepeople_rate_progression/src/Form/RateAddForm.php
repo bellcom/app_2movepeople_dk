@@ -2,6 +2,7 @@
 
 namespace Drupal\bc_2movepeople_rate_progression\Form;
 
+use Drupal\bc_2movepeople\Form\TextSettings;
 use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Cache\Cache;
 use Drupal\node\Entity\Node;
@@ -27,6 +28,13 @@ use Drupal\user\Entity\User;
 class RateAddForm extends FormBase {
 
   protected $node;
+
+  /**
+   * Page title callback.
+   */
+  public function getTitle() {
+    return TextSettings::get('bc_2movepeople_rate_progresion.rates_add_title');
+  }
 
   /**
    * Build RateAddForm render representing array.
