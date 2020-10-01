@@ -70,8 +70,8 @@
   }
 
   function _datasetWithDateLabels(dataset) {
-    var mutatedLabels = dataset[0].slice();
-    mutatedLabels.shift();
+    var labels = dataset[0].slice();
+    labels.shift();
 
     var mutatedDatasets = [];
     var datasets = dataset.slice();
@@ -90,17 +90,17 @@
       mutatedDatasets.push(mutatedDataset);
     }
 
-    var mutatedData = {
-      labels: mutatedLabels,
+    var data = {
+      labels: labels,
       datasets: mutatedDatasets
     };
 
-    return mutatedData;
+    return data;
   }
 
   function _datasetWithDateTextLabels(dataset) {
-    var mutatedLabels = dataset[0].slice();
-    mutatedLabels.shift();
+    var labels = dataset[0].slice();
+    labels.shift();
 
     var mutatedDatasets = [];
     var datasets = dataset.slice();
@@ -119,12 +119,12 @@
       mutatedDatasets.push(mutatedDataset);
     }
 
-    var mutatedData = {
-      labels: mutatedLabels,
+    var data = {
+      labels: labels,
       datasets: mutatedDatasets
     };
 
-    return mutatedData;
+    return data;
   }
 
   function GetColumnCount(table) {
