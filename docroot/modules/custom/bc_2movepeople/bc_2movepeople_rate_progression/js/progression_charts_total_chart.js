@@ -51,37 +51,81 @@
         });
       }
 
-      // Mutate labels.
-      var mutatedLabels = arr[0].slice();
-      mutatedLabels.shift();
+      var type = (chart_type === 'radar') ? 'text' : 'date';
+      var dataset = generateDataset(type, arr);
 
-      // Mutate data.
-      var mutatedDatasets = [];
-      var datasets = arr.slice();
-      datasets.shift();
-
-      for (var dataset of datasets) {
-        var label = dataset[0];
-        var mutatedDataset = dataset.slice();
-        mutatedDataset.shift();
-
-        var mutatedDataset = {
-          label: label,
-          values: mutatedDataset
-        };
-
-        mutatedDatasets.push(mutatedDataset);
-      }
-
-      var mutatedData = {
-        labels: mutatedLabels,
-        datasets: mutatedDatasets
-      };
+      debugger;
 
       // On load.
-      charty.drawChart('progression_total_chart', mutatedData, chart_type);
+      charty.drawChart('progression_total_chart', dataset, chart_type);
     }
   };
+
+  function generateDataset(type, dataset) {
+    if (type === 'date') {
+      return _datasetWithDateLabels(dataset);
+    }
+
+    return _datasetWithDateTextLabels(dataset);
+  }
+
+  function _datasetWithDateLabels(dataset) {
+    var labels = dataset[0].slice();
+    labels.shift();
+
+    var mutatedDatasets = [];
+    var datasets = dataset.slice();
+    datasets.shift();
+
+    for (var dataset of datasets) {
+      var label = dataset[0];
+      var mutatedDataset = dataset.slice();
+      mutatedDataset.shift();
+
+      var mutatedDataset = {
+        label: label,
+        values: mutatedDataset
+      };
+
+      mutatedDatasets.push(mutatedDataset);
+    }
+
+    var data = {
+      labels: labels,
+      datasets: mutatedDatasets
+    };
+
+    return data;
+  }
+
+  function _datasetWithDateTextLabels(dataset) {
+    var labels = dataset[0].slice();
+    labels.shift();
+
+    var mutatedDatasets = [];
+    var datasets = dataset.slice();
+    datasets.shift();
+
+    for (var dataset of datasets) {
+      var label = dataset[0];
+      var mutatedDataset = dataset.slice();
+      mutatedDataset.shift();
+
+      var mutatedDataset = {
+        label: label,
+        values: mutatedDataset
+      };
+
+      mutatedDatasets.push(mutatedDataset);
+    }
+
+    var data = {
+      labels: labels,
+      datasets: mutatedDatasets
+    };
+
+    return data;
+  }
 
   function GetColumnCount(table) {
     var ColCount = 0;
