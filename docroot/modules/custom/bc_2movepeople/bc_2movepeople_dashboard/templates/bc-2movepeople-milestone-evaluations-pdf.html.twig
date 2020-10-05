@@ -44,19 +44,28 @@
   </div>
 
   <br>
-
+  <table style="width: 100%; border-collapse: collapse;" border="1" cellpadding="5px">
   {% for item in milestones_data %}
-    <h1>{{ item.milestone.name }}</h1>
-    <p>{{ item.milestone.purpose }}</p>
-
-    <h2>{{ 'Evaluering' | trans }}</h2>
-    <p>
-      {% for target in item.targets %}
-        <strong>{{ target.name }}</strong>
-        <br>
-        {{ target.evaluation }}
-        <br><br>
-      {% endfor %}
-    </p>
+    {% if item.milestone.status != 'not_active' %}
+        <tr>
+          <td><h2>{{ 'Mål' | trans }}</h2></td>
+          <td><h2>{{ item.milestone.name }}</h2></td>
+        </tr>
+        <tr>
+          <td><h3>{{ 'Formål' | trans }}</h3></td>
+          <td><h3>{{ item.milestone.purpose }}</h3></td>
+        </tr>
+        <tr>
+          <td><h3>{{ 'Delmål' | trans }}</h3></td>
+          <td><h3>{{ 'Evaluering' | trans }}</h3></td>
+        </tr>
+        {% for target in item.targets %}
+          <tr>
+            <td>{{ target.name }}</td>
+            <td>{{ target.evaluation }}</td>
+          </tr>
+        {% endfor %}
+    {% endif %}
   {% endfor %}
+  </table>
 </div>

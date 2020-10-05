@@ -12,29 +12,27 @@
 
   {% for item in milestones_data %}
     <div class="milestone-evaluation__item">
-      <h2>{{ item.milestone.name }}</h2>
-
       <a href="{{ path('bc_2movepeople_dashboard.milestone.evaluate', {'node':item.milestone.id})}}"
          id="btn-evaluering"
          data-dialog-type="dialog"
          class="btn btn-default btn-sm pull-right btn-progress use-ajax">
         {{ 'Edit'|trans }}
       </a>
-
-      <p>{{ item.milestone.purpose }}</p>
-
+      <h2>{{ 'Mål' | trans }}: {{ item.milestone.name }} {% if item.milestone.status == 'not_active' %}({{ 'Ikke aktiv' | trans }}){% endif %}</h2>
+      <h3>{{ 'Formål' | trans }}: {{ item.milestone.purpose }}</h3>
       <div class="ev-list">
-        <h4>{{ 'Evaluering' |trans}}</h4>
-        {% for target in item.targets %}
-
-          <div class="ev-item">
-            <p>
-              <strong>{{ target.name }}</strong>
-              <br>
-              {{ target.evaluation }}
-            </p>
-          </div>
-        {% endfor %}
+        <table style="width: 100%;">
+          <tr>
+            <td><h3>{{ 'Delmål' | trans }}</h3></td>
+            <td><h3>{{ 'Evaluering' | trans }}</h3></td>
+          </tr>
+          {% for target in item.targets %}
+            <tr>
+              <td>{{ target.name }}</td>
+              <td>{{ target.evaluation }}</td>
+            </tr>
+          {% endfor %}
+        </table>
       </div>
     </div>
   {% endfor %}

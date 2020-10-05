@@ -1007,6 +1007,7 @@ class MovepeopleDashboardController extends ControllerBase {
     foreach ($milestone_nodes as $milestone_node) {
       $milestones_data[$milestone_node->id()]['milestone'] = [
         'name' => $milestone_node->getTitle(),
+        'status' => $milestone_node->get('field_progression_status')->value,
         'purpose' => $milestone_node->get('field_purpose')->getValue()[0]['value'],
         'id' => $milestone_node->id(),
       ];
