@@ -73,13 +73,16 @@
   not node.isPublished() ? 'is-unpublished',
   view_mode ? view_mode|clean_class,
   'clearfix',
+  'col-md-12',
 ]
 %}
 {% if progression_user %}
 <div class="row user-task-box" id="task-row-{{node.id}}">
   <div{{ attributes.addClass(classes) }}">
   <div class="dashboard-overview-task-title"><a href="{{ path('bc_2movepeople_dashboard.user.milestones', {'user': progression_user }) }}">{{ label }}</a></div>
+  {% if node.field_due_date.value %}
     <div class="dashboard-overview-task-date">{{ 'Date'|trans }}: {{ node.field_due_date.value|date("d-m-Y") }}</div>
+  {% endif %}
   </div>
 </div>
 {% endif %}

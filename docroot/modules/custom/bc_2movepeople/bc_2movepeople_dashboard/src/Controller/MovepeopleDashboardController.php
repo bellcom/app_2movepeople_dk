@@ -4,6 +4,7 @@ namespace Drupal\bc_2movepeople_dashboard\Controller;
 
 use Drupal\bc_2movepeople\Form\ConfigForm;
 use Drupal\bc_2movepeople_dashboard\Bc2movepeopleDashboardMailerInterface;
+use Drupal\bc_2movepeople_dashboard\Misc\Utils;
 use Drupal\Core\Render\Markup;
 use Drupal\user\Entity\User;
 use Mpdf\Mpdf;
@@ -717,7 +718,15 @@ class MovepeopleDashboardController extends ControllerBase {
     $goals_rendered = [];
 
     foreach ($goals as $goal) {
-      $goals_rendered[] = $view_builder
+      $progression_target = Utils::getMilestoneByGoal($goal->id());
+      if (empty($goals_rendered[$progression_target->field_progression_user->target_id])) {
+        $goals_rendered[$progression_target->field_progression_user->target_id] = [
+          'user' => User::load($progression_target->field_progression_user->target_id),
+          'tasks' => [],
+        ];
+
+      }
+      $goals_rendered[$progression_target->field_progression_user->target_id]['tasks'][] = $view_builder
         ->view($goal, 'teaser');
     }
 
