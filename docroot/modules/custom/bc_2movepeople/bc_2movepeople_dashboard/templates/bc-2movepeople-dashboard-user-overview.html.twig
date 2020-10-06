@@ -3,12 +3,13 @@
 
 <div class="dashboard-overview">
   {% if table_milestone %}
+    <h2 class="subtitle">{{ table_milestone.title }}</h2>
     {{ table_milestone.controls }}
     <div class="clearfix"></div>
     {% if table_milestone.data %}
       {{ table_milestone.data }}
     {% endif %}
-    <div style="margin-top:50px">&nbsp;</div>
+    <div style="margin-top:20px"></div>
   {% endif %}
 
   {% for progression_type, progression in progressions %}
@@ -17,8 +18,7 @@
         {{ progression.empty }}
       </strong>
     {% endif %}
-
-    <h2>{{ progression.title }}</h2>
+    <h2 class="subtitle">{{ progression.title }}</h2>
     {{ progression.controls }}
     {{ progression.message }}
     <div class="dashboard-divider clearfix"></div>
@@ -41,6 +41,6 @@
         <div id="progression_total_chart"></div>
       </div>
     {% endif %}
-    <div style="margin-top:50px">&nbsp;</div>
+    <div style="margin-top:50px"></div>
   {% endfor %}
 </div>

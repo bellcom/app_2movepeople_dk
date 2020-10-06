@@ -284,10 +284,12 @@ class MovepeopleDashboardController extends ControllerBase {
    *   Progression type.
    */
   private function getProgressionUserOverview(AccountInterface $user, array &$build, $progression_type) {
+    $build_data = [];
     $entity_progression_ids = $this->getProgressionTargets($user->id(), $progression_type);
     // Depends on progression type different category button shown.
     $limit = NULL;
     $category_button = 'Progression.show_category';
+    $title = $this->t('Progressionsmåling');
     switch ($progression_type) {
       case 'progression':
         $limit = self::$pStr;
@@ -296,8 +298,11 @@ class MovepeopleDashboardController extends ControllerBase {
       case 'feedback':
         $category_button = 'Progression.feedback';
         $limit = self::$fStr;
+        $title = $this->t('Feedback');
         break;
     }
+
+    $build_data['title'] = $title;
     if (!empty($entity_progression_ids)) {
       // Meeting button.
       // Show meeting button only on progression type.
@@ -414,6 +419,8 @@ class MovepeopleDashboardController extends ControllerBase {
           "#table_data" => $result_milestone['data'],
         ];
       }
+
+      $build['#table_milestone']['title'] = $this->t('Mål og Delmål');
     }
 
     return $build;
