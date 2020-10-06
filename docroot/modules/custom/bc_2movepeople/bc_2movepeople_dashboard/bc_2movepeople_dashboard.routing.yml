@@ -184,6 +184,20 @@ bc_2movepeople_dashboard.milestone.tasks.add:
   requirements:
     _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
+bc_2movepeople_dashboard.milestone.subtasks.add:
+  path: '/dashboard/milestones/{node}/tasks/{task_node}/add'
+  options:
+    parameters:
+      node:
+        type: entity:node
+      task_node:
+        type: entity:node
+  defaults:
+    _title: 'Add new milestone task'
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneSubtaskAddForm'
+  requirements:
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
+
 bc_2movepeople_dashboard.milestone.tasks.clone:
   path: '/dashboard/milestones/users/{user}/tasks/{node}/clone'
   options:

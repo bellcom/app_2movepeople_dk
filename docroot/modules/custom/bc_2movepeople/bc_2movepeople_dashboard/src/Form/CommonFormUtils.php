@@ -5,6 +5,7 @@ namespace Drupal\bc_2movepeople_dashboard\Form;
 use Drupal\bc_2movepeople_dashboard\Controller\MovepeopleDashboardController;
 use Drupal\bc_2movepeople_dashboard\Misc\Utils;
 use Drupal\Core\Url;
+use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 use Drupal\Core\Session\AccountInterface;
 
@@ -86,10 +87,6 @@ class CommonFormUtils {
       '#type' => 'container',
     ];
 
-    if ($parent_subgoal_id) {
-      $form['goals'][$goal_id]['#attributes']['class'][] = 'subtask';
-    }
-
     $icon_class = '';
     if ($goal['completed']) {
       $icon_class = ' is-completed';
@@ -98,13 +95,21 @@ class CommonFormUtils {
       $icon_class = ' ' . $remind_types[$is_remind];
     }
 
-    $form['goals'][$goal_id]['title'] = [
-      '#type' => 'textfield',
-      '#default_value' => $goal['title'],
-      '#prefix' => '<div class="custom-form-fields div-form' . $icon_class . '" id="goal_row_' . $goal_id . '">'
-      . '<div class="custom-form-field-title"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Task') . '</div>',
-      '#suffix' => '</div>',
-    ];
+    if ($parent_subgoal_id) {
+      $form['goals'][$goal_id]['title'] = [
+        '#type' => 'markup',
+        '#markup' => '<div class="custom-form-fields div-form' . $icon_class . '" id="goal_row_' . $goal_id . '"><div class="custom-form-field-title"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Task') . '</div></div>'
+      ];
+    }
+    else {
+      $form['goals'][$goal_id]['title'] = [
+        '#type' => 'textfield',
+        '#default_value' => $goal['title'],
+        '#prefix' => '<div class="custom-form-fields div-form' . $icon_class . '" id="goal_row_' . $goal_id . '">'
+          . '<div class="custom-form-field-title"><div class="visible-xs visible-sm visible-md custom-form-label">' . t('Task') . '</div>',
+        '#suffix' => '</div>',
+      ];
+    }
 
     $form['goals'][$goal_id]['activity_title'] = [
       '#type' => 'textfield',
@@ -148,6 +153,26 @@ class CommonFormUtils {
       '#suffix' => '</div>',
     ];
 
+    $form['goals'][$goal_id]['control_btn_start'] = ['#markup' => '<div class="dashboard-accordion__action-btn">'];
+
+    $progression_target = Node::load($goal['progression_target_id'] ?: NULL);
+    if ($progression_target && empty($parent_subgoal_id)) {
+      $task_node = Node::load($goal_id);
+      $form['goals'][$goal_id]['subtask_btn'] = [
+        '#type' => 'html_tag',
+        '#tag' => 'a',
+        '#value' => '<span class="glyphicon glyphicon-plus"></span>',
+        '#attributes' => [
+          'href' => Url::fromRoute('bc_2movepeople_dashboard.milestone.subtasks.add', ['node' => $progression_target->id(), 'task_node' => $task_node->id()])->toString(),
+          'class' => ['btn', 'btn-default', 'use-ajax'],
+          'data-dialog-type' => 'modal',
+          'title' => t('Tilføj ny handling'),
+        ],
+        '#prefix' => '<span id="subtask_btn_box' . $goal_id . '">',
+        '#suffix' => '</span>',
+      ];
+    }
+
     $form['goals'][$goal_id]['complete_btn'] = [
       '#type' => 'button',
       '#name' => 'complete_btn' . $goal_id,
@@ -164,8 +189,7 @@ class CommonFormUtils {
         'callback' => '::ajaxGoalComplete',
         'progress' => ['type' => 'none'],
       ],
-      '#prefix' => '<div class="dashboard-accordion__action-btn">'
-      . '<span id="complete_btn_box' . $goal_id . '">',
+      '#prefix' => '<span id="complete_btn_box' . $goal_id . '">',
       '#suffix' => '</span>',
     ];
 
@@ -211,8 +235,8 @@ class CommonFormUtils {
         'aria-pressed' => ['false'],
         'autocomplete' => ['off'],
       ],
-      '#suffix' => '</div></div>',
     ];
+    $form['goals'][$goal_id]['control_btn_end'] = ['#markup' => '</div></div>'];
 
     if (count($goal['subgoals']) > 0) {
       foreach ($goal['subgoals'] as $subgoal) {
