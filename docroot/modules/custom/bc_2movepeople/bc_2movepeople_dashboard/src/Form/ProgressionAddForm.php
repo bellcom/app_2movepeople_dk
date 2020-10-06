@@ -27,7 +27,7 @@ class ProgressionAddForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state, UserInterface $user = NULL, $limit = NULL) {
     $this->user = $user;
     $this->limit = $limit;
-    
+
     $form['title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Category'),
@@ -38,6 +38,10 @@ class ProgressionAddForm extends FormBase {
       '#type' => 'checkbox',
       '#title' => $this->t('For user feedback'),
     ];
+    if ($limit == 'feedback') {
+      $form['for_user_feedback']['#type'] = 'hidden';
+      $form['for_user_feedback']['#value'] = TRUE;
+    }
 
     $form['actions']['#type'] = 'actions';
     $form['actions']['submit'] = [

@@ -61,6 +61,12 @@ class ConfigForm extends ConfigFormBase {
       '#default_value' => $config->get('enable_milestones'),
     ];
 
+    $form['functionality']['enable_meetings'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable meetings'),
+      '#default_value' => $config->get('enable_meetings'),
+    ];
+
     $form['functionality']['email_required'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('User email is required'),
@@ -158,6 +164,7 @@ class ConfigForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $config = $this->config('bc_2movepeople.settings');
     $config->set('enable_milestones', $form_state->getValue('enable_milestones'))
+      ->set('enable_meetings', $form_state->getValue('enable_meetings'))
       ->set('email_required', $form_state->getValue('email_required'))
       ->set('rates_separately', $form_state->getValue('rates_separately'))
       ->set('default_progression_template', $form_state->getValue('default_progression_template'))

@@ -10,33 +10,37 @@
     {% endif %}
     <div style="margin-top:50px">&nbsp;</div>
   {% endif %}
-  {% if table_progression.empty %}
-    <strong>
-      {{ table_progression.empty }}
-    </strong>
-  {% endif %}
 
-  {{ table_progression.controls }}
-  {{ table_progression.message }}
-  <div class="dashboard-divider clearfix"></div>
-  {% if table_progression.data %}
-    {{ table_progression.data }}
-    <div class="progression-chart">
-      <div class="text-center">
-        <div class="btn-group graph-type-btn" data-toggle="buttons">
-          <label class="btn btn-default active">
-            <input type="radio" name="chart_type" class="line-graph-btn" autocomplete="off" checked> {{ 'Line graph' | trans }}
-          </label>
-          <label class="btn btn-default">
-            <input type="radio" name="chart_type" class="bar-graph-btn" autocomplete="off"> {{ 'Bar' | trans }}
-          </label>
-          <label class="btn btn-default">
-            <input type="radio" name="chart_type" class="radar-graph-btn" autocomplete="off"> {{ 'Radar' | trans }}
-          </label>
+  {% for progression_type, progression in progressions %}
+    {% if progression.empty %}
+      <strong>
+        {{ progression.empty }}
+      </strong>
+    {% endif %}
+
+    <h2>{{ progression.title }}</h2>
+    {{ progression.controls }}
+    {{ progression.message }}
+    <div class="dashboard-divider clearfix"></div>
+    {% if progression.data %}
+      {{ progression.data }}
+      <div class="progression-chart">
+        <div class="text-center">
+          <div class="btn-group graph-type-btn" data-toggle="buttons">
+            <label class="btn btn-default active">
+              <input type="radio" name="chart_type-{{ progression_type }}" class="line-graph-btn" autocomplete="off" checked> {{ 'Line graph' | trans }}
+            </label>
+            <label class="btn btn-default">
+              <input type="radio" name="chart_type-{{ progression_type }}" class="bar-graph-btn" autocomplete="off"> {{ 'Bar' | trans }}
+            </label>
+            <label class="btn btn-default">
+              <input type="radio" name="chart_type-{{ progression_type }}" class="radar-graph-btn" autocomplete="off"> {{ 'Radar' | trans }}
+            </label>
+          </div>
         </div>
+        <div id="progression_total_chart"></div>
       </div>
-      <div id="progression_total_chart"></div>
-{#      <canvas id="radarChart" class="hidden" width="400" height="400"></canvas>#}
-    </div>
-  {% endif %}
+    {% endif %}
+    <div style="margin-top:50px">&nbsp;</div>
+  {% endfor %}
 </div>

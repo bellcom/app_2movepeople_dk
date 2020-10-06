@@ -5,6 +5,8 @@
  * Install, update, and uninstall functions for the 2Movepeople common module.
  */
 
+use Drupal\bc_2movepeople\Form\ConfigForm;
+
 /**
  * Remove menu from db to override them from code.
  */
@@ -18,4 +20,13 @@ function bc_2movepeople_update_8001() {
       $menu_item->link->deleteLink();
     }
   }
+}
+
+/**
+ * Add meeting enavle/disable setting.
+ */
+function bc_2movepeople_update_8901(&$sandbox) {
+  $config = \Drupal::service('config.factory')->getEditable(ConfigForm::getConfigName());
+  $config->set('enable_meetings', TRUE);
+  $config->save();
 }

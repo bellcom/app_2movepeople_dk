@@ -77,7 +77,7 @@ function bc_2movepeople_dashboard_theme() {
       'variables' => [
         'title' => NULL,
         'user' => NULL,
-        'table_progression' => NULL,
+        'progressions' => [],
         'table_milestone' => NULL,
       ],
     ],

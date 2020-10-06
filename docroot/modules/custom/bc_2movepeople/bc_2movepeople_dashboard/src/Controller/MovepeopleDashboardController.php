@@ -6,6 +6,7 @@ use Drupal\bc_2movepeople\Form\ConfigForm;
 use Drupal\bc_2movepeople_dashboard\Bc2movepeopleDashboardMailerInterface;
 use Drupal\bc_2movepeople_dashboard\Misc\Utils;
 use Drupal\Core\Render\Markup;
+use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 use Mpdf\Mpdf;
 use Drupal\Core\Url;
@@ -273,84 +274,81 @@ class MovepeopleDashboardController extends ControllerBase {
   }
 
   /**
-   * Render callback function for user overview page.
+   * User progression overview build function.
+   *
+   * @param AccountInterface $user
+   *   User to build progression for.
+   * @param array $build
+   *   Build array
+   * @param $progression_type
+   *   Progression type.
    */
-  private function getUserOverview(AccountInterface $user) {
-    $build = [
-      "#theme" => "bc_2movepeople_dashboard_user_overview",
-      "#title" => $user->field_user_firstname->value . ' ' . $user->field_user_surname->value,
-      "#user" => $user->id(),
-    ];
+  private function getProgressionUserOverview(AccountInterface $user, array &$build, $progression_type) {
+    $entity_progression_ids = $this->getProgressionTargets($user->id(), $progression_type);
+    // Depends on progression type different category button shown.
+    $limit = NULL;
+    $category_button = 'Progression.show_category';
+    switch ($progression_type) {
+      case 'progression':
+        $limit = self::$pStr;
+        break;
 
-    $entity_progression_ids = $this->getProgressionTargets($user->id(), 'progressions');
-    $entity_milestone_ids = $this->getProgressionTargets($user->id(), 'target_milestone');
+      case 'feedback':
+        $category_button = 'Progression.feedback';
+        $limit = self::$fStr;
+        break;
+    }
     if (!empty($entity_progression_ids)) {
-
-      // We need to know if there are any questions on categories to show
-      // 'Rate' buttons or not.
-      $categories = node_load_multiple($entity_progression_ids);
-      $questions_found = FALSE;
-      foreach ($categories as $category) {
-        if (!empty($category->field_goal_ids->entity)) {
-          $questions_found = TRUE;
-          break;
-        }
-      }
-
       // Meeting button.
-      if (\Drupal::currentUser()->hasPermission('access category template')) {
+      // Show meeting button only on progression type.
+      $config = $this->config(ConfigForm::getConfigName());
+      if ($config->get('enable_meetings')
+        && strpos($progression_type, 'progression') === 0) {
         $controls['Meetings.meetings'] = [
           '#url' => Url::fromRoute('bc_2movepeople_meeting.user.meetings', ['user' => $user->id()]),
         ];
       }
 
-      $config = $this->config('bc_2movepeople.settings');
-      if (!empty($config->get('rates_separately'))) {
-        $controls['Progression.feedback'] = [
-          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id(), 'limit' => self::$fStr]),
-        ];
-        $controls['Progression.show_category'] = [
-          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
-        ];
-      }
-      else {
-        $controls['Progression.show_category'] = [
-          '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
-        ];
-      }
+      $controls[$category_button] = [
+        '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id(), 'limit' => $limit]),
+      ];
 
-      // Add 'Rate category' btn if there are any questions.
-      if (!$questions_found) {
-        $controls['Progression.rate_category'] = [
-          '#attributes' => [
-            'disabled' => 'disabled',
-          ],
-        ];
-      }
-      else {
+      if (strpos($progression_type, 'progression') === 0) {
+        // We need to know if there are any questions on categories to show
+        // 'Rate' buttons or not.
+        $categories = Node::loadMultiple($entity_progression_ids);
+        $questions_found = FALSE;
+        foreach ($categories as $category) {
+          if (!empty($category->field_goal_ids->entity)) {
+            $questions_found = TRUE;
+            break;
+          }
+        }
         $controls['Progression.rate_category'] = [
           '#url' => Url::fromRoute('bc_2movepeople_rate_progression.user_rates_add', ['user' => $user->id()]),
           '#attributes' => [
             'class' => ['btn-progress', 'use-ajax'],
             'data-dialog-type' => 'modal',
+            'disabled' => $questions_found ? NULL : 'disabled',
           ],
         ];
+
+        // Show template button only on progression type.
+        if (\Drupal::currentUser()->hasPermission('access category template')) {
+          $controls['Progression.save_to_template'] = [
+            '#url' => Url::fromRoute('bc_2movepeople_dashboard.save_to_tpl', ['user' => $user->id()]),
+            '#attributes' => [
+              'class' => ['btn-progress', 'use-ajax'],
+              'data-dialog-type' => 'modal',
+            ],
+          ];
+        }
       }
 
+      // Rate results table data.
       $result_progression = $this->getProgressionsTable($entity_progression_ids);
-
-      if (\Drupal::currentUser()->hasPermission('access category template')) {
-        $controls['Progression.save_to_template'] = [
-          '#url' => Url::fromRoute('bc_2movepeople_dashboard.save_to_tpl', ['user' => $user->id()]),
-          '#attributes' => [
-            'class' => ['btn-progress', 'use-ajax'],
-            'data-dialog-type' => 'modal',
-          ],
-        ];
-      }
-
       if (!empty($result_progression['data'])) {
-        $build['#table_progression']['data'] = [
+        $build_data['data'] = [
           "#theme" => "bc_2movepeople_dashboard_progression_total_table",
           "#type" => 'progression',
           "#table_header" => $result_progression['header'],
@@ -360,13 +358,36 @@ class MovepeopleDashboardController extends ControllerBase {
     }
     else {
       $controls['Progression.create_categories'] = [
-        '#title' => $this->t('Create categories'),
-        '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id()]),
+        '#title' => $this->t('Add new category'),
+        '#url' => Url::fromRoute('bc_2movepeople_dashboard.user.progressions', ['user' => $user->id(), 'limit' => $limit]),
       ];
-
-      $build['#table_progression']['empty'] = $this->t('Currently no measurements found. You need to create a category to create measurements.');
+      $build_data['empty'] = $this->t('Currently no measurements found. You need to create a category to create measurements.');
     }
-    $build['#table_progression']['controls'] = $this->getControlButtons($controls, ['class' => 'dashboard-overview__control-buttons']);
+    // Processing control buttons.
+    $build_data['controls'] = $this->getControlButtons($controls, ['class' => 'dashboard-overview__control-buttons']);
+
+    // Adding build array.
+    $build['#progressions'][$progression_type] = $build_data;
+  }
+
+  /**
+   * Render callback function for user overview page.
+   */
+  private function getUserOverview(AccountInterface $user) {
+    $build = [
+      "#theme" => "bc_2movepeople_dashboard_user_overview",
+      "#title" => $user->field_user_firstname->value . ' ' . $user->field_user_surname->value,
+      "#user" => $user->id(),
+    ];
+
+    $config = $this->config(ConfigForm::getConfigName());
+    if (empty($config->get('rates_separately'))) {
+      $this->getProgressionUserOverview($user, $build, 'progressions');
+    }
+    else {
+      $this->getProgressionUserOverview($user, $build, 'progression');
+      $this->getProgressionUserOverview($user, $build, 'feedback');
+    }
 
     $config = $this->config('bc_2movepeople.settings');
     $control_links['Milestone.overall_evaluation'] = [
@@ -383,6 +404,7 @@ class MovepeopleDashboardController extends ControllerBase {
       ];
       $build['#table_milestone']['controls'] = $this->getControlButtons($control_links, ['class' => ['dashboard-overview__control-buttons']]);
 
+      $entity_milestone_ids = $this->getProgressionTargets($user->id(), 'target_milestone');
       if (!empty($entity_milestone_ids)) {
         $result_milestone = $this->getMilestoneTable($entity_milestone_ids);
         $build['#table_milestone']['data'] = [
@@ -980,7 +1002,7 @@ class MovepeopleDashboardController extends ControllerBase {
       $value = !empty($button['title']) ? $button['title'] : $button['name'];
 
       // Button (only buttons can be disabled).
-      if (isset($link['#attributes']['disabled'])) {
+      if (!empty($link['#attributes']['disabled'])) {
         $type = 'button';
         $link['#value'] = $value;
       }
