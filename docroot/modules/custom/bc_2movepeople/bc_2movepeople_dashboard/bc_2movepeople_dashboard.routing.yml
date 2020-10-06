@@ -193,7 +193,7 @@ bc_2movepeople_dashboard.milestone.tasks.clone:
       node:
         type: entity:node
   defaults:
-    _title: 'Copy question to category'
+    _title: 'Kopier delmål til progressionsmåling'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskCloneForm'
   requirements:
     _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
