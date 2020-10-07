@@ -4,8 +4,11 @@ namespace Drupal\bc_2movepeople_dashboard\Controller;
 
 use Drupal\bc_2movepeople\Form\ConfigForm;
 use Drupal\bc_2movepeople_dashboard\Bc2movepeopleDashboardMailerInterface;
+use Drupal\bc_2movepeople_dashboard\Entity\Evaluation;
 use Drupal\bc_2movepeople_dashboard\Misc\Utils;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Render\Markup;
+use Drupal\file\Entity\File;
 use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 use Mpdf\Mpdf;
@@ -13,6 +16,7 @@ use Drupal\Core\Url;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Controller\ControllerBase;
 use Mpdf\Output\Destination;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\bc_2movepeople_dashboard\bc_2movepeople_dashboardStorage;
@@ -41,6 +45,13 @@ class MovepeopleDashboardController extends ControllerBase {
    */
   protected $dashboardMailer;
 
+ /**
+   * FileSystemInterface.
+   *
+   * @var FileSystemInterface
+   */
+  protected $fileSystem;
+
 
   /**
    * {@inheritdoc}
@@ -48,16 +59,18 @@ class MovepeopleDashboardController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
         $container->get('database'),
-        $container->get('2movepeople_dashboard.mailer')
+        $container->get('2movepeople_dashboard.mailer'),
+        $container->get('file_system')
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(Connection $database, Bc2movepeopleDashboardMailerInterface $dashboard_mailer) {
+  public function __construct(Connection $database, Bc2movepeopleDashboardMailerInterface $dashboard_mailer, FileSystemInterface $file_system) {
     $this->database = $database;
     $this->dashboardMailer = $dashboard_mailer;
+    $this->fileSystem = $file_system;
   }
 
   /**
@@ -1097,17 +1110,48 @@ class MovepeopleDashboardController extends ControllerBase {
    * Output a PDF of user evaluations.
    */
   public function getMilestoneEvaluationsPdf(AccountInterface $user) {
-    $html = $this->getMilestoneEvaluationsContent($user);
-    $mpdf = new Mpdf(['tempDir' => 'sites/default/files/tmp']);
-    $mpdf->WriteHTML($html);
-    $mpdf->Output('user_' . $user->id() . '_evaluations.pdf', 'D');
-    exit;
+    // Getting build array to save in Evaluation entity.
+    $build = $this->getMilestoneEvaluationsContent($user, TRUE);
+    // Rendering
+    $data = Utils::renderPdfFileSource($build);
+    $this->saveEvaluation($user, $build, $data);
+    return Utils::downloadPdfFile($data, 'user_' . $user->id() . '_evaluations.pdf');
   }
 
   /**
-   * Milestone Evaluations content generate mathod.
+   * Saves Evaluation entity.
+   *
+   * @param AccountInterface $user
+   *   Evaluation user.
+   * @param array $build
+   *   Build array
+   * @param string $data
+   *   Evaluation PDF file data.
+   *
+   * @return bool
+   *   Evaluation save status.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  private function getMilestoneEvaluationsContent(AccountInterface $user) {
+  private function saveEvaluation(AccountInterface $user, array $build, string $data) {
+    $destination = 'private://evaluation';
+    $filename = 'user_' . $user->id() . '_evaluations_' . date('Ymd-His', strtotime('now')) . '.pdf';
+    if ($this->fileSystem->prepareDirectory($destination, FileSystemInterface::CREATE_DIRECTORY)) {
+      $file = file_save_data($data, $destination . DIRECTORY_SEPARATOR . $filename);
+      $evaluation = Evaluation::create([
+        'user' => $user,
+        'file' => $file,
+        'data' => $build,
+      ]);
+      return (bool) $evaluation->save();
+    }
+    return FALSE;
+  }
+
+  /**
+   * Milestone Evaluations content generate method.
+   */
+  private function getMilestoneEvaluationsContent(AccountInterface $user, $build_data = FALSE) {
     $config = $this->config('bc_2movepeople_dashboard.AdminSettings');
 
     // Load Milestone evaluation header.
@@ -1139,9 +1183,7 @@ class MovepeopleDashboardController extends ControllerBase {
       '#milestones_data' => $this->getMilestoneEvaluationsData($user),
     ];
 
-    $html = \Drupal::service('renderer')->renderRoot($build);
-    $html = Html::transformRootRelativeUrlsToAbsolute($html, \Drupal::request()->getSchemeAndHttpHost());
-    return $html;
+    return $build_data ? $build : Utils::renderMarkup($build);
   }
 
   /**
@@ -1152,11 +1194,11 @@ class MovepeopleDashboardController extends ControllerBase {
   public function sendMilestoneEvaluationsToSbsys(AccountInterface $user) {
     $attachments = [];
 
-    // Getting PDF file.
-    $html = $this->getMilestoneEvaluationsContent($user);
-    $mpdf = new Mpdf(['tempDir' => 'sites/default/files/tmp']);
-    $mpdf->WriteHTML($html);
-    $pdf_content = $mpdf->Output('user_' . $user->id() . '_evaluations.pdf', Destination::STRING_RETURN);
+    // Getting build array to save in Evaluation entity.
+    $build = $this->getMilestoneEvaluationsContent($user, TRUE);
+    // Rendering
+    $pdf_content = Utils::renderPdfFileSource($build);
+    $this->saveEvaluation($user, $build, $pdf_content);
     $attachments[] = [
       'filecontent' => $pdf_content,
       'filename' => 'evaluation.pdf',

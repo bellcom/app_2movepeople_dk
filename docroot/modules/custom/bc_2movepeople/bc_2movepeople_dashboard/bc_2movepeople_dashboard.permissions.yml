@@ -13,3 +13,12 @@ create connected users:
 create supervisor users:
   title: 'Create supervisor user'
   description: 'Ability to create supervisor'
+
+administer evaluation entities:
+  title: 'Administer Evaluation entities'
+  description: 'Allow to access the administration form to configure Evaluation entities.'
+  restrict access: true
+
+delete evaluation entities:
+  title: 'Delete Evaluation entities'
+

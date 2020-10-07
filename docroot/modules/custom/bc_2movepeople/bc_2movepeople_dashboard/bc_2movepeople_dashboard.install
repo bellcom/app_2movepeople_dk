@@ -1,6 +1,9 @@
 <?php
 
 use Drupal\node\Entity\Node;
+use Drupal\Core\Entity\ContentEntityType;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\bc_2movepeople_dashboard\Entity\Evaluation;
 
 function bc_2movepeople_dashboard_schema() {
   $schema['bc_2movepeople_dashboard_task_reminder'] = array(
@@ -53,5 +56,34 @@ function bc_2movepeople_dashboard_update_8001() {
   /** @var \Drupal\node\NodeInterface $node */
   foreach (Node::loadMultiple($nids) as $node) {
     $node->set('field_task_show_complete_button', ['value' => 1])->save();
+  }
+}
+
+/**
+ * Adds new content entity type for Evaluation.
+ */
+function bc_2movepeople_dashboard_update_8901() {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+
+  $definition_update_manager->installEntityType(new ContentEntityType([
+    'id' => 'evaluation',
+    'label' => new TranslatableMarkup('Evaluation'),
+    'handlers' => [
+       'view_builder' => 'Drupal\Core\Entity\EntityViewBuilder',
+       'list_builder' => 'Drupal\bc_2movepeople_dashboard\EvaluationListBuilder',
+       'views_data' => 'Drupal\bc_2movepeople_dashboard\Entity\EvaluationViewsData',
+    ],
+    'base_table' => 'evaluation',
+    'translatable' => FALSE,
+    'admin_permission' => 'administer evaluation entities',
+    'entity_keys' => [
+      'id' => 'id',
+    ],
+  ]));
+
+  $entity_type = $definition_update_manager->getEntityType('evaluation');
+  $fields = Evaluation::baseFieldDefinitions($entity_type);
+  foreach ($fields as $field_name => $field_definition) {
+    $definition_update_manager->installFieldStorageDefinition($field_name, 'evaluation', 'evaluation', $field_definition);
   }
 }
