@@ -128,10 +128,11 @@ function bc_webform_webform_help_info_alter(array &$help) {
 function bc_webform_webform_submission_custom_alter(array &$form, FormStateInterface $form_state) {
   /** @var WebformSubmissionInterface $webform_submission */
   $webform_submission = $form_state->getFormObject()->getEntity();
+  $roles = $webform_submission->getWebform()->getThirdPartySetting('bc_webform', 'roles') ?: [];
   if (!bc_webform_has_anonymization($webform_submission->getWebform())
     || (
       $webform_submission->getOwner()->hasRole('anonymous')
-      && in_array('anonymous', $webform_submission->getWebform()->getThirdPartySetting('bc_webform', 'roles'))
+      && in_array('anonymous', $roles)
       )
   ) {
     return;

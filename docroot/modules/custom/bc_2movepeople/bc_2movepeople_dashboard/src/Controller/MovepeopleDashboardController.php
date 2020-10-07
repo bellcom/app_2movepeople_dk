@@ -515,6 +515,7 @@ class MovepeopleDashboardController extends ControllerBase {
     ];
     if (is_object($progression_target)) {
       $result['rates'] = bc_2movepeople_rate_progression_get_rates($progression_target->id(), $nodeid);
+      $result['progression_target_id'] = $progression_target->id();
     }
 
     return $result;

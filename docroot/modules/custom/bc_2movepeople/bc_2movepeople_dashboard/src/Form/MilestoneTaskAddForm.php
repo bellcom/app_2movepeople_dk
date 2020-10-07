@@ -69,14 +69,8 @@ class MilestoneTaskAddForm extends FormBase {
     $form['#prefix'] = '<div id="bc_2movepeople-dashboard-milestone-task-add-form">';
     $form['#suffix'] = '</div>';
 
-    $goals_options = MovepeopleDashboardController::getProgressionGoalsList($this->parentNode);
-    $form['parent_task_id'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Parent task'),
-      '#options' => $goals_options,
-      '#empty_option' => $this->t('-Select parent task-'),
-      '#required' => FALSE
-    ];
+    // This field is used on subtask create.
+    $form['parent_task_id'] = ['#type' => 'hidden'];
 
     $form['title'] = [
       '#type' => 'textfield',

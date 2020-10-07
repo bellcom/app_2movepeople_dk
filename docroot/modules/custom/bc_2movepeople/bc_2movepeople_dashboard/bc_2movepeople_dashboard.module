@@ -440,7 +440,7 @@ function bc_2movepeople_dashboard_preprocess_user(&$variables) {
 
   // Only for 2mp_user role.
   if (in_array('2mp_user', $user->getRoles())) {
-    $entity_progression_ids = MovepeopleDashboardController::getProgressionTargets($user->id(), 'progressions');
+    $entity_progression_ids = MovepeopleDashboardController::getProgressionTargets($user->id(), 'progression');
     $progression_table = MovepeopleDashboardController::getProgressionsTable($entity_progression_ids);
 
     $minRate = 0;

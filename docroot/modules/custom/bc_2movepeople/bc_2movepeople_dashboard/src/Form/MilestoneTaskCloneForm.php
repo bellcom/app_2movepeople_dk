@@ -42,7 +42,9 @@ class MilestoneTaskCloneForm extends FormBase {
     foreach ($progression_nodes as $progrdata) {
       $progression_options[$progrdata->id()] = $progrdata->get('title')->value;
     }
-
+    if (!empty($progression_options)) {
+      $progression_options['other'] = $this->t('Anden ...');
+    }
     $form['#prefix'] = '<div id="bc_2movepeople-dashboard-task-clone-form">';
     $form['#suffix'] = '</div>';
 
@@ -64,6 +66,20 @@ class MilestoneTaskCloneForm extends FormBase {
         'wrapper' => 'parent_task_wrapper',
       ],
     ];
+
+    $form['progression_other_title'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Nyt kategori'),
+      '#states' => [
+        'visible' => [
+          ':input[name=progression_id]' => ['value' => 'other'],
+        ],
+        'required' => [
+          ':input[name=progression_id]' => ['value' => 'other'],
+        ],
+      ]
+    ];
+
     $task_ids = $this->getParentQuestionOptions($form_state);
     if (!empty($task_ids)) {
       $task_ids['other'] = $this->t('Anden ...');
@@ -148,13 +164,12 @@ class MilestoneTaskCloneForm extends FormBase {
 
     $options = array();
     $progression_id = $form_state->getValue('progression_id');
-
-	if ($progression_id) {
+    if ($progression_id && $progression_id != 'other') {
       $progression = Node::load($progression_id);
       $options = MovepeopleDashboardController::getProgressionGoalsList($progression);
     }
 
-	return $options;
+    return $options;
   }
 
 
@@ -172,6 +187,7 @@ class MilestoneTaskCloneForm extends FormBase {
 
     $progression_id = $form_state->getValue('progression_id');
     $parent_task_id = $form_state->getValue('parent_task_id');
+    $progression_other_title = $form_state->getValue('progression_other_title');
     $parent_task_other_title = $form_state->getValue('parent_task_other_title');
 
     $new_node = Node::create(array(
@@ -181,6 +197,20 @@ class MilestoneTaskCloneForm extends FormBase {
     ));
 
     if ($new_node->save() == SAVED_NEW) {
+      // Creating new progression category.
+      if ($progression_id == 'other') {
+        $progression_node = Node::create(array(
+          'status' => 1,
+          'type' => 'progression_target',
+          'title' => $progression_other_title,
+          'field_progression_user' => $this->user->id(),
+          'field_progression_type' => 'progression',
+        ));
+        $progression_node->save();
+        $progression_id = $progression_node->id();
+      }
+
+      // Creating new progression task category.
       if ($parent_task_id == 'other') {
         $parent_task_node = Node::create(array(
           'type' => 'goal',
