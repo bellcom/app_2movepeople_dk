@@ -6,37 +6,51 @@
 (function ($) {
   Drupal.behaviors.totalChart = {
     attach: function (context, settings) {
-      $(this).graphTotalLoad();
+      var wrappers = document.querySelectorAll('.progression-chart');
+
+      for(var i = 0; i < wrappers.length; i += 1) {
+        var currentElement = wrappers[i];
+
+        $(this).graphTotalLoad('line', currentElement);
+      }
 
       $('.line-graph-btn').change(function () {
+        var element = this;
+        var wrapper = element.closest('.progression-chart');
         $('#progression_total_chart').text('');
 
-        $(this).graphTotalLoad('line');
+        $(this).graphTotalLoad('line', wrapper);
       });
 
       $('.bar-graph-btn').change(function () {
+        var element = this;
+        var wrapper = element.closest('.progression-chart');
         $('#progression_total_chart').text('');
 
-        $(this).graphTotalLoad('bar');
+        $(this).graphTotalLoad('bar', wrapper);
       });
 
       $('.radar-graph-btn').change(function () {
+        var element = this;
+        var wrapper = element.closest('.progression-chart');
         $('#progression_total_chart').text('');
 
-        $(this).graphTotalLoad('radar');
+        $(this).graphTotalLoad('radar', wrapper);
       });
     }
   };
 
-  $.fn.graphTotalLoad = function (chart_type = 'line') {
-    if ($('#progression_total_table').length > 0) {
-      columns = GetColumnCount($('#progression_total_table table'));
+  $.fn.graphTotalLoad = function (chart_type = 'line', wrapper) {
+    var table = wrapper.querySelector('#progression_total_table');
+
+    if (table) {
+      var columns = GetColumnCount(table.querySelectorAll('table'));
       var arr = [];
 
       for (var i = 1; i <= columns; i++) {
-        arr[i - 1] = [$('#progression_total_table table th[data-target=col_' + i + ']').text()];
+        arr[i - 1] = [$(table).find('th[data-target=col_' + i + ']').text()];
 
-        $('#progression_total_table table td[data-target=col_' + i + ']').each(function () {
+        $(table).find('td[data-target=col_' + i + ']').each(function () {
           var cellContent = $(this).text().trim();
 
           if (!isNaN(parseFloat(cellContent))) {
@@ -54,10 +68,9 @@
       var type = (chart_type === 'radar') ? 'text' : 'date';
       var dataset = generateDataset(type, arr);
 
-      debugger;
-
       // On load.
-      charty.drawChart('progression_total_chart', dataset, chart_type);
+      // @TODO: fejlen ligger i hvordan vi finder progression-total-chart (vi finder bare den første). Pass et objekt ind.
+      charty.drawChart(wrapper.querySelector('.progression-total-chart'), dataset, chart_type);
     }
   };
 

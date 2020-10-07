@@ -49,7 +49,8 @@
       var iteration = 1;
       var colors = ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913'];
       var canvas = document.createElement('CANVAS');
-      var container = document.getElementById(element);
+      var container = (typeof element === 'string') ? document.querySelector(element) : element;
+
       canvas.style.height = '30vh';
       container.innerHTML = '';
       container.appendChild(canvas);
