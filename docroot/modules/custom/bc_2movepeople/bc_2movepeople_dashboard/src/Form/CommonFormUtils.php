@@ -315,7 +315,7 @@ class CommonFormUtils {
       '#default_value' => $goal['title'],
       '#prefix' => '<div class="row"><div class="col-xs-12"><div class="custom-form-fields" id="goal_row_' . $goal['id'] . '">'
       . ($parent_subgoal_id ? ''
-      . '<div class="row"><div class="hidden-xs col-sm-1"></div><div class="col-xs-9 col-sm-9 col-md-10">' : '<div class="row"><div class="col-xs-9 col-sm-10 col-md-11">'),
+      . '<div class="row"><div class="hidden-xs col-sm-1"><hr></div><div class="col-xs-9 col-sm-9 col-md-10">' : '<div class="row"><div class="col-xs-9 col-sm-10 col-md-11">'),
       '#suffix' => '</div>',
     ];
 
