@@ -69,7 +69,6 @@
       var dataset = generateDataset(type, arr);
 
       // On load.
-      // @TODO: fejlen ligger i hvordan vi finder progression-total-chart (vi finder bare den første). Pass et objekt ind.
       charty.drawChart(wrapper.querySelector('.progression-total-chart'), dataset, chart_type);
     }
   };
@@ -79,7 +78,7 @@
       return _datasetWithDateLabels(dataset);
     }
 
-    return _datasetWithDateTextLabels(dataset);
+    return _datasetWithTextLabels(dataset);
   }
 
   function _datasetWithDateLabels(dataset) {
@@ -111,7 +110,7 @@
     return data;
   }
 
-  function _datasetWithDateTextLabels(dataset) {
+  function _datasetWithTextLabels(dataset) {
     var labels = dataset[0].slice();
     labels.shift();
 
