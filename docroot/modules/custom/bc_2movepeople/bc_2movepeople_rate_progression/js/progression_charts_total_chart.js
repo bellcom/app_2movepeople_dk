@@ -82,32 +82,48 @@
   }
 
   function _datasetWithDateLabels(dataset) {
-    var labels = dataset[0].slice();
-    labels.shift();
 
+    // Generate date labels.
+    var dateLabelsData = dataset.slice();
+    dateLabelsData.shift();
+
+    var dateLabels = [];
+
+    for (var i = 0; i < dateLabelsData.length; i += 1) {
+      var item = dateLabelsData[i];
+      var date = item[0];
+
+      dateLabels.push(date);
+    }
+
+    // Generate text labels.
+    var textLabels = dataset[0].slice();
+    textLabels.shift();
+
+    // Datasets.
     var mutatedDatasets = [];
     var datasets = dataset.slice();
     datasets.shift();
 
-    for (var dataset of datasets) {
-      var label = dataset[0];
-      var mutatedDataset = dataset.slice();
-      mutatedDataset.shift();
+    for (var i = 0; i < datasets.length; i += 1) {
+      var item = datasets[i];
+      // var label = item[0];
+
+      var itemDataset = item.slice();
+      itemDataset.shift();
 
       var mutatedDataset = {
-        label: label,
-        values: mutatedDataset
+        // label: label,
+        values: itemDataset
       };
 
       mutatedDatasets.push(mutatedDataset);
     }
 
-    var data = {
-      labels: labels,
+    return {
+      labels: dateLabels,
       datasets: mutatedDatasets
     };
-
-    return data;
   }
 
   function _datasetWithTextLabels(dataset) {
