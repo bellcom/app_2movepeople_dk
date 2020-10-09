@@ -96,33 +96,34 @@
       dateLabels.push(date);
     }
 
-    // Generate text labels.
+    // // Generate text labels.
     var textLabels = dataset[0].slice();
     textLabels.shift();
 
     // Datasets.
-    var mutatedDatasets = [];
-    var datasets = dataset.slice();
-    datasets.shift();
+    var datasetCopy = dataset.slice();
+    datasetCopy.shift();
+    var newDataset = [];
+    var firstColumn = datasetCopy[0].slice();
+    firstColumn.shift();
 
-    for (var i = 0; i < datasets.length; i += 1) {
-      var item = datasets[i];
-      // var label = item[0];
+    var numberOfRows = firstColumn.length;
+    for (var rowInt = 0; rowInt < numberOfRows; rowInt += 1) {
+      var rowData = [];
 
-      var itemDataset = item.slice();
-      itemDataset.shift();
+      for (var columnInt = 0; columnInt < datasetCopy.length; columnInt += 1) {
+        rowData.push(datasetCopy[columnInt][rowInt + 1]);
+      }
 
-      var mutatedDataset = {
-        // label: label,
-        values: itemDataset
-      };
-
-      mutatedDatasets.push(mutatedDataset);
+      newDataset.push({
+        label: textLabels[rowInt],
+        values: rowData,
+      });
     }
 
     return {
       labels: dateLabels,
-      datasets: mutatedDatasets
+      datasets: newDataset,
     };
   }
 

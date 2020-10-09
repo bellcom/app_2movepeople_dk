@@ -61,7 +61,8 @@
       var options = {
         maintainAspectRatio: false,
         legend: {
-          display: false
+          position: 'bottom',
+          display: true
         },
         animation: {
           duration: 0
