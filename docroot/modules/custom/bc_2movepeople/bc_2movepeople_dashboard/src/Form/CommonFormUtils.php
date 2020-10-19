@@ -316,10 +316,9 @@ class CommonFormUtils {
     $form['goals'][$goal['id']]['title'] = [
       '#type' => 'textfield',
       '#default_value' => $goal['title'],
-      '#prefix' => '<div class="row"><div class="custom-form-fields" id="goal_row_' . $goal['id'] . '">'
+      '#prefix' => '<div class="row"><div class="col-xs-12"><div class="custom-form-fields" id="goal_row_' . $goal['id'] . '">'
       . ($parent_subgoal_id ? ''
-      . '<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">'
-      . '<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">' : '<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">'),
+      . '<div class="row"><div class="hidden-xs col-sm-1"><hr></div><div class="col-xs-9 col-sm-9 col-md-10">' : '<div class="row"><div class="col-xs-9 col-sm-10 col-md-11">'),
       '#suffix' => '</div>',
     ];
 
@@ -339,8 +338,8 @@ class CommonFormUtils {
         'callback' => '::ajaxGoalDelete',
         'progress' => ['type' => 'none'],
       ],
-      '#prefix' => '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">',
-      '#suffix' => '</div></div>',
+      '#prefix' => '<div class="col-xs-3 col-sm-2 col-md-1 text-right">',
+      '#suffix' => '</div></div></div></div></div>',
     ];
     if (count($goal['subgoals']) > 0) {
       foreach ($goal['subgoals'] as $subgoal) {
