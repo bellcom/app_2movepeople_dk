@@ -193,7 +193,7 @@ bc_2movepeople_dashboard.milestone.subtasks.add:
       task_node:
         type: entity:node
   defaults:
-    _title: 'Add new milestone task'
+    _title: 'Tilføj handling'
     _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneSubtaskAddForm'
   requirements:
     _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
