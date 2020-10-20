@@ -7,9 +7,12 @@
 
 namespace Drupal\bc_2movepeople_dashboard\Misc;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\node\Entity\Node;
 use Drupal\user\UserInterface;
+use Mpdf\Mpdf;
+use Mpdf\Output\Destination;
 
 /**
  * General utils wrapper.
@@ -114,6 +117,57 @@ class Utils {
       }
     }
     return $user_organization_tids;
+  }
+
+  /**
+   * Renders PDF file
+   *
+   * @param $data
+   * @param $filename
+   */
+  public static function downloadPdfFile($data, $filename) {
+    header('Content-Description: File Transfer');
+    header('Content-Transfer-Encoding: binary');
+    header('Cache-Control: public, must-revalidate, max-age=0');
+    header('Pragma: public');
+    header('X-Generator: mPDF ' . Mpdf::VERSION);
+    header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
+    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+    header('Content-Type: application/pdf');
+
+    if (!isset($_SERVER['HTTP_ACCEPT_ENCODING']) || empty($_SERVER['HTTP_ACCEPT_ENCODING'])) {
+      // don't use length if server using compression
+      header('Content-Length: ' . strlen($data));
+    }
+
+    header('Content-Disposition: attachment; filename="' . $filename . '"');
+    echo $data;
+    return exit;
+  }
+
+  /**
+   * Renders markup with absolute URLs.
+   */
+  public static function renderMarkup($build) {
+    $html = \Drupal::service('renderer')->renderRoot($build);
+    return Html::transformRootRelativeUrlsToAbsolute($html, \Drupal::request()->getSchemeAndHttpHost());
+  }
+
+  /**
+   * Render PDF source.
+   *
+   * @param array $build
+   *   Build array.
+   *
+   * @return string
+   *   Rendered PDF string.
+   * @throws \Mpdf\MpdfException
+   */
+  public static function renderPdfFileSource($build) {
+    $html = self::renderMarkup($build);
+    $mpdf = new Mpdf(['tempDir' => 'sites/default/files/tmp']);
+    $mpdf->WriteHTML($html);
+    return $mpdf->Output('evaluation.pdf', Destination::STRING_RETURN);
   }
 
 }
