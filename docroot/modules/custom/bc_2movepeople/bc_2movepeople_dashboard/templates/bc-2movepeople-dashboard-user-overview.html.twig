@@ -1,6 +1,5 @@
 {{ attach_library('bc_2movepeople_rate_progression/bc_2movepeople_rate_progression.charts.total') }}
 
-
 <div class="dashboard-overview">
   {% if table_milestone %}
     <h2 class="subtitle">{{ table_milestone.title }}</h2>
@@ -23,8 +22,8 @@
     {{ progression.message }}
     <div class="dashboard-divider clearfix"></div>
     {% if progression.data %}
-      {{ progression.data }}
       <div class="progression-chart">
+        {{ progression.data }}
         <div class="text-center">
           <div class="btn-group graph-type-btn" data-toggle="buttons">
             <label class="btn btn-default active">
@@ -38,7 +37,7 @@
             </label>
           </div>
         </div>
-        <div id="progression_total_chart"></div>
+        <div class="progression-total-chart"></div>
       </div>
     {% endif %}
     <div style="margin-top:50px"></div>

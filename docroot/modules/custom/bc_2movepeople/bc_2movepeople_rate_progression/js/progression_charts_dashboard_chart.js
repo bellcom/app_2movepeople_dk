@@ -120,7 +120,7 @@
         if (data.values.length) {
           var mutatedData = charty.convertDataToDatasets(data);
 
-          charty.drawChart('div_chart_' + progression_id, mutatedData, chart_type);
+          charty.drawChart('#div_chart_' + progression_id, mutatedData, chart_type);
         }
       }
     });

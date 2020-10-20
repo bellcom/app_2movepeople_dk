@@ -3,6 +3,7 @@
 namespace Drupal\bc_2movepeople_dashboard\Controller;
 
 use Drupal\bc_2movepeople\Form\ConfigForm;
+use Drupal\bc_2movepeople\Form\TextSettings;
 use Drupal\bc_2movepeople_dashboard\Bc2movepeopleDashboardMailerInterface;
 use Drupal\bc_2movepeople_dashboard\Entity\Evaluation;
 use Drupal\bc_2movepeople_dashboard\Misc\Utils;
@@ -787,6 +788,7 @@ class MovepeopleDashboardController extends ControllerBase {
       "#theme" => 'bc_2movepeople_manager_tasks_overview',
       "#user" => $user->id(),
       "#tasks" => $goals_rendered,
+      "#title" => TextSettings::get('bc_2movepeople_dashboard.manager_tasks')
     ];
 
     return $build;

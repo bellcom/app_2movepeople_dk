@@ -26,14 +26,14 @@ abstract class ProgressionTargetEditForm extends FormBase {
   private $wrong_msg = 'Something wrong.';
 
   abstract public function getFormId();
-    
+
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, NodeInterface $node = NULL, $limit = NULL) {
     $this->node = $node;
     $this->limit = $limit;
-    
+
     $form['#prefix'] = '<div class="dashboard-overview">';
     $form['#suffix'] = '</div>';
 
@@ -44,7 +44,7 @@ abstract class ProgressionTargetEditForm extends FormBase {
       '#required' => TRUE,
     ];
 
-    
+
     $form['for_user_feedback'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('For user feedback'),
@@ -88,7 +88,7 @@ abstract class ProgressionTargetEditForm extends FormBase {
       '#attributes' => [
         'class' => ['btn-default'],
       ],
-      '#prefix' => '<div class="col-md-6 col-sm-6 col-xs-12 right-btn-box">',
+      '#prefix' => '<div class="col-md-6 col-sm-6 col-xs-12 text-right right-btn-box">',
         //'#suffix' => '</div>',
     ];
 
@@ -237,7 +237,7 @@ abstract class ProgressionTargetEditForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    
+
   }
 
   /**
