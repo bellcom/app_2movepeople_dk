@@ -51,8 +51,15 @@
       var canvas = document.createElement('CANVAS');
       var container = (typeof element === 'string') ? document.querySelector(element) : element;
 
+      // Help text.
+      var helpText = (chart_type === 'radar') ? 'Klik på datoerne få at skjule/vise linje' : 'Klik på kategorien få at skjule/vise linje';
+      var helpNode = document.createElement('DIV');
+      helpNode.classList.add('text-center');
+      helpNode.innerText = helpText;
+
       canvas.style.height = '30vh';
       container.innerHTML = '';
+      container.appendChild(helpNode);
       container.appendChild(canvas);
 
       var ctx = canvas.getContext('2d');
