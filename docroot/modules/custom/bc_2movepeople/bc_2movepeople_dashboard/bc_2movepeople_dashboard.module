@@ -5,6 +5,7 @@ use Drupal\bc_2movepeople_dashboard\Misc\Utils;
 use Drupal\web_push_notification\Entity\SubscriptionInterface;
 use Drupal\Core\Field\EntityReferenceFieldItemListInterface;
 use Drupal\user\UserInterface;
+use Drupal\bc_2movepeople\Form\TextSettings;
 
 /**
  * @file
@@ -124,6 +125,7 @@ function bc_2movepeople_dashboard_theme() {
       'variables' => [
         'tasks' => NULL,
         'user'  => NULL,
+        'title'  => NULL,
       ],
     ],
   ];
@@ -532,5 +534,27 @@ function bc_2movepeople_dashboard_wpn_subscription_insert(EntityInterface $entit
       $user->get('field_wpn')->appendItem($entity);
       $user->save();
     }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function bc_2movepeople_dashboard_form_bc_2movepeople_text_settings_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $config = \Drupal::config(TextSettings::$config_name);
+  $form['bc_2movepeople_dashboard'] = [
+    '#type' => 'details',
+    '#open' => TRUE,
+    '#title' => t('Dashboard'),
+  ];
+  $texts = [
+    'manager_tasks' => t('Manager tasks'),
+  ];
+  foreach ($texts as $key => $label) {
+    $form['bc_2movepeople_dashboard'][$key] = [
+      '#type' => 'textfield',
+      '#title' => $label,
+      '#default_value' => $config->get('bc_2movepeople_dashboard.' . $key),
+    ];
   }
 }

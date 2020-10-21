@@ -183,6 +183,7 @@ class CommonFormUtils {
         'data-toggle' => ['button'],
         'aria-pressed' => ['false'],
         'autocomplete' => ['off'],
+        'title' => t('Opfyldt delmål/handling'),
       ],
       '#ajax' => [
         'event' => 'click',
@@ -208,6 +209,7 @@ class CommonFormUtils {
         'data-toggle' => ['button'],
         'aria-pressed' => ['false'],
         'autocomplete' => ['off'],
+        'title' => t('Slet delmål/handling'),
       ],
       '#ajax' => [
         'event' => 'click',
@@ -234,6 +236,7 @@ class CommonFormUtils {
         'data-toggle' => ['button'],
         'aria-pressed' => ['false'],
         'autocomplete' => ['off'],
+        'title' => t('Kopier delmål til progressionsmåling'),
       ],
     ];
     $form['goals'][$goal_id]['control_btn_end'] = ['#markup' => '</div></div>'];
