@@ -203,6 +203,7 @@ class CommonFormUtils {
       '#type' => 'link',
       '#name' => 'delete_btn' . $goal_id,
       '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.tasks.delete', ['node' => $progression_target->id(), 'task_node' => $goal_id ]),
+      '#title' => '',
       '#attributes' => [
         'data_parent_goal' => $parent_subgoal_id ?: FALSE,
         'data_goal_id' => $goal_id,
