@@ -200,22 +200,26 @@ class CommonFormUtils {
     }
 
     $form['goals'][$goal_id]['delete_btn'] = [
-      '#type' => 'submit',
+      '#type' => 'link',
       '#name' => 'delete_btn' . $goal_id,
+      '#url' => Url::fromRoute('bc_2movepeople_dashboard.milestone.tasks.delete', ['node' => $progression_target->id(), 'task_node' => $goal_id ]),
       '#attributes' => [
         'data_parent_goal' => $parent_subgoal_id ?: FALSE,
         'data_goal_id' => $goal_id,
-        'class' => ['btn', 'btn-default', 'custom-checkbox-trash'],
-        'data-toggle' => ['button'],
+         'data-dialog-type' => 'modal',
+        'class' => ['use-ajax',
+          'btn',
+          'btn-default',
+          'link-btn',
+          'custom-checkbox-trash'],
+         'data_prefix' => '',
+         'data-toggle' => ['button'],
         'aria-pressed' => ['false'],
         'autocomplete' => ['off'],
         'title' => t('Slet delmål/handling'),
+
       ],
-      '#ajax' => [
-        'event' => 'click',
-        'callback' => '::ajaxGoalDelete',
-        'progress' => ['type' => 'none'],
-      ],
+
     ];
 
     $form['goals'][$goal_id]['clone_btn'] = [

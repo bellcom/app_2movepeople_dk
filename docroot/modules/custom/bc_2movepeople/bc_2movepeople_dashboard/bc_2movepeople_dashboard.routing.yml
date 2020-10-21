@@ -212,6 +212,20 @@ bc_2movepeople_dashboard.milestone.tasks.clone:
   requirements:
     _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
 
+bc_2movepeople_dashboard.milestone.tasks.delete:
+  path: '/dashboard/milestones/{node}/tasks/{task_node}/delete'
+  options:
+    parameters:
+      node:
+        type: entity:node
+      task_node:
+        type: entity:node
+  defaults:
+    _title: 'Delete delmål'
+    _form: '\Drupal\bc_2movepeople_dashboard\Form\MilestoneTaskDeleteForm'
+  requirements:
+    _custom_access: '\Drupal\bc_2movepeople_dashboard\Access\Bc2movepeopleAccess::checkAccess'
+
 bc_2movepeople_dashboard.user.tasks:
   path: '/dashboard/users/{user}/tasks'
   options:
