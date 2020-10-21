@@ -69,7 +69,7 @@
             var mutatedData = charty.convertDataToDatasets(data, chart_type);
             var node = document.getElementById(element);
 
-            charty.drawChart(node, mutatedData, chart_type);
+            charty.drawChart(node, mutatedData, chart_type, false);
           }
           else {
             $(panel).find('.div-form').hide();
@@ -97,7 +97,7 @@
           var mutatedData = charty.convertDataToDatasets(data, chart_type);
           var node = document.getElementById(element);
 
-          charty.drawChart(node, mutatedData, chart_type);
+          charty.drawChart(node, mutatedData, chart_type, false);
         }
         else {
           $(panel).find('.div-form').hide();
@@ -122,7 +122,7 @@
         if (data.values.length) {
           var mutatedData = charty.convertDataToDatasets(data, chart_type);
 
-          charty.drawChart('#div_chart_' + progression_id, mutatedData, chart_type);
+          charty.drawChart('#div_chart_' + progression_id, mutatedData, chart_type, false);
         }
       }
     });

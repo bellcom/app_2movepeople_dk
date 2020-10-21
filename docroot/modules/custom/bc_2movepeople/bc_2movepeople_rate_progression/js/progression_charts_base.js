@@ -45,7 +45,7 @@
 
       return typeof obj[Symbol.iterator] === 'function';
     },
-    drawChart: function (element, data, chart_type = 'line') {
+    drawChart: function (element, data, chart_type = 'line', showLegend = true) {
       var iteration = 1;
       var colors = ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913'];
       var canvas = document.createElement('CANVAS');
@@ -71,7 +71,7 @@
         maintainAspectRatio: false,
         legend: {
           position: 'bottom',
-          display: true
+          display: showLegend,
         },
         animation: {
           duration: 0
