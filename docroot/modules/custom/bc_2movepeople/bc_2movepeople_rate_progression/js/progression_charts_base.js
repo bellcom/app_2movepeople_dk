@@ -60,7 +60,9 @@
       canvas.style.height = '30vh';
       container.innerHTML = '';
       container.appendChild(canvas);
+      container.appendChild(document.createElement('BR'));
       container.appendChild(helpNode);
+      container.appendChild(document.createElement('BR'));
 
       var ctx = canvas.getContext('2d');
       var labels = [];
