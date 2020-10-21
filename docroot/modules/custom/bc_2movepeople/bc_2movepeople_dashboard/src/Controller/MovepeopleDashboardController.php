@@ -144,6 +144,8 @@ class MovepeopleDashboardController extends ControllerBase {
    *   A renderable array.
    */
   public function getJsAccordionImplementation(AccountInterface $user, $limit = NULL) {
+    $current_user = \Drupal::currentUser();
+    $roles = $current_user->getRoles();
 
     // Remove limit from progressions route if option is disabled.
     $config = $this->config('bc_2movepeople.settings');
@@ -154,6 +156,7 @@ class MovepeopleDashboardController extends ControllerBase {
     $title = t('Click on each section to expand or collapse the categories:');
     // Build using our theme. This gives us content, which is not a good
     // practice,.
+
     $progression_targets = [];
     $entity_ids = self::getProgressionTargets($user->id());
     $nodes = \Drupal::entityTypeManager()->getStorage('node')->loadMultiple($entity_ids);
@@ -186,6 +189,7 @@ class MovepeopleDashboardController extends ControllerBase {
       "#user" => $user->id(),
       '#progression_targets' => $progression_targets,
       "#limit" => $limit,
+      '#isSuperviser' => in_array('2mp_supervisor', $roles)
     ];
     return $build;
   }

@@ -62,6 +62,7 @@ function bc_2movepeople_dashboard_theme() {
         'subtitle' => NULL,
         'limit' => NULL,
         'progression_targets' => [],
+        'isSuperviser' => ''
       ],
     ],
     'bc_2movepeople_milestone_dashboard' => [
