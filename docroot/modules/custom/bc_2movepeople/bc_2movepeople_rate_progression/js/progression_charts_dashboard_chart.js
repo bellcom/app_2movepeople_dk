@@ -66,9 +66,10 @@
           if (data.values.length) {
             $(panel).find('.div-form').show();
             var element = $(panel).find('.div-chart').attr('id');
-            var mutatedData = charty.convertDataToDatasets(data);
+            var mutatedData = charty.convertDataToDatasets(data, chart_type);
+            var node = document.getElementById(element);
 
-            charty.drawChart(element, mutatedData, chart_type);
+            charty.drawChart(node, mutatedData, chart_type, false);
           }
           else {
             $(panel).find('.div-form').hide();
@@ -93,9 +94,10 @@
         if (data.values.length) {
           $(panel).find('.div-form').show();
           var element = $(panel).find('.div-chart').attr('id');
-          var mutatedData = charty.convertDataToDatasets(data);
+          var mutatedData = charty.convertDataToDatasets(data, chart_type);
+          var node = document.getElementById(element);
 
-          charty.drawChart(element, mutatedData, chart_type);
+          charty.drawChart(node, mutatedData, chart_type, false);
         }
         else {
           $(panel).find('.div-form').hide();
@@ -118,9 +120,9 @@
       dataType: 'json',
       success: function (data) {
         if (data.values.length) {
-          var mutatedData = charty.convertDataToDatasets(data);
+          var mutatedData = charty.convertDataToDatasets(data, chart_type);
 
-          charty.drawChart('#div_chart_' + progression_id, mutatedData, chart_type);
+          charty.drawChart('#div_chart_' + progression_id, mutatedData, chart_type, false);
         }
       }
     });

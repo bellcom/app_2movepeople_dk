@@ -1,6 +1,7 @@
 <?php
 
 use Drupal\node\Entity\Node;
+use Drupal\bc_2movepeople\Form\TextSettings;
 
 function bc_2movepeople_dashboard_schema() {
   $schema['bc_2movepeople_dashboard_task_reminder'] = array(
@@ -54,4 +55,13 @@ function bc_2movepeople_dashboard_update_8001() {
   foreach (Node::loadMultiple($nids) as $node) {
     $node->set('field_task_show_complete_button', ['value' => 1])->save();
   }
+}
+
+/**
+ * Add default text and titles.
+ */
+function bc_2movepeople_dashboard_update_8902(&$sandbox) {
+  $config = \Drupal::service('config.factory')->getEditable(TextSettings::$config_name);
+  $config->set('bc_2movepeople_dashboard.manager_tasks', t('Manager tasks'));
+  $config->save();
 }

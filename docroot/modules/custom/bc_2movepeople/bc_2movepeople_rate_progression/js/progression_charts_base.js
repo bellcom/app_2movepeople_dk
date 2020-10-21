@@ -45,15 +45,24 @@
 
       return typeof obj[Symbol.iterator] === 'function';
     },
-    drawChart: function (element, data, chart_type = 'line') {
+    drawChart: function (element, data, chart_type = 'line', showLegend = true) {
       var iteration = 1;
       var colors = ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913'];
       var canvas = document.createElement('CANVAS');
       var container = (typeof element === 'string') ? document.querySelector(element) : element;
 
+      // Help text.
+      var helpText = (chart_type === 'radar') ? 'Klik på datoerne få at skjule/vise linje' : 'Klik på kategorien få at skjule/vise linje';
+      var helpNode = document.createElement('DIV');
+      helpNode.classList.add('text-center');
+      helpNode.innerText = helpText;
+
       canvas.style.height = '30vh';
       container.innerHTML = '';
       container.appendChild(canvas);
+      container.appendChild(document.createElement('BR'));
+      container.appendChild(helpNode);
+      container.appendChild(document.createElement('BR'));
 
       var ctx = canvas.getContext('2d');
       var labels = [];
@@ -62,7 +71,7 @@
         maintainAspectRatio: false,
         legend: {
           position: 'bottom',
-          display: true
+          display: showLegend,
         },
         animation: {
           duration: 0
