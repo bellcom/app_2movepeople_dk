@@ -67,8 +67,9 @@
             $(panel).find('.div-form').show();
             var element = $(panel).find('.div-chart').attr('id');
             var mutatedData = charty.convertDataToDatasets(data);
+            var node = document.getElementById(element);
 
-            charty.drawChart(element, mutatedData, chart_type);
+            charty.drawChart(node, mutatedData, chart_type);
           }
           else {
             $(panel).find('.div-form').hide();
