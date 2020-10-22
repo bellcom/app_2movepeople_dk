@@ -16,27 +16,53 @@
 
       return string;
     },
-    convertDataToDatasets : function (data) {
-      var mutatedDatasets = [];
+    generateDataset: function(dataset, chart_type) {
+      var type = (chart_type === 'radar') ? 'text' : 'date';
 
-      for (var dataset of data.values) {
-        var shiftedDataset = dataset.slice();
-        shiftedDataset.shift();
-
-        var mutatedDataset = {
-          label: false,
-          values: shiftedDataset
-        };
-
-        mutatedDatasets.push(mutatedDataset);
+      if (type === 'date') {
+        return this._datasetWithDateLabels(dataset);
       }
 
-      var mutatedData = {
-        labels: (typeof data.series === 'string') ? [data.series] : data.series, // Cast to array.
-        datasets: mutatedDatasets,
-      };
+      return this._datasetWithTextLabels(dataset);
+    },
+    _datasetWithDateLabels: function(dataset) {
+      return {
+        labels: dataset.dates,
+        datasets: dataset.goals,
+      }
+    },
+    _datasetWithTextLabels: function(dataset) {
 
-      return mutatedData;
+      // Generate labels.
+      var labels = [];
+
+      for (var i = 0; i < dataset.goals.length; i += 1) {
+        var goal = dataset.goals[i];
+
+        labels.push(goal.label);
+      }
+
+      // Generate datasets.
+      var datasets = [];
+
+      for (var dateIndex = 0; dateIndex < dataset.dates.length; dateIndex += 1) {
+        var dateData = [];
+
+        // Run through all goals.
+        for (var goalIndex = 0; goalIndex < dataset.goals.length; goalIndex += 1) {
+          dateData.push(dataset.goals[goalIndex].values[dateIndex]);
+        }
+
+        datasets.push({
+          label: dataset.dates[dateIndex],
+          values: dateData,
+        });
+      }
+
+      return {
+        labels: labels,
+        datasets: datasets,
+      }
     },
     isIterable: function (obj) {
       if (obj == null) {
@@ -45,7 +71,7 @@
 
       return typeof obj[Symbol.iterator] === 'function';
     },
-    drawChart: function (element, data, chart_type = 'line', showLegend = true) {
+    drawChart: function (element, data, chart_type = 'line') {
       var iteration = 1;
       var colors = ['#ebbab2', '#4782a6', '#60d5d5', '#f2188e', '#980299', '#dc3913'];
       var canvas = document.createElement('CANVAS');
@@ -71,7 +97,7 @@
         maintainAspectRatio: false,
         legend: {
           position: 'bottom',
-          display: showLegend,
+          display: true,
         },
         animation: {
           duration: 0
