@@ -63,13 +63,13 @@
         url: '/rates/' + progression_id + '/get',
         dataType: 'json',
         success: function (data) {
-          if (data.values.length) {
+          if (data) {
             $(panel).find('.div-form').show();
             var element = $(panel).find('.div-chart').attr('id');
-            var mutatedData = charty.convertDataToDatasets(data, chart_type);
+            var dataset = charty.generateDataset(data, chart_type);
             var node = document.getElementById(element);
 
-            charty.drawChart(node, mutatedData, chart_type, false);
+            charty.drawChart(node, dataset, chart_type);
           }
           else {
             $(panel).find('.div-form').hide();
@@ -91,13 +91,13 @@
       url: '/rates/' + progression_id + '/get',
       dataType: 'json',
       success: function (data) {
-        if (data.values.length) {
+        if (data) {
           $(panel).find('.div-form').show();
           var element = $(panel).find('.div-chart').attr('id');
-          var mutatedData = charty.convertDataToDatasets(data, chart_type);
+          var dataset = charty.generateDataset(data, chart_type);
           var node = document.getElementById(element);
 
-          charty.drawChart(node, mutatedData, chart_type, false);
+          charty.drawChart(node, dataset, chart_type);
         }
         else {
           $(panel).find('.div-form').hide();
@@ -119,10 +119,10 @@
       url: '/rates/' + progression_id + '/get',
       dataType: 'json',
       success: function (data) {
-        if (data.values.length) {
-          var mutatedData = charty.convertDataToDatasets(data, chart_type);
+        if (data) {
+          var dataset = charty.generateDataset(data, chart_type);
 
-          charty.drawChart('#div_chart_' + progression_id, mutatedData, chart_type, false);
+          charty.drawChart('#div_chart_' + progression_id, dataset, chart_type);
         }
       }
     });

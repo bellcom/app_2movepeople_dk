@@ -4,6 +4,7 @@ namespace Drupal\bc_2movepeople_rate_progression\Controller;
 
 use Drupal\bc_2movepeople\Form\TextSettings;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\node\Entity\Node;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Drupal\bc_2movepeople_rate_progression\Progression\Target;
 
@@ -38,51 +39,39 @@ class RateController extends ControllerBase {
     $goals = $progression_target->getAllGoals();
 
     $data['chart_title'] = $progression_target_data->get('title')->value;
-    $rates = array();
-    isset($_GET['to']) ? $date_to = strtotime($_GET['to']) : NULL;
-    isset($_GET['from']) ? $date_from = strtotime($_GET['from']) : NULL;
-
+    $date_to = empty($_GET['to']) ? NULL : strtotime($_GET['to']);
+    $date_from = empty($_GET['from']) ? NULL : strtotime($_GET['from']);
+    $rates = [];
+    $dates = [];
     foreach ($goals as $key => $id) {
       $goal_id = $id;
-      $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($goal_id);
-      $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
-      $query->fields('rates', array('rate'))
-       // ->condition('uid', \Drupal::currentUser()->id(), '=')
-        ->condition('goal_id', $goal_id, '=')
-        ->condition('progression_target_id', $progression_target_id, '=')
-        ->condition('status', TRUE);
-      if (isset($date_to)) {
-        $query->condition('created', $date_to, '<=');
-      }
-
-      if (isset($date_from)) {
-        $query->condition('created', $date_from, '>=');
-      }
-
-      $query->orderBy('created', 'DESC');
-      if (!isset($date_to) && !isset($date_from)) {
-        $query->range(0, 5);
-      }
-
-      $result = $query->execute()->fetchAll();
-      if ($result) {
-        $data['series'][$key] = $nodedata->get('title')->value;
+      $result = self::getTargetAveragePoints($progression_target_id, $goal_id, $date_from, $date_to);
+      if (empty($result)) {
+        continue;
       }
       foreach ($result as $row) {
-        $rates[$key][] = (int) $row->rate;
+        $rates[$id][$row->dates] = round($row->avg_rates, 2);
+        if (!in_array($row->dates, $dates)) {
+          $dates[] = $row->dates;
+        }
       }
     }
-    if (is_array($rates) && count($rates) > 0) {
-      array_unshift($rates, NULL);
-      $rates = array_reverse(call_user_func_array("array_map", $rates));
-    }
-    foreach ($rates as $key => $val) {
-      if (!is_array($val)) {
-        $val = array($val);
-      }
-      $data['values'][$key] = array_merge(array(" "), $val);
-    }
+    $data = [
+      'dates' => $dates,
+      'goals' => [],
+    ];
+    foreach ($rates as $gid => $goal_rates) {
+      $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($gid);
 
+      $arr = [
+        'label' => $nodedata->get('title')->value,
+        'values' => [],
+      ];
+      foreach ($dates as $date) {
+        $arr['values'][] = isset($goal_rates[$date]) ? $goal_rates[$date] : NULL;
+      }
+      $data['goals'][] = $arr;
+    }
     return new JsonResponse($data);
   }
 
@@ -109,6 +98,42 @@ class RateController extends ControllerBase {
     $user = \Drupal::currentUser();
     $form = \Drupal::formBuilder()->getForm('Drupal\bc_2movepeople_rate_progression\Form\UserRatesAddForm', $user->getAccount());
     return $form;
+  }
+
+  /**
+   * Get average target rate.
+   *
+   * @params
+   * $target_id - progression target id
+   *
+   * @return array
+   *   Average value of rate.
+   */
+  public static function getTargetAveragePoints($target_id, $goal_id = NULL, $date_from = NULL, $date_to = NULL) {
+    $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
+    if ($goal_id) {
+      $query->condition('goal_id', $goal_id, '=');
+    }
+    $query->condition('progression_target_id', $target_id, '=');
+    $query->addExpression("FROM_UNIXTIME(created,  '%d.%m')", 'dates');
+    $query->addExpression("AVG(rate)", 'avg_rates');
+    $query->addExpression("MAX(created)", 'created');
+    $query->GroupBy('dates');
+    $query->orderBy('created', 'ASC');
+    if (isset($date_to)) {
+      $query->condition('created', $date_to, '<=');
+    }
+
+    if (isset($date_from)) {
+      $query->condition('created', $date_from, '>=');
+    }
+
+    if (!isset($date_to) && !isset($date_from)) {
+      $query->range(0, 5);
+    }
+
+    $result = $query->execute()->fetchAll();
+    return $result;
   }
 
 }

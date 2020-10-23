@@ -6,6 +6,7 @@ use Drupal\bc_2movepeople\Form\ConfigForm;
 use Drupal\bc_2movepeople\Form\TextSettings;
 use Drupal\bc_2movepeople_dashboard\Bc2movepeopleDashboardMailerInterface;
 use Drupal\bc_2movepeople_dashboard\Misc\Utils;
+use Drupal\bc_2movepeople_rate_progression\Controller\RateController;
 use Drupal\Core\Render\Markup;
 use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
@@ -557,27 +558,6 @@ class MovepeopleDashboardController extends ControllerBase {
   }
 
   /**
-   * Get average target rate.
-   *
-   * @params
-   * $target_id - progression target id
-   *
-   * @return float
-   *   Average value of rate.
-   */
-  public static function getTargetAveragePoints($target_id) {
-    $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
-    $query->condition('progression_target_id', $target_id, '=');
-    $query->addExpression("FROM_UNIXTIME(created,  '%d.%m')", 'dates');
-    $query->addExpression("AVG(rate)", 'avg_rates');
-    $query->addExpression("MAX(created)", 'created');
-    $query->GroupBy('dates');
-    $query->orderBy('created', 'ASC');
-    $result = $query->execute()->fetchAll();
-    return $result;
-  }
-
-  /**
    * Prepare progression data by entity id.
    *
    * @params
@@ -613,7 +593,7 @@ class MovepeopleDashboardController extends ControllerBase {
         if ($nodedata) {
           $title = $nodedata->get('title')->value;
           $table[$key] = array_fill(1, count($dates), 0);
-          $avg_rates = self::getTargetAveragePoints($target_id);
+          $avg_rates = RateController::getTargetAveragePoints($target_id);
           foreach ($avg_rates as $row) {
             $table[$key][array_search($row->dates, $header)] = round((float) $row->avg_rates, 2);
           }
