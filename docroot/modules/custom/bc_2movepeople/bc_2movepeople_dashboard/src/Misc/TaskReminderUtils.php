@@ -35,6 +35,9 @@ class TaskReminderUtils {
         if (count($reminder_data) == 0 || $reminder_data['reminded_count'] < 1) {
           // Get objects.
           $user = is_null($user) ? User::load($uid) : $user;
+          if (empty($user)) {
+            continue;
+          }
           $to = $user->get('mail')->value;
           if (empty($to)) {
             continue;
