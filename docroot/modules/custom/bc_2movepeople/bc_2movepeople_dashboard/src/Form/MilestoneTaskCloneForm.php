@@ -44,7 +44,10 @@ class MilestoneTaskCloneForm extends FormBase {
     }
     if (!empty($progression_options)) {
       $progression_options['other'] = $this->t('Anden ...');
+      $default_category = array_search($this->node->getTitle(), $progression_options);
     }
+    $counter = $form_state->getValue('counter');
+
     $form['#prefix'] = '<div id="bc_2movepeople-dashboard-task-clone-form">';
     $form['#suffix'] = '</div>';
 
@@ -52,12 +55,16 @@ class MilestoneTaskCloneForm extends FormBase {
       '#markup' => '<div id="clone-task-form-system-messages"></div>',
       '#weight' => -100,
     ];
+    if (empty($counter)) {
+      $counter = $form_state->setValue('counter', 1);
+    }
 
     $form['progression_id'] = [
       '#type' => 'select',
       '#title' => $this->t('Category'),
       '#options' => $progression_options,
       '#empty_option' => $this->t('-Select category-'),
+      '#default_value' => $default_category ? $default_category : 'other',
       '#required' => FALSE,
       '#ajax' => [
         'callback' => '::changeParentQuestionOptionsAjax',
@@ -66,10 +73,16 @@ class MilestoneTaskCloneForm extends FormBase {
         'wrapper' => 'parent_task_wrapper',
       ],
     ];
+     $form['counter'] = [
+      '#type' => 'value',
+      '#value' => $counter,
+    ];
 
-    $form['progression_other_title'] = [
+
+      $form['progression_other_title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Nyt kategori'),
+      '#default_value' => $this->node->getTitle(),
       '#states' => [
         'visible' => [
           ':input[name=progression_id]' => ['value' => 'other'],
@@ -79,32 +92,30 @@ class MilestoneTaskCloneForm extends FormBase {
         ],
       ]
     ];
-
-    $task_ids = $this->getParentQuestionOptions($form_state);
-    if (!empty($task_ids)) {
-      $task_ids['other'] = $this->t('Anden ...');
-    }
-    $form['parent_task_id'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Parent question'),
-      '#options' =>  $task_ids,
-      '#empty_option' => $this->t('-Select parent question-'),
-      '#required' => FALSE,
-      '#prefix' => '<div id="parent_task_wrapper">',
+    $form['progerssion_tasks'] = [
+      '#tree' => TRUE,
+      '#prefix' => '<div id="progerssion_tasks-wrapper">',
       '#suffix' => '</div>',
     ];
-
-    $form['parent_task_other_title'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Nyt spørgsmål'),
-      '#states' => [
-        'visible' => [
-          ':input[name=parent_task_id]' => ['value' => 'other'],
-        ],
-        'required' => [
-          ':input[name=parent_task_id]' => ['value' => 'other'],
-        ],
-      ]
+    for ($i = 0; $i < $counter; $i++) {
+      $form['progerssion_tasks']['task_title'][$i] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Spørgsmål'),
+        '#default_value' => ($i == 0 ) ? $this->node->get('field_activity_title')->value : ''
+      ];
+    }
+  $form['add-more'] = [
+      '#value' => t('Tilføj mere spørgsmål'),
+      '#name' => 'add more',
+      '#ajax' => [
+        'wrapper' => 'progerssion_tasks-wrapper',
+        'callback' => '::ajaxAddmoreCallback',
+        'event' => 'click',
+      ],
+      '#submit' => ['::submitAddMore'],
+      '#type' => 'submit',
+      '#prefix' => '<div class="add-more-elements">',
+      '#suffix' => '</div>',
     ];
 
     $form['actions']['#type'] = 'actions';
@@ -179,82 +190,53 @@ class MilestoneTaskCloneForm extends FormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
 
-//    if ($form_state->getErrors()) {
-//      return false;
-//    }
-
-    $title = $this->node->get('title')->value;
-
-    $progression_id = $form_state->getValue('progression_id');
-    $parent_task_id = $form_state->getValue('parent_task_id');
-    $progression_other_title = $form_state->getValue('progression_other_title');
-    $parent_task_other_title = $form_state->getValue('parent_task_other_title');
-
-    $new_node = Node::create(array(
-      'type' => 'goal',
-      'status' => 1,
-      'title' => $title,
-    ));
-
-    if ($new_node->save() == SAVED_NEW) {
-      // Creating new progression category.
-      if ($progression_id == 'other') {
+    $category_id = $form_state->getValue('progression_id');
+    $category_title = $form_state->getValue('progression_other_title');
+    $tasks = $form_state->getValue('progerssion_tasks');
+    // Creating new progression category.
+      if ($category_id == 'other') {
         $progression_node = Node::create(array(
           'status' => 1,
           'type' => 'progression_target',
-          'title' => $progression_other_title,
+          'title' => $category_title,
           'field_progression_user' => $this->user->id(),
           'field_progression_type' => 'progression',
         ));
+        $progression_node->get('field_related_tasks')->appendItem($this->node->id());
         $progression_node->save();
-        $progression_id = $progression_node->id();
       }
-
-      // Creating new progression task category.
-      if ($parent_task_id == 'other') {
-        $parent_task_node = Node::create(array(
+      else {
+        $progression_node = Node::load($category_id);
+        $related_tasks = $progression_node->get('field_related_tasks')->referencedEntities();
+        $is_new = TRUE;
+        foreach($related_tasks as $task) {
+          if ($task->id() == $this->node->id()) {
+            $is_new = FALSE;
+            break;
+          }
+        }
+        if ($is_new) {
+          $progression_node->get('field_related_tasks')->appendItem($this->node->id());
+        }
+      }
+      foreach ($tasks['task_title'] as $task) {
+        $new_goal = Node::create(array(
           'type' => 'goal',
           'status' => 1,
-          'title' => $parent_task_other_title,
+          'title' => $task,
         ));
-        $parent_task_node->save();
-
-        // Updating parent node with reference to newly created goal.
-        $new_progression_goal_ids = [];
-        $progression_node = Node::load($progression_id);
-        $old_progression_goal_ids = $progression_node->get('field_goal_ids')->getValue();
-        foreach($old_progression_goal_ids as $tid) {
-          $new_progression_goal_ids[] = $tid['target_id'];
-        }
-        $new_progression_goal_ids[] = $parent_task_node->id();
-
-        $progression_node->set('field_goal_ids', $new_progression_goal_ids);
-        $progression_node->save();
-
-        $parent_task_id = $parent_task_node->id();
+        $new_goal->save();
+        $progression_node->get('field_goal_ids')->appendItem($new_goal->id());
       }
 
-      $node = $parent_task_id ? Node::load($parent_task_id) : Node::load($progression_id);
-      $field_name = $parent_task_id ? 'field_subgoal' : 'field_goal_ids';
-      $old_goal_ids = $node->get($field_name)->getValue();
-
-      $new_goal_ids = [];
-      foreach($old_goal_ids as $tid) {
-        $new_goal_ids[] = $tid['target_id'];
-      }
-      $new_goal_ids[] = $new_node->id();
-
-      $node->set($field_name, $new_goal_ids);
-      $this->isSaved = $node->save();
+      $this->isSaved = $progression_node->save();
 
       if ($this->isSaved == SAVED_UPDATED) {
         drupal_set_message($this->t($this->updated_msg));
       } else {
         drupal_set_message($this->t($this->wrong_msg));
       }
-    } else {
-      drupal_set_message($this->t($this->wrong_msg));
-    }
+
   }
 
   /**
@@ -264,6 +246,27 @@ class MilestoneTaskCloneForm extends FormBase {
     if (!$form_state->getValue('progression_id')) {
       $form_state->setErrorByName('progression_id', $this->t('Category field is required.'));
     }
+  }
+
+ /**
+   * Ajax bullet point update function.
+   *
+   * @param array $form
+   *   Form API form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form API form.
+   *
+   * @return array
+   *   Form array.
+   */
+  public function ajaxAddmoreCallback(array $form, FormStateInterface $form_state) {
+    return $form['progerssion_tasks'];
+  }
+
+ public function submitAddMore(array &$form, FormStateInterface $form_state) {
+  $form_state->setValue('counter', $form_state->getValue('counter') + 1);
+    $form_state->setRebuild();
+
   }
 
 }

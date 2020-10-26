@@ -47,5 +47,12 @@ class Target {
   public function getProgressionTargetTitle() {
     return $this->node->get('title')->value;
   }
+   public function getProgressionTargetRelatedTasks() {
+      $related_tasks = false;
+      if (!empty($this->node->field_related_tasks)) {
+        $related_tasks = $this->node->get('field_related_tasks')->referencedEntities();
+      }
+    return $related_tasks;
+  }
 
 }

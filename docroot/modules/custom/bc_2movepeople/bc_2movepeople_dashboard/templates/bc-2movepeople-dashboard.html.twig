@@ -12,11 +12,13 @@
 
 <div class="dashboard-overview">
   <h2 class="subtitle">{{ subtitle }}</h2>
-  <div class="dashboard-overview__control-buttons">
-    <a href="{{ path('bc_2movepeople_dashboard.user.progressions.add', {'user': user, 'limit': limit}) }}"
-       class="btn btn-default use-ajax" data-dialog-type="modal" data-dialog-options='{"width":640}'
-       role="button">{{ 'Add new category'|trans }}</a>
-  </div>
+  {% if isSuperviser  %}
+    <div class="dashboard-overview__control-buttons">
+        <a href="{{ path('bc_2movepeople_dashboard.user.progressions.add', {'user': user, 'limit': limit}) }}"
+         class="btn btn-default use-ajax" data-dialog-type="modal" data-dialog-options='{"width":640}'
+         role="button">{{ 'Add new category'|trans }}</a>
+    </div>
+   {% endif %}
     <div class="dashboard-accordion panel-group" id="accordion-progressions" role="tablist" aria-multiselectable="true">
       {% for progression_target in progression_targets %}
         <div class="panel panel-default">
@@ -35,10 +37,12 @@
               <div class="panel-body">
                   <div>
                     <div class="row">
-                      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 left-btn-box">
-                        <a href="{{ path('bc_2movepeople_dashboard.progressions.edit', {'node': progression_target.id, 'limit': limit}) }}"
-                           class="btn btn-default btn-sm btn-progress">{{ 'Edit category'|trans }}</a>
-                      </div>
+                     {% if isSuperviser  %}
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 left-btn-box">
+                          <a href="{{ path('bc_2movepeople_dashboard.progressions.edit', {'node': progression_target.id, 'limit': limit}) }}"
+                             class="btn btn-default btn-sm btn-progress">{{ 'Edit category'|trans }}</a>
+                        </div>
+                      {% endif %}
                           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 right-btn-box">
                             {% if progression_target.goals is empty %}
                               {{ 'There is no question in categories to rate it' |trans }}

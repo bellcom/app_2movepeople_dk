@@ -49,7 +49,6 @@ class UserRatesAddForm extends FormBase {
     $this->user = $user;
     $progression_targets_ids = MovepeopleDashboardController::getProgressionTargets($this->user->id(), $progression_type);
     $form['#tree'] = TRUE;
-
     if (!empty($progression_targets_ids)) {
       $form['tabs_start'] = [
         '#markup' => '<div class="modal-body__progression-tabs modal-form">'
@@ -73,8 +72,19 @@ class UserRatesAddForm extends FormBase {
             . '" id="tab_' . $target . '" role="tabpanel"><h2 class="visible-xs">' . $title . '</h2>'
         ];
         $is_active = 1;
-
+        $is_not_completed = FALSE;
+        $related_tasks = $progression_target->getProgressionTargetRelatedTasks();
+        if (!$related_tasks) {
+           $is_not_completed = TRUE;
+        }
+        foreach($related_tasks as $task) {
+          if($task->get('field_task_complete')->value == 0) {
+            $is_not_completed = TRUE;
+          }
+        }
         $last_goal_id = 0;
+
+        if ($is_not_completed) {
         foreach ($goals as $goal_id) {
           $goaldata = \Drupal::entityTypeManager()->getStorage('node')->load($goal_id);
           if (empty($goaldata->get('field_due_date')->value)) {
@@ -126,6 +136,7 @@ class UserRatesAddForm extends FormBase {
               $form['rates'][$target][$goal_id]['#wrapper_attributes']['class'][] = 'draft';
             }
           }
+        }
         }
         $form['rates'][$target][$last_goal_id]['#suffix'] = '</div>';
       }
