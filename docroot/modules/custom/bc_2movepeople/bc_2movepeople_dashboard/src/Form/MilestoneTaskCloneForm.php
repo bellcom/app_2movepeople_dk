@@ -105,7 +105,7 @@ class MilestoneTaskCloneForm extends FormBase {
       ];
     }
   $form['add-more'] = [
-      '#value' => t('Tilføj mere spørgsmål'),
+      '#value' => t('Tilføj yderligere et spørgsmål'),
       '#name' => 'add more',
       '#ajax' => [
         'wrapper' => 'progerssion_tasks-wrapper',
@@ -114,7 +114,7 @@ class MilestoneTaskCloneForm extends FormBase {
       ],
       '#submit' => ['::submitAddMore'],
       '#type' => 'submit',
-      '#prefix' => '<div class="add-more-elements">',
+      '#prefix' => '<div class="add-more-elements form-group">',
       '#suffix' => '</div>',
     ];
 
