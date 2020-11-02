@@ -3,6 +3,7 @@
 namespace Drupal\bc_2movepeople_dashboard\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Cache\Cache;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\user\Entity\User;
 
@@ -87,6 +88,11 @@ class WhoAmIBlock extends BlockBase {
     ];
 
     return $build;
+  }
+
+  public function getCacheContexts() {
+    // Vary caching of this block per user.
+    return Cache::mergeContexts(parent::getCacheContexts(), ['user']);
   }
 
 }
