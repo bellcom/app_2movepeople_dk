@@ -57,7 +57,7 @@ class NewUserCreateForm extends NewUserCreateFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
-    if ($this->isSaved && $form_state->getValue('template_select')) {
+    if ($this->isSaved && $form_state->getValue('template_select') !== NULL) {
       $user = $form_state->get('new_user');
       // Loading user templates.
       $conf_object = \Drupal::configFactory()->getEditable(SaveToTemplateForm::$configName);

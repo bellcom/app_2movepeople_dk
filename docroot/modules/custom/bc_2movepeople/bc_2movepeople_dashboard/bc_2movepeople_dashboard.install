@@ -2,6 +2,9 @@
 
 use Drupal\node\Entity\Node;
 use Drupal\bc_2movepeople\Form\TextSettings;
+use Drupal\field\Entity\FieldStorageConfig;
+use Symfony\Component\Yaml\Yaml;
+use Drupal\field\Entity\FieldConfig;
 
 function bc_2movepeople_dashboard_schema() {
   $schema['bc_2movepeople_dashboard_task_reminder'] = array(
@@ -65,3 +68,19 @@ function bc_2movepeople_dashboard_update_8902(&$sandbox) {
   $config->set('bc_2movepeople_dashboard.manager_tasks', t('Manager tasks'));
   $config->save();
 }
+
+
+function bc_2movepeople_dashboard_update_8903() {
+ // Add new fields.
+  $path = drupal_get_path('module', 'bc_2movepeople_dashboard');
+  // Create field storage.
+  $field_storage_yml = Yaml::parse(file_get_contents($path . '/config/optional/field.storage.node.field_related_tasks.yml'));
+  if (!FieldStorageConfig::loadByName($field_storage_yml['entity_type'], $field_storage_yml['field_name'])) {
+    FieldStorageConfig::create($field_storage_yml)->save();
+  }
+  // Create field instance.
+  $field_yml = Yaml::parse(file_get_contents($path . '/config/optional/field.field.node.progression_target.field_related_tasks.yml'));
+  if (!FieldConfig::loadByName($field_yml['entity_type'], $field_yml['bundle'], $field_yml['field_name'])) {
+    FieldConfig::create($field_yml)->save();
+  }
+}  
