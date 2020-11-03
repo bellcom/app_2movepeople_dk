@@ -109,6 +109,7 @@
         scales: {
           yAxes: [{
             ticks: {
+              suggestedMax: 10,
               beginAtZero: true
             }
           }]
