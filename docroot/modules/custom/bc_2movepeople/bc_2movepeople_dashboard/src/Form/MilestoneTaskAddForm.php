@@ -110,14 +110,9 @@ class MilestoneTaskAddForm extends FormBase {
       '#title' => $this->t('Activity'),
       '#required' => TRUE,
     ];
-    $form['evaluation'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Evaluation'),
-    ];
     $form['due_date'] = [
       '#type' => 'date',
-      '#title' => $this->t('Deadline'),
-//      '#required' => TRUE,
+      '#title' => $this->t('Evalueringsdato'),
     ];
 
     // Disable caching on this form.
@@ -193,7 +188,6 @@ class MilestoneTaskAddForm extends FormBase {
 
     $title = $form_state->getValue('title');
     $activity_title = $form_state->getValue('activity_title');
-    $evaluation = $form_state->getValue('evaluation');
     $due_date = $form_state->getValue('due_date');
     $responsible_manager = $form_state->getValue('responsible_manager');
     $parent_task_id = $form_state->getValue('parent_task_id');
@@ -204,7 +198,6 @@ class MilestoneTaskAddForm extends FormBase {
       'title' => $title,
       'field_activity_title' => $activity_title,
       'field_due_date' => $due_date,
-      'field_evaluation' => $evaluation,
       'field_responsible_manager' => $responsible_manager,
     ]);
 
