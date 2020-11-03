@@ -564,7 +564,7 @@ function bc_2movepeople_dashboard_form_bc_2movepeople_text_settings_alter(&$form
  * Implements hook_views_pre_view().
  */
 function bc_2movepeople_dashboard_views_pre_view(\Drupal\views\ViewExecutable $view, $display_id, array &$args) {
-  if ($view->id() == '2mp_users_search' && !empty($args[0])) {
-    $view->element['#cache']['tags']['user:' . $args[0]];
+  if ($view->id() == '2mp_users_search') {
+    $view->element['#cache']['tags']['user:' . \Drupal::currentUser()->id()];
   }
 }
