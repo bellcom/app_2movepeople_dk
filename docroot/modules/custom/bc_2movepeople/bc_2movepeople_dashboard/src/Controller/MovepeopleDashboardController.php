@@ -574,6 +574,7 @@ class MovepeopleDashboardController extends ControllerBase {
     if (!empty($entity_ids)) {
       $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
       $query->condition('progression_target_id', $entity_ids, 'IN');
+      $query->isNotNull('created');
       $query->addExpression("FROM_UNIXTIME(created,  '%d.%m')", 'dates');
       $query->addExpression("MAX(created)", 'created');
       $query->GroupBy('dates');
