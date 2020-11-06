@@ -56,6 +56,7 @@ class RateController extends ControllerBase {
         }
       }
     }
+    $dates = array_reverse($dates);
     $data = [
       'dates' => $dates,
       'goals' => [],
@@ -115,11 +116,12 @@ class RateController extends ControllerBase {
       $query->condition('goal_id', $goal_id, '=');
     }
     $query->condition('progression_target_id', $target_id, '=');
+    $query->isNotNull('created');
     $query->addExpression("FROM_UNIXTIME(created,  '%d.%m')", 'dates');
     $query->addExpression("AVG(rate)", 'avg_rates');
     $query->addExpression("MAX(created)", 'created');
     $query->GroupBy('dates');
-    $query->orderBy('created', 'ASC');
+    $query->orderBy('created', 'DESC');
     if (isset($date_to)) {
       $query->condition('created', $date_to, '<=');
     }
