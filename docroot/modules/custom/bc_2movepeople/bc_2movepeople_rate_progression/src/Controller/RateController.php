@@ -45,7 +45,7 @@ class RateController extends ControllerBase {
     $dates = [];
     foreach ($goals as $key => $id) {
       $goal_id = $id;
-      $result = self::getTargetAveragePoints($progression_target_id, $goal_id, $date_from, $date_to);
+      $result = self::getTargetAveragePoints($progression_target_id, $goal_id, $date_from, $date_to, 5);
       if (empty($result)) {
         continue;
       }
@@ -56,6 +56,7 @@ class RateController extends ControllerBase {
         }
       }
     }
+    $dates = array_reverse($dates);
     $data = [
       'dates' => $dates,
       'goals' => [],
@@ -109,17 +110,18 @@ class RateController extends ControllerBase {
    * @return array
    *   Average value of rate.
    */
-  public static function getTargetAveragePoints($target_id, $goal_id = NULL, $date_from = NULL, $date_to = NULL) {
+  public static function getTargetAveragePoints($target_id, $goal_id = NULL, $date_from = NULL, $date_to = NULL, $limit = NULL) {
     $query = \Drupal::database()->select('bc_2movepeople_rate_progression', 'rates');
     if ($goal_id) {
       $query->condition('goal_id', $goal_id, '=');
     }
     $query->condition('progression_target_id', $target_id, '=');
+    $query->isNotNull('created');
     $query->addExpression("FROM_UNIXTIME(created,  '%d.%m')", 'dates');
     $query->addExpression("AVG(rate)", 'avg_rates');
     $query->addExpression("MAX(created)", 'created');
     $query->GroupBy('dates');
-    $query->orderBy('created', 'ASC');
+    $query->orderBy('created', 'DESC');
     if (isset($date_to)) {
       $query->condition('created', $date_to, '<=');
     }
@@ -128,8 +130,8 @@ class RateController extends ControllerBase {
       $query->condition('created', $date_from, '>=');
     }
 
-    if (!isset($date_to) && !isset($date_from)) {
-      $query->range(0, 5);
+    if (!isset($date_to) && !isset($date_from) && $limit) {
+      $query->range(0, $limit);
     }
 
     $result = $query->execute()->fetchAll();
