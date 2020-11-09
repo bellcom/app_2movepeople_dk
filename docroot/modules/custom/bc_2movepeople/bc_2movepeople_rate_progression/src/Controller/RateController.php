@@ -46,6 +46,7 @@ class RateController extends ControllerBase {
     foreach ($goals as $key => $id) {
       $goal_id = $id;
       $result = self::getTargetAveragePoints($progression_target_id, $goal_id, $date_from, $date_to, 5);
+      $result = array_reverse($result);
       if (empty($result)) {
         continue;
       }
@@ -56,7 +57,7 @@ class RateController extends ControllerBase {
         }
       }
     }
-    $dates = array_reverse($dates);
+
     $data = [
       'dates' => $dates,
       'goals' => [],
