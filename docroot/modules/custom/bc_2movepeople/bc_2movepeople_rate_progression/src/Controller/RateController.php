@@ -28,12 +28,6 @@ class RateController extends ControllerBase {
    *   JSON Object responce.
    */
   public function rateGet($progression_target_id) {
-    $data = array(
-      'chart_title' => '',
-      'series' => array(),
-      'values' => array(),
-    );
-
     $progression_target = new Target($progression_target_id);
     $progression_target_data = $progression_target->getProgressionTarget();
     $goals = $progression_target->getAllGoals();
@@ -41,27 +35,35 @@ class RateController extends ControllerBase {
     $data['chart_title'] = $progression_target_data->get('title')->value;
     $date_to = empty($_GET['to']) ? NULL : strtotime($_GET['to']);
     $date_from = empty($_GET['from']) ? NULL : strtotime($_GET['from']);
+    // Common rates array.
     $rates = [];
+    // Array for data keys. Used to get array ASC sorted by date.
     $dates = [];
+    // Collecting rate data from all progression goals to.
     foreach ($goals as $key => $id) {
       $goal_id = $id;
+      // Fetching last 5 rate for specific goal.
       $result = self::getTargetAveragePoints($progression_target_id, $goal_id, $date_from, $date_to, 5);
-      $result = array_reverse($result);
       if (empty($result)) {
         continue;
       }
       foreach ($result as $row) {
-        $rates[$id][$row->dates] = round($row->avg_rates, 2);
+        $fulldate = date('Ymd', $row->created);
+        $rates[$id][$fulldate] = round($row->avg_rates, 2);
         if (!in_array($row->dates, $dates)) {
-          $dates[] = $row->dates;
+          $dates[$fulldate] = $row->dates;
         }
       }
     }
 
+    // Sorting found dates by ASC order.
+    ksort($dates);
     $data = [
-      'dates' => $dates,
+      'dates' => array_values($dates),
       'goals' => [],
     ];
+
+    // Preparing date for outpuf in JSON array.
     foreach ($rates as $gid => $goal_rates) {
       $nodedata = \Drupal::entityTypeManager()->getStorage('node')->load($gid);
 
@@ -69,8 +71,8 @@ class RateController extends ControllerBase {
         'label' => $nodedata->get('title')->value,
         'values' => [],
       ];
-      foreach ($dates as $date) {
-        $arr['values'][] = isset($goal_rates[$date]) ? $goal_rates[$date] : NULL;
+      foreach ($dates as $fulldate => $date) {
+        $arr['values'][] = isset($goal_rates[$fulldate]) ? $goal_rates[$fulldate] : NULL;
       }
       $data['goals'][] = $arr;
     }
