@@ -10,7 +10,6 @@
 
       for(var i = 0; i < wrappers.length; i += 1) {
         var currentElement = wrappers[i];
-
         $(this).graphTotalLoad('line', currentElement);
       }
 
@@ -21,7 +20,6 @@
 
         $(this).graphTotalLoad('line', wrapper);
       });
-
       $('.bar-graph-btn').change(function () {
         var element = this;
         var wrapper = element.closest('.progression-chart');
@@ -39,7 +37,13 @@
       });
     }
   };
-
+ $.fn.totalChartReload = function(selector){
+    var wrappers = document.querySelectorAll(selector);
+    for(var i = 0; i < wrappers.length; i += 1) {
+      var currentElement = wrappers[i];
+      $(this).graphTotalLoad('line', currentElement);
+    }
+}
   $.fn.graphTotalLoad = function (chart_type = 'line', wrapper) {
     var table = wrapper.querySelector('#progression_total_table');
 
