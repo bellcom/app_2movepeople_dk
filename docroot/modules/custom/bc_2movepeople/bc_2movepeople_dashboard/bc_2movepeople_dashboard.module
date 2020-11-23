@@ -559,15 +559,3 @@ function bc_2movepeople_dashboard_form_bc_2movepeople_text_settings_alter(&$form
     ];
   }
 }
-
-/**
- * Implements hook_views_pre_view().
- */
-function bc_2movepeople_dashboard_views_pre_view(\Drupal\views\ViewExecutable $view, $display_id, array &$args) {
-  if ($view->id() == '2mp_users_search') {
-    if (empty($view->element['#cache']['contexts'])) {
-      $view->element['#cache']['contexts'] = [];
-    }
-    $view->element['#cache']['contexts'][] = 'user';
-  }
-}
