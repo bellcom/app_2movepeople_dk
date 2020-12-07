@@ -736,8 +736,12 @@ class MovepeopleDashboardController extends ControllerBase {
     foreach ($goals as $goal) {
       $progression_target = Utils::getMilestoneByGoal($goal->id());
       if (empty($goals_rendered[$progression_target->field_progression_user->target_id])) {
+        $task_user = User::load($progression_target->field_progression_user->target_id);
+        if (empty($task_user)) {
+          continue;
+        }
         $goals_rendered[$progression_target->field_progression_user->target_id] = [
-          'user' => User::load($progression_target->field_progression_user->target_id),
+          'user' => $task_user,
           'tasks' => [],
         ];
 
