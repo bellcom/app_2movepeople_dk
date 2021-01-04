@@ -33,7 +33,8 @@ abstract class NewUserCreateFormBase extends FormBase {
 
     // Allow supervisor create user for managers.
     $create_for = \Drupal::request()->query->get('create-for');
-    if (in_array('2mp_supervisor', $current_user->getRoles())
+    if ((in_array('2mp_supervisor', $current_user->getRoles())
+      || in_array('2mp_admin', $current_user->getRoles()))
       && !empty($create_for)
       && $create_for_user = User::load($create_for)) {
       $current_user = $create_for_user;
