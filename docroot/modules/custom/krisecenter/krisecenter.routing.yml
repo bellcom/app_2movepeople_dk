@@ -1,0 +1,7 @@
+krisecenter.kvinde_basic_info_form:
+  path: '/user/{user}/kvinde-basic-info'
+  defaults:
+    _form: '\Drupal\krisecenter\Form\KvindeBasicInfoForm'
+    _title: 'KvindeBasicInfoForm'
+  requirements:
+    _custom_access: '\Drupal\krisecenter\KrisecenterAccess::checkKvindeBasicInfoFormAccess'

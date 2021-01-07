@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains krisecenter.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function krisecenter_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the krisecenter module.
+    case 'help.page.krisecenter':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Krisecenter') . '</p>';
+      return $output;
+
+    default:
+  }
+}

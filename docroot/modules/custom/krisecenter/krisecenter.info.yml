@@ -1,0 +1,7 @@
+name: 'krisecenter'
+type: module
+description: 'Krisecenter'
+core: 8.x
+package: '2Movepeople'
+dependencies:
+  - bc_2movepeople_dashboard
