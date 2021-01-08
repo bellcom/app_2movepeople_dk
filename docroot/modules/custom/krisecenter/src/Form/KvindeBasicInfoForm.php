@@ -96,6 +96,78 @@ class KvindeBasicInfoForm extends FormBase {
       '#default_value' => $basicInfo['general']['support_basis'],
     ];
 
+    $general_children_counter = empty($form_state->get('general_children_counter')) ? count($basicInfo['general_children']) : $form_state->get('general_children_counter');
+    if (empty($general_children_counter)) {
+      $general_children_counter = 1;
+    }
+
+    if (empty($form_state->get('general_children_counter'))) {
+      $form_state->set('general_children_counter', $general_children_counter);
+    }
+
+    $form['general_children'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Stamoplysninger Børn'),
+      '#open' => TRUE,
+      '#prefix' => '<div id="general-children-wrapper">',
+      '#suffix' => '</div>',
+    ];
+    for ($i = 0; $i < $general_children_counter; $i++) {
+      $child = empty($basicInfo['general_children'][$i]) ? [
+        'name' => '',
+        'age' => '',
+        'cpr' => '',
+      ] : $basicInfo['general_children'][$i];
+      $form['general_children'][$i] = [
+        '#type' => 'details',
+        '#title' => $this->t('Barn @i', ['@i' => $i + 1]),
+        '#open' => TRUE,
+        'name' => [
+          '#type' => 'textfield',
+          '#title' => $this->t('Navn'),
+          '#default_value' => $child['name']
+        ],
+        'age' => [
+          '#type' => 'textfield',
+          '#title' => $this->t('Alder'),
+          '#default_value' => $child['age']
+        ],
+        'cpr' => [
+          '#type' => 'textfield',
+          '#title' => $this->t('Cpr.nr.'),
+          '#default_value' => $child['cpr']
+        ],
+        'remove' => [
+          '#value' => t('Fjern linje'),
+          '#name' => 'remove-' . $i,
+          '#child_index' => $i,
+          '#ajax' => [
+            'wrapper' => 'general-children-wrapper',
+            'callback' => '::ajaxGeneralChildrenCallback',
+            'event' => 'click',
+          ],
+          '#submit' => ['::submitRemoveChild'],
+          '#type' => 'submit',
+          '#prefix' => '<div class="remove-element form-group">',
+          '#suffix' => '</div>',
+        ]
+      ];
+    }
+    $form['general_children']['add-more'] = [
+      '#value' => t('Tilføj et linje mere'),
+      '#name' => 'add more',
+      '#ajax' => [
+        'wrapper' => 'general-children-wrapper',
+        'callback' => '::ajaxGeneralChildrenCallback',
+        'event' => 'click',
+      ],
+      '#submit' => ['::submitAddMoreChild'],
+      '#type' => 'submit',
+      '#prefix' => '<div class="add-more-elements form-group">',
+      '#suffix' => '</div>',
+    ];
+
+
     $form['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Submit'),
@@ -120,6 +192,39 @@ class KvindeBasicInfoForm extends FormBase {
     $entity->setBasicInfo($values);
     $entity->save();
     \Drupal::messenger()->addMessage($this->t('Basis information gemt'));
+  }
+
+  /**
+   * Ajax bullet point update function.
+   *
+   * @param array $form
+   *   Form API form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form API form.
+   *
+   * @return array
+   *   Form array.
+   */
+  public function ajaxGeneralChildrenCallback(array $form, FormStateInterface $form_state) {
+    return $form['general_children'];
+  }
+
+  public function submitAddMoreChild(array &$form, FormStateInterface $form_state) {
+    $form_state->set('general_children_counter', $form_state->get('general_children_counter') + 1);
+    $form_state->setRebuild();
+  }
+
+  public function submitRemoveChild(array &$form, FormStateInterface $form_state) {
+    // @TODO Is not stable. Need to review/fix
+    $triggering_element = $form_state->getTriggeringElement();
+    $child_index = $triggering_element['#child_index'];
+    $general_children = $form_state->getValue('general_children');
+    unset($general_children[$child_index]);
+    $form_state->setValue('general_children', $general_children);
+
+    $form_state->set('general_children_counter', $form_state->get('general_children_counter') - 1);
+    $form_state->setRebuild();
+
   }
 
 }

@@ -77,6 +77,7 @@ class KvindeInfo extends ContentEntityBase {
         'need_assistance' => '',
         'support_basis' => '',
       ],
+      'general_children' => [],
     ];
   }
 
