@@ -1,0 +1,458 @@
+diff --git a/core/modules/jsonapi/src/ResourceType/ResourceType.php b/core/modules/jsonapi/src/ResourceType/ResourceType.php
+index aca198b87d..997e52d9d1 100644
+--- a/core/modules/jsonapi/src/ResourceType/ResourceType.php
++++ b/core/modules/jsonapi/src/ResourceType/ResourceType.php
+@@ -386,15 +386,16 @@ public function setRelatableResourceTypes(array $relatable_resource_types) {
+    * @return array
+    *   The relatable resource types, keyed by relationship field names.
+    *
+-   * @see self::setRelatableResourceTypes()
++   * @see setRelatableResourceTypes()
+    */
+   public function getRelatableResourceTypes() {
+     if (!isset($this->relatableResourceTypesByField)) {
+-      $this->relatableResourceTypesByField = array_reduce(array_map(function (ResourceTypeRelationship $field) {
+-        return [$field->getPublicName() => $field->getRelatableResourceTypes()];
+-      }, array_filter($this->fields, function (ResourceTypeField $field) {
+-        return $field instanceof ResourceTypeRelationship;
+-      })), 'array_merge', []);
++      $this->relatableResourceTypesByField = [];
++      foreach ($this->fields as $field) {
++        if ($field instanceof ResourceTypeRelationship) {
++          $this->relatableResourceTypesByField[$field->getPublicName()] = $field->getRelatableResourceTypes();
++        }
++      }
+     }
+     return $this->relatableResourceTypesByField;
+   }
+@@ -408,7 +409,7 @@ public function getRelatableResourceTypes() {
+    * @return \Drupal\jsonapi\ResourceType\ResourceType[]
+    *   The relatable JSON:API resource types.
+    *
+-   * @see self::getRelatableResourceTypes()
++   * @see getRelatableResourceTypes()
+    */
+   public function getRelatableResourceTypesByField($field_name) {
+     return ($field = $this->getFieldByPublicName($field_name)) && $field instanceof ResourceTypeRelationship
+diff --git a/core/modules/jsonapi/src/ResourceType/ResourceTypeRelationship.php b/core/modules/jsonapi/src/ResourceType/ResourceTypeRelationship.php
+index 8e782a527c..f452ebc767 100644
+--- a/core/modules/jsonapi/src/ResourceType/ResourceTypeRelationship.php
++++ b/core/modules/jsonapi/src/ResourceType/ResourceTypeRelationship.php
+@@ -2,6 +2,8 @@
+ 
+ namespace Drupal\jsonapi\ResourceType;
+ 
++use Drupal\Component\Assertion\Inspector;
++
+ /**
+  * Specialization of a ResourceTypeField to represent a resource relationship.
+  *
+@@ -25,13 +27,14 @@ class ResourceTypeRelationship extends ResourceTypeField {
+   /**
+    * Establishes the relatable resource types of this field.
+    *
+-   * @param array $resource_types
++   * @param \Drupal\jsonapi\ResourceType\ResourceType[] $resource_types
+    *   The array of relatable resource types.
+    *
+    * @return static
+    *   A new instance of the field with the given relatable resource types.
+    */
+   public function withRelatableResourceTypes(array $resource_types) {
++    assert(Inspector::assertAllObjects($resource_types, ResourceType::class));
+     $relationship = new static($this->internalName, $this->publicName, $this->enabled, $this->hasOne);
+     $relationship->relatableResourceTypes = $resource_types;
+     return $relationship;
+diff --git a/core/modules/jsonapi/src/ResourceType/ResourceTypeRepository.php b/core/modules/jsonapi/src/ResourceType/ResourceTypeRepository.php
+index ff830f4f55..503e3f9dd3 100644
+--- a/core/modules/jsonapi/src/ResourceType/ResourceTypeRepository.php
++++ b/core/modules/jsonapi/src/ResourceType/ResourceTypeRepository.php
+@@ -119,18 +119,14 @@ public function all() {
+     $cached = $this->cache->get('jsonapi.resource_types', FALSE);
+     if ($cached === FALSE) {
+       $resource_types = [];
+-      foreach ($this->entityTypeManager->getDefinitions() as $entity_type) {
+-        $bundles = array_keys($this->entityTypeBundleInfo->getBundleInfo($entity_type->id()));
+-        $resource_types = array_reduce($bundles, function ($resource_types, $bundle) use ($entity_type) {
+-          $resource_type = $this->createResourceType($entity_type, (string) $bundle);
+-          return array_merge($resource_types, [
+-            $resource_type->getTypeName() => $resource_type,
+-          ]);
+-        }, $resource_types);
++      foreach ($this->entityTypeManager->getDefinitions() as $entity_type_id => $entity_type) {
++        foreach ($this->getAllBundlesForEntityType($entity_type_id) as $bundle) {
++          $resource_type = $this->createResourceType($entity_type, $bundle);
++          $resource_types[$resource_type->getTypeName()] = $resource_type;
++        }
+       }
+       foreach ($resource_types as $resource_type) {
+-        $relatable_resource_types = $this->calculateRelatableResourceTypes($resource_type, $resource_types);
+-        $resource_type->setRelatableResourceTypes($relatable_resource_types);
++        $resource_type->setRelatableResourceTypes($this->calculateRelatableResourceTypes($resource_type, $resource_types));
+       }
+       $this->cache->set('jsonapi.resource_types', $resource_types, Cache::PERMANENT, $this->cacheTags);
+     }
+@@ -179,7 +175,7 @@ public function get($entity_type_id, $bundle) {
+       throw new PreconditionFailedHttpException('Server error. The current route is malformed.');
+     }
+ 
+-    return $this->getByTypeName("$entity_type_id--$bundle");
++    return static::lookupResourceType($this->all(), $entity_type_id, $bundle);
+   }
+ 
+   /**
+@@ -381,31 +377,27 @@ protected static function isVersionableResourceType(EntityTypeInterface $entity_
+    * @param \Drupal\jsonapi\ResourceType\ResourceType[] $resource_types
+    *   A list of JSON:API resource types.
+    *
+-   * @return array
++   * @return array[][]
+    *   The relatable JSON:API resource types, keyed by field name.
+    */
+   protected function calculateRelatableResourceTypes(ResourceType $resource_type, array $resource_types) {
+     // For now, only fieldable entity types may contain relationships.
+     $entity_type = $this->entityTypeManager->getDefinition($resource_type->getEntityTypeId());
++    $relatable_public = [];
+     if ($entity_type->entityClassImplements(FieldableEntityInterface::class)) {
+       $field_definitions = $this->entityFieldManager->getFieldDefinitions(
+         $resource_type->getEntityTypeId(),
+         $resource_type->getBundle()
+       );
+ 
+-      $relatable_internal = array_map(function ($field_definition) use ($resource_types) {
+-        return $this->getRelatableResourceTypesFromFieldDefinition($field_definition, $resource_types);
+-      }, array_filter($field_definitions, function ($field_definition) {
+-        return $this->isReferenceFieldDefinition($field_definition);
+-      }));
+-
+-      $relatable_public = [];
+-      foreach ($relatable_internal as $internal_field_name => $value) {
+-        $relatable_public[$resource_type->getPublicName($internal_field_name)] = $value;
++      foreach (array_filter($field_definitions, ['static', 'isReferenceFieldDefinition']) as $field_name => $field_definition) {
++        $relatable_public[$resource_type->getPublicName($field_name)] = $this->getRelatableResourceTypesFromFieldDefinition(
++          $field_definition,
++          $resource_types
++        );
+       }
+-      return $relatable_public;
+     }
+-    return [];
++    return $relatable_public;
+   }
+ 
+   /**
+@@ -417,25 +409,37 @@ protected function calculateRelatableResourceTypes(ResourceType $resource_type,
+    * @param \Drupal\jsonapi\ResourceType\ResourceType[] $resource_types
+    *   A list of JSON:API resource types.
+    *
+-   * @return \Drupal\jsonapi\ResourceType\ResourceType[]
++   * @return \Drupal\jsonapi\ResourceType\ResourceType[][]
+    *   The JSON:API resource types with which the given field may have a
+    *   relationship.
+    */
+   protected function getRelatableResourceTypesFromFieldDefinition(FieldDefinitionInterface $field_definition, array $resource_types) {
+     $item_definition = $field_definition->getItemDefinition();
+-
+     $entity_type_id = $item_definition->getSetting('target_type');
+     $handler_settings = $item_definition->getSetting('handler_settings');
++    $target_bundles = empty($handler_settings['target_bundles']) ? $this->getAllBundlesForEntityType($entity_type_id) : $handler_settings['target_bundles'];
++    $relatable_resource_types = [];
+ 
+-    $has_target_bundles = isset($handler_settings['target_bundles']) && !empty($handler_settings['target_bundles']);
+-    $target_bundles = $has_target_bundles ?
+-      $handler_settings['target_bundles']
+-      : $this->getAllBundlesForEntityType($entity_type_id);
++    foreach ($target_bundles as $target_bundle) {
++      if ($resource_type = static::lookupResourceType($resource_types, $entity_type_id, $target_bundle)) {
++        $relatable_resource_types[] = $resource_type;
++      }
++      else {
++        trigger_error(
++          \sprintf(
++            'The "%s" at "%s:%s" references the "%s:%s" entity type that does not exist. Please take action.',
++            $field_definition->getName(),
++            $field_definition->getTargetEntityTypeId(),
++            $field_definition->getTargetBundle(),
++            $entity_type_id,
++            $target_bundle
++          ),
++          E_USER_WARNING
++        );
++      }
++    }
+ 
+-    return array_map(function ($target_bundle) use ($entity_type_id, $resource_types) {
+-      $type_name = "$entity_type_id--$target_bundle";
+-      return isset($resource_types[$type_name]) ? $resource_types[$type_name] : NULL;
+-    }, $target_bundles);
++    return $relatable_resource_types;
+   }
+ 
+   /**
+@@ -448,19 +452,19 @@ protected function getRelatableResourceTypesFromFieldDefinition(FieldDefinitionI
+    *   TRUE if the field definition is found to be a reference field. FALSE
+    *   otherwise.
+    */
+-  protected function isReferenceFieldDefinition(FieldDefinitionInterface $field_definition) {
++  protected static function isReferenceFieldDefinition(FieldDefinitionInterface $field_definition) {
+     static $field_type_is_reference = [];
+ 
+-    if (isset($field_type_is_reference[$field_definition->getType()])) {
+-      return $field_type_is_reference[$field_definition->getType()];
++    $field_type = $field_definition->getType();
++
++    if (isset($field_type_is_reference[$field_type])) {
++      return $field_type_is_reference[$field_type];
+     }
+ 
+-    /* @var \Drupal\Core\Field\TypedData\FieldItemDataDefinition $item_definition */
+     $item_definition = $field_definition->getItemDefinition();
+-    $main_property = $item_definition->getMainPropertyName();
+-    $property_definition = $item_definition->getPropertyDefinition($main_property);
++    $property_definition = $item_definition->getPropertyDefinition($item_definition->getMainPropertyName());
+ 
+-    return $field_type_is_reference[$field_definition->getType()] = $property_definition instanceof DataReferenceTargetDefinition;
++    return $field_type_is_reference[$field_type] = $property_definition instanceof DataReferenceTargetDefinition;
+   }
+ 
+   /**
+@@ -473,7 +477,36 @@ protected function isReferenceFieldDefinition(FieldDefinitionInterface $field_de
+    *   The bundle IDs.
+    */
+   protected function getAllBundlesForEntityType($entity_type_id) {
+-    return array_keys($this->entityTypeBundleInfo->getBundleInfo($entity_type_id));
++    // Ensure all keys are strings, because numeric values are allowed
++    // as bundle names and "array_keys()" will cast "42" to 42.
++    return array_map('strval', array_keys($this->entityTypeBundleInfo->getBundleInfo($entity_type_id)));
++  }
++
++  /**
++   * Lookups resource type by the internal and public identifiers.
++   *
++   * @param \Drupal\jsonapi\ResourceType\ResourceType[] $resource_types
++   *   The list of resource types to do a lookup.
++   * @param string $entity_type_id
++   *   The entity type of a seekable resource.
++   * @param string $bundle
++   *   The entity bundle of a seekable resource.
++   *
++   * @return \Drupal\jsonapi\ResourceType\ResourceType|null
++   *   The resource type or NULL if it cannot be found.
++   */
++  protected static function lookupResourceType(array $resource_types, $entity_type_id, $bundle) {
++    if (isset($resource_types["$entity_type_id--$bundle"])) {
++      return $resource_types["$entity_type_id--$bundle"];
++    }
++
++    foreach ($resource_types as $resource_type) {
++      if ($resource_type->getEntityTypeId() === $entity_type_id && $resource_type->getBundle() === $bundle) {
++        return $resource_type;
++      }
++    }
++
++    return NULL;
+   }
+ 
+ }
+diff --git a/core/modules/jsonapi/tests/modules/jsonapi_test_resource_typename_hack/jsonapi_test_resource_typename_hack.info.yml b/core/modules/jsonapi/tests/modules/jsonapi_test_resource_typename_hack/jsonapi_test_resource_typename_hack.info.yml
+new file mode 100644
+index 0000000000..68cd74fe99
+--- /dev/null
++++ b/core/modules/jsonapi/tests/modules/jsonapi_test_resource_typename_hack/jsonapi_test_resource_typename_hack.info.yml
+@@ -0,0 +1,3 @@
++name: 'JSON:API test resource typeName override'
++type: module
++package: Testing
+diff --git a/core/modules/jsonapi/tests/modules/jsonapi_test_resource_typename_hack/jsonapi_test_resource_typename_hack.services.yml b/core/modules/jsonapi/tests/modules/jsonapi_test_resource_typename_hack/jsonapi_test_resource_typename_hack.services.yml
+new file mode 100644
+index 0000000000..2238b13a6d
+--- /dev/null
++++ b/core/modules/jsonapi/tests/modules/jsonapi_test_resource_typename_hack/jsonapi_test_resource_typename_hack.services.yml
+@@ -0,0 +1,5 @@
++services:
++  Drupal\jsonapi_test_resource_typename_hack\ResourceType\ResourceTypeRepository:
++    decorates: jsonapi.resource_type.repository
++    parent: jsonapi.resource_type.repository
++    public: false
+diff --git a/core/modules/jsonapi/tests/modules/jsonapi_test_resource_typename_hack/src/ResourceType/ResourceType.php b/core/modules/jsonapi/tests/modules/jsonapi_test_resource_typename_hack/src/ResourceType/ResourceType.php
+new file mode 100644
+index 0000000000..1d68da3fe5
+--- /dev/null
++++ b/core/modules/jsonapi/tests/modules/jsonapi_test_resource_typename_hack/src/ResourceType/ResourceType.php
+@@ -0,0 +1,21 @@
++<?php
++
++namespace Drupal\jsonapi_test_resource_typename_hack\ResourceType;
++
++use Drupal\jsonapi\ResourceType\ResourceType as ResourceTypeBase;
++
++/**
++ * Custom resource type.
++ */
++class ResourceType extends ResourceTypeBase {
++
++  /**
++   * {@inheritdoc}
++   */
++  public function __construct(...$arguments) {
++    parent::__construct(...$arguments);
++    // That's what JSON:API Extras allows to do.
++    $this->typeName = str_replace('--', '==', $this->typeName);
++  }
++
++}
+diff --git a/core/modules/jsonapi/tests/modules/jsonapi_test_resource_typename_hack/src/ResourceType/ResourceTypeRepository.php b/core/modules/jsonapi/tests/modules/jsonapi_test_resource_typename_hack/src/ResourceType/ResourceTypeRepository.php
+new file mode 100644
+index 0000000000..2da8d7b326
+--- /dev/null
++++ b/core/modules/jsonapi/tests/modules/jsonapi_test_resource_typename_hack/src/ResourceType/ResourceTypeRepository.php
+@@ -0,0 +1,29 @@
++<?php
++
++namespace Drupal\jsonapi_test_resource_typename_hack\ResourceType;
++
++use Drupal\Core\Entity\EntityTypeInterface;
++use Drupal\jsonapi\ResourceType\ResourceTypeRepository as ResourceTypeRepositoryBase;
++
++/**
++ * Provides a repository of JSON:API resource types.
++ */
++class ResourceTypeRepository extends ResourceTypeRepositoryBase {
++
++  /**
++   * {@inheritdoc}
++   */
++  protected function createResourceType(EntityTypeInterface $entity_type, $bundle) {
++    return new ResourceType(
++      $entity_type->id(),
++      $bundle,
++      $entity_type->getClass(),
++      $entity_type->isInternal(),
++      static::isLocatableResourceType($entity_type, $bundle),
++      static::isMutableResourceType($entity_type, $bundle),
++      static::isVersionableResourceType($entity_type),
++      static::getFields($this->getAllFieldNames($entity_type, $bundle), $entity_type, $bundle)
++    );
++  }
++
++}
+diff --git a/core/modules/jsonapi/tests/src/Kernel/ResourceType/ResourceTypeRepositoryTypeNameHackTest.php b/core/modules/jsonapi/tests/src/Kernel/ResourceType/ResourceTypeRepositoryTypeNameHackTest.php
+new file mode 100644
+index 0000000000..19160dce35
+--- /dev/null
++++ b/core/modules/jsonapi/tests/src/Kernel/ResourceType/ResourceTypeRepositoryTypeNameHackTest.php
+@@ -0,0 +1,114 @@
++<?php
++
++namespace Drupal\Tests\jsonapi\Kernel\ResourceType;
++
++use Drupal\jsonapi\ResourceType\ResourceType;
++use Drupal\Tests\jsonapi\Kernel\JsonapiKernelTestBase;
++use PHPUnit\Framework\Error\Warning;
++
++/**
++ * @coversDefaultClass \Drupal\jsonapi\ResourceType\ResourceTypeRepository
++ * @group jsonapi
++ *
++ * @internal
++ */
++class ResourceTypeRepositoryTypeNameHackTest extends JsonapiKernelTestBase {
++
++  /**
++   * {@inheritdoc}
++   */
++  public static $modules = [
++    'node',
++    'user',
++    'field',
++    'system',
++    'serialization',
++    'jsonapi_test_resource_typename_hack',
++  ];
++
++  /**
++   * {@inheritdoc}
++   */
++  protected function setUp() {
++    parent::setUp();
++
++    $this->container
++      ->get('entity_type.manager')
++      ->getStorage('node_type')
++      ->create(['type' => 'page'])
++      ->save();
++  }
++
++  /**
++   * Ensures resource repository forms the listing using internal names.
++   *
++   * JSON:API Extras is used widely and it's hard to imagine how big its
++   * coverage at existing projects. The project allows renaming resource
++   * types (e.g. "user---user" to "user") and this negatively affects the
++   * operability of JSON:API itself.
++   *
++   * @covers ::get
++   * @covers ::all
++   * @covers ::getByTypeName
++   *
++   * @link https://www.drupal.org/project/drupal/issues/2996114
++   */
++  public function test() {
++    $repository = $this->container->get('jsonapi.resource_type.repository');
++
++    static::assertInstanceOf(ResourceType::class, $repository->get('user', 'user'));
++    static::assertNull($repository->getByTypeName('user--user'));
++    static::assertInstanceOf(ResourceType::class, $repository->getByTypeName('user==user'));
++
++    static::assertInstanceOf(ResourceType::class, $repository->get('node', 'page'));
++    static::assertNull($repository->getByTypeName('node--page'));
++    static::assertInstanceOf(ResourceType::class, $repository->getByTypeName('node==page'));
++
++    foreach ($repository->all() as $id => $resource_type) {
++      static::assertSame(
++        $resource_type->getTypeName(),
++        $id,
++        'The key is always equal to the type name.'
++      );
++
++      static::assertNotSame(
++        sprintf('%s--%s', $resource_type->getEntityTypeId(), $resource_type->getBundle()),
++        $id,
++        'The type name can be renamed so it differs from the internal.'
++      );
++    }
++  }
++
++  /**
++   * Ensures resource repository avoids using missing references from fields.
++   *
++   * @covers ::all
++   * @covers ::calculateRelatableResourceTypes
++   * @covers ::getRelatableResourceTypesFromFieldDefinition
++   *
++   * @link https://www.drupal.org/project/drupal/issues/2996114
++   */
++  public function testGetRelatableResourceTypesFromFieldDefinition() {
++    $field_config_storage = $this->container->get('entity_type.manager')->getStorage('field_config');
++    $repository = $this->container->get('jsonapi.resource_type.repository');
++
++    static::assertCount(0, $repository->get('node', 'page')->getRelatableResourceTypesByField('field_relationship'));
++    $this->createEntityReferenceField('node', 'page', 'field_relationship', 'Related entity', 'node', 'default', [
++      'target_bundles' => ['missing_bundle'],
++    ]);
++    $fields = $field_config_storage->loadByProperties(['field_name' => 'field_relationship']);
++    static::assertSame(['missing_bundle'], $fields['node.page.field_relationship']->getItemDefinition()->getSetting('handler_settings')['target_bundles']);
++
++    try {
++      $repository->get('node', 'page')->getRelatableResourceTypesByField('field_relationship');
++      static::fail('The above code must produce a warning since the "missing_bundle" does not exist.');
++    }
++    catch (Warning $e) {
++      static::assertSame(
++        'The "field_relationship" at "node:page" references the "node:missing_bundle" entity type that does not exist. Please take action.',
++        $e->getMessage()
++      );
++    }
++  }
++
++}

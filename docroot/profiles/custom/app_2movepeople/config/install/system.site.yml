@@ -1,0 +1,12 @@
+name: 2movepeople
+mail: drupal@bellcom.dk
+slogan: ''
+page:
+  403: /user/login
+  404: ''
+  front: /dashboard
+admin_compact_mode: false
+weight_select_max: 100
+langcode: da
+default_langcode: da
+mail_notification: ''

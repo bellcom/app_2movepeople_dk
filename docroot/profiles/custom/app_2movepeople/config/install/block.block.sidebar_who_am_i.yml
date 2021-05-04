@@ -1,0 +1,19 @@
+langcode: da
+status: true
+dependencies:
+  module:
+    - bc_2movepeople_dashboard
+  theme:
+    - site
+id: sidebar_who_am_i
+theme: site
+region: sidebar_left__mobile
+weight: -9
+provider: null
+plugin: whoami_block
+settings:
+  id: whoami_block
+  label: 'Who am i'
+  provider: bc_2movepeople_dashboard
+  label_display: '0'
+visibility: {  }

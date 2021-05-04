@@ -1,0 +1,19 @@
+langcode: da
+status: true
+dependencies:
+  module:
+    - bc_2movepeople_dashboard
+  theme:
+    - site
+id: sidr_navigation_block
+theme: site
+region: sidebar_left__mobile
+weight: -6
+provider: null
+plugin: navigation_block
+settings:
+  id: navigation_block
+  label: 'Navigation block'
+  provider: bc_2movepeople_dashboard
+  label_display: '0'
+visibility: {  }

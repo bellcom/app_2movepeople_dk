@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_progression_type
+    - node.type.progression_target
+  module:
+    - options
+id: node.progression_target.field_progression_type
+field_name: field_progression_type
+entity_type: node
+bundle: progression_target
+label: 'Progression type'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

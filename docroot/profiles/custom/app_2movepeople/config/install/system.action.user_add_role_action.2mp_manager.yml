@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.2mp_manager
+  module:
+    - user
+id: user_add_role_action.2mp_manager
+label: 'Add the 2MP Manager role to the selected users'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: 2mp_manager

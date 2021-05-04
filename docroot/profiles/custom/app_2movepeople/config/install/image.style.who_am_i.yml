@@ -1,0 +1,14 @@
+langcode: da
+status: true
+dependencies: {  }
+name: who_am_i
+label: 'Who am i'
+effects:
+  bbed5643-1849-4ce5-8d86-a8ed8b387c3b:
+    uuid: bbed5643-1849-4ce5-8d86-a8ed8b387c3b
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 110
+      height: 110
+      anchor: center-center

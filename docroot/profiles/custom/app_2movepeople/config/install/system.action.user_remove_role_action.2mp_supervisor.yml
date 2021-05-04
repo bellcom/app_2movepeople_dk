@@ -1,0 +1,13 @@
+langcode: da
+status: true
+dependencies:
+  config:
+    - user.role.2mp_supervisor
+  module:
+    - user
+id: user_remove_role_action.2mp_supervisor
+label: 'Remove the 2MP Supervisor role from the selected users'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: 2mp_supervisor

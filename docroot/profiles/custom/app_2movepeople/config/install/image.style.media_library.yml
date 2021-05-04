@@ -1,0 +1,14 @@
+langcode: da
+status: true
+dependencies: {  }
+name: media_library
+label: 'Media Library (220x220)'
+effects:
+  c741cc74-f0fb-4798-99a3-2df0d6f1657c:
+    uuid: c741cc74-f0fb-4798-99a3-2df0d6f1657c
+    id: image_scale
+    weight: 0
+    data:
+      width: 220
+      height: 220
+      upscale: false

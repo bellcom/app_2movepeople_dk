@@ -1,0 +1,8 @@
+langcode: da
+status: true
+dependencies: {  }
+id: node
+label: Indhold
+tags:
+  title: '[node:title] | [site:name]'
+  description: '[node:summary]'

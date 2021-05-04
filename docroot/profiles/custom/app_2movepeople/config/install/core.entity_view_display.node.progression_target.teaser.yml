@@ -1,0 +1,45 @@
+langcode: da
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.progression_target.body
+    - field.field.node.progression_target.field_goal_ids
+    - field.field.node.progression_target.field_priority
+    - field.field.node.progression_target.field_progression_status
+    - field.field.node.progression_target.field_progression_type
+    - field.field.node.progression_target.field_progression_user
+    - field.field.node.progression_target.field_purpose
+    - field.field.node.progression_target.field_related_tasks
+    - node.type.progression_target
+  module:
+    - text
+    - user
+id: node.progression_target.teaser
+targetEntityType: node
+bundle: progression_target
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_goal_ids: true
+  field_priority: true
+  field_progression_status: true
+  field_progression_type: true
+  field_progression_user: true
+  field_purpose: true
+  field_related_tasks: true
+  langcode: true
+  search_api_excerpt: true

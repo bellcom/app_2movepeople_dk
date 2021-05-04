@@ -1,0 +1,151 @@
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.field.node.page.body
+    - field.field.node.page.field_faq_paragraphs
+    - field.field.node.page.field_meta_tags
+    - field.field.node.page.layout_selection
+    - field.field.node.page.panelizer
+    - node.type.page
+  module:
+    - entity_reference_revisions
+    - layout_builder
+    - layout_discovery
+    - layout_library
+    - metatag
+    - panelizer
+    - text
+    - user
+third_party_settings:
+  panelizer:
+    enable: false
+    custom: false
+    allow: false
+    default: default
+  layout_builder:
+    enabled: true
+    sections:
+      -
+        layout_id: layout_onecol
+        layout_settings:
+          label: ''
+        components:
+          0f585ca9-9186-4128-a39a-c2b783555545:
+            uuid: 0f585ca9-9186-4128-a39a-c2b783555545
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'extra_field_block:node:page:content_moderation_control'
+            additional: {  }
+            weight: 0
+          ee476f20-8ed4-4a12-8870-a16ed73dc876:
+            uuid: ee476f20-8ed4-4a12-8870-a16ed73dc876
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'field_block:node:page:body'
+              formatter:
+                label: hidden
+                type: text_default
+                settings: {  }
+                third_party_settings: {  }
+            additional: {  }
+            weight: 1
+          ba0677a8-8ebb-485a-801a-f59faa02bc66:
+            uuid: ba0677a8-8ebb-485a-801a-f59faa02bc66
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'extra_field_block:node:page:links'
+            additional: {  }
+            weight: 2
+          3ed6693d-4ce7-4eb3-8568-47ae86c8d9e6:
+            uuid: 3ed6693d-4ce7-4eb3-8568-47ae86c8d9e6
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'field_block:node:page:field_meta_tags'
+              formatter:
+                type: metatag_empty_formatter
+                label: above
+                settings: {  }
+                third_party_settings: {  }
+            additional: {  }
+            weight: 3
+          40de96c0-a57a-4371-b5c7-2cb5b1518f2f:
+            uuid: 40de96c0-a57a-4371-b5c7-2cb5b1518f2f
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'field_block:node:page:field_faq_paragraphs'
+              formatter:
+                type: entity_reference_revisions_entity_view
+                label: hidden
+                settings:
+                  view_mode: default
+                  link: ''
+                third_party_settings: {  }
+            additional: {  }
+            weight: 4
+        third_party_settings: {  }
+  layout_library:
+    enable: true
+id: node.page.default
+targetEntityType: node
+bundle: page
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  content_moderation_control:
+    weight: -20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_faq_paragraphs:
+    type: entity_reference_revisions_entity_view
+    weight: 5
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
+  field_meta_tags:
+    type: metatag_empty_formatter
+    region: content
+    weight: 2
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+  links:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  workbench_moderation_control:
+    weight: -20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  langcode: true
+  layout_selection: true
+  panelizer: true
+  search_api_excerpt: true

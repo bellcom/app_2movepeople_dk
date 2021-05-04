@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.2mp_manager
+  module:
+    - user
+id: user_remove_role_action.2mp_manager
+label: 'Remove the 2MP Manager role from the selected users'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: 2mp_manager

@@ -1,0 +1,11 @@
+langcode: da
+status: true
+dependencies:
+  enforced:
+    module:
+      - webform
+id: days
+label: Dage
+category: 'Dato og tid'
+likert: false
+options: "Sunday: Sunday\nMonday: Monday\nTuesday: Tuesday\nWednesday: Wednesday\nThursday: Thursday\nFriday: Friday\nSaturday: Saturday\n"

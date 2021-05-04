@@ -1,0 +1,17 @@
+langcode: da
+status: false
+dependencies:
+  theme:
+    - bootstrap
+id: bootstrap_page_title
+theme: bootstrap
+region: navigation
+weight: 0
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: Sidetitel
+  provider: core
+  label_display: '0'
+visibility: {  }

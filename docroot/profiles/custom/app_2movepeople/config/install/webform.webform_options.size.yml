@@ -1,0 +1,11 @@
+langcode: da
+status: true
+dependencies:
+  enforced:
+    module:
+      - webform
+id: size
+label: Størrelse
+category: Generelt
+likert: false
+options: "Extra Small: Extra Small\nSmall: Small\nMedium: Medium\nLarge: Large\nExtra Large: Extra Large\n"

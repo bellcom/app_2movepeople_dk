@@ -1,0 +1,5 @@
+roles:
+  2mp_user: perm
+  2mp_manager: perm
+  2mp_supervisor: unsafe
+  2mp_admin: unsafe

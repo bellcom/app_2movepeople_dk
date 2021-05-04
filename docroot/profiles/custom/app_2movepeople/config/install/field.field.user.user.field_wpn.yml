@@ -1,0 +1,25 @@
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_wpn
+  module:
+    - user
+id: user.user.field_wpn
+field_name: field_wpn
+entity_type: user
+bundle: user
+label: 'Web push notifications subscription'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:wpn_subscription'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference

@@ -96,7 +96,8 @@
         "enable-patching": true,
         "patches": {
             "drupal/core": {
-                "2449895 - Imported PO files have no public URL but have a link at admin/content/files": "https://www.drupal.org/files/issues/locale-po-files-public-url-exception-2449895-11.patch"
+                "2449895 - Imported PO files have no public URL but have a link at admin/content/files": "https://www.drupal.org/files/issues/locale-po-files-public-url-exception-2449895-11.patch",
+                "2996114 - Argument 2 passed to Drupal\\jsonapi\\Routing\\Routes::Drupal\\jsonapi\\Routing\\{closure}()": "https://www.drupal.org/files/issues/2020-06-06/2996114-141.patch"
             },
             "drupal/web_push_notification": {
                 "3107658 - web_push_notification": "https://www.drupal.org/files/issues/2020-01-22/3107658-4.patch"

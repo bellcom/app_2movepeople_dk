@@ -1,0 +1,8 @@
+langcode: da
+status: true
+dependencies: {  }
+id: taxonomy_term
+label: 'Ord i ordforråd'
+tags:
+  title: '[term:name] | [site:name]'
+  description: '[term:description]'

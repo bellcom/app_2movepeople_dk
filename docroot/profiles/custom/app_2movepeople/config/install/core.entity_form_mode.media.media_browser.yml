@@ -1,0 +1,9 @@
+langcode: da
+status: true
+dependencies:
+  module:
+    - media
+id: media.media_browser
+label: Mediebrowser
+targetEntityType: media
+cache: true

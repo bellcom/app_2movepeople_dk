@@ -1,0 +1,4 @@
+ignored_config_entities:
+  - 'webform.webform.*'
+  - stage_file_proxy.settings
+langcode: da

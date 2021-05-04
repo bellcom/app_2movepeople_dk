@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: 2mp_user
+label: '2MP User'
+weight: 5
+is_admin: null
+permissions:
+  - 'access provide feedback'

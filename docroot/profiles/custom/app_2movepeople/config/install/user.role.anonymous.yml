@@ -1,0 +1,11 @@
+langcode: da
+status: true
+dependencies: {  }
+id: anonymous
+label: 'Anonym bruger'
+weight: 0
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access site-wide contact form'
+  - 'view media'

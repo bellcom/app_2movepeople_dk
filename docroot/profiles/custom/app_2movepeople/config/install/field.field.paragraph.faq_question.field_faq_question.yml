@@ -1,0 +1,18 @@
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_faq_question
+    - paragraphs.paragraphs_type.faq_question
+id: paragraph.faq_question.field_faq_question
+field_name: field_faq_question
+entity_type: paragraph
+bundle: faq_question
+label: 'FAQ Question'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

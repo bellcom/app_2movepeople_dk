@@ -1,0 +1,11 @@
+langcode: da
+status: true
+dependencies:
+  module:
+    - lightning_core
+    - media
+third_party_settings:
+id: media.thumbnail
+label: Thumbnail
+targetEntityType: media
+cache: true

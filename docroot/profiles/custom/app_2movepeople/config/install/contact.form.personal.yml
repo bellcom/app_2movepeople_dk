@@ -1,0 +1,10 @@
+langcode: da
+status: true
+dependencies: {  }
+id: personal
+label: 'Personal contact form'
+recipients: {  }
+reply: ''
+weight: 0
+message: 'Din besked er blevet sendt.'
+redirect: ''

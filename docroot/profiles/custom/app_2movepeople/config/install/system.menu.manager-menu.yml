@@ -1,0 +1,7 @@
+langcode: da
+status: true
+dependencies: {  }
+id: manager-menu
+label: 'Manager menu'
+description: ''
+locked: false

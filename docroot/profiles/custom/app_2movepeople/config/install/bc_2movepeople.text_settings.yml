@@ -1,0 +1,6 @@
+bc_2movepeople_dashboard:
+  manager_tasks: 'Manager opgaver'
+bc_2movepeople_rate_progresion:
+  self_rates_add_title: 'Self rates add'
+  user_rates_add_title: 'Evaluering 2'
+  rates_add_title: 'Evaluering 3'

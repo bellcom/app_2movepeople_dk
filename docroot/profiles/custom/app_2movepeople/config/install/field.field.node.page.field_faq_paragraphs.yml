@@ -1,0 +1,28 @@
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_faq_paragraphs
+    - node.type.page
+  module:
+    - entity_reference_revisions
+id: node.page.field_faq_paragraphs
+field_name: field_faq_paragraphs
+entity_type: node
+bundle: page
+label: 'FAQ Paragraphs'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles: null
+    target_bundles_drag_drop:
+      faq_question:
+        weight: 2
+        enabled: false
+field_type: entity_reference_revisions
