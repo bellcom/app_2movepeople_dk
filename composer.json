@@ -23,7 +23,7 @@
     "require": {
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "cweagans/composer-patches": "^1.6.0",
-        "acquia/lightning": "~4.1.11",
+        "acquia/lightning": "~4.1.17",
         "drupal/bootstrap": "^3.17",
         "drupal/admin_toolbar": "^2.0",
         "drupal/field_permissions": "^1.0@beta",
