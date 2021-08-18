@@ -736,8 +736,12 @@ class MovepeopleDashboardController extends ControllerBase {
     foreach ($goals as $goal) {
       $progression_target = Utils::getMilestoneByGoal($goal->id());
       if (empty($goals_rendered[$progression_target->field_progression_user->target_id])) {
+        $task_user = User::load($progression_target->field_progression_user->target_id);
+        if (empty($task_user)) {
+          continue;
+        }
         $goals_rendered[$progression_target->field_progression_user->target_id] = [
-          'user' => User::load($progression_target->field_progression_user->target_id),
+          'user' => $task_user,
           'tasks' => [],
         ];
 
@@ -958,13 +962,13 @@ class MovepeopleDashboardController extends ControllerBase {
     $route_params = [];
 
     // Allow supervisor create user for managers.
-    if (in_array('2mp_supervisor', \Drupal::currentUser()->getRoles())
+    if ((in_array('2mp_supervisor', \Drupal::currentUser()->getRoles())
+        || in_array('2mp_admin', \Drupal::currentUser()->getRoles()))
       && $user->id() != \Drupal::currentUser()->id()) {
       $route_params['create-for'] = $user->id();
     }
 
     // Alter text of button.
-    $add_button_key = 'Navigation.create_user';
     if (in_array('2mp_supervisor', $user_roles)) {
       $add_button_key = 'Navigation.manager_create_user';
     }
@@ -972,13 +976,15 @@ class MovepeopleDashboardController extends ControllerBase {
       $add_button_key = 'Navigation.create_user';
     }
 
-    $buttons[$add_button_key] = [
-      '#url' => Url::fromRoute('bc_2movepeople_dashboard.users.create', $route_params),
-      '#attributes' => [
-        'class' => ['use-ajax'],
-        'data-dialog-type' => 'modal'
-      ],
-    ];
+    if (!empty($add_button_key)) {
+      $buttons[$add_button_key] = [
+        '#url' => Url::fromRoute('bc_2movepeople_dashboard.users.create', $route_params),
+        '#attributes' => [
+          'class' => ['use-ajax'],
+          'data-dialog-type' => 'modal'
+        ],
+      ];
+    }
 
     return $buttons;
   }
