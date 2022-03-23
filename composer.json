@@ -96,7 +96,8 @@
         "enable-patching": true,
         "patches": {
             "drupal/core": {
-                "2449895 - Imported PO files have no public URL but have a link at admin/content/files": "https://www.drupal.org/files/issues/locale-po-files-public-url-exception-2449895-11.patch"
+                "2449895 - Imported PO files have no public URL but have a link at admin/content/files": "https://www.drupal.org/files/issues/locale-po-files-public-url-exception-2449895-11.patch",
+               "CKEditor update - SA Moderately critical - Third-party libraries - SA-CORE-2022-005" : "https://www.drupal.org/files/issues/2022-03-17/3270054-SA-CORE-2022-005_2.patch"
             },
             "drupal/web_push_notification": {
                 "3107658 - web_push_notification": "https://www.drupal.org/files/issues/2020-01-22/3107658-4.patch"
